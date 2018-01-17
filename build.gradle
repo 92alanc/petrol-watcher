@@ -1,0 +1,36 @@
+buildscript {
+    ext.kotlin_version = '1.2.20'
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:3.1.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+extensions.libs = [
+        android : [
+                constraint_layout : '1.0.2',
+                espresso_core : '3.0.1',
+                support : '27.0.2',
+                test_runner : '1.0.1'
+        ],
+        firebase_auth : '11.8.0',
+        junit : '4.12'
+]
