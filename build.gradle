@@ -32,5 +32,6 @@ extensions.libs = [
                 test_runner : '1.0.1'
         ],
         firebase_auth : '11.8.0',
+        firebase_database : '11.8.0',
         junit : '4.12'
 ]

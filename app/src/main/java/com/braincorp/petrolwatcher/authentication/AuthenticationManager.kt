@@ -1,10 +1,10 @@
-package com.braincorp.petrolwatcher.utils
+package com.braincorp.petrolwatcher.authentication
 
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
-object AuthenticationUtils {
+object AuthenticationManager {
 
     private val AUTH = FirebaseAuth.getInstance()
 
@@ -33,6 +33,8 @@ object AuthenticationUtils {
         USER?.delete()
         signOut()
     }
+
+    fun isSignedIn(): Boolean = USER != null
 
     fun resetPassword(email: String, onCompleteListener: OnCompleteListener<Void>) {
         AUTH.sendPasswordResetEmail(email)
