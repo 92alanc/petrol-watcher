@@ -11,18 +11,18 @@ object AuthenticationManager {
     val USER = AUTH.currentUser
 
     fun createUser(email: String, password: String,
-                   onCompleteListener: OnCompleteListener<AuthResult>) {
+                   onEmailVerificationSent: OnCompleteListener<Void>) {
         AUTH.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(onCompleteListener)
+                .addOnCompleteListener({
+                    it.result.user.sendEmailVerification()
+                            .addOnCompleteListener(onEmailVerificationSent)
+                })
     }
 
     fun signIn(email: String, password: String,
-               func: () -> Unit) {
+               onCompleteListener: OnCompleteListener<AuthResult>) {
         AUTH.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener({
-                    it.result.user.sendEmailVerification()
-                    apply { func() }
-                })
+                .addOnCompleteListener(onCompleteListener)
     }
 
     fun signOut() {

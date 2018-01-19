@@ -28,7 +28,7 @@ object PetrolStationDatabase {
             }
         })
     }
-    
+
     fun delete(petrolStation: PetrolStation,
                onCompleteListener: OnCompleteListener<Void>) {
         reference.child(petrolStation.id)
