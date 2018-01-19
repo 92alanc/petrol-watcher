@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Olho no Posto</string>
+    <string name="app_icon">ícone do aplicativo</string>
+    <string name="password">senha</string>
+    <string name="sign_in">entrar</string>
+    <string name="sign_up">criar conta</string>
+    <string name="error">Erro</string>
+    <string name="invalid_email_or_password">E-mail ou senha inválidos</string>
+</resources>
