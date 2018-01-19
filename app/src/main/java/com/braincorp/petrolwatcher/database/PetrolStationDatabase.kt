@@ -28,6 +28,13 @@ object PetrolStationDatabase {
             }
         })
     }
+    
+    fun delete(petrolStation: PetrolStation,
+               onCompleteListener: OnCompleteListener<Void>) {
+        reference.child(petrolStation.id)
+                .removeValue()
+                .addOnCompleteListener(onCompleteListener)
+    }
 
     fun select(valueEventListener: ValueEventListener) {
         reference.addValueEventListener(valueEventListener)
