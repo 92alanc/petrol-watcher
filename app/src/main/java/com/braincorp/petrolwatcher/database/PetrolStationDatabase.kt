@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.model.PetrolStation
-import com.braincorp.petrolwatcher.model.TestModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 
