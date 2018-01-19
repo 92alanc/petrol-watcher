@@ -9,4 +9,8 @@
     <string name="error">Error</string>
     <string name="invalid_email_or_password">Invalid e-mail or password</string>
     <string name="ok" translatable="false">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="sign_out">Sign out</string>
+    <string name="question_sign_out">Are you sure you want to sign out?</string>
 </resources>

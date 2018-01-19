@@ -19,6 +19,10 @@ object AuthenticationManager {
                 })
     }
 
+    fun setIdTokenListener(idTokenListener: FirebaseAuth.IdTokenListener) {
+        AUTH.addIdTokenListener(idTokenListener)
+    }
+
     fun signIn(email: String, password: String,
                onCompleteListener: OnCompleteListener<AuthResult>) {
         AUTH.signInWithEmailAndPassword(email, password)

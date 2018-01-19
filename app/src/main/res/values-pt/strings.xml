@@ -7,4 +7,8 @@
     <string name="sign_up">criar conta</string>
     <string name="error">Erro</string>
     <string name="invalid_email_or_password">E-mail ou senha inválidos</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="sign_out">Sair</string>
+    <string name="question_sign_out">Tem certeza que deseja sair?</string>
 </resources>

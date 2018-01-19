@@ -1,6 +1,9 @@
 package com.braincorp.petrolwatcher.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.isEmpty
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
@@ -12,14 +15,20 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<AuthResult> {
 
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setOnClickListeners()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         checkAuthenticationState()
     }
 
@@ -31,7 +40,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
     }
 
     override fun onComplete(task: Task<AuthResult>) {
-        hideProgressBar()
         if (task.isSuccessful)
             startHomeActivity()
         else
@@ -49,10 +57,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
     }
 
     private fun signIn() {
-        showProgressBar()
         val email = editTextEmail.text.toString()
         val password = editTextPassword.text.toString()
-        AuthenticationManager.signIn(email, password, onCompleteListener = this)
+        if (!isEmpty(email) && !isEmpty(password))
+            AuthenticationManager.signIn(email, password, onCompleteListener = this)
+        else
+            showErrorDialogue(R.string.invalid_email_or_password)
     }
 
     private fun startHomeActivity() {

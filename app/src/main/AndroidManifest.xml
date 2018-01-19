@@ -19,7 +19,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.BaseActivity"/>
 
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity"
+            android:finishOnTaskLaunch="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
