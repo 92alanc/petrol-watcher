@@ -29,24 +29,6 @@ object PetrolStationDatabase {
         })
     }
 
-    fun insert(testModel: TestModel, onCompleteListener: OnCompleteListener<Void>) {
-        reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError?) { }
-
-            override fun onDataChange(snapshot: DataSnapshot?) {
-                if (snapshot?.child(testModel.id)?.exists()!!) {
-                    reference.child(testModel.id)
-                            .updateChildren(testModel.toMap())
-                            .addOnCompleteListener(onCompleteListener)
-                } else {
-                    reference.child(testModel.id)
-                            .setValue(testModel)
-                            .addOnCompleteListener(onCompleteListener)
-                }
-            }
-        })
-    }
-
     fun select(valueEventListener: ValueEventListener) {
         reference.addValueEventListener(valueEventListener)
     }
