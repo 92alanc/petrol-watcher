@@ -28,6 +28,7 @@ extensions.libs = [
         android : [
                 constraint_layout : '1.0.2',
                 espresso_core : '3.0.1',
+                espresso_intents : '3.0.1',
                 support : '27.0.2',
                 test_runner : '1.0.1'
         ],
