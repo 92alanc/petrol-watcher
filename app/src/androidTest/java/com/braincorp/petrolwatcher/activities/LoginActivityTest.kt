@@ -49,7 +49,18 @@ class LoginActivityTest {
         robot.typePassword(correct = true)
                 .hideKeyboard()
         robot.clickOnSignIn()
-                .wait(1000)
+                .wait()
+        checkIfShowsErrorDialogue()
+    }
+
+    @Test
+    fun shouldShowErrorDialogueWithIncorrectPassword() {
+        robot.typeEmail(correct = true)
+                .hideKeyboard()
+        robot.typePassword(correct = false)
+                .hideKeyboard()
+        robot.clickOnSignIn()
+                .wait()
         checkIfShowsErrorDialogue()
     }
 
