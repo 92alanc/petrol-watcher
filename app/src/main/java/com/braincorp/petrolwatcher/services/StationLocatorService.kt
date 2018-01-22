@@ -8,7 +8,8 @@ import com.braincorp.petrolwatcher.model.Fuel
 class StationLocatorService : IntentService(SERVICE_NAME) {
 
     companion object {
-        private const val DEFAULT_RADIUS = 200f
+        private const val DEFAULT_RADIUS = 200f // = 200m
+        const val MAX_RADIUS = 2000f // = 2km
 
         private const val EXTRA_FUEL = "fuel"
         private const val EXTRA_MAX_PRICE = "max_price"
@@ -31,7 +32,11 @@ class StationLocatorService : IntentService(SERVICE_NAME) {
     override fun onHandleIntent(intent: Intent?) {
         val fuel = intent?.getSerializableExtra(EXTRA_FUEL) as Fuel
         val maxPrice = intent.getFloatExtra(EXTRA_MAX_PRICE, 0f)
-        val radius = intent.getFloatExtra(EXTRA_RADIUS, DEFAULT_RADIUS)
+        val radius = if (intent.getFloatExtra(EXTRA_RADIUS, DEFAULT_RADIUS) > MAX_RADIUS) {
+            MAX_RADIUS
+        } else {
+            intent.getFloatExtra(EXTRA_RADIUS, DEFAULT_RADIUS)
+        }
 
         locateStations(fuel, maxPrice, radius)
     }
