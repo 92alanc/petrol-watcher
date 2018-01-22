@@ -18,14 +18,8 @@ class StationLocatorService : IntentService(SERVICE_NAME) {
 
         fun getIntent(context: Context,
                       fuel: Fuel,
-                      maxPrice: Float) : Intent {
-            return getIntent(context, fuel, maxPrice, DEFAULT_RADIUS)
-        }
-
-        fun getIntent(context: Context,
-                      fuel: Fuel,
                       maxPrice: Float,
-                      radius: Float) : Intent {
+                      radius: Float = DEFAULT_RADIUS) : Intent {
             val intent = Intent(context, StationLocatorService::class.java)
             intent.putExtra(EXTRA_FUEL, fuel)
             intent.putExtra(EXTRA_MAX_PRICE, maxPrice)
