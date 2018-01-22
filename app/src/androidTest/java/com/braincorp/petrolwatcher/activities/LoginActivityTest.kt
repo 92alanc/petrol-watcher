@@ -5,7 +5,9 @@ import android.support.test.filters.FlakyTest
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.robots.action.LoginActivityActionRobot
-import com.braincorp.petrolwatcher.robots.assertion.*
+import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesHomeActivity
+import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesProfileActivity
+import com.braincorp.petrolwatcher.robots.assertion.checkIfShowsErrorDialogue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -122,24 +124,6 @@ class LoginActivityTest {
     fun shouldLaunchProfileActivityWhenClickingOnSignUp() {
         robot.clickOnSignUp()
         checkIfLaunchesProfileActivity()
-    }
-
-    @Test
-    fun shouldKeepEmailTextAfterRotatingDevice() {
-        robot.typeEmail(correct = true)
-                .hideKeyboard()
-                .rotateDeviceClockwise()
-        checkIfEmailTextIsDisplayed(correct = true)
-        robot.restoreDeviceOrientation()
-    }
-
-    @Test
-    fun shouldKeepPasswordTextAfterRotatingDevice() {
-        robot.typePassword(correct = true)
-                .hideKeyboard()
-                .rotateDeviceClockwise()
-        checkIfPasswordTextIsDisplayed(correct = true)
-        robot.restoreDeviceOrientation()
     }
 
 }

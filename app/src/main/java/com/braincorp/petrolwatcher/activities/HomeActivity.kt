@@ -9,9 +9,8 @@ import android.view.MenuItem
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
-import com.google.firebase.auth.FirebaseAuth
 
-class HomeActivity : AppCompatActivity(), FirebaseAuth.IdTokenListener {
+class HomeActivity : AppCompatActivity() {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -22,7 +21,6 @@ class HomeActivity : AppCompatActivity(), FirebaseAuth.IdTokenListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        AuthenticationManager.setIdTokenListener(this) // FIXME
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,7 +35,7 @@ class HomeActivity : AppCompatActivity(), FirebaseAuth.IdTokenListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onIdTokenChanged(auth: FirebaseAuth) {
+    private fun launchLoginActivity() {
         val intent = LoginActivity.getIntent(context = this)
         startActivity(intent)
         finish()
@@ -45,7 +43,10 @@ class HomeActivity : AppCompatActivity(), FirebaseAuth.IdTokenListener {
 
     private fun promptSignOut() {
         showQuestionDialogue(R.string.sign_out, R.string.question_sign_out,
-                positiveFunc = { AuthenticationManager.signOut() },
+                positiveFunc = {
+                    AuthenticationManager.signOut()
+                    launchLoginActivity()
+                },
                 negativeFunc = { })
     }
 

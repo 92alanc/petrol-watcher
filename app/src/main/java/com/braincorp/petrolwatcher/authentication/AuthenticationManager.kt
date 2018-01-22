@@ -24,9 +24,13 @@ object AuthenticationManager {
     }
 
     fun signIn(email: String, password: String,
-               onCompleteListener: OnCompleteListener<AuthResult>) {
-        AUTH.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(onCompleteListener)
+               onCompleteListener: OnCompleteListener<AuthResult>? = null) {
+        if (onCompleteListener != null) {
+            AUTH.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(onCompleteListener)
+        } else {
+            AUTH.signInWithEmailAndPassword(email, password)
+        }
     }
 
     fun signOut() {

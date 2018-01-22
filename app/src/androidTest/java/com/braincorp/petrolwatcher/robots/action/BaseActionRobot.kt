@@ -1,8 +1,7 @@
 package com.braincorp.petrolwatcher.robots.action
 
-import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.uiautomator.UiDevice
+import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 
 open class BaseActionRobot {
 
@@ -11,13 +10,10 @@ open class BaseActionRobot {
         return this
     }
 
-    fun restoreDeviceOrientation(): BaseActionRobot {
-        UiDevice.getInstance(getInstrumentation()).setOrientationNatural()
-        return this
-    }
-
-    fun rotateDeviceClockwise(): BaseActionRobot {
-        UiDevice.getInstance(getInstrumentation()).setOrientationRight()
+    fun signIn(): BaseActionRobot {
+        val email = "alcam.ukdev@gmail.com"
+        val password = "abcd1234"
+        AuthenticationManager.signIn(email, password)
         return this
     }
 
