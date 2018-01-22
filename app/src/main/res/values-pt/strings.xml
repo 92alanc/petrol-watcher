@@ -11,4 +11,11 @@
     <string name="no">Não</string>
     <string name="sign_out">Sair</string>
     <string name="question_sign_out">Tem certeza que deseja sair?</string>
+    <string name="description_navigation_open">Menu aberto</string>
+    <string name="description_navigation_closed">Menu fechado</string>
+    <string name="map">Mapa</string>
+    <string name="stations_nearby">Postos por perto</string>
+    <string name="your_account">Sua conta</string>
+    <string name="profile">Perfil</string>
+    <string name="find_stations">Encontrar postos</string>
 </resources>

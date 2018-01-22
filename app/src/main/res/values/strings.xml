@@ -13,4 +13,11 @@
     <string name="no">No</string>
     <string name="sign_out">Sign out</string>
     <string name="question_sign_out">Are you sure you want to sign out?</string>
+    <string name="description_navigation_open">Menu open</string>
+    <string name="description_navigation_closed">Menu closed</string>
+    <string name="map">Map</string>
+    <string name="stations_nearby">Stations nearby</string>
+    <string name="your_account">Your account</string>
+    <string name="profile">Profile</string>
+    <string name="find_stations">Find stations</string>
 </resources>

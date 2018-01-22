@@ -29,6 +29,7 @@ android {
 
 dependencies {
     androidTestImplementation "com.android.support.test:runner:$libs.android.test_runner"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$libs.android.espresso_contrib"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$libs.android.espresso_core"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$libs.android.espresso_intents"
 
