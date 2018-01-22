@@ -5,8 +5,7 @@ import android.support.test.filters.FlakyTest
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.robots.action.LoginActivityActionRobot
-import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesHomeActivity
-import com.braincorp.petrolwatcher.robots.assertion.checkIfShowsErrorDialogue
+import com.braincorp.petrolwatcher.robots.assertion.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -24,8 +23,15 @@ class LoginActivityTest {
     @Before
     fun setup() {
         if (AuthenticationManager.isSignedIn()) {
-            AuthenticationManager.signOut()
-            robot.wait(2000)
+            /*
+             * If the test user is signed in there's
+             * nothing that can be automatically done
+             * in order to sign it out. Not even calling
+             * AuthenticationManager.signOut() will do,
+             * so the best thing here is to abort the
+             * whole test suite and start it again.
+             */
+            System.exit(1)
         }
         robot.launchActivity()
     }
@@ -110,6 +116,30 @@ class LoginActivityTest {
         robot.clickOnSignIn()
                 .wait()
         checkIfShowsErrorDialogue()
+    }
+
+    @Test
+    fun shouldLaunchProfileActivityWhenClickingOnSignUp() {
+        robot.clickOnSignUp()
+        checkIfLaunchesProfileActivity()
+    }
+
+    @Test
+    fun shouldKeepEmailTextAfterRotatingDevice() {
+        robot.typeEmail(correct = true)
+                .hideKeyboard()
+                .rotateDeviceClockwise()
+        checkIfEmailTextIsDisplayed(correct = true)
+        robot.restoreDeviceOrientation()
+    }
+
+    @Test
+    fun shouldKeepPasswordTextAfterRotatingDevice() {
+        robot.typePassword(correct = true)
+                .hideKeyboard()
+                .rotateDeviceClockwise()
+        checkIfPasswordTextIsDisplayed(correct = true)
+        robot.restoreDeviceOrientation()
     }
 
 }

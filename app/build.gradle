@@ -20,12 +20,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        debug {
+            manifest.srcFile 'src/androidTest/AndroidManifest.xml'
+        }
+    }
 }
 
 dependencies {
     androidTestImplementation "com.android.support.test:runner:$libs.android.test_runner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$libs.android.espresso_core"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$libs.android.espresso_intents"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$libs.android.ui_automator"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$libs.android.support"

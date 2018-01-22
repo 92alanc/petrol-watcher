@@ -21,3 +21,13 @@ fun checkIfLaunchesProfileActivity() {
 fun checkIfShowsErrorDialogue() {
     onView(withText(R.string.invalid_email_or_password)).check(matches(isDisplayed()))
 }
+
+fun checkIfEmailTextIsDisplayed(correct: Boolean) {
+    val text = if (correct) "alcam.ukdev@gmail.com" else "incorrect@incorrect.com"
+    onView(withText(text)).check(matches(isDisplayed()))
+}
+
+fun checkIfPasswordTextIsDisplayed(correct: Boolean) {
+    val text = if (correct) "abcd1234" else "incorrect123"
+    onView(withText(text)).check(matches(isDisplayed()))
+}
