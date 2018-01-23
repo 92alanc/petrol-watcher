@@ -8,9 +8,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity.START
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
+import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 
@@ -29,6 +32,7 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setSupportActionBar(toolbar)
         bindNavigationDrawer()
         fabHome.setOnClickListener(this)
+        checkEmailVerification()
     }
 
     override fun onBackPressed() {
@@ -59,7 +63,24 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navigationView.setNavigationItemSelectedListener(this)
 
         val headerView = navigationView.getHeaderView(0)
-        // TODO: do stuff with header view
+        val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
+        val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
+        val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
+
+        imageViewProfile.setImageURI(AuthenticationManager.USER?.photoUrl)
+        textViewDisplayName.text = AuthenticationManager.USER?.displayName
+        textViewEmail.text = AuthenticationManager.USER?.email
+    }
+
+    private fun checkEmailVerification() {
+        val isEmailVerified = AuthenticationManager.USER?.isEmailVerified
+        if (isEmailVerified != null && !isEmailVerified) {
+            showInformationDialogue(R.string.email_not_verified,
+                    R.string.message_email_not_verified, {
+                launchLoginActivity()
+                finish()
+            })
+        }
     }
 
     private fun launchLoginActivity() {

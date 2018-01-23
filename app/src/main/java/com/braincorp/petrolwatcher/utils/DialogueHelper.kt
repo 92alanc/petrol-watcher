@@ -33,6 +33,19 @@ fun Context.showInformationDialogue(@StringRes title: Int,
             .show()
 }
 
+fun Context.showInformationDialogue(@StringRes title: Int,
+                                    @StringRes message: Int,
+                                    onDismissAction: () -> Unit) {
+    AlertDialog.Builder(this).setTitle(title)
+            .setMessage(message)
+            .setIcon(R.drawable.ic_information)
+            .setNeutralButton(R.string.ok, null)
+            .setOnDismissListener {
+                onDismissAction()
+            }
+            .show()
+}
+
 fun Context.showQuestionDialogue(@StringRes title: Int,
                                  @StringRes message: Int,
                                  positiveFunc: () -> Unit,

@@ -30,4 +30,6 @@
     <string name="password_and_confirmation_dont_match">Password and confirmation don\'t match</string>
     <string name="confirmation_email">A confirmation e-mail has been sent to you. Please confirm before signing in.</string>
     <string name="account_created">Account created</string>
+    <string name="email_not_verified">E-mail not verified</string>
+    <string name="message_email_not_verified">Please check your e-mail and click on the confirmation link.</string>
 </resources>

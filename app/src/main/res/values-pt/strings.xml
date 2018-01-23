@@ -28,4 +28,6 @@
     <string name="password_and_confirmation_dont_match">Senha e confirmação estão diferentes</string>
     <string name="confirmation_email">Um e-mail de confirmação foi enviado. Por favor confirme antes de entrar no app.</string>
     <string name="account_created">Conta criada</string>
+    <string name="email_not_verified">E-mail não verificado</string>
+    <string name="message_email_not_verified">Por favor abra seu e-mail e clique no link de confirmação.</string>
 </resources>
