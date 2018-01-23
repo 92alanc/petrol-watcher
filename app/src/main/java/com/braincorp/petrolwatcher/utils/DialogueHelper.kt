@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.view.ImagePickerDialogue
 
 fun Context.showErrorDialogue(@StringRes message: Int) {
     AlertDialog.Builder(this).setTitle(R.string.error)
@@ -11,6 +12,16 @@ fun Context.showErrorDialogue(@StringRes message: Int) {
             .setIcon(R.drawable.ic_error)
             .setNeutralButton(R.string.ok, null)
             .show()
+}
+
+fun Context.showImagePickerDialogue(cameraButtonAction: () -> Unit,
+                                    galleryButtonAction: () -> Unit) {
+    val dialogue = ImagePickerDialogue(context = this)
+    dialogue.setOnShowListener({
+        dialogue.setCameraClickAction(cameraButtonAction)
+        dialogue.setGalleryClickAction(galleryButtonAction)
+    })
+    dialogue.show()
 }
 
 fun Context.showInformationDialogue(@StringRes title: Int,

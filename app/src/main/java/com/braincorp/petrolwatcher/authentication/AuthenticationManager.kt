@@ -1,8 +1,10 @@
 package com.braincorp.petrolwatcher.authentication
 
+import android.net.Uri
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 object AuthenticationManager {
 
@@ -11,16 +13,19 @@ object AuthenticationManager {
     val USER = AUTH.currentUser
 
     fun createUser(email: String, password: String,
-                   onEmailVerificationSent: OnCompleteListener<Void>) {
+                   displayName: String, photoUri: Uri? = null,
+                   onEmailVerificationSentAction: () -> Unit) {
         AUTH.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener({
+                    it.result.user.updateProfile(UserProfileChangeRequest.Builder()
+                            .setDisplayName(displayName)
+                            .setPhotoUri(photoUri)
+                            .build())
                     it.result.user.sendEmailVerification()
-                            .addOnCompleteListener(onEmailVerificationSent)
+                            .addOnCompleteListener({
+                                onEmailVerificationSentAction()
+                            })
                 })
-    }
-
-    fun setIdTokenListener(idTokenListener: FirebaseAuth.IdTokenListener) {
-        AUTH.addIdTokenListener(idTokenListener)
     }
 
     fun signIn(email: String, password: String,

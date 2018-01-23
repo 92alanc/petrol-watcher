@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
 
     private fun startProfileActivity() {
         val intent = ProfileActivity.getIntent(context = this,
-                                               edit = true)
+                                               newAccount = true)
         startActivity(intent)
         clearEditTexts()
     }

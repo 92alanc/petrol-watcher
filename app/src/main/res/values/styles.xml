@@ -33,4 +33,9 @@
         <item name="android:layout_marginTop">@dimen/default_margin</item>
     </style>
 
+    <style name="TextViewTitle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
 </resources>

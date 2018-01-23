@@ -2,14 +2,16 @@ package com.braincorp.petrolwatcher.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
-import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -19,46 +21,80 @@ import kotlinx.android.synthetic.main.content_profile.*
 class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<Void> {
 
     companion object {
-        private const val EXTRA_EDIT = "edit"
+        private const val EXTRA_NEW_ACCOUNT = "new_account"
 
-        fun getIntent(context: Context, edit: Boolean = false): Intent {
-            return Intent(context, ProfileActivity::class.java).putExtra(EXTRA_EDIT, edit)
+        fun getIntent(context: Context,
+                      newAccount: Boolean = false): Intent {
+            return Intent(context, ProfileActivity::class.java)
+                    .putExtra(EXTRA_NEW_ACCOUNT, newAccount)
         }
     }
 
     private var editMode = false
+    private var newAccountMode = false
+    private var viewMode = true
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         setOnClickListeners()
-        if (AuthenticationManager.isSignedIn())
-            fillViews()
         parseIntent()
-        if (editMode)
-            prepareEditMode()
+        prepareUi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_CAMERA -> {
+                if (resultCode == RESULT_OK) {
+                    val bitmap = data?.extras?.get("data") as Bitmap
+                    photoUri = bitmapToUri(bitmap)
+                    imageViewProfile.setImageURI(photoUri)
+                }
+            }
+
+            REQUEST_CODE_GALLERY -> {
+                if (resultCode == RESULT_OK) {
+                    photoUri = data?.data
+                    imageViewProfile.setImageURI(photoUri)
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_CAMERA && grantResults[0] == PERMISSION_GRANTED)
+            openCamera()
     }
 
     override fun onBackPressed() {
         if (editMode) {
             showQuestionDialogue(title = R.string.changes_not_saved,
-                                 message = R.string.question_changes_not_saved,
-                                 positiveFunc = {
-                                    super.onBackPressed()
-                                 },
-                                 negativeFunc = { })
+                    message = R.string.question_changes_not_saved,
+                    positiveFunc = {
+                        super.onBackPressed()
+                    },
+                    negativeFunc = { })
         } else super.onBackPressed()
     }
 
     override fun onClick(view: View?) {
-        if (view?.id == R.id.fabProfile) {
-            if (!editMode) {
-                prepareEditMode()
-            } else {
-                save()
+        when (view?.id) {
+            R.id.fabProfile -> {
+                if (viewMode) prepareEditMode()
+                else save()
             }
-        } else if (view?.id == R.id.imageViewProfile) {
 
+            R.id.imageViewProfile -> {
+                showImagePickerDialogue(cameraButtonAction = {
+                    openCamera()
+                }, galleryButtonAction = {
+                    openGallery()
+                })
+            }
         }
     }
 
@@ -73,22 +109,13 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         }
     }
 
-    private fun fillViews() {
-        imageViewProfile.setImageURI(AuthenticationManager.USER?.photoUrl)
-
-        textViewDisplayName.text = AuthenticationManager.USER?.displayName
-        textViewEmail.text = AuthenticationManager.USER?.email
-
-        editTextDisplayName.setText(AuthenticationManager.USER?.displayName,
-                                    TextView.BufferType.EDITABLE)
-    }
-
     private fun parseIntent() {
-        editMode = intent.getBooleanExtra(EXTRA_EDIT, false)
+        newAccountMode = intent.getBooleanExtra(EXTRA_NEW_ACCOUNT, false)
     }
 
     private fun prepareEditMode() {
         editMode = true
+        viewMode = false
 
         textViewDisplayName.visibility = GONE
         textViewEmail.visibility = GONE
@@ -98,12 +125,61 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         fabProfile.setImageResource(R.drawable.ic_save)
     }
 
-    private fun save() {
-        val displayName = editTextDisplayName.text.toString()
+    private fun prepareNewAccountMode() {
+        viewMode = false
+        editMode = false
 
-        AuthenticationManager.USER?.updateProfile(UserProfileChangeRequest.Builder()
-                                                          .setDisplayName(displayName)
-                                                          .build())?.addOnCompleteListener(this)
+        textViewDisplayName.visibility = GONE
+        textViewEmail.visibility = GONE
+
+        editTextDisplayName.visibility = VISIBLE
+        editTextEmail.visibility = VISIBLE
+        editTextPassword.visibility = VISIBLE
+        editTextConfirmPassword.visibility = VISIBLE
+
+        fabProfile.setImageResource(R.drawable.ic_save)
+    }
+
+    private fun prepareViewMode() {
+        imageViewProfile.setImageURI(AuthenticationManager.USER?.photoUrl)
+
+        textViewDisplayName.text = AuthenticationManager.USER?.displayName
+        textViewEmail.text = AuthenticationManager.USER?.email
+    }
+
+    private fun prepareUi() {
+        when {
+            newAccountMode -> prepareNewAccountMode()
+            editMode -> prepareEditMode()
+            viewMode -> prepareViewMode()
+        }
+    }
+
+    private fun save() {
+        if (editMode) {
+            val displayName = editTextDisplayName.text.toString()
+
+            AuthenticationManager.USER?.updateProfile(UserProfileChangeRequest.Builder()
+                    .setDisplayName(displayName)
+                    .build())?.addOnCompleteListener(this)
+        } else if (newAccountMode) {
+            val displayName = editTextDisplayName.text.toString()
+            val email = editTextEmail.text.toString()
+            val password = editTextPassword.text.toString()
+            val confirmPassword = editTextConfirmPassword.text.toString()
+
+            if (password != confirmPassword) {
+                showErrorDialogue(R.string.password_and_confirmation_dont_match)
+            } else {
+                AuthenticationManager.createUser(email, password, displayName, photoUri, {
+                    showInformationDialogue(title = R.string.account_created,
+                            message = R.string.confirmation_email)
+                    val intent = LoginActivity.getIntent(context = this)
+                    startActivity(intent)
+                    finish()
+                })
+            }
+        }
     }
 
     private fun setOnClickListeners() {

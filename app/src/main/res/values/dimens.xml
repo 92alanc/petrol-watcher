@@ -3,7 +3,9 @@
     <dimen name="default_corner_radius">4dp</dimen>
     <dimen name="default_margin">8dp</dimen>
     <dimen name="default_padding">16dp</dimen>
+    <dimen name="dialogue_margin">32dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="navigation_header_height">160dp</dimen>
-    <dimen name="size_image_view">60dp</dimen>
+    <dimen name="size_image_view">120dp</dimen>
+    <dimen name="text_size_title">18sp</dimen>
 </resources>

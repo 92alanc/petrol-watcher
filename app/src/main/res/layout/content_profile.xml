@@ -29,6 +29,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="Alan Camargo"/>
 
+    <TextView
+        android:id="@+id/textViewEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textViewDisplayName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="alcam.ukdev@gmail.com"/>
+
     <EditText
         android:id="@+id/editTextDisplayName"
         style="@style/EditTextWidthMatchParent"
@@ -40,14 +50,37 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/editTextEmail"
+        style="@style/EditTextWidthMatchParent"
         android:layout_marginTop="@dimen/default_margin"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewDisplayName"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/editTextDisplayName"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:text="alcam.ukdev@gmail.com"/>
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        style="@style/EditTextWidthMatchParent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        style="@style/EditTextWidthMatchParent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:inputType="textPassword"
+        android:hint="@string/confirm_password"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

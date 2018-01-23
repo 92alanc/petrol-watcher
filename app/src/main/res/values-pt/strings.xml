@@ -21,4 +21,11 @@
     <string name="name">nome</string>
     <string name="question_changes_not_saved">Você não salvou suas alterações. Tem certeza que deseja descartar?</string>
     <string name="changes_not_saved">Mudanças não salvas</string>
+    <string name="pick_image_from">Selecionar imagem de…</string>
+    <string name="camera">câmera</string>
+    <string name="gallery">galeria</string>
+    <string name="confirm_password">confirme a senha</string>
+    <string name="password_and_confirmation_dont_match">Senha e confirmação estão diferentes</string>
+    <string name="confirmation_email">Um e-mail de confirmação foi enviado. Por favor confirme antes de entrar no app.</string>
+    <string name="account_created">Conta criada</string>
 </resources>

@@ -23,4 +23,11 @@
     <string name="name">name</string>
     <string name="question_changes_not_saved">You haven\'t saved your changed. Are you sure you want to discard them?</string>
     <string name="changes_not_saved">Changes not saved</string>
+    <string name="pick_image_from">Pick image from…</string>
+    <string name="camera">camera</string>
+    <string name="gallery">gallery</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="password_and_confirmation_dont_match">Password and confirmation don\'t match</string>
+    <string name="confirmation_email">A confirmation e-mail has been sent to you. Please confirm before signing in.</string>
+    <string name="account_created">Account created</string>
 </resources>

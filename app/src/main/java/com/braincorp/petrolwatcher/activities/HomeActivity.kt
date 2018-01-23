@@ -44,6 +44,7 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.itemProfile -> launchProfileActivity()
             R.id.itemSignOut -> promptSignOut()
         }
         return true
@@ -65,6 +66,11 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val intent = LoginActivity.getIntent(context = this)
         startActivity(intent)
         finish()
+    }
+
+    private fun launchProfileActivity() {
+        val intent = ProfileActivity.getIntent(context = this, newAccount = false)
+        startActivity(intent)
     }
 
     private fun promptSignOut() {
