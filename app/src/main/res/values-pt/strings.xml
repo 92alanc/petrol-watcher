@@ -18,4 +18,7 @@
     <string name="your_account">Sua conta</string>
     <string name="profile">Perfil</string>
     <string name="find_stations">Encontrar postos</string>
+    <string name="name">nome</string>
+    <string name="question_changes_not_saved">Você não salvou suas alterações. Tem certeza que deseja descartar?</string>
+    <string name="changes_not_saved">Mudanças não salvas</string>
 </resources>

@@ -33,6 +33,7 @@ extensions.libs = [
                 support: '27.0.2',
                 test_runner: '1.0.1'
         ],
+        circle_image_view: '2.2.0',
         firebase_auth: '11.8.0',
         firebase_database: '11.8.0',
         junit: '4.12'

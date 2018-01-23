@@ -20,4 +20,7 @@
     <string name="your_account">Your account</string>
     <string name="profile">Profile</string>
     <string name="find_stations">Find stations</string>
+    <string name="name">name</string>
+    <string name="question_changes_not_saved">You haven\'t saved your changed. Are you sure you want to discard them?</string>
+    <string name="changes_not_saved">Changes not saved</string>
 </resources>

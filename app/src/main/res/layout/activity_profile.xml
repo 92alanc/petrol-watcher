@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.braincorp.petrolwatcher.activities.ProfileActivity">
+    android:padding="@dimen/default_padding">
 
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/content_profile"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_edit"/>
+
+</android.support.design.widget.CoordinatorLayout>

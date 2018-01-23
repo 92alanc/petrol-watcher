@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.braincorp.petrolwatcher"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -39,6 +39,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$libs.android.constraint_layout"
     implementation "com.google.firebase:firebase-auth:$libs.firebase_auth"
     implementation "com.google.firebase:firebase-database:$libs.firebase_database"
+    implementation "de.hdodenhof:circleimageview:$libs.circle_image_view"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     testImplementation "junit:junit:$libs.junit"
