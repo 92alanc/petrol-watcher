@@ -39,8 +39,10 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$libs.android.constraint_layout"
     implementation "com.google.firebase:firebase-auth:$libs.firebase_auth"
     implementation "com.google.firebase:firebase-database:$libs.firebase_database"
+    implementation "com.google.firebase:firebase-storage:$libs.firebase_storage"
     implementation "de.hdodenhof:circleimageview:$libs.circle_image_view"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "com.squareup.picasso:picasso:$libs.picasso"
 
     testImplementation "junit:junit:$libs.junit"
 }

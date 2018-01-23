@@ -32,4 +32,5 @@
     <string name="account_created">Account created</string>
     <string name="email_not_verified">E-mail not verified</string>
     <string name="message_email_not_verified">Please check your e-mail and click on the confirmation link.</string>
+    <string name="error_setting_profile_picture">Error setting profile picture</string>
 </resources>

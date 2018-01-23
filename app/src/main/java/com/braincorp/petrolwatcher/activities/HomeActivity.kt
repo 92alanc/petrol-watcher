@@ -13,6 +13,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
@@ -67,7 +68,10 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 
-        imageViewProfile.setImageURI(AuthenticationManager.USER?.photoUrl)
+        Picasso.with(this).load(AuthenticationManager.USER?.photoUrl)
+                .placeholder(R.drawable.ic_profile)
+                .into(imageViewProfile)
+
         textViewDisplayName.text = AuthenticationManager.USER?.displayName
         textViewEmail.text = AuthenticationManager.USER?.email
     }

@@ -11,10 +11,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
+import com.braincorp.petrolwatcher.storage.StorageManager
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 
@@ -40,6 +42,10 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         setContentView(R.layout.activity_profile)
         setOnClickListeners()
         parseIntent()
+    }
+
+    override fun onStart() {
+        super.onStart()
         prepareUi()
     }
 
@@ -49,15 +55,28 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
             REQUEST_CODE_CAMERA -> {
                 if (resultCode == RESULT_OK) {
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    photoUri = bitmapToUri(bitmap)
-                    imageViewProfile.setImageURI(photoUri)
+                    StorageManager.upload(bitmap, onSuccessAction = {
+                        photoUri = it.downloadUrl
+                        Picasso.with(this).load(photoUri)
+                                .placeholder(R.drawable.ic_profile)
+                                .into(imageViewProfile)
+                    }, onFailureAction = {
+                        showErrorDialogue(R.string.error_setting_profile_picture)
+                    })
                 }
             }
 
             REQUEST_CODE_GALLERY -> {
                 if (resultCode == RESULT_OK) {
                     photoUri = data?.data
-                    imageViewProfile.setImageURI(photoUri)
+                    StorageManager.upload(photoUri!!, onSuccessAction = {
+                        photoUri = it.downloadUrl
+                        Picasso.with(this).load(photoUri)
+                                .placeholder(R.drawable.ic_profile)
+                                .into(imageViewProfile)
+                    }, onFailureAction = {
+                        showErrorDialogue(R.string.error_setting_profile_picture)
+                    })
                 }
             }
         }
@@ -117,10 +136,13 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         editMode = true
         viewMode = false
 
+        imageViewProfile.isClickable = true
+
         textViewDisplayName.visibility = GONE
         textViewEmail.visibility = GONE
 
         editTextDisplayName.visibility = VISIBLE
+        editTextDisplayName.setText(AuthenticationManager.USER?.displayName)
 
         fabProfile.setImageResource(R.drawable.ic_save)
     }
@@ -128,6 +150,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     private fun prepareNewAccountMode() {
         viewMode = false
         editMode = false
+
+        imageViewProfile.isClickable = true
 
         textViewDisplayName.visibility = GONE
         textViewEmail.visibility = GONE
@@ -141,7 +165,10 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     }
 
     private fun prepareViewMode() {
-        imageViewProfile.setImageURI(AuthenticationManager.USER?.photoUrl)
+        imageViewProfile.isClickable = false
+        Picasso.with(this).load(AuthenticationManager.USER?.photoUrl)
+                .placeholder(R.drawable.ic_profile)
+                .into(imageViewProfile)
 
         textViewDisplayName.text = AuthenticationManager.USER?.displayName
         textViewEmail.text = AuthenticationManager.USER?.email
@@ -161,6 +188,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
             AuthenticationManager.USER?.updateProfile(UserProfileChangeRequest.Builder()
                     .setDisplayName(displayName)
+                    .setPhotoUri(photoUri)
                     .build())?.addOnCompleteListener(this)
         } else if (newAccountMode) {
             val displayName = editTextDisplayName.text.toString()
