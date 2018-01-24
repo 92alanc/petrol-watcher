@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="@dimen/default_padding">
+    android:padding="@dimen/padding_default">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -20,7 +20,7 @@
         android:id="@+id/buttonCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dialogue_margin"
+        android:layout_marginTop="@dimen/margin_dialogue"
         android:background="@color/white"
         android:contentDescription="@string/camera"
         android:drawableTop="@drawable/ic_camera"
@@ -35,7 +35,7 @@
         android:id="@+id/buttonGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dialogue_margin"
+        android:layout_marginTop="@dimen/margin_dialogue"
         android:background="@color/white"
         android:contentDescription="@string/gallery"
         android:drawableTop="@drawable/ic_gallery"

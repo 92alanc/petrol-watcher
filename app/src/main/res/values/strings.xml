@@ -33,4 +33,8 @@
     <string name="email_not_verified">E-mail not verified</string>
     <string name="message_email_not_verified">Please check your e-mail and click on the confirmation link.</string>
     <string name="error_setting_profile_picture">Error setting profile picture</string>
+    <string name="error_creating_account">Error creating account. Maybe this account already exists or you\'re having connection problems.</string>
+    <string name="header_email_password">First, let\'s set your e-mail and password</string>
+    <string name="header_picture_name">Now just your picture and name, then we\'re done!</string>
+    <string name="error_signing_in">Error signing in. Try again.</string>
 </resources>

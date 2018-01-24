@@ -16,7 +16,7 @@
     <style name="ButtonGrey">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
         <item name="android:background">@drawable/shape_rounded_corners_button_grey</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/black</item>
@@ -30,7 +30,12 @@
     <style name="EditTextWidthMatchParent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
+    </style>
+
+    <style name="TextViewHeader">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_header</item>
     </style>
 
     <style name="TextViewTitle">

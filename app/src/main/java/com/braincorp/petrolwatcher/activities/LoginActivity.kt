@@ -7,13 +7,11 @@ import android.text.TextUtils.isEmpty
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
+import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<AuthResult> {
+class LoginActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -39,15 +37,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
         }
     }
 
-    override fun onComplete(task: Task<AuthResult>) {
-        if (task.isSuccessful)
-            startHomeActivity()
-        else
-            showErrorDialogue(R.string.invalid_email_or_password)
-    }
-
     private fun checkAuthenticationState() {
-        if (AuthenticationManager.USER != null)
+        if (AuthenticationManager.isSignedIn())
             startHomeActivity()
     }
 
@@ -60,7 +51,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
         val email = editTextEmail.text.toString()
         val password = editTextPassword.text.toString()
         if (!isEmpty(email) && !isEmpty(password))
-            AuthenticationManager.signIn(email, password, onCompleteListener = this)
+            AuthenticationManager.signIn(email, password, onSuccessAction = {
+                startHomeActivity()
+            }, onFailureAction = {
+                showErrorDialogue(R.string.invalid_email_or_password)
+            })
         else
             showErrorDialogue(R.string.invalid_email_or_password)
     }
@@ -72,7 +67,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<A
 
     private fun startProfileActivity() {
         val intent = ProfileActivity.getIntent(context = this,
-                                               newAccount = true)
+                                               uiMode = UiMode.CREATE)
         startActivity(intent)
         clearEditTexts()
     }

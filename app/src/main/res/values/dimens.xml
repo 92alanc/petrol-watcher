@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_corner_radius">4dp</dimen>
-    <dimen name="default_margin">8dp</dimen>
-    <dimen name="default_padding">16dp</dimen>
-    <dimen name="dialogue_margin">32dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="navigation_header_height">160dp</dimen>
+    <!-- Height -->
+    <dimen name="height_navigation_header">160dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="margin_default">8dp</dimen>
+    <dimen name="margin_dialogue">32dp</dimen>
+    <dimen name="margin_fab">16dp</dimen>
+    <dimen name="margin_header">32dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_default">16dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radius_corner_default">4dp</dimen>
+
+    <!-- View size -->
     <dimen name="size_circle_image_view">120dp</dimen>
     <dimen name="size_circle_image_view_small">80dp</dimen>
+
+    <!-- Text size -->
+    <dimen name="text_size_header">24sp</dimen>
     <dimen name="text_size_title">18sp</dimen>
 </resources>

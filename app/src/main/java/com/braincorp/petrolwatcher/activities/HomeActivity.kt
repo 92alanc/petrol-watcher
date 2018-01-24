@@ -11,8 +11,9 @@ import android.view.View
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
-import com.braincorp.petrolwatcher.utils.showInformationDialogue
+import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -33,7 +34,6 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setSupportActionBar(toolbar)
         bindNavigationDrawer()
         fabHome.setOnClickListener(this)
-        checkEmailVerification()
     }
 
     override fun onBackPressed() {
@@ -63,28 +63,19 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         navigationView.setNavigationItemSelectedListener(this)
 
+        val user = FirebaseAuth.getInstance().currentUser
+
         val headerView = navigationView.getHeaderView(0)
         val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 
-        Picasso.with(this).load(AuthenticationManager.USER?.photoUrl)
+        Picasso.with(this).load(user?.photoUrl)
                 .placeholder(R.drawable.ic_profile)
                 .into(imageViewProfile)
 
-        textViewDisplayName.text = AuthenticationManager.USER?.displayName
-        textViewEmail.text = AuthenticationManager.USER?.email
-    }
-
-    private fun checkEmailVerification() {
-        val isEmailVerified = AuthenticationManager.USER?.isEmailVerified
-        if (isEmailVerified != null && !isEmailVerified) {
-            showInformationDialogue(R.string.email_not_verified,
-                    R.string.message_email_not_verified, {
-                launchLoginActivity()
-                finish()
-            })
-        }
+        textViewDisplayName.text = user?.displayName
+        textViewEmail.text = user?.email
     }
 
     private fun launchLoginActivity() {
@@ -94,15 +85,17 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun launchProfileActivity() {
-        val intent = ProfileActivity.getIntent(context = this, newAccount = false)
+        val intent = ProfileActivity.getIntent(context = this, uiMode = UiMode.VIEW)
         startActivity(intent)
     }
 
     private fun promptSignOut() {
         showQuestionDialogue(R.string.sign_out, R.string.question_sign_out,
                 positiveFunc = {
-                    AuthenticationManager.signOut()
-                    launchLoginActivity()
+                    AuthenticationManager.signOut {
+                        launchLoginActivity()
+                        finish()
+                    }
                 },
                 negativeFunc = { })
     }

@@ -6,46 +6,50 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
+import com.braincorp.petrolwatcher.fragments.DisplayNameFragment
+import com.braincorp.petrolwatcher.fragments.EmailAndPasswordFragment
+import com.braincorp.petrolwatcher.fragments.ImagePickerFragment
+import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.storage.StorageManager
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.UserProfileChangeRequest
-import com.squareup.picasso.Picasso
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 
 class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<Void> {
 
     companion object {
-        private const val EXTRA_NEW_ACCOUNT = "new_account"
+        private const val EXTRA_MODE = "mode"
+        private const val TAG_EMAIL_PASSWORD = "email_password"
+        private const val TAG_NAME = "name"
 
         fun getIntent(context: Context,
-                      newAccount: Boolean = false): Intent {
+                      uiMode: UiMode): Intent {
             return Intent(context, ProfileActivity::class.java)
-                    .putExtra(EXTRA_NEW_ACCOUNT, newAccount)
+                    .putExtra(EXTRA_MODE, uiMode)
         }
     }
 
-    private var editMode = false
-    private var newAccountMode = false
-    private var viewMode = true
+    private lateinit var uiMode: UiMode
+
+    private var bottomFragment: Fragment? = null
+    private var topFragment: ImagePickerFragment? = null
     private var photoUri: Uri? = null
+    private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        setOnClickListeners()
+        fabProfile.setOnClickListener(this)
         parseIntent()
-    }
-
-    override fun onStart() {
-        super.onStart()
         prepareUi()
     }
 
@@ -57,9 +61,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
                     val bitmap = data?.extras?.get("data") as Bitmap
                     StorageManager.upload(bitmap, onSuccessAction = {
                         photoUri = it.downloadUrl
-                        Picasso.with(this).load(photoUri)
-                                .placeholder(R.drawable.ic_profile)
-                                .into(imageViewProfile)
+                        topFragment?.setData(photoUri)
                     }, onFailureAction = {
                         showErrorDialogue(R.string.error_setting_profile_picture)
                     })
@@ -71,9 +73,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
                     photoUri = data?.data
                     StorageManager.upload(photoUri!!, onSuccessAction = {
                         photoUri = it.downloadUrl
-                        Picasso.with(this).load(photoUri)
-                                .placeholder(R.drawable.ic_profile)
-                                .into(imageViewProfile)
+                        topFragment?.setData(photoUri)
                     }, onFailureAction = {
                         showErrorDialogue(R.string.error_setting_profile_picture)
                     })
@@ -90,7 +90,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     }
 
     override fun onBackPressed() {
-        if (editMode) {
+        if (uiMode == UiMode.EDIT) {
             showQuestionDialogue(title = R.string.changes_not_saved,
                     message = R.string.question_changes_not_saved,
                     positiveFunc = {
@@ -103,116 +103,129 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.fabProfile -> {
-                if (viewMode) prepareEditMode()
-                else save()
-            }
+                when (uiMode) {
+                    UiMode.CREATE -> {
+                        if (bottomFragment?.tag == TAG_EMAIL_PASSWORD) prepareLastStep()
+                        else save()
+                    }
 
-            R.id.imageViewProfile -> {
-                showImagePickerDialogue(cameraButtonAction = {
-                    openCamera()
-                }, galleryButtonAction = {
-                    openGallery()
-                })
+                    UiMode.EDIT -> save()
+                    UiMode.VIEW -> prepareEditMode()
+                }
             }
         }
     }
 
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful) {
-            val intent = if (editMode) {
-                HomeActivity.getIntent(context = this)
-            } else {
-                LoginActivity.getIntent(context = this)
-            }
+            val intent = if (uiMode == UiMode.EDIT) HomeActivity.getIntent(context = this)
+            else LoginActivity.getIntent(context = this)
             startActivity(intent)
         }
     }
 
+    private fun bindFragments(bottomFragmentTag: String) {
+        if (topFragment != null) {
+            replaceFragmentPlaceholder(R.id.placeholderProfileTop, topFragment!!)
+        }
+        if (bottomFragment != null) {
+            replaceFragmentPlaceholder(R.id.placeholderProfileBottom, bottomFragment!!,
+                    bottomFragmentTag)
+        }
+    }
+
     private fun parseIntent() {
-        newAccountMode = intent.getBooleanExtra(EXTRA_NEW_ACCOUNT, false)
+        uiMode = intent.getSerializableExtra(EXTRA_MODE) as UiMode
     }
 
     private fun prepareEditMode() {
-        editMode = true
-        viewMode = false
+        uiMode = UiMode.EDIT
 
-        imageViewProfile.isClickable = true
-
-        textViewDisplayName.visibility = GONE
-        textViewEmail.visibility = GONE
-
-        editTextDisplayName.visibility = VISIBLE
-        editTextDisplayName.setText(AuthenticationManager.USER?.displayName)
+        textViewProfileHeader.visibility = GONE
 
         fabProfile.setImageResource(R.drawable.ic_save)
+
+        topFragment = ImagePickerFragment.newInstance(uiMode)
+        bottomFragment = DisplayNameFragment.newInstance(uiMode)
+
+        bindFragments(TAG_NAME)
     }
 
     private fun prepareNewAccountMode() {
-        viewMode = false
-        editMode = false
+        textViewProfileHeader.visibility = VISIBLE
+        textViewProfileHeader.setText(R.string.header_email_password)
 
-        imageViewProfile.isClickable = true
+        fabProfile.setImageResource(R.drawable.ic_next)
 
-        textViewDisplayName.visibility = GONE
-        textViewEmail.visibility = GONE
+        topFragment = null
+        bottomFragment = EmailAndPasswordFragment.newInstance(uiMode)
 
-        editTextDisplayName.visibility = VISIBLE
-        editTextEmail.visibility = VISIBLE
-        editTextPassword.visibility = VISIBLE
-        editTextConfirmPassword.visibility = VISIBLE
-
-        fabProfile.setImageResource(R.drawable.ic_save)
+        bindFragments(TAG_EMAIL_PASSWORD)
     }
 
     private fun prepareViewMode() {
-        imageViewProfile.isClickable = false
-        Picasso.with(this).load(AuthenticationManager.USER?.photoUrl)
-                .placeholder(R.drawable.ic_profile)
-                .into(imageViewProfile)
+        textViewProfileHeader.visibility = GONE
 
-        textViewDisplayName.text = AuthenticationManager.USER?.displayName
-        textViewEmail.text = AuthenticationManager.USER?.email
+        fabProfile.setImageResource(R.drawable.ic_edit)
+
+        topFragment = ImagePickerFragment.newInstance(uiMode)
+        bottomFragment = DisplayNameFragment.newInstance(uiMode)
+
+        bindFragments(TAG_NAME)
+    }
+
+    private fun prepareLastStep() {
+        val email = (bottomFragment as EmailAndPasswordFragment).getEmail()
+        val password = (bottomFragment as EmailAndPasswordFragment).getPassword()
+        val passwordConfirmation = (bottomFragment as EmailAndPasswordFragment).getPasswordConfirmation()
+
+        if (password != passwordConfirmation) {
+            showErrorDialogue(R.string.password_and_confirmation_dont_match)
+        } else {
+            AuthenticationManager.createUser(email, password, {
+                if (it.isSuccessful) {
+                    AuthenticationManager.signIn(email, password, onSuccessAction = {
+                        user = it.user
+                        textViewProfileHeader.setText(R.string.header_picture_name)
+
+                        topFragment = ImagePickerFragment.newInstance(uiMode)
+                        bottomFragment = DisplayNameFragment.newInstance(uiMode)
+
+                        fabProfile.setImageResource(R.drawable.ic_save)
+                        bindFragments(TAG_NAME)
+                    }, onFailureAction = {
+                        showErrorDialogue(R.string.error_signing_in)
+                    })
+                } else {
+                    showErrorDialogue(R.string.error_creating_account)
+                }
+            })
+        }
     }
 
     private fun prepareUi() {
-        when {
-            newAccountMode -> prepareNewAccountMode()
-            editMode -> prepareEditMode()
-            viewMode -> prepareViewMode()
+        when (uiMode) {
+            UiMode.CREATE -> prepareNewAccountMode()
+            UiMode.EDIT -> prepareEditMode()
+            UiMode.VIEW -> prepareViewMode()
         }
     }
 
     private fun save() {
-        if (editMode) {
-            val displayName = editTextDisplayName.text.toString()
+        val displayName = (bottomFragment as DisplayNameFragment).getDisplayName()
+        val profilePicture = topFragment?.getImageUri()
 
-            AuthenticationManager.USER?.updateProfile(UserProfileChangeRequest.Builder()
-                    .setDisplayName(displayName)
-                    .setPhotoUri(photoUri)
-                    .build())?.addOnCompleteListener(this)
-        } else if (newAccountMode) {
-            val displayName = editTextDisplayName.text.toString()
-            val email = editTextEmail.text.toString()
-            val password = editTextPassword.text.toString()
-            val confirmPassword = editTextConfirmPassword.text.toString()
-
-            if (password != confirmPassword) {
-                showErrorDialogue(R.string.password_and_confirmation_dont_match)
-            } else {
-                AuthenticationManager.createUser(email, password, displayName, photoUri, {
-                    showInformationDialogue(title = R.string.account_created,
-                            message = R.string.confirmation_email)
-                    val intent = LoginActivity.getIntent(context = this)
+        AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, profilePicture,
+                onSuccessAction =  {
+                    val intent = if (uiMode == UiMode.CREATE)
+                        LoginActivity.getIntent(context = this)
+                    else
+                        HomeActivity.getIntent(context = this)
                     startActivity(intent)
                     finish()
-                })
-            }
-        }
-    }
-
-    private fun setOnClickListeners() {
-        fabProfile.setOnClickListener(this)
-        imageViewProfile.setOnClickListener(this)
+                }, onFailureAction = {
+            showErrorDialogue(R.string.error_setting_profile_picture)
+        })
     }
 
 }
