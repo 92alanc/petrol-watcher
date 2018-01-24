@@ -3,6 +3,7 @@
 build/
 captures/
 app/google-services.json
+app/release.properties
 local.properties
 *.iml
 *.jks

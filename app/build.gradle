@@ -14,12 +14,26 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            def properties = new Properties()
+            file("release.properties").withInputStream { properties.load(it) }
+            keyPassword properties.getProperty("key.password")
+            storePassword properties.getProperty("store.password")
+            keyAlias properties.getProperty("key.alias")
+            storeFile file(properties.getProperty("store.file"))
+        }
+    }
+
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         debug {
             manifest.srcFile 'src/androidTest/AndroidManifest.xml'
