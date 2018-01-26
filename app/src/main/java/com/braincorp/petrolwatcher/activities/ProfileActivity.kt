@@ -28,6 +28,12 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     companion object {
         private const val EXTRA_MODE = "mode"
+
+        private const val KEY_UI_MODE = "ui_mode"
+        private const val KEY_TOP_FRAGMENT = "top_fragment"
+        private const val KEY_BOTTOM_FRAGMENT = "bottom_fragment"
+
+        private const val TAG_PICTURE = "picture"
         private const val TAG_EMAIL_PASSWORD = "email_password"
         private const val TAG_NAME = "name"
 
@@ -40,8 +46,9 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     private lateinit var uiMode: UiMode
 
-    private var bottomFragment: Fragment? = null
     private var topFragment: ImagePickerFragment? = null
+    private var bottomFragment: Fragment? = null
+
     private var photoUri: Uri? = null
     private var user: FirebaseUser? = null
 
@@ -49,8 +56,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         fabProfile.setOnClickListener(this)
-        parseIntent()
-        prepareUi()
+        if (savedInstanceState != null)
+            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as UiMode
+        else
+            parseIntent()
+        prepareUi(savedInstanceState)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,6 +99,28 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
             openCamera()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        if (topFragment != null) outState?.putString(KEY_TOP_FRAGMENT, topFragment!!.tag)
+        if (bottomFragment != null) outState?.putString(KEY_BOTTOM_FRAGMENT, bottomFragment!!.tag)
+        outState?.putSerializable(KEY_UI_MODE, uiMode)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val topFragmentTag = savedInstanceState?.getString(KEY_TOP_FRAGMENT)
+        val bottomFragmentTag = savedInstanceState?.getString(KEY_BOTTOM_FRAGMENT)
+
+        if (topFragmentTag != null)
+            topFragment = supportFragmentManager.findFragmentByTag(topFragmentTag) as ImagePickerFragment
+
+        if (bottomFragmentTag != null)
+            bottomFragment = supportFragmentManager.findFragmentByTag(bottomFragmentTag)
+
+        uiMode = savedInstanceState?.getSerializable(KEY_UI_MODE) as UiMode
+    }
+
     override fun onBackPressed() {
         if (uiMode == UiMode.EDIT) {
             showQuestionDialogue(title = R.string.changes_not_saved,
@@ -110,7 +142,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
                     }
 
                     UiMode.EDIT -> save()
-                    UiMode.VIEW -> prepareEditMode()
+                    UiMode.VIEW -> prepareEditMode(savedInstanceState = null)
                 }
             }
         }
@@ -126,7 +158,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     private fun bindFragments(bottomFragmentTag: String) {
         if (topFragment != null) {
-            replaceFragmentPlaceholder(R.id.placeholderProfileTop, topFragment!!)
+            replaceFragmentPlaceholder(R.id.placeholderProfileTop, topFragment!!, TAG_PICTURE)
         }
         if (bottomFragment != null) {
             replaceFragmentPlaceholder(R.id.placeholderProfileBottom, bottomFragment!!,
@@ -138,7 +170,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         uiMode = intent.getSerializableExtra(EXTRA_MODE) as UiMode
     }
 
-    private fun prepareEditMode() {
+    private fun prepareEditMode(savedInstanceState: Bundle?) {
         uiMode = UiMode.EDIT
 
         textViewProfileHeader.visibility = GONE
@@ -148,10 +180,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         topFragment = ImagePickerFragment.newInstance(uiMode)
         bottomFragment = DisplayNameFragment.newInstance(uiMode)
 
-        bindFragments(TAG_NAME)
+        if (savedInstanceState == null)
+            bindFragments(TAG_NAME)
     }
 
-    private fun prepareNewAccountMode() {
+    private fun prepareNewAccountMode(savedInstanceState: Bundle?) {
         textViewProfileHeader.visibility = VISIBLE
         textViewProfileHeader.setText(R.string.header_email_password)
 
@@ -160,10 +193,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         topFragment = null
         bottomFragment = EmailAndPasswordFragment.newInstance(uiMode)
 
-        bindFragments(TAG_EMAIL_PASSWORD)
+        if (savedInstanceState == null)
+            bindFragments(TAG_EMAIL_PASSWORD)
     }
 
-    private fun prepareViewMode() {
+    private fun prepareViewMode(savedInstanceState: Bundle?) {
         textViewProfileHeader.visibility = GONE
 
         fabProfile.setImageResource(R.drawable.ic_edit)
@@ -171,7 +205,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         topFragment = ImagePickerFragment.newInstance(uiMode)
         bottomFragment = DisplayNameFragment.newInstance(uiMode)
 
-        bindFragments(TAG_NAME)
+        if (savedInstanceState == null)
+            bindFragments(TAG_NAME)
     }
 
     private fun prepareLastStep() {
@@ -203,11 +238,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         }
     }
 
-    private fun prepareUi() {
+    private fun prepareUi(savedInstanceState: Bundle?) {
         when (uiMode) {
-            UiMode.CREATE -> prepareNewAccountMode()
-            UiMode.EDIT -> prepareEditMode()
-            UiMode.VIEW -> prepareViewMode()
+            UiMode.CREATE -> prepareNewAccountMode(savedInstanceState)
+            UiMode.EDIT -> prepareEditMode(savedInstanceState)
+            UiMode.VIEW -> prepareViewMode(savedInstanceState)
         }
     }
 
