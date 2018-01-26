@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Olho no Posto</string>
+    <string name="app_name">Melhor combustível</string>
     <string name="app_icon">ícone do aplicativo</string>
     <string name="password">senha</string>
     <string name="sign_in">entrar</string>
@@ -26,10 +26,6 @@
     <string name="gallery">galeria</string>
     <string name="confirm_password">confirme a senha</string>
     <string name="password_and_confirmation_dont_match">Senha e confirmação estão diferentes</string>
-    <string name="confirmation_email">Um e-mail de confirmação foi enviado. Por favor confirme antes de entrar no app.</string>
-    <string name="account_created">Conta criada</string>
-    <string name="email_not_verified">E-mail não verificado</string>
-    <string name="message_email_not_verified">Por favor abra seu e-mail e clique no link de confirmação.</string>
     <string name="error_setting_profile_picture">Erro ao definir foto de perfil</string>
     <string name="error_creating_account">Erro ao criar conta. Talvez essa conta já existe ou você está tendo problemas de conexão.</string>
     <string name="header_email_password">Primeiro, vamos definir seu e-mail e senha</string>

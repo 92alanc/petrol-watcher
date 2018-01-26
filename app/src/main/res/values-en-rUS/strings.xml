@@ -1,14 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Petrol Watcher</string>
-
+    <string name="app_name">Gas Watcher</string>
     <string name="app_icon">app icon</string>
-    <string name="email" translatable="false">e-mail</string>
     <string name="password">password</string>
     <string name="sign_in">sign in</string>
     <string name="sign_up">sign up</string>
     <string name="error">Error</string>
     <string name="invalid_email_or_password">Invalid e-mail or password</string>
-    <string name="ok" translatable="false">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="sign_out">Sign out</string>
@@ -23,7 +21,7 @@
     <string name="name">name</string>
     <string name="question_changes_not_saved">You haven\'t saved your changes. Are you sure you want to discard them?</string>
     <string name="changes_not_saved">Changes not saved</string>
-    <string name="pick_image_from">Pick image from…</string>
+    <string name="pick_image_from">Pick image from...</string>
     <string name="camera">camera</string>
     <string name="gallery">gallery</string>
     <string name="confirm_password">confirm password</string>
