@@ -53,11 +53,6 @@ class EmailAndPasswordFragment : Fragment() {
 
     fun getPasswordConfirmation(): String = editTextConfirmPassword.text.toString()
 
-    fun setUiMode(uiMode: UiMode) {
-        this.uiMode = uiMode
-        prepareUi()
-    }
-
     private fun bindViews(view: View) {
         textViewEmail = view.findViewById(R.id.textViewEmail)
 
