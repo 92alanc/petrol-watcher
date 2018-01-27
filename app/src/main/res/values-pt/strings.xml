@@ -31,4 +31,17 @@
     <string name="header_email_password">Primeiro, vamos definir seu e-mail e senha</string>
     <string name="header_picture_name">Agora só sua foto e seu nome, e já terminamos!</string>
     <string name="error_signing_in">Erro ao fazer login. Tente novamente.</string>
+    <string name="rating_ok">razoável</string>
+    <string name="very_bad">muito ruim</string>
+    <string name="bad">ruim</string>
+    <string name="good">boa</string>
+    <string name="very_good">muito boa</string>
+    <string name="car">carro</string>
+    <string name="lorry">caminhão</string>
+    <string name="motorcycle">moto</string>
+    <string name="autogas">gás natural</string>
+    <string name="petrol">gasolina</string>
+    <string name="ethanol">etanol</string>
+    <string name="premium">aditivado(a)</string>
+    <string name="regular">comum</string>
 </resources>
