@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.model.Vehicle
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 object VehicleDatabase {
@@ -11,7 +12,8 @@ object VehicleDatabase {
 
     init {
         database.setPersistenceEnabled(true)
-        reference = database.getReference("vehicles")
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        reference = database.getReference("vehicles").child(uid)
     }
 
     fun insertOrUpdate(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
