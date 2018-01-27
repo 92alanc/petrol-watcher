@@ -4,10 +4,7 @@ import android.support.test.espresso.intent.Intents
 import android.support.test.filters.FlakyTest
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
-import com.braincorp.petrolwatcher.robots.action.LoginActivityActionRobot
-import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesHomeActivity
-import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesProfileActivity
-import com.braincorp.petrolwatcher.robots.assertion.checkIfShowsErrorDialogue
+import com.braincorp.petrolwatcher.robots.LoginActivityRobot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +17,7 @@ class LoginActivityTest {
         const val DEFAULT_TIMEOUT = 5000L
     }
 
-    private val robot = LoginActivityActionRobot()
+    private val robot = LoginActivityRobot()
 
     @Before
     fun setup() {
@@ -54,7 +51,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait(2000)
-        checkIfLaunchesHomeActivity()
+        robot.checkIfLaunchesHomeActivity()
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
@@ -66,7 +63,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
@@ -78,7 +75,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
@@ -90,7 +87,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @Test(timeout = DEFAULT_TIMEOUT)
@@ -99,7 +96,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
@@ -109,7 +106,7 @@ class LoginActivityTest {
                 .hideKeyboard()
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
@@ -117,13 +114,13 @@ class LoginActivityTest {
     fun shouldShowErrorDialogueWithNullEmailAndPassword() {
         robot.clickOnSignIn()
                 .wait()
-        checkIfShowsErrorDialogue()
+        robot.checkIfShowsErrorDialogue()
     }
 
     @Test
     fun shouldLaunchProfileActivityWhenClickingOnSignUp() {
         robot.clickOnSignUp()
-        checkIfLaunchesProfileActivity()
+                .checkIfLaunchesProfileActivity()
     }
 
 }

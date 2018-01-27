@@ -2,11 +2,7 @@ package com.braincorp.petrolwatcher.activities
 
 import android.support.test.espresso.intent.Intents
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.robots.action.HomeActivityActionRobot
-import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesLoginActivity
-import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesProfileActivity
-import com.braincorp.petrolwatcher.robots.assertion.checkIfNavigationBarIsOpen
-import com.braincorp.petrolwatcher.robots.assertion.checkIfShowsQuestionDialogue
+import com.braincorp.petrolwatcher.robots.HomeActivityRobot
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,7 +10,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HomeActivityTest {
 
-    private val robot = HomeActivityActionRobot()
+    private val robot = HomeActivityRobot()
 
     @After
     fun after() {
@@ -25,28 +21,28 @@ class HomeActivityTest {
     fun shouldShowDialogueWhenClickingOnSignOut() {
         robot.launchActivity()
                 .openNavigationBar()
-        checkIfNavigationBarIsOpen()
-        robot.clickOnSignOut()
-        checkIfShowsQuestionDialogue()
+                .checkIfNavigationBarIsOpen()
+                .clickOnSignOut()
+                .checkIfShowsQuestionDialogue()
     }
 
     @Test
     fun shouldLaunchLoginActivityWhenClickingYesInSignOutDialogue() {
         robot.launchActivity()
                 .openNavigationBar()
-        checkIfNavigationBarIsOpen()
-        robot.clickOnSignOut()
+                .checkIfNavigationBarIsOpen()
+                .clickOnSignOut()
                 .clickOnYesDialogueButton()
-        checkIfLaunchesLoginActivity()
+                .checkIfLaunchesLoginActivity()
     }
 
     @Test
     fun shouldLaunchProfileActivityWhenClickingOnProfile() {
         robot.launchActivity()
                 .openNavigationBar()
-        checkIfNavigationBarIsOpen()
-        robot.clickOnProfile()
-        checkIfLaunchesProfileActivity()
+                .checkIfNavigationBarIsOpen()
+                .clickOnProfile()
+                .checkIfLaunchesProfileActivity()
     }
 
 }
