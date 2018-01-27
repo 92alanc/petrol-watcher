@@ -11,7 +11,6 @@ object PetrolStationDatabase {
 
     init {
         database.setPersistenceEnabled(true)
-        database.setLogLevel(Logger.Level.DEBUG)
         reference = database.getReference("petrol_stations")
     }
 
