@@ -33,13 +33,17 @@
         <item name="android:layout_marginTop">@dimen/margin_default</item>
     </style>
 
-    <style name="TextViewHeader">
+    <style name="TextViewDefault">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextViewHeader" parent="TextViewDefault">
         <item name="android:textSize">@dimen/text_size_header</item>
     </style>
 
-    <style name="TextViewTitle">
-        <item name="android:textColor">@color/black</item>
+    <style name="TextViewTitle" parent="TextViewDefault">
         <item name="android:textSize">@dimen/text_size_title</item>
     </style>
 

@@ -1,9 +1,10 @@
 package com.braincorp.petrolwatcher.model
 
-data class Vehicle(var name: String, var year: Int, var vehicleType: VehicleType,
-                   var fuelTypes: Array<FuelType>, var kmPerLitre: Float) {
+data class Vehicle(var manufacturer: String, var name: String, var year: Int,
+                   var vehicleType: VehicleType, var fuelTypes: Array<FuelType>,
+                   var kmPerLitre: Float) {
 
-    val id = "$name $year - ${hashCode()}"
+    val id = "$manufacturer $name $year - ${hashCode()}"
 
     override fun equals(other: Any?): Boolean {
         val sameObject = other is Vehicle
@@ -29,6 +30,7 @@ data class Vehicle(var name: String, var year: Int, var vehicleType: VehicleType
     fun toMap(): Map<String, Any> {
         val map = HashMap<String, Any>()
         map["id"] = id
+        map["manufacturer"] = manufacturer
         map["name"] = name
         map["year"] = year
         map["vehicle_type"] = vehicleType
