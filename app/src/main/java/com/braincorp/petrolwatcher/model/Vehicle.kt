@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.model
 
-data class Vehicle(var name: String, var fuelTypes: Array<FuelType>,
-                   var year: Int, var kmPerLitre: Float) {
+data class Vehicle(var name: String, var year: Int, var vehicleType: VehicleType,
+                   var fuelTypes: Array<FuelType>, var kmPerLitre: Float) {
 
     val id = "$name $year - ${hashCode()}"
 
@@ -30,8 +30,9 @@ data class Vehicle(var name: String, var fuelTypes: Array<FuelType>,
         val map = HashMap<String, Any>()
         map["id"] = id
         map["name"] = name
-        map["fuel_types"] = fuelTypes
         map["year"] = year
+        map["vehicle_type"] = vehicleType
+        map["fuel_types"] = fuelTypes
         map["km_per_litre"] = kmPerLitre
         return map
     }
