@@ -5,7 +5,7 @@ import android.location.Address
 data class PetrolStation(var name: String,
                          var phoneNumber: String,
                          var address: Address,
-                         val prices: Map<Fuel, Float>,
+                         val prices: Map<Map<FuelType, FuelQuality>, Float>,
                          var rating: Rating) {
 
     val id = "$name - ${address.latitude}${address.longitude}"

@@ -4,6 +4,7 @@ import android.support.test.espresso.intent.Intents
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.robots.action.HomeActivityActionRobot
 import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesLoginActivity
+import com.braincorp.petrolwatcher.robots.assertion.checkIfLaunchesProfileActivity
 import com.braincorp.petrolwatcher.robots.assertion.checkIfNavigationBarIsOpen
 import com.braincorp.petrolwatcher.robots.assertion.checkIfShowsQuestionDialogue
 import org.junit.After
@@ -37,6 +38,15 @@ class HomeActivityTest {
         robot.clickOnSignOut()
                 .clickOnYesDialogueButton()
         checkIfLaunchesLoginActivity()
+    }
+
+    @Test
+    fun shouldLaunchProfileActivityWhenClickingOnProfile() {
+        robot.launchActivity()
+                .openNavigationBar()
+        checkIfNavigationBarIsOpen()
+        robot.clickOnProfile()
+        checkIfLaunchesProfileActivity()
     }
 
 }

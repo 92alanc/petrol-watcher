@@ -46,6 +46,7 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$libs.android.espresso_contrib"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$libs.android.espresso_core"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$libs.android.espresso_intents"
+    androidTestImplementation "com.21buttons:fragment-test-rule:$libs.fragment_test_rule"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$libs.android.support"

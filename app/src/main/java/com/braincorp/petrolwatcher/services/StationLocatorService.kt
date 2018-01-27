@@ -3,7 +3,8 @@ package com.braincorp.petrolwatcher.services
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
-import com.braincorp.petrolwatcher.model.Fuel
+import com.braincorp.petrolwatcher.model.FuelQuality
+import com.braincorp.petrolwatcher.model.FuelType
 
 class StationLocatorService : IntentService(SERVICE_NAME) {
 
@@ -18,19 +19,20 @@ class StationLocatorService : IntentService(SERVICE_NAME) {
         private const val SERVICE_NAME = "StationLocatorService"
 
         fun getIntent(context: Context,
-                      fuel: Fuel,
+                      fuelType: FuelType,
                       maxPrice: Float,
                       radius: Float = DEFAULT_RADIUS) : Intent {
             val intent = Intent(context, StationLocatorService::class.java)
-            intent.putExtra(EXTRA_FUEL, fuel)
+            intent.putExtra(EXTRA_FUEL, fuelType)
             intent.putExtra(EXTRA_MAX_PRICE, maxPrice)
             intent.putExtra(EXTRA_RADIUS, radius)
             return intent
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onHandleIntent(intent: Intent?) {
-        val fuel = intent?.getSerializableExtra(EXTRA_FUEL) as Fuel
+        val fuel = intent?.getSerializableExtra(EXTRA_FUEL) as Pair<FuelType, FuelQuality>
         val maxPrice = intent.getFloatExtra(EXTRA_MAX_PRICE, 0f)
         val radius = if (intent.getFloatExtra(EXTRA_RADIUS, DEFAULT_RADIUS) > MAX_RADIUS) {
             MAX_RADIUS
@@ -41,7 +43,7 @@ class StationLocatorService : IntentService(SERVICE_NAME) {
         locateStations(fuel, maxPrice, radius)
     }
 
-    private fun locateStations(fuel: Fuel, maxPrice: Float, radius: Float) {
+    private fun locateStations(fuel: Pair<FuelType, FuelQuality>, maxPrice: Float, radius: Float) {
         TODO("not implemented")
     }
 

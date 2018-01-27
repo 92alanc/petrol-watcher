@@ -38,4 +38,9 @@ class HomeActivityActionRobot : BaseActionRobot() {
         return this
     }
 
+    fun clickOnProfile(): HomeActivityActionRobot {
+        onView(withText(R.string.profile)).perform(click())
+        return this
+    }
+
 }

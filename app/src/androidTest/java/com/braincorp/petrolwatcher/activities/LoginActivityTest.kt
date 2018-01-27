@@ -40,9 +40,9 @@ class LoginActivityTest {
 
     @After
     fun after() {
-        AuthenticationManager.signOut()
-        robot.wait(2000)
-        Intents.release()
+        AuthenticationManager.signOut {
+            Intents.release()
+        }
     }
 
     @FlakyTest(detail = "Sometimes there's not enough time to receive the authentication server response")
