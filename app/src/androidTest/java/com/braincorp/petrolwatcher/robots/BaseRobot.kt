@@ -1,12 +1,21 @@
 package com.braincorp.petrolwatcher.robots
 
 import android.support.annotation.IdRes
+import android.support.test.InstrumentationRegistry.getTargetContext
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 
 open class BaseRobot {
+
+    val context = getTargetContext()
+
+    fun click(@IdRes viewId: Int): BaseRobot {
+        onView(withId(viewId)).perform(ViewActions.click())
+        return this
+    }
 
     fun hideKeyboard(): BaseRobot {
         closeSoftKeyboard()
@@ -19,7 +28,7 @@ open class BaseRobot {
     }
 
     fun checkIfVisible(@IdRes viewId: Int): BaseRobot {
-        onView(withId(viewId)).check(matches(isDisplayed()))
+        onView(withId(viewId)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         return this
     }
 

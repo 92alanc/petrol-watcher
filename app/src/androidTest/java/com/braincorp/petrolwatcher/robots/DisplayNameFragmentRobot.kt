@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.robots
 import android.content.Intent
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.TestActivity
 import com.braincorp.petrolwatcher.fragments.DisplayNameFragment
 import com.braincorp.petrolwatcher.model.UiMode
 import org.junit.Rule
@@ -11,8 +10,7 @@ import org.junit.Rule
 class DisplayNameFragmentRobot : BaseRobot() {
 
     @Rule
-    private val rule = FragmentTestRule(TestActivity::class.java,
-            DisplayNameFragment::class.java,
+    private val rule = FragmentTestRule.create(DisplayNameFragment::class.java,
             false, false)
 
     fun launchFragment(uiMode: UiMode): DisplayNameFragmentRobot {

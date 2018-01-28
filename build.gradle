@@ -38,6 +38,7 @@ extensions.libs = [
         firebase_database: '11.8.0',
         firebase_storage: '11.8.0',
         fragment_test_rule: '1.1.0',
+        fragment_test_rule_extras: '1.1.0',
         junit: '4.12',
         picasso: '2.5.2'
 ]
