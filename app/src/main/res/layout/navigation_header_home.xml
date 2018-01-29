@@ -24,27 +24,33 @@
 
     <TextView
         android:id="@+id/textViewDisplayName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginLeft="@dimen/margin_default"
         android:textSize="@dimen/text_size_title"
         android:textColor="@color/white"
+        app:layout_constraintWidth_max="@dimen/width_max_navigation_header_text"
         app:layout_constraintTop_toTopOf="@id/imageViewProfile"
         app:layout_constraintBottom_toTopOf="@+id/textViewEmail"
         app:layout_constraintLeft_toRightOf="@id/imageViewProfile"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         tools:text="Alan Camargo" />
 
     <TextView
         android:id="@id/textViewEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginLeft="@dimen/margin_default"
         android:textColor="@color/white"
+        app:layout_constraintWidth_max="@dimen/width_max_navigation_header_text"
         app:layout_constraintTop_toBottomOf="@id/textViewDisplayName"
         app:layout_constraintBottom_toBottomOf="@id/imageViewProfile"
         app:layout_constraintLeft_toRightOf="@id/imageViewProfile"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         tools:text="alcam.ukdev@gmail.com"/>
 
 </android.support.constraint.ConstraintLayout>

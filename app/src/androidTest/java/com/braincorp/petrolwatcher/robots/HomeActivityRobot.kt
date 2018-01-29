@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.contrib.DrawerActions.close
 import android.support.test.espresso.contrib.DrawerActions.open
 import android.support.test.espresso.contrib.DrawerMatchers.isOpen
 import android.support.test.espresso.contrib.NavigationViewActions.navigateTo
@@ -65,11 +64,6 @@ class HomeActivityRobot : BaseRobot() {
 
     fun checkIfLaunchesProfileActivity(): HomeActivityRobot {
         intended(hasComponent(ProfileActivity::class.java.name))
-        return this
-    }
-
-    fun closeNavigationBar(): HomeActivityRobot {
-        onView(withId(R.id.drawer_home)).perform(close())
         return this
     }
 

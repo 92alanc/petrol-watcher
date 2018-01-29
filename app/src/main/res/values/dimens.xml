@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Width -->
+    <dimen name="width_max_navigation_header_text">160dp</dimen>
+
     <!-- Height -->
     <dimen name="height_navigation_header">160dp</dimen>
 
