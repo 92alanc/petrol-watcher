@@ -16,11 +16,12 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 
 fun Context.fillImageView(imageView: ImageView, uri: Uri?,
-                          @DrawableRes placeholder: Int = -1) {
+                          @DrawableRes placeholder: Int = -1,
+                          rotation: Float = 0f) {
     Picasso.with(this)
             .load(uri)
             .placeholder(placeholder)
-            .rotate(90f) // FIXME
+            .rotate(rotation)
             .fit()
             .into(imageView)
 }

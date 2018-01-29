@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageButton
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.fillImageView
@@ -35,6 +38,8 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
     private var uri: Uri? = null
 
     private lateinit var imageViewProfile: CircleImageView
+    private lateinit var buttonRotateClockwise: ImageButton
+    private lateinit var buttonRotateAnticlockwise: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,12 +51,22 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if (v?.id == R.id.imageViewProfile) {
-            activity!!.showImagePickerDialogue(cameraButtonAction = {
+        when {
+            v?.id == R.id.imageViewProfile -> activity!!.showImagePickerDialogue(cameraButtonAction = {
                 activity!!.openCamera()
             }, galleryButtonAction = {
                 activity!!.openGallery()
             })
+
+            v?.id == R.id.buttonRotateClockwise -> { // FIXME
+                context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
+                        rotation = 90f)
+            }
+
+            v?.id == R.id.buttonRotateAnticlockwise -> { // FIXME
+                context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
+                        rotation = 270f)
+            }
         }
     }
 
@@ -65,6 +80,12 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
     private fun bindViews(view: View) {
         imageViewProfile = view.findViewById(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
+
+        buttonRotateClockwise = view.findViewById(R.id.buttonRotateClockwise)
+        buttonRotateClockwise.setOnClickListener(this)
+
+        buttonRotateAnticlockwise = view.findViewById(R.id.buttonRotateAnticlockwise)
+        buttonRotateAnticlockwise.setOnClickListener(this)
     }
 
     private fun parseArgs() {
@@ -73,6 +94,14 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
 
     private fun prepareUi() {
         imageViewProfile.isClickable = (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT)
+
+        buttonRotateClockwise.visibility =
+                if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT) VISIBLE
+                else GONE
+
+        buttonRotateAnticlockwise.visibility =
+                if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT) VISIBLE
+                else GONE
 
         if (uiMode == UiMode.EDIT || uiMode == UiMode.VIEW)
             setData(user?.photoUrl)

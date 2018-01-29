@@ -44,4 +44,6 @@
     <string name="ethanol">etanol</string>
     <string name="premium">aditivado(a)</string>
     <string name="regular">comum</string>
+    <string name="rotate_right">girar para a direita</string>
+    <string name="rotate_left">girar para a esquerda</string>
 </resources>

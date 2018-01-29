@@ -47,4 +47,6 @@
     <string name="ethanol">ethanol</string>
     <string name="premium">premium</string>
     <string name="regular">regular</string>
+    <string name="rotate_right">rotate right</string>
+    <string name="rotate_left">rotate left</string>
 </resources>
