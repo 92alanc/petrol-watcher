@@ -35,9 +35,9 @@ work.
 <pre>
     <code>
   key.password=test
-    store.password=test
-    key.alias=test
-    store.file=test
+  store.password=test
+  key.alias=test
+  store.file=test
     </code>
 </pre>
 
