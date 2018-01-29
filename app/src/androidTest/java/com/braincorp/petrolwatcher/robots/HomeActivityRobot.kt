@@ -4,13 +4,14 @@ import android.content.Intent
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.contrib.DrawerActions.close
 import android.support.test.espresso.contrib.DrawerActions.open
 import android.support.test.espresso.contrib.DrawerMatchers.isOpen
 import android.support.test.espresso.contrib.NavigationViewActions.navigateTo
 import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.HomeActivity
 import com.braincorp.petrolwatcher.activities.ProfileActivity
@@ -19,7 +20,7 @@ import org.junit.Rule
 class HomeActivityRobot : BaseRobot() {
 
     @Rule
-    private val rule = IntentsTestRule<HomeActivity>(HomeActivity::class.java,
+    private val rule = ActivityTestRule<HomeActivity>(HomeActivity::class.java,
             false, false)
 
     fun launchActivity(): HomeActivityRobot {
@@ -64,6 +65,11 @@ class HomeActivityRobot : BaseRobot() {
 
     fun checkIfLaunchesProfileActivity(): HomeActivityRobot {
         intended(hasComponent(ProfileActivity::class.java.name))
+        return this
+    }
+
+    fun closeNavigationBar(): HomeActivityRobot {
+        onView(withId(R.id.drawer_home)).perform(close())
         return this
     }
 

@@ -2,8 +2,12 @@ package com.braincorp.petrolwatcher.activities
 
 import android.support.test.espresso.intent.Intents
 import android.support.test.runner.AndroidJUnit4
+import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.robots.HomeActivityRobot
+import com.google.firebase.auth.FirebaseAuth
 import org.junit.After
+import org.junit.Assert.fail
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -12,9 +16,18 @@ class HomeActivityTest {
 
     private val robot = HomeActivityRobot()
 
+    @Before
+    fun setup() {
+        Intents.init()
+    }
+
     @After
     fun after() {
-        Intents.release()
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            AuthenticationManager.signOut {
+                Intents.release()
+            }
+        } else Intents.release()
     }
 
     @Test
@@ -28,12 +41,18 @@ class HomeActivityTest {
 
     @Test
     fun shouldLaunchLoginActivityWhenClickingYesInSignOutDialogue() {
-        robot.launchActivity()
-                .openNavigationBar()
-                .checkIfNavigationBarIsOpen()
-                .clickOnSignOut()
-                .clickOnYesDialogueButton()
-                .checkIfLaunchesLoginActivity()
+        val email = "alcam.ukdev@gmail.com"
+        val password = "abcd1234"
+        AuthenticationManager.signIn(email, password, onSuccessAction = {
+            robot.launchActivity()
+                    .openNavigationBar()
+                    .checkIfNavigationBarIsOpen()
+                    .clickOnSignOut()
+                    .clickOnYesDialogueButton()
+                    .checkIfLaunchesLoginActivity()
+        }, onFailureAction = {
+            fail()
+        })
     }
 
     @Test

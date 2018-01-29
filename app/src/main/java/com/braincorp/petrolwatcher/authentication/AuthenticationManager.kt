@@ -43,14 +43,14 @@ object AuthenticationManager {
                onFailureAction: () -> Unit) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener({
-                    Runnable {
+                    Thread {
                         while (true) {
                             if (it.user != null) {
                                 onSuccessAction(it)
                                 break
                             }
                         }
-                    }.run()
+                    }.start()
                 })
                 .addOnFailureListener({
                     onFailureAction()
@@ -59,28 +59,28 @@ object AuthenticationManager {
 
     fun signOut(onSuccessAction: () -> Unit) {
         FirebaseAuth.getInstance().signOut()
-        Runnable {
+        Thread {
             while (true) {
                 if (!isSignedIn()) {
                     onSuccessAction()
                     break
                 }
             }
-        }.run()
+        }.start()
     }
 
     fun deleteUser(onSuccessAction: () -> Unit) {
         FirebaseAuth.getInstance()
                 .currentUser
                 ?.delete()
-        Runnable {
+        Thread {
             while (true) {
                 if (!isSignedIn()) {
                     onSuccessAction()
                     break
                 }
             }
-        }.run()
+        }.start()
     }
 
     fun isSignedIn(): Boolean = FirebaseAuth.getInstance().currentUser != null
