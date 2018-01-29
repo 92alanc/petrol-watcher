@@ -36,6 +36,12 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         fabHome.setOnClickListener(this)
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (drawer_home.isDrawerOpen(START))
+            drawer_home.closeDrawer(START)
+    }
+
     override fun onBackPressed() {
         if (drawer_home.isDrawerOpen(START))
             drawer_home.closeDrawer(START)
@@ -72,6 +78,7 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         Picasso.with(this).load(user?.photoUrl)
                 .placeholder(R.drawable.ic_profile)
+                .rotate(270f)
                 .into(imageViewProfile)
 
         textViewDisplayName.text = user?.displayName

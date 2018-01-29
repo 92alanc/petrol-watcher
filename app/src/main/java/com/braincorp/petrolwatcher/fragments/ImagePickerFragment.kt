@@ -62,6 +62,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
         Picasso.with(context)
                 .load(uri)
                 .placeholder(R.drawable.ic_profile)
+                .rotate(270f)
                 .into(imageViewProfile)
     }
 
