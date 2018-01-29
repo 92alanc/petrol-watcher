@@ -52,6 +52,10 @@ These robots make it easier to test activities and fragments
 and also make test cases more readable with methods like
 `launchActivity()` or `clickOnSignInButton()` for example.
 
+Note: If you run all instrumented tests at once and the
+test suite terminates before running all tests, clean
+the project and run them again.
+
 ## Project owner
 
 Alan Camargo
