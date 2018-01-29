@@ -28,6 +28,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            testCoverageEnabled true
+        }
+
         release {
             debuggable false
             minifyEnabled false
