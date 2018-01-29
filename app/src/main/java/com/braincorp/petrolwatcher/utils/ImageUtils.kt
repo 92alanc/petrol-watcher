@@ -22,7 +22,6 @@ fun Context.fillImageView(imageView: ImageView, uri: Uri?,
             .load(uri)
             .placeholder(placeholder)
             .rotate(rotation)
-            .fit()
             .into(imageView)
 }
 
