@@ -2,13 +2,28 @@ package com.braincorp.petrolwatcher.utils
 
 import android.Manifest.permission.*
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
 import android.provider.MediaStore
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
+import android.support.annotation.DrawableRes
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
+
+fun Context.fillImageView(imageView: ImageView, uri: Uri?,
+                          @DrawableRes placeholder: Int = -1) {
+    Picasso.with(this)
+            .load(uri)
+            .placeholder(placeholder)
+            .rotate(90f) // FIXME
+            .fit()
+            .into(imageView)
+}
 
 fun Activity.openCamera() {
     if (SDK_INT >= M) {

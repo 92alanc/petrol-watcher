@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.openCamera
 import com.braincorp.petrolwatcher.utils.openGallery
 import com.braincorp.petrolwatcher.utils.showImagePickerDialogue
 import com.google.firebase.auth.FirebaseAuth
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ImagePickerFragment : Fragment(), View.OnClickListener {
@@ -59,11 +59,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
 
     fun setData(uri: Uri?) {
         this.uri = uri
-        Picasso.with(context)
-                .load(uri)
-                .placeholder(R.drawable.ic_profile)
-                .rotate(270f)
-                .into(imageViewProfile)
+        context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile)
     }
 
     private fun bindViews(view: View) {

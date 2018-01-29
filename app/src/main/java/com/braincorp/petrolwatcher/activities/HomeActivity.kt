@@ -12,9 +12,9 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
 import com.google.firebase.auth.FirebaseAuth
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
@@ -76,10 +76,8 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 
-        Picasso.with(this).load(user?.photoUrl)
-                .placeholder(R.drawable.ic_profile)
-                .rotate(270f)
-                .into(imageViewProfile)
+        fillImageView(imageViewProfile, user?.photoUrl,
+                placeholder = R.drawable.ic_profile)
 
         textViewDisplayName.text = user?.displayName
         textViewEmail.text = user?.email
