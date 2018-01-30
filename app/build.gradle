@@ -28,9 +28,14 @@ android {
     }
 
     buildTypes {
-        debug {
+        coverage {
             debuggable true
             testCoverageEnabled true
+        }
+
+        debug {
+            debuggable true
+            testCoverageEnabled false
         }
 
         release {

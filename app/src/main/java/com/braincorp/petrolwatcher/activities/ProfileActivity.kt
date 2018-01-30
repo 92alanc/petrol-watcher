@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
@@ -49,7 +48,6 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     private var topFragment: ImagePickerFragment? = null
     private var bottomFragment: Fragment? = null
 
-    private var photoUri: Uri? = null
     private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,25 +67,13 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
             REQUEST_CODE_CAMERA -> {
                 if (resultCode == RESULT_OK) {
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    StorageManager.upload(bitmap, onSuccessAction = {
-                        photoUri = it.downloadUrl
-                        topFragment?.setData(photoUri)
-                    }, onFailureAction = {
-                        showErrorDialogue(R.string.error_setting_profile_picture)
-                    })
+                    topFragment?.setImageBitmap(bitmap)
                 }
             }
 
             REQUEST_CODE_GALLERY -> {
-                if (resultCode == RESULT_OK) {
-                    photoUri = data?.data
-                    StorageManager.upload(photoUri!!, onSuccessAction = {
-                        photoUri = it.downloadUrl
-                        topFragment?.setData(photoUri)
-                    }, onFailureAction = {
-                        showErrorDialogue(R.string.error_setting_profile_picture)
-                    })
-                }
+                if (resultCode == RESULT_OK)
+                    topFragment?.setImageUri(data?.data)
             }
         }
     }
@@ -221,13 +207,15 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
                 if (it.isSuccessful) {
                     AuthenticationManager.signIn(email, password, onSuccessAction = {
                         user = it.user
-                        textViewProfileHeader.setText(R.string.header_picture_name)
 
-                        topFragment = ImagePickerFragment.newInstance(uiMode)
-                        bottomFragment = DisplayNameFragment.newInstance(uiMode)
+                        runOnUiThread {
+                            textViewProfileHeader.setText(R.string.header_picture_name)
+                            topFragment = ImagePickerFragment.newInstance(uiMode)
+                            bottomFragment = DisplayNameFragment.newInstance(uiMode)
 
-                        fabProfile.setImageResource(R.drawable.ic_save)
-                        bindFragments(TAG_NAME)
+                            fabProfile.setImageResource(R.drawable.ic_save)
+                            bindFragments(TAG_NAME)
+                        }
                     }, onFailureAction = {
                         showErrorDialogue(R.string.error_signing_in)
                     })
@@ -248,17 +236,21 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     private fun save() {
         val displayName = (bottomFragment as DisplayNameFragment).getDisplayName()
-        val profilePicture = topFragment?.getImageUri()
 
-        AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, profilePicture,
-                onSuccessAction =  {
-                    val intent = if (uiMode == UiMode.CREATE)
-                        LoginActivity.getIntent(context = this)
-                    else
-                        HomeActivity.getIntent(context = this)
-                    startActivity(intent)
-                    finish()
-                }, onFailureAction = {
+        val bitmap = topFragment?.getImageBitmap()
+        StorageManager.upload(bitmap, onSuccessAction = {
+            AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
+                    onSuccessAction =  {
+                        val intent = if (uiMode == UiMode.CREATE)
+                            LoginActivity.getIntent(context = this)
+                        else
+                            HomeActivity.getIntent(context = this)
+                        startActivity(intent)
+                        finish()
+                    }, onFailureAction = {
+                showErrorDialogue(R.string.error_setting_profile_picture)
+            })
+        }, onFailureAction = {
             showErrorDialogue(R.string.error_setting_profile_picture)
         })
     }

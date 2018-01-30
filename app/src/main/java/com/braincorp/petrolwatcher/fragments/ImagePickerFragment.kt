@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher.fragments
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,10 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.UiMode
-import com.braincorp.petrolwatcher.utils.fillImageView
-import com.braincorp.petrolwatcher.utils.openCamera
-import com.braincorp.petrolwatcher.utils.openGallery
-import com.braincorp.petrolwatcher.utils.showImagePickerDialogue
+import com.braincorp.petrolwatcher.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -32,14 +31,14 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private val user = FirebaseAuth.getInstance().currentUser
-
+    private var bitmap: Bitmap? = null
     private var uiMode = UiMode.VIEW
     private var uri: Uri? = null
 
+    private var rotation = 0f
+
     private lateinit var imageViewProfile: CircleImageView
     private lateinit var buttonRotateClockwise: ImageButton
-    private lateinit var buttonRotateAnticlockwise: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -58,21 +57,26 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
                 activity!!.openGallery()
             })
 
-            v?.id == R.id.buttonRotateClockwise -> { // FIXME
+            v?.id == R.id.buttonRotateClockwise -> {
+                if (rotation == 360f) rotation = 0f
+                else rotation += 90f
+                bitmap = rotateBitmap(bitmap!!, rotation)
                 context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
-                        rotation = 90f)
-            }
-
-            v?.id == R.id.buttonRotateAnticlockwise -> { // FIXME
-                context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
-                        rotation = 270f)
+                        rotation = rotation)
             }
         }
     }
 
-    fun getImageUri(): Uri? = uri
+    fun getImageBitmap(): Bitmap {
+        return (imageViewProfile.drawable as BitmapDrawable).bitmap
+    }
 
-    fun setData(uri: Uri?) {
+    fun setImageBitmap(bitmap: Bitmap?) {
+        this.bitmap = bitmap
+        imageViewProfile.setImageBitmap(bitmap)
+    }
+
+    fun setImageUri(uri: Uri?) {
         this.uri = uri
         context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile)
     }
@@ -83,9 +87,6 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
 
         buttonRotateClockwise = view.findViewById(R.id.buttonRotateClockwise)
         buttonRotateClockwise.setOnClickListener(this)
-
-        buttonRotateAnticlockwise = view.findViewById(R.id.buttonRotateAnticlockwise)
-        buttonRotateAnticlockwise.setOnClickListener(this)
     }
 
     private fun parseArgs() {
@@ -99,12 +100,10 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
                 if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT) VISIBLE
                 else GONE
 
-        buttonRotateAnticlockwise.visibility =
-                if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT) VISIBLE
-                else GONE
-
-        if (uiMode == UiMode.EDIT || uiMode == UiMode.VIEW)
-            setData(user?.photoUrl)
+        if (uiMode == UiMode.EDIT || uiMode == UiMode.VIEW) {
+            bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
+            setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
+        }
     }
 
 }
