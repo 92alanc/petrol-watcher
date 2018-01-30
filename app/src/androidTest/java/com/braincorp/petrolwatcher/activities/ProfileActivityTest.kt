@@ -35,4 +35,11 @@ class ProfileActivityTest {
                 .checkIfHeaderIsNotVisible()
     }
 
+    @Test
+    fun shouldShowChangesNotSavedDialogueWhenBackButtonIsPressedInEditMode() {
+        robot.launchActivity(UiMode.EDIT)
+                .pressBackButton()
+        robot.checkIfShowsChangesNotSavedDialogue()
+    }
+
 }

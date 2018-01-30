@@ -37,4 +37,9 @@ class ProfileActivityRobot : BaseRobot() {
         return this
     }
 
+    fun checkIfShowsChangesNotSavedDialogue(): ProfileActivityRobot {
+        onView(withText(R.string.question_changes_not_saved)).check(matches(isDisplayed()))
+        return this
+    }
+
 }
