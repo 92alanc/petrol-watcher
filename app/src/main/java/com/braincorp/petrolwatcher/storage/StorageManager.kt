@@ -8,8 +8,6 @@ import com.google.firebase.storage.UploadTask
 
 object StorageManager {
 
-
-
     fun upload(bitmap: Bitmap?, onSuccessAction: (snapshot: UploadTask.TaskSnapshot) -> Unit,
                onFailureAction: () -> Unit) {
         val rootReference = FirebaseStorage.getInstance().reference
