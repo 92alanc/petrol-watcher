@@ -49,4 +49,6 @@
     <string name="vehicles">veículos</string>
     <string name="manufacturer">fabricante</string>
     <string name="year">ano</string>
+    <string name="km_per_litre">quilômetros por litro</string>
+    <string name="miles_per_gallon">milhas por galão</string>
 </resources>

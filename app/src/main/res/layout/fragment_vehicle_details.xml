@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/radius_corner_default"
+    tools:context=".fragments.VehicleDetailsFragment">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_default">
+
+        <TextView
+            android:id="@+id/textViewVehicleName"
+            style="@style/TextViewTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="TT"/>
+
+        <TextView
+            android:id="@+id/textViewManufacturer"
+            style="@style/TextViewDefault"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewVehicleName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="Audi"/>
+
+        <TextView
+            android:id="@+id/textViewYear"
+            style="@style/TextViewDefault"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewManufacturer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="2018"/>
+
+        <ImageView
+            android:id="@+id/imageViewVehicleType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewYear"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:src="@drawable/ic_car"
+            tools:ignore="ContentDescription"/>
+
+        <TextView
+            android:id="@+id/textViewFuelTypes"
+            style="@style/TextViewDefault"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="Petrol, Ethanol"/>
+
+        <TextView
+            android:id="@+id/textViewKmPerLitre"
+            style="@style/TextViewDefault"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewFuelTypes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:text="10km/L"/>
+
+        <EditText
+            android:id="@+id/editTextVehicleName"
+            style="@style/EditTextWidthMatchParent"
+            android:hint="@string/name"
+            android:inputType="textCapWords"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <EditText
+            android:id="@+id/editTextManufacturer"
+            style="@style/EditTextWidthMatchParent"
+            android:layout_marginTop="@dimen/margin_default"
+            android:hint="@string/manufacturer"
+            android:inputType="textCapWords"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/editTextVehicleName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <EditText
+            android:id="@+id/editTextYear"
+            style="@style/EditTextWidthMatchParent"
+            android:layout_marginTop="@dimen/margin_default"
+            android:hint="@string/year"
+            android:inputType="number"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spinnerVehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/editTextYear"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxAutogas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/autogas"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxDiesel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/diesel"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/checkBoxAutogas"
+            app:layout_constraintLeft_toLeftOf="@id/checkBoxAutogas"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxEthanol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/ethanol"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.7"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxPetrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/petrol"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/checkBoxEthanol"
+            app:layout_constraintLeft_toLeftOf="@id/checkBoxEthanol"/>
+
+        <EditText
+            android:id="@+id/editTextKmPerLitre"
+            style="@style/EditTextWidthMatchParent"
+            android:hint="@string/km_per_litre"
+            android:inputType="numberDecimal"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/checkBoxDiesel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0"/>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

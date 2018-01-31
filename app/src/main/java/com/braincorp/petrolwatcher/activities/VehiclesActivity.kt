@@ -4,13 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.fragments.VehicleDetailsFragment
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.utils.removeFragment
+import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import kotlinx.android.synthetic.main.activity_vehicles.*
+import kotlinx.android.synthetic.main.content_vehicles.*
 
 class VehiclesActivity : BaseActivity(), View.OnClickListener {
-
-    // TODO: move the fields from this activity to a fragment
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -18,6 +22,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    private var fragment: VehicleDetailsFragment? = null
     private var uiMode = UiMode.VIEW
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +49,18 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    private fun loadFragment() {
+        placeholderVehicles.visibility = VISIBLE
+
+        fragment = VehicleDetailsFragment.newInstance(uiMode)
+        replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!)
+    }
+
+    private fun removeFragment() {
+        removeFragment(fragment!!)
+        placeholderVehicles.visibility = GONE
+    }
+
     private fun prepareUi() {
         when (uiMode) {
             UiMode.CREATE -> prepareCreateMode()
@@ -53,15 +70,18 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun prepareCreateMode() {
-        // TODO: implement
+        recyclerViewVehicles.visibility = GONE
+        loadFragment()
     }
 
     private fun prepareEditMode() {
-        // TODO: implement
+        recyclerViewVehicles.visibility = GONE
+        loadFragment()
     }
 
     private fun prepareViewMode() {
-        // TODO: implement
+        recyclerViewVehicles.visibility = VISIBLE
+        removeFragment()
     }
 
     private fun save() {

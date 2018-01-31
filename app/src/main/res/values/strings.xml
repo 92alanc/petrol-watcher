@@ -52,4 +52,6 @@
     <string name="vehicles">vehicles</string>
     <string name="manufacturer">manufacturer</string>
     <string name="year">year</string>
+    <string name="km_per_litre">kilometres per litre</string>
+    <string name="miles_per_gallon">miles per gallon</string>
 </resources>
