@@ -54,6 +54,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         fabProfile.setOnClickListener(this)
+        buttonVehicles.setOnClickListener(this)
         if (savedInstanceState != null)
             uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as UiMode
         else
@@ -131,6 +132,10 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
                     UiMode.VIEW -> prepareEditMode(savedInstanceState = null)
                 }
             }
+
+            R.id.buttonVehicles -> {
+                // TODO: open VehiclesActivity
+            }
         }
     }
 
@@ -159,6 +164,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     private fun prepareEditMode(savedInstanceState: Bundle?) {
         uiMode = UiMode.EDIT
 
+        buttonVehicles.visibility = GONE
+
         textViewProfileHeader.visibility = GONE
 
         fabProfile.setImageResource(R.drawable.ic_save)
@@ -174,6 +181,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         textViewProfileHeader.visibility = VISIBLE
         textViewProfileHeader.setText(R.string.header_email_password)
 
+        buttonVehicles.visibility = GONE
+
         fabProfile.setImageResource(R.drawable.ic_next)
 
         topFragment = null
@@ -185,6 +194,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     private fun prepareViewMode(savedInstanceState: Bundle?) {
         textViewProfileHeader.visibility = GONE
+
+        buttonVehicles.visibility = VISIBLE
 
         fabProfile.setImageResource(R.drawable.ic_edit)
 

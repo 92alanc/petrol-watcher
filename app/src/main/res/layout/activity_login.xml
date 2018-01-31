@@ -44,6 +44,7 @@
     <Button
         android:id="@id/buttonSignIn"
         style="@style/ButtonOrange"
+        android:layout_marginTop="@dimen/margin_default"
         android:text="@string/sign_in"
         app:layout_constraintTop_toBottomOf="@id/editTextPassword"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
@@ -54,6 +55,7 @@
     <Button
         android:id="@id/buttonSignUp"
         style="@style/ButtonGrey"
+        android:layout_marginTop="@dimen/margin_default"
         android:text="@string/sign_up"
         app:layout_constraintTop_toBottomOf="@id/buttonSignIn"
         app:layout_constraintBottom_toBottomOf="parent"

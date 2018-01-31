@@ -10,7 +10,7 @@
     <dimen name="margin_default">8dp</dimen>
     <dimen name="margin_dialogue">32dp</dimen>
     <dimen name="margin_fab">16dp</dimen>
-    <dimen name="margin_header">32dp</dimen>
+    <dimen name="margin_header_bottom">32dp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_default">16dp</dimen>

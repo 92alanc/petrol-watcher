@@ -26,6 +26,7 @@ task clean(type: Delete) {
 
 extensions.libs = [
         android: [
+                card_view: '27.0.2',
                 constraint_layout: '1.0.2',
                 espresso_contrib: '3.0.1',
                 espresso_core: '3.0.1',

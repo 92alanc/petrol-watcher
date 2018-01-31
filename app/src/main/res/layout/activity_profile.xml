@@ -2,16 +2,13 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_default">
+    android:layout_height="match_parent">
 
     <include layout="@layout/content_profile"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        style="@style/FloatingActionButton"
         android:src="@drawable/ic_edit"/>
 
 </android.support.design.widget.CoordinatorLayout>

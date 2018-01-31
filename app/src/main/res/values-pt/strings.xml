@@ -46,4 +46,7 @@
     <string name="regular">comum</string>
     <string name="rotate_right">girar para a direita</string>
     <string name="rotate_left">girar para a esquerda</string>
+    <string name="vehicles">veículos</string>
+    <string name="manufacturer">fabricante</string>
+    <string name="year">ano</string>
 </resources>

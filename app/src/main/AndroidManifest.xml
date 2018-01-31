@@ -31,6 +31,13 @@
 
         <activity android:name=".activities.ProfileActivity" />
 
+        <activity android:name=".activities.VehiclesActivity"
+            android:parentActivityName=".activities.ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ProfileActivity"/>
+        </activity>
+
         <activity android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:finishOnTaskLaunch="true"
