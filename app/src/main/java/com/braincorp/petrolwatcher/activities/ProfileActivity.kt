@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.content_profile.*
 class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<Void> {
 
     companion object {
-        private const val EXTRA_MODE = "mode"
+        private const val EXTRA_UI_MODE = "ui_mode"
 
         private const val KEY_UI_MODE = "ui_mode"
         private const val KEY_TOP_FRAGMENT = "top_fragment"
@@ -38,8 +38,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
         fun getIntent(context: Context,
                       uiMode: UiMode): Intent {
-            return Intent(context, ProfileActivity::class.java)
-                    .putExtra(EXTRA_MODE, uiMode)
+            val intent = Intent(context, ProfileActivity::class.java)
+            return intent.putExtra(EXTRA_UI_MODE, uiMode)
         }
     }
 
@@ -134,7 +134,8 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
             }
 
             R.id.buttonVehicles -> {
-                // TODO: open VehiclesActivity
+                val intent = VehiclesActivity.getIntent(context = this)
+                startActivity(intent)
             }
         }
     }
@@ -158,7 +159,10 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     }
 
     private fun parseIntent() {
-        uiMode = intent.getSerializableExtra(EXTRA_MODE) as UiMode
+        uiMode = if (intent.hasExtra(EXTRA_UI_MODE))
+            intent.getSerializableExtra(EXTRA_UI_MODE) as UiMode
+        else
+            UiMode.VIEW
     }
 
     private fun prepareEditMode(savedInstanceState: Bundle?) {

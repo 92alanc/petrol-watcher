@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.VehiclesActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,6 +26,6 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabVehicles"
         style="@style/FloatingActionButton"
-        tools:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_add"/>
     
 </android.support.design.widget.CoordinatorLayout>

@@ -2,18 +2,21 @@ package com.braincorp.petrolwatcher.robots
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.intent.Intents.intended
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.ProfileActivity
+import com.braincorp.petrolwatcher.activities.VehiclesActivity
 import com.braincorp.petrolwatcher.model.UiMode
 import org.junit.Rule
 
 class ProfileActivityRobot : BaseRobot() {
 
     @Rule
-    private val rule = ActivityTestRule<ProfileActivity>(ProfileActivity::class.java,
+    private val rule = IntentsTestRule<ProfileActivity>(ProfileActivity::class.java,
             false, false)
 
     fun launchActivity(uiMode: UiMode): ProfileActivityRobot {
@@ -39,6 +42,26 @@ class ProfileActivityRobot : BaseRobot() {
 
     fun checkIfShowsChangesNotSavedDialogue(): ProfileActivityRobot {
         onView(withText(R.string.question_changes_not_saved)).check(matches(isDisplayed()))
+        return this
+    }
+
+    fun checkIfVehiclesButtonIsVisible(): ProfileActivityRobot {
+        checkIfVisible(R.id.buttonVehicles)
+        return this
+    }
+
+    fun checkIfVehiclesButtonIsNotVisible(): ProfileActivityRobot {
+        checkIfNotVisible(R.id.buttonVehicles)
+        return this
+    }
+
+    fun clickOnVehiclesButton(): ProfileActivityRobot {
+        click(R.id.buttonVehicles)
+        return this
+    }
+
+    fun checkIfLaunchesVehiclesActivity(): ProfileActivityRobot {
+        intended(hasComponent(VehiclesActivity::class.java.name))
         return this
     }
 

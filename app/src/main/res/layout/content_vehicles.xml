@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_default"
-    tools:context=".activities.VehiclesActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_vehicles">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewVehicles"
@@ -21,7 +22,6 @@
     <TextView
         android:id="@+id/textViewVehicleName"
         style="@style/TextViewTitle"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="TT"/>
@@ -30,7 +30,6 @@
         android:id="@+id/textViewManufacturer"
         style="@style/TextViewDefault"
         android:layout_marginTop="@dimen/margin_default"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/textViewVehicleName"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="Audi"/>
@@ -39,7 +38,6 @@
         android:id="@+id/textViewYear"
         style="@style/TextViewDefault"
         android:layout_marginTop="@dimen/margin_default"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/textViewManufacturer"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="2018"/>
@@ -49,7 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/textViewYear"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:src="@drawable/ic_car"
@@ -59,7 +56,6 @@
         android:id="@+id/textViewFuelTypes"
         style="@style/TextViewDefault"
         android:layout_marginTop="@dimen/margin_default"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="Petrol, Ethanol"/>
@@ -68,7 +64,6 @@
         android:id="@+id/textViewKmPerLitre"
         style="@style/TextViewDefault"
         android:layout_marginTop="@dimen/margin_default"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/textViewFuelTypes"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="10km/L"/>
@@ -78,6 +73,7 @@
         style="@style/EditTextWidthMatchParent"
         android:hint="@string/name"
         android:inputType="textCapWords"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -88,6 +84,7 @@
         android:layout_marginTop="@dimen/margin_default"
         android:hint="@string/manufacturer"
         android:inputType="textCapWords"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/editTextVehicleName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -98,6 +95,7 @@
         android:layout_marginTop="@dimen/margin_default"
         android:hint="@string/year"
         android:inputType="number"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -107,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/editTextYear"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -117,6 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/autogas"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -128,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/diesel"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/checkBoxAutogas"
         app:layout_constraintLeft_toLeftOf="@id/checkBoxAutogas"/>
 
@@ -137,6 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/ethanol"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -148,6 +150,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/petrol"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/checkBoxEthanol"
         app:layout_constraintLeft_toLeftOf="@id/checkBoxEthanol"/>
 
