@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.model
 
+import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
@@ -8,14 +9,14 @@ import kotlin.collections.ArrayList
 data class Vehicle(var manufacturer: String = "", var name: String = "",
                    var year: Int = 0,
                    var vehicleType: VehicleType = VehicleType.CAR,
-                   var fuelTypes: List<FuelType> = emptyList(),
+                   var fuelTypes: ArrayList<FuelType> = ArrayList(),
                    var kmPerLitre: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
-        private const val AUTOGAS_INT = 1
-        private const val DIESEL_INT = 2
-        private const val ETHANOL_INT = 3
-        private const val PETROL_INT = 4
+        private const val KEY_AUTOGAS = "autogas"
+        private const val KEY_DIESEL = "diesel"
+        private const val KEY_ETHANOL = "ethanol"
+        private const val KEY_PETROL = "petrol"
 
         override fun createFromParcel(parcel: Parcel): Vehicle {
             return Vehicle(parcel)
@@ -34,10 +35,13 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
         year = parcel.readInt()
         vehicleType = parcel.readSerializable() as VehicleType
 
-        @Suppress("UNCHECKED_CAST")
-        fuelTypes = parcel.readArrayList(javaClass.classLoader) as ArrayList<FuelType> // FIXME
+        val bundle = parcel.readBundle(javaClass.classLoader)
+        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(FuelType.AUTOGAS)
+        if (bundle.containsKey(KEY_DIESEL)) fuelTypes.add(FuelType.DIESEL)
+        if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(FuelType.ETHANOL)
+        if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(FuelType.PETROL)
 
-        kmPerLitre = parcel.readFloat() // FIXME
+        kmPerLitre = parcel.readFloat()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -79,19 +83,21 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
         parcel.writeInt(year)
         parcel.writeSerializable(vehicleType)
 
-        val typesList = ArrayList<Int>()
+        val bundle = Bundle()
         fuelTypes.forEach {
-            when (it) {
-                FuelType.AUTOGAS -> typesList.add(AUTOGAS_INT)
-                FuelType.DIESEL -> typesList.add(DIESEL_INT)
-                FuelType.ETHANOL -> typesList.add(ETHANOL_INT)
-                FuelType.PETROL -> typesList.add(PETROL_INT)
+            val key = when (it) {
+                FuelType.AUTOGAS -> KEY_AUTOGAS
+                FuelType.DIESEL -> KEY_DIESEL
+                FuelType.ETHANOL -> KEY_ETHANOL
+                FuelType.PETROL -> KEY_PETROL
             }
+            bundle.putSerializable(key, it)
         }
-        parcel.writeList(typesList)
+        parcel.writeBundle(bundle)
 
         parcel.writeFloat(kmPerLitre)
     }
+
 
     override fun describeContents(): Int {
         return 0

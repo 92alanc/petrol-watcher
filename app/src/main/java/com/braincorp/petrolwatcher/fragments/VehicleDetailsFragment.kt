@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -102,6 +103,7 @@ class VehicleDetailsFragment : Fragment() {
     private fun parseArgs() {
         uiMode = arguments?.getSerializable(ARG_UI_MODE) as UiMode
         vehicle = arguments?.getParcelable(ARG_VEHICLE)
+        Log.d("ALAN", "found ${vehicle?.fuelTypes} and ${vehicle?.kmPerLitre}")
     }
 
     private fun populateSpinner() {

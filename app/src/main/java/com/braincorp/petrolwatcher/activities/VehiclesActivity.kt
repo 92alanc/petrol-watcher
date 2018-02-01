@@ -14,9 +14,11 @@ import com.braincorp.petrolwatcher.fragments.VehicleDetailsFragment
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
+import com.braincorp.petrolwatcher.model.VehicleType
 import com.braincorp.petrolwatcher.utils.removeFragment
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.braincorp.petrolwatcher.utils.stringToFuelType
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -67,9 +69,17 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     override fun onDataChange(snapshot: DataSnapshot?) {
         val list = ArrayList<Vehicle>()
         snapshot?.children?.forEach {
-            val vehicle = it.getValue(Vehicle::class.java)
-            if (vehicle != null)
-                list.add(vehicle)
+            val vehicle = Vehicle()
+            vehicle.name = it.child("name").value.toString()
+            vehicle.manufacturer = it.child("manufacturer").value.toString()
+            vehicle.year = it.child("year").value.toString().toInt()
+            vehicle.kmPerLitre = it.child("km_per_litre").value.toString().toFloat()
+            vehicle.vehicleType = it.child("vehicle_type").getValue(VehicleType::class.java)!!
+            @Suppress("UNCHECKED_CAST")
+            it.child("fuel_types").children.forEach {
+                vehicle.fuelTypes.add(stringToFuelType(it.value.toString()))
+            }
+            list.add(vehicle)
         }
         vehicles = list.toTypedArray()
         if (vehicles != null) populateRecyclerView(vehicles!!)
@@ -126,7 +136,8 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun populateRecyclerView(items: Array<Vehicle>) {
-        recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
+        recyclerViewVehicles.layoutManager = LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false)
         val adapter = VehicleAdapter(context = this, items = items, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
         // hideProgressBar()

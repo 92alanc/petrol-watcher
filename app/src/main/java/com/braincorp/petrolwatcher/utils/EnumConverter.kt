@@ -25,6 +25,16 @@ fun Context.fuelTypeToString(fuelType: FuelType): String {
     }
 }
 
+fun stringToFuelType(string: String): FuelType {
+    return when (string) {
+        "AUTOGAS" -> FuelType.AUTOGAS
+        "DIESEL" -> FuelType.DIESEL
+        "ETHANOL" -> FuelType.ETHANOL
+        "PETROL" -> FuelType.PETROL
+        else -> FuelType.PETROL
+    }
+}
+
 fun Context.ratingToString(rating: Rating): String {
     return when (rating) {
         Rating.VERY_BAD -> getString(R.string.very_bad)
