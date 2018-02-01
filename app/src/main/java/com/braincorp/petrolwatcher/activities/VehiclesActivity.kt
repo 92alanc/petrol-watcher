@@ -7,14 +7,17 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.database.VehicleDatabase
 import com.braincorp.petrolwatcher.fragments.VehicleDetailsFragment
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.removeFragment
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_vehicles.*
 import kotlinx.android.synthetic.main.content_vehicles.*
 
-class VehiclesActivity : BaseActivity(), View.OnClickListener {
+class VehiclesActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<Void> {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -39,6 +42,12 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fabVehicles -> handleFabClick()
+        }
+    }
+
+    override fun onComplete(task: Task<Void>) {
+        if (task.isSuccessful) {
+            // TODO: refresh recyclerView
         }
     }
 
@@ -85,7 +94,9 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun save() {
-        // TODO: implement
+        val vehicle = fragment?.getVehicle()
+        if (vehicle != null)
+            VehicleDatabase.insertOrUpdate(vehicle, this)
     }
 
 }
