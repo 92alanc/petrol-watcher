@@ -56,4 +56,5 @@
     <string name="miles_per_gallon">miles per gallon</string>
     <string name="unit_km_per_litre" translatable="false">km/L</string>
     <string name="unit_miles_per_gallon" translatable="false">mpg</string>
+    <string name="error_finding_vehicles">Error finding your vehicles</string>
 </resources>

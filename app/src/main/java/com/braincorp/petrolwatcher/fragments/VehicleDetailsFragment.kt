@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.model.FuelType
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
@@ -29,6 +30,7 @@ class VehicleDetailsFragment : Fragment() {
             val args = Bundle()
             args.putSerializable(ARG_UI_MODE, uiMode)
             args.putParcelable(ARG_VEHICLE, vehicle)
+            instance.arguments = args
             return instance
         }
     }
@@ -99,7 +101,12 @@ class VehicleDetailsFragment : Fragment() {
 
     private fun parseArgs() {
         uiMode = arguments?.getSerializable(ARG_UI_MODE) as UiMode
-        vehicle = arguments?.getParcelable(ARG_VEHICLE) as Vehicle
+        vehicle = arguments?.getParcelable(ARG_VEHICLE)
+    }
+
+    private fun populateSpinner() {
+        val adapter = VehicleTypeAdapter(context!!)
+        spinnerVehicleType.adapter = adapter
     }
 
     private fun prepareUi() {
@@ -146,6 +153,7 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxEthanol.visibility = VISIBLE
         checkBoxPetrol.visibility = VISIBLE
         editTextKmPerLitre.visibility = VISIBLE
+        populateSpinner()
     }
 
     private fun hideEditableFields() {
@@ -173,7 +181,7 @@ class VehicleDetailsFragment : Fragment() {
         editTextName.setText(vehicle!!.name)
         editTextManufacturer.setText(vehicle!!.manufacturer)
         editTextYear.setText(vehicle!!.year.toString())
-        //spinnerVehicleType.setSelection()
+        spinnerVehicleType.setSelection(vehicle!!.vehicleType.ordinal)
         vehicle!!.fuelTypes.forEach {
             when (it) {
                 FuelType.AUTOGAS -> checkBoxAutogas.isChecked = true
@@ -215,6 +223,7 @@ class VehicleDetailsFragment : Fragment() {
     fun getVehicle(): Vehicle {
         if (uiMode == UiMode.VIEW) return vehicle!!
 
+        vehicle = Vehicle()
         vehicle!!.name = editTextName.text.toString()
         vehicle!!.manufacturer = editTextManufacturer.text.toString()
         vehicle!!.year = editTextYear.text.toString().toInt()
@@ -225,7 +234,7 @@ class VehicleDetailsFragment : Fragment() {
         if (checkBoxEthanol.isChecked) fuelTypesList.add(FuelType.ETHANOL)
         if (checkBoxPetrol.isChecked) fuelTypesList.add(FuelType.PETROL)
 
-        vehicle!!.fuelTypes = fuelTypesList.toTypedArray()
+        vehicle!!.fuelTypes = fuelTypesList
 
         vehicle!!.kmPerLitre = editTextKmPerLitre.text.toString().toFloat()
 

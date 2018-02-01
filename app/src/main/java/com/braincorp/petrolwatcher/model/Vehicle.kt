@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 data class Vehicle(var manufacturer: String = "", var name: String = "",
                    var year: Int = 0,
                    var vehicleType: VehicleType = VehicleType.CAR,
-                   var fuelTypes: Array<FuelType> = emptyArray(),
+                   var fuelTypes: List<FuelType> = emptyList(),
                    var kmPerLitre: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
@@ -26,7 +26,7 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
         }
     }
 
-    val id = "$manufacturer $name $year - ${hashCode()}"
+    val id = UUID.randomUUID().toString()
 
     constructor(parcel: Parcel) : this() {
         manufacturer = parcel.readString()
@@ -34,11 +34,10 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
         year = parcel.readInt()
         vehicleType = parcel.readSerializable() as VehicleType
 
-        val fuelTypesList = parcel.readArrayList(javaClass.classLoader)
         @Suppress("UNCHECKED_CAST")
-        fuelTypes = fuelTypesList.toTypedArray() as Array<FuelType>
+        fuelTypes = parcel.readArrayList(javaClass.classLoader) as ArrayList<FuelType> // FIXME
 
-        kmPerLitre = parcel.readFloat()
+        kmPerLitre = parcel.readFloat() // FIXME
     }
 
     override fun equals(other: Any?): Boolean {

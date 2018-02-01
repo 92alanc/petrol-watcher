@@ -51,4 +51,5 @@
     <string name="year">ano</string>
     <string name="km_per_litre">quilômetros por litro</string>
     <string name="miles_per_gallon">milhas por galão</string>
+    <string name="error_finding_vehicles">Erro ao encontrar seus veículos</string>
 </resources>
