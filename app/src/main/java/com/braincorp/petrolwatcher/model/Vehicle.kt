@@ -1,10 +1,45 @@
 package com.braincorp.petrolwatcher.model
 
-data class Vehicle(var manufacturer: String, var name: String, var year: Int,
-                   var vehicleType: VehicleType, var fuelTypes: Array<FuelType>,
-                   var kmPerLitre: Float) {
+import android.os.Parcel
+import android.os.Parcelable
+import java.util.*
+import kotlin.collections.ArrayList
+
+data class Vehicle(var manufacturer: String = "", var name: String = "",
+                   var year: Int = 0,
+                   var vehicleType: VehicleType = VehicleType.CAR,
+                   var fuelTypes: Array<FuelType> = emptyArray(),
+                   var kmPerLitre: Float = 0f) : Parcelable {
+
+    companion object CREATOR : Parcelable.Creator<Vehicle> {
+        private const val AUTOGAS_INT = 1
+        private const val DIESEL_INT = 2
+        private const val ETHANOL_INT = 3
+        private const val PETROL_INT = 4
+
+        override fun createFromParcel(parcel: Parcel): Vehicle {
+            return Vehicle(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Vehicle?> {
+            return arrayOfNulls(size)
+        }
+    }
 
     val id = "$manufacturer $name $year - ${hashCode()}"
+
+    constructor(parcel: Parcel) : this() {
+        manufacturer = parcel.readString()
+        name = parcel.readString()
+        year = parcel.readInt()
+        vehicleType = parcel.readSerializable() as VehicleType
+
+        val fuelTypesList = parcel.readArrayList(javaClass.classLoader)
+        @Suppress("UNCHECKED_CAST")
+        fuelTypes = fuelTypesList.toTypedArray() as Array<FuelType>
+
+        kmPerLitre = parcel.readFloat()
+    }
 
     override fun equals(other: Any?): Boolean {
         val sameObject = other is Vehicle
@@ -37,6 +72,30 @@ data class Vehicle(var manufacturer: String, var name: String, var year: Int,
         map["fuel_types"] = fuelTypes
         map["km_per_litre"] = kmPerLitre
         return map
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(manufacturer)
+        parcel.writeString(name)
+        parcel.writeInt(year)
+        parcel.writeSerializable(vehicleType)
+
+        val typesList = ArrayList<Int>()
+        fuelTypes.forEach {
+            when (it) {
+                FuelType.AUTOGAS -> typesList.add(AUTOGAS_INT)
+                FuelType.DIESEL -> typesList.add(DIESEL_INT)
+                FuelType.ETHANOL -> typesList.add(ETHANOL_INT)
+                FuelType.PETROL -> typesList.add(PETROL_INT)
+            }
+        }
+        parcel.writeList(typesList)
+
+        parcel.writeFloat(kmPerLitre)
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 
 }

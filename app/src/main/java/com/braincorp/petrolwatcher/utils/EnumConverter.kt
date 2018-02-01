@@ -1,6 +1,8 @@
 package com.braincorp.petrolwatcher.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.FuelQuality
 import com.braincorp.petrolwatcher.model.FuelType
@@ -39,4 +41,13 @@ fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
         VehicleType.LORRY -> getString(R.string.lorry)
         VehicleType.MOTORCYCLE -> getString(R.string.motorcycle)
     }
+}
+
+fun Context.vehicleTypeToDrawable(vehicleType: VehicleType): Drawable {
+    val drawableRes = when (vehicleType) {
+        VehicleType.CAR -> R.drawable.ic_car
+        VehicleType.LORRY -> R.drawable.ic_lorry
+        VehicleType.MOTORCYCLE -> R.drawable.ic_motorcycle
+    }
+    return ContextCompat.getDrawable(this, drawableRes)!!
 }
