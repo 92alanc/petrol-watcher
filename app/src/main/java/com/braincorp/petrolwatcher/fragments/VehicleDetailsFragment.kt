@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.TextUtils.isEmpty
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
+import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.model.FuelType
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
@@ -28,8 +29,11 @@ class VehicleDetailsFragment : Fragment() {
         private const val ARG_UI_MODE = "ui_mode"
         private const val ARG_VEHICLE = "vehicle"
 
-        fun newInstance(uiMode: UiMode, vehicle: Vehicle? = null): VehicleDetailsFragment {
+        fun newInstance(uiMode: UiMode,
+                        onFragmentInflatedListener: OnFragmentInflatedListener,
+                        vehicle: Vehicle? = null): VehicleDetailsFragment {
             val instance = VehicleDetailsFragment()
+            instance.setOnFragmentInflatedListener(onFragmentInflatedListener)
             val args = Bundle()
             args.putSerializable(ARG_UI_MODE, uiMode)
             args.putParcelable(ARG_VEHICLE, vehicle)
@@ -43,6 +47,7 @@ class VehicleDetailsFragment : Fragment() {
     private lateinit var imageViewVehicleType: ImageView
     private lateinit var textViewFuelTypes: TextView
     private lateinit var textViewFuelConsumption: TextView
+    private lateinit var buttonDelete: ImageButton
 
     private lateinit var editTextName: EditText
     private lateinit var editTextManufacturer: EditText
@@ -55,6 +60,7 @@ class VehicleDetailsFragment : Fragment() {
     private lateinit var editTextFuelConsumption: EditText
     private lateinit var divider: View
 
+    private var onFragmentInflatedListener: OnFragmentInflatedListener? = null
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
     private var uiMode = UiMode.VIEW
     private var vehicle: Vehicle? = null
@@ -68,7 +74,42 @@ class VehicleDetailsFragment : Fragment() {
         applyPreferences()
         parseArgs()
         prepareUi()
+        onFragmentInflatedListener?.onFragmentInflated(fragment = this)
         return view
+    }
+
+    fun getVehicle(): Vehicle {
+        if (uiMode == UiMode.VIEW) return vehicle!!
+        if (uiMode == UiMode.CREATE) vehicle = Vehicle()
+
+        vehicle!!.name = editTextName.text.toString()
+        vehicle!!.manufacturer = editTextManufacturer.text.toString()
+        vehicle!!.year = if (!TextUtils.isEmpty(editTextYear.text.toString()))
+            editTextYear.text.toString().toInt()
+        else 0
+
+        val fuelTypesList = ArrayList<FuelType>()
+        if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.AUTOGAS)
+        if (checkBoxDiesel.isChecked) fuelTypesList.add(FuelType.DIESEL)
+        if (checkBoxEthanol.isChecked) fuelTypesList.add(FuelType.ETHANOL)
+        if (checkBoxPetrol.isChecked) fuelTypesList.add(FuelType.PETROL)
+
+        vehicle!!.fuelTypes = fuelTypesList
+
+        vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
+        vehicle!!.fuelConsumption = if (!TextUtils.isEmpty(editTextFuelConsumption.text.toString()))
+            editTextFuelConsumption.text.toString().toFloat()
+        else 0f
+
+        return vehicle!!
+    }
+
+    fun setDeleteButtonClickListener(clickListener: View.OnClickListener) {
+        buttonDelete.setOnClickListener(clickListener)
+    }
+
+    fun setOnFragmentInflatedListener(onFragmentInflatedListener: OnFragmentInflatedListener?) {
+        this.onFragmentInflatedListener = onFragmentInflatedListener
     }
 
     private fun applyPreferences() {
@@ -89,6 +130,7 @@ class VehicleDetailsFragment : Fragment() {
         imageViewVehicleType = view.findViewById(R.id.imageViewVehicleType)
         textViewFuelTypes = view.findViewById(R.id.textViewFuelTypes)
         textViewFuelConsumption = view.findViewById(R.id.textViewFuelConsumption)
+        buttonDelete = view.findViewById(R.id.buttonDelete)
 
         editTextName = view.findViewById(R.id.editTextVehicleName)
         editTextManufacturer = view.findViewById(R.id.editTextManufacturer)
@@ -144,6 +186,7 @@ class VehicleDetailsFragment : Fragment() {
         imageViewVehicleType.visibility = GONE
         textViewFuelTypes.visibility = GONE
         textViewFuelConsumption.visibility = GONE
+        buttonDelete.visibility = GONE
     }
 
     private fun showEditableFields() {
@@ -187,6 +230,7 @@ class VehicleDetailsFragment : Fragment() {
         imageViewVehicleType.visibility = VISIBLE
         textViewFuelTypes.visibility = VISIBLE
         textViewFuelConsumption.visibility = VISIBLE
+        buttonDelete.visibility = VISIBLE
     }
 
     private fun fillEditableFields() {
@@ -220,32 +264,6 @@ class VehicleDetailsFragment : Fragment() {
             SystemOfMeasurement.METRIC -> context!!.getString(R.string.unit_km_per_litre)
         }
         textViewFuelConsumption.text = "${vehicle!!.fuelConsumption} $unit"
-    }
-
-    fun getVehicle(): Vehicle {
-        if (uiMode == UiMode.VIEW) return vehicle!!
-        if (uiMode == UiMode.CREATE) vehicle = Vehicle()
-
-        vehicle!!.name = editTextName.text.toString()
-        vehicle!!.manufacturer = editTextManufacturer.text.toString()
-        vehicle!!.year = if (!isEmpty(editTextYear.text.toString()))
-            editTextYear.text.toString().toInt()
-        else 0
-
-        val fuelTypesList = ArrayList<FuelType>()
-        if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.AUTOGAS)
-        if (checkBoxDiesel.isChecked) fuelTypesList.add(FuelType.DIESEL)
-        if (checkBoxEthanol.isChecked) fuelTypesList.add(FuelType.ETHANOL)
-        if (checkBoxPetrol.isChecked) fuelTypesList.add(FuelType.PETROL)
-
-        vehicle!!.fuelTypes = fuelTypesList
-
-        vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
-        vehicle!!.fuelConsumption = if (!isEmpty(editTextFuelConsumption.text.toString()))
-                editTextFuelConsumption.text.toString().toFloat()
-            else 0f
-
-        return vehicle!!
     }
 
 }

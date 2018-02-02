@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.View.GONE
@@ -12,13 +13,11 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.VehicleAdapter
 import com.braincorp.petrolwatcher.database.VehicleDatabase
 import com.braincorp.petrolwatcher.fragments.VehicleDetailsFragment
+import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
-import com.braincorp.petrolwatcher.utils.removeFragment
-import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
-import com.braincorp.petrolwatcher.utils.showErrorDialogue
-import com.braincorp.petrolwatcher.utils.showInformationDialogue
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -28,7 +27,8 @@ import kotlinx.android.synthetic.main.activity_vehicles.*
 import kotlinx.android.synthetic.main.content_vehicles.*
 
 class VehiclesActivity : BaseActivity(), View.OnClickListener,
-        OnCompleteListener<Void>, OnItemClickListener, ValueEventListener {
+        OnFragmentInflatedListener, OnCompleteListener<Void>,
+        OnItemClickListener, ValueEventListener {
 
     companion object {
         private const val EXTRA_DATA = "data"
@@ -66,7 +66,12 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fabVehicles -> handleFabClick()
+            R.id.buttonDelete -> promptDelete()
         }
+    }
+
+    override fun onFragmentInflated(fragment: Fragment) {
+        (fragment as VehicleDetailsFragment).setDeleteButtonClickListener(this)
     }
 
     override fun onItemClick(position: Int) {
@@ -129,7 +134,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
 
     private fun loadFragment(uiMode: UiMode, vehicle: Vehicle? = null) {
         placeholderVehicles.visibility = VISIBLE
-        fragment = VehicleDetailsFragment.newInstance(uiMode, vehicle)
+        fragment = VehicleDetailsFragment.newInstance(uiMode, this, vehicle)
         replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!)
     }
 
@@ -155,10 +160,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
 
     private fun prepareEditMode(vehicle: Vehicle) {
         fabVehicles.setImageResource(R.drawable.ic_save)
-
-
         loadFragment(uiMode!!, vehicle)
-
         recyclerViewVehicles.visibility = GONE
     }
 
@@ -169,6 +171,15 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         removeFragment()
         VehicleDatabase.select(valueEventListener = this)
         // showProgressBar()
+    }
+
+    private fun promptDelete() {
+        showQuestionDialogue(R.string.delete_vehicle, R.string.are_you_sure, positiveFunc = {
+            VehicleDatabase.delete(vehicle!!, OnCompleteListener {
+                recyclerViewVehicles.adapter.notifyDataSetChanged()
+                prepareInitialMode()
+            })
+        }, negativeFunc = { })
     }
 
     private fun populateRecyclerView(items: Array<Vehicle>) {

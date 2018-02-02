@@ -56,4 +56,7 @@
     <string name="no_vehicles">Nenhum veículo.\nClique no botão + para adicionar</string>
     <string name="all_fields_are_required">Todos os campos são obrigatórios</string>
     <string name="information">Informação</string>
+    <string name="delete">Remover</string>
+    <string name="delete_vehicle">Remover veículo</string>
+    <string name="are_you_sure">Tem certeza?</string>
 </resources>

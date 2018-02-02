@@ -62,4 +62,7 @@
     <string name="no_vehicles">No vehicles.\nTap the + button to add</string>
     <string name="all_fields_are_required">All fields are required</string>
     <string name="information">Information</string>
+    <string name="delete">Delete</string>
+    <string name="delete_vehicle">Delete vehicle</string>
+    <string name="are_you_sure">Are you sure?</string>
 </resources>
