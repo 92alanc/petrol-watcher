@@ -13,14 +13,14 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
                    var year: Int = 0,
                    var vehicleType: VehicleType = VehicleType.CAR,
                    var fuelTypes: ArrayList<FuelType> = ArrayList(),
-                   var kmPerLitre: Float = 0f) : Parcelable {
+                   var fuelConsumption: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
         private const val KEY_ID = "id"
         private const val KEY_MANUFACTURER = "manufacturer"
         private const val KEY_NAME = "name"
         private const val KEY_YEAR = "year"
-        private const val KEY_KM_PER_LITRE = "km_per_litre"
+        private const val KEY_FUEL_CONSUMPTION = "fuel_consumption"
         private const val KEY_VEHICLE_TYPE = "vehicle_type"
         private const val KEY_FUEL_TYPES = "fuel_types"
 
@@ -43,7 +43,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         name = snapshot.child(KEY_NAME).value.toString()
         manufacturer = snapshot.child(KEY_MANUFACTURER).value.toString()
         year = snapshot.child(KEY_YEAR).value.toString().toInt()
-        kmPerLitre = snapshot.child(KEY_KM_PER_LITRE).value.toString().toFloat()
+        fuelConsumption = snapshot.child(KEY_FUEL_CONSUMPTION).value.toString().toFloat()
         vehicleType = snapshot.child(KEY_VEHICLE_TYPE).getValue(VehicleType::class.java)!!
         snapshot.child(KEY_FUEL_TYPES).children.forEach {
             fuelTypes.add(stringToFuelType(it.value.toString()))
@@ -63,7 +63,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(FuelType.ETHANOL)
         if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(FuelType.PETROL)
 
-        kmPerLitre = parcel.readFloat()
+        fuelConsumption = parcel.readFloat()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -75,7 +75,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
                     .filterIndexed { i, fuelType -> fuelType != otherVehicle.fuelTypes[i] }
                     .none()
             val sameYear = year == otherVehicle.year
-            val sameKmPerLitre = kmPerLitre == otherVehicle.kmPerLitre
+            val sameKmPerLitre = fuelConsumption == otherVehicle.fuelConsumption
 
             sameName && sameFuelType && sameYear && sameKmPerLitre
         } else {
@@ -95,7 +95,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         map[KEY_YEAR] = year
         map[KEY_VEHICLE_TYPE] = vehicleType
         map[KEY_FUEL_TYPES] = fuelTypes
-        map[KEY_KM_PER_LITRE] = kmPerLitre
+        map[KEY_FUEL_CONSUMPTION] = fuelConsumption
         return map
     }
 
@@ -118,7 +118,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         }
         parcel.writeBundle(bundle)
 
-        parcel.writeFloat(kmPerLitre)
+        parcel.writeFloat(fuelConsumption)
     }
 
 

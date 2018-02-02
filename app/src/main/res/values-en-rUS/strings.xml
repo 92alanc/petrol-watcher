@@ -52,4 +52,6 @@
     <string name="km_per_litre">kilometers per liter</string>
     <string name="miles_per_gallon">miles per gallon</string>
     <string name="error_finding_vehicles">Error finding your vehicles</string>
+    <string name="fuel_consumption">fuel consumption</string>
+    <string name="no_vehicles">No vehicles.\nTap the + button to add</string>
 </resources>

@@ -74,7 +74,13 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
             list.add(vehicle)
         }
         vehicles = list.toTypedArray()
-        if (vehicles != null) populateRecyclerView(vehicles!!)
+        if (vehicles != null && vehicles!!.isNotEmpty()) {
+            textViewNoVehicles.visibility = GONE
+            populateRecyclerView(vehicles!!)
+        } else {
+            textViewNoVehicles.visibility = VISIBLE
+            recyclerViewVehicles.visibility = GONE
+        }
     }
 
     override fun onCancelled(error: DatabaseError?) {
@@ -137,16 +143,16 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun prepareInitialMode() {
-        uiMode = UiMode.VIEW
+        uiMode = null
         fabVehicles.setImageResource(R.drawable.ic_add)
 
         removeFragment()
         VehicleDatabase.select(valueEventListener = this)
         // showProgressBar()
-        recyclerViewVehicles.visibility = VISIBLE
     }
 
     private fun populateRecyclerView(items: Array<Vehicle>) {
+        recyclerViewVehicles.visibility = VISIBLE
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
         val adapter = VehicleAdapter(context = this, items = items, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter

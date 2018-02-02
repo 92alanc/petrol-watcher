@@ -41,7 +41,7 @@ class VehicleDetailsFragment : Fragment() {
     private lateinit var textViewYear: TextView
     private lateinit var imageViewVehicleType: ImageView
     private lateinit var textViewFuelTypes: TextView
-    private lateinit var textViewKmPerLitre: TextView
+    private lateinit var textViewFuelConsumption: TextView
 
     private lateinit var editTextName: EditText
     private lateinit var editTextManufacturer: EditText
@@ -51,7 +51,7 @@ class VehicleDetailsFragment : Fragment() {
     private lateinit var checkBoxDiesel: CheckBox
     private lateinit var checkBoxEthanol: CheckBox
     private lateinit var checkBoxPetrol: CheckBox
-    private lateinit var editTextKmPerLitre: EditText
+    private lateinit var editTextFuelConsumption: EditText
     private lateinit var divider: View
 
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
@@ -73,11 +73,11 @@ class VehicleDetailsFragment : Fragment() {
     private fun applyPreferences() {
         when (systemOfMeasurement) {
             SystemOfMeasurement.IMPERIAL -> {
-                editTextKmPerLitre.hint = context!!.getString(R.string.miles_per_gallon)
+                editTextFuelConsumption.hint = context!!.getString(R.string.miles_per_gallon)
             }
 
             SystemOfMeasurement.METRIC -> {
-                editTextKmPerLitre.hint = context!!.getString(R.string.km_per_litre)
+                editTextFuelConsumption.hint = context!!.getString(R.string.km_per_litre)
             }
         }
     }
@@ -87,7 +87,7 @@ class VehicleDetailsFragment : Fragment() {
         textViewYear = view.findViewById(R.id.textViewYear)
         imageViewVehicleType = view.findViewById(R.id.imageViewVehicleType)
         textViewFuelTypes = view.findViewById(R.id.textViewFuelTypes)
-        textViewKmPerLitre = view.findViewById(R.id.textViewKmPerLitre)
+        textViewFuelConsumption = view.findViewById(R.id.textViewFuelConsumption)
 
         editTextName = view.findViewById(R.id.editTextVehicleName)
         editTextManufacturer = view.findViewById(R.id.editTextManufacturer)
@@ -97,14 +97,14 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxDiesel = view.findViewById(R.id.checkBoxDiesel)
         checkBoxEthanol = view.findViewById(R.id.checkBoxEthanol)
         checkBoxPetrol = view.findViewById(R.id.checkBoxPetrol)
-        editTextKmPerLitre = view.findViewById(R.id.editTextKmPerLitre)
+        editTextFuelConsumption = view.findViewById(R.id.editTextFuelConsumption)
         divider = view.findViewById(R.id.divider)
     }
 
     private fun parseArgs() {
         uiMode = arguments?.getSerializable(ARG_UI_MODE) as UiMode
         vehicle = arguments?.getParcelable(ARG_VEHICLE)
-        Log.d("ALAN", "found ${vehicle?.fuelTypes} and ${vehicle?.kmPerLitre}")
+        Log.d("ALAN", "found ${vehicle?.fuelTypes} and ${vehicle?.fuelConsumption}")
     }
 
     private fun populateSpinner() {
@@ -142,7 +142,7 @@ class VehicleDetailsFragment : Fragment() {
         textViewYear.visibility = GONE
         imageViewVehicleType.visibility = GONE
         textViewFuelTypes.visibility = GONE
-        textViewKmPerLitre.visibility = GONE
+        textViewFuelConsumption.visibility = GONE
     }
 
     private fun showEditableFields() {
@@ -154,9 +154,17 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxDiesel.visibility = VISIBLE
         checkBoxEthanol.visibility = VISIBLE
         checkBoxPetrol.visibility = VISIBLE
-        editTextKmPerLitre.visibility = VISIBLE
+        editTextFuelConsumption.visibility = VISIBLE
         divider.visibility = VISIBLE
         populateSpinner()
+
+        val unit = when (systemOfMeasurement) {
+            SystemOfMeasurement.IMPERIAL -> context!!.getString(R.string.unit_miles_per_gallon)
+            SystemOfMeasurement.METRIC -> context!!.getString(R.string.unit_km_per_litre)
+        }
+
+        val hint = "${context!!.getString(R.string.fuel_consumption)} ($unit)"
+        editTextFuelConsumption.hint = hint
     }
 
     private fun hideEditableFields() {
@@ -168,7 +176,7 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxDiesel.visibility = GONE
         checkBoxEthanol.visibility = GONE
         checkBoxPetrol.visibility = GONE
-        editTextKmPerLitre.visibility = GONE
+        editTextFuelConsumption.visibility = GONE
         divider.visibility = GONE
     }
 
@@ -177,7 +185,7 @@ class VehicleDetailsFragment : Fragment() {
         textViewYear.visibility = VISIBLE
         imageViewVehicleType.visibility = VISIBLE
         textViewFuelTypes.visibility = VISIBLE
-        textViewKmPerLitre.visibility = VISIBLE
+        textViewFuelConsumption.visibility = VISIBLE
     }
 
     private fun fillEditableFields() {
@@ -193,7 +201,7 @@ class VehicleDetailsFragment : Fragment() {
                 FuelType.PETROL -> checkBoxPetrol.isChecked = true
             }
         }
-        editTextKmPerLitre.setText(vehicle!!.kmPerLitre.toString())
+        editTextFuelConsumption.setText(vehicle!!.fuelConsumption.toString())
     }
 
     @SuppressLint("SetTextI18n")
@@ -210,7 +218,7 @@ class VehicleDetailsFragment : Fragment() {
             SystemOfMeasurement.IMPERIAL -> context!!.getString(R.string.unit_miles_per_gallon)
             SystemOfMeasurement.METRIC -> context!!.getString(R.string.unit_km_per_litre)
         }
-        textViewKmPerLitre.text = "${vehicle!!.kmPerLitre} $unit"
+        textViewFuelConsumption.text = "${vehicle!!.fuelConsumption} $unit"
     }
 
     fun getVehicle(): Vehicle {
@@ -230,7 +238,7 @@ class VehicleDetailsFragment : Fragment() {
         vehicle!!.fuelTypes = fuelTypesList
 
         vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
-        vehicle!!.kmPerLitre = editTextKmPerLitre.text.toString().toFloat()
+        vehicle!!.fuelConsumption = editTextFuelConsumption.text.toString().toFloat()
 
         return vehicle!!
     }

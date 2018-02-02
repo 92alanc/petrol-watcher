@@ -47,7 +47,7 @@
             tools:text="Petrol, Ethanol"/>
 
         <TextView
-            android:id="@+id/textViewKmPerLitre"
+            android:id="@+id/textViewFuelConsumption"
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/textViewFuelTypes"
@@ -153,9 +153,9 @@
             app:layout_constraintLeft_toLeftOf="@id/checkBoxEthanol"/>
 
         <EditText
-            android:id="@+id/editTextKmPerLitre"
+            android:id="@+id/editTextFuelConsumption"
             style="@style/EditTextWidthMatchParent"
-            android:hint="@string/km_per_litre"
+            android:hint="@string/fuel_consumption"
             android:inputType="numberDecimal"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/checkBoxDiesel"

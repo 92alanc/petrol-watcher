@@ -52,4 +52,6 @@
     <string name="km_per_litre">quilômetros por litro</string>
     <string name="miles_per_gallon">milhas por galão</string>
     <string name="error_finding_vehicles">Erro ao encontrar seus veículos</string>
+    <string name="fuel_consumption">consumo de combustível</string>
+    <string name="no_vehicles">Nenhum veículo.\nClique no botão + para adicionar</string>
 </resources>
