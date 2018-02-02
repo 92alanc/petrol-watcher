@@ -35,7 +35,8 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     private var fragment: VehicleDetailsFragment? = null
-    private var uiMode = UiMode.VIEW
+    private var uiMode: UiMode? = null
+    private var vehicle: Vehicle? = null
     private var vehicles: Array<Vehicle>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fabVehicles.setOnClickListener(this)
-        prepareViewMode()
+        prepareInitialMode()
     }
 
     override fun onClick(v: View?) {
@@ -56,7 +57,9 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        prepareEditMode(vehicles!![position])
+        vehicle = vehicles!![position]
+        uiMode = UiMode.VIEW
+        prepareViewMode(vehicle!!)
     }
 
     override fun onComplete(task: Task<Void>) {
@@ -81,15 +84,19 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     private fun handleFabClick() {
         when (uiMode) {
             UiMode.VIEW -> {
-                uiMode = UiMode.CREATE
-                recyclerViewVehicles.visibility = GONE
-                fabVehicles.setImageResource(R.drawable.ic_save)
-                loadFragment(uiMode)
+                uiMode = UiMode.EDIT
+                prepareEditMode(vehicle!!)
             }
-            else -> {
+
+            UiMode.CREATE, UiMode.EDIT -> {
                 save()
-                uiMode = UiMode.VIEW
-                prepareViewMode()
+                uiMode = null
+                prepareInitialMode()
+            }
+
+            null -> {
+                uiMode = UiMode.CREATE
+                prepareCreateMode()
             }
         }
     }
@@ -105,16 +112,31 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         placeholderVehicles.visibility = GONE
     }
 
-    private fun prepareEditMode(vehicle: Vehicle) {
-        fabVehicles.setImageResource(R.drawable.ic_save)
+    private fun prepareViewMode(vehicle: Vehicle) {
+        fabVehicles.setImageResource(R.drawable.ic_edit)
 
-        uiMode = UiMode.EDIT
-        loadFragment(uiMode, vehicle)
+        uiMode = UiMode.VIEW
+        loadFragment(uiMode!!, vehicle)
 
         recyclerViewVehicles.visibility = GONE
     }
 
-    private fun prepareViewMode() {
+    private fun prepareCreateMode() {
+        recyclerViewVehicles.visibility = GONE
+        fabVehicles.setImageResource(R.drawable.ic_save)
+        loadFragment(uiMode!!)
+    }
+
+    private fun prepareEditMode(vehicle: Vehicle) {
+        fabVehicles.setImageResource(R.drawable.ic_save)
+
+
+        loadFragment(uiMode!!, vehicle)
+
+        recyclerViewVehicles.visibility = GONE
+    }
+
+    private fun prepareInitialMode() {
         uiMode = UiMode.VIEW
         fabVehicles.setImageResource(R.drawable.ic_add)
 

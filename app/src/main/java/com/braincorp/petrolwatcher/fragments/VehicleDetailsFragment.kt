@@ -37,8 +37,7 @@ class VehicleDetailsFragment : Fragment() {
         }
     }
 
-    private lateinit var textViewName: TextView
-    private lateinit var textViewManufacturer: TextView
+    private lateinit var textViewManufacturerAndName: TextView
     private lateinit var textViewYear: TextView
     private lateinit var imageViewVehicleType: ImageView
     private lateinit var textViewFuelTypes: TextView
@@ -84,8 +83,7 @@ class VehicleDetailsFragment : Fragment() {
     }
 
     private fun bindViews(view: View) {
-        textViewName = view.findViewById(R.id.textViewVehicleName)
-        textViewManufacturer = view.findViewById(R.id.textViewManufacturerAndName)
+        textViewManufacturerAndName = view.findViewById(R.id.textViewManufacturerAndName)
         textViewYear = view.findViewById(R.id.textViewYear)
         imageViewVehicleType = view.findViewById(R.id.imageViewVehicleType)
         textViewFuelTypes = view.findViewById(R.id.textViewFuelTypes)
@@ -140,8 +138,7 @@ class VehicleDetailsFragment : Fragment() {
     }
 
     private fun hideNotEditableViews() {
-        textViewName.visibility = GONE
-        textViewManufacturer.visibility = GONE
+        textViewManufacturerAndName.visibility = GONE
         textViewYear.visibility = GONE
         imageViewVehicleType.visibility = GONE
         textViewFuelTypes.visibility = GONE
@@ -176,8 +173,7 @@ class VehicleDetailsFragment : Fragment() {
     }
 
     private fun showNotEditableFields() {
-        textViewName.visibility = VISIBLE
-        textViewManufacturer.visibility = VISIBLE
+        textViewManufacturerAndName.visibility = VISIBLE
         textViewYear.visibility = VISIBLE
         imageViewVehicleType.visibility = VISIBLE
         textViewFuelTypes.visibility = VISIBLE
@@ -202,8 +198,7 @@ class VehicleDetailsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun fillNotEditableFields() {
-        textViewName.text = vehicle!!.name
-        textViewManufacturer.text = vehicle!!.manufacturer
+        textViewManufacturerAndName.text = "${vehicle!!.manufacturer} ${vehicle!!.name}"
         textViewYear.text = vehicle!!.year.toString()
 
         val drawable = context!!.vehicleTypeToDrawable(vehicle!!.vehicleType)

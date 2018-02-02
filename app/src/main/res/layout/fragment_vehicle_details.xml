@@ -13,21 +13,22 @@
         android:layout_height="match_parent"
         android:padding="@dimen/padding_default">
 
-        <TextView
-            android:id="@+id/textViewVehicleName"
-            style="@style/TextViewTitle"
+        <ImageView
+            android:id="@+id/imageViewVehicleType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:text="TT"/>
+            tools:src="@drawable/ic_car"
+            tools:ignore="ContentDescription"/>
 
         <TextView
             android:id="@+id/textViewManufacturerAndName"
             style="@style/TextViewDefault"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/textViewVehicleName"
+            app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Audi"/>
+            tools:text="Audi TT"/>
 
         <TextView
             android:id="@+id/textViewYear"
@@ -37,21 +38,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="2018"/>
 
-        <ImageView
-            android:id="@+id/imageViewVehicleType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/textViewYear"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:src="@drawable/ic_car"
-            tools:ignore="ContentDescription"/>
-
         <TextView
             android:id="@+id/textViewFuelTypes"
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
+            app:layout_constraintTop_toBottomOf="@id/textViewYear"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="Petrol, Ethanol"/>
 
