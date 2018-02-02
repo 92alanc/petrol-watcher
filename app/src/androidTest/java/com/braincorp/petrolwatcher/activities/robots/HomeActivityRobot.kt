@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.robots
+package com.braincorp.petrolwatcher.activities.robots
 
 import android.content.Intent
 import android.support.test.espresso.Espresso.onView
@@ -14,6 +14,7 @@ import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.HomeActivity
 import com.braincorp.petrolwatcher.activities.ProfileActivity
+import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
 class HomeActivityRobot : BaseRobot() {

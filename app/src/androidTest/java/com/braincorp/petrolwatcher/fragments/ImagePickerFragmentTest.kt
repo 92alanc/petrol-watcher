@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.fragments
 
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.model.UiMode
-import com.braincorp.petrolwatcher.robots.ImagePickerFragmentRobot
+import com.braincorp.petrolwatcher.fragments.robots.ImagePickerFragmentRobot
 import org.junit.Test
 import org.junit.runner.RunWith
 

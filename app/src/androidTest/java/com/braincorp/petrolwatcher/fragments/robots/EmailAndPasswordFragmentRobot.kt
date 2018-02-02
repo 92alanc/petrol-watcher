@@ -1,10 +1,11 @@
-package com.braincorp.petrolwatcher.robots
+package com.braincorp.petrolwatcher.fragments.robots
 
 import android.content.Intent
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.fragments.EmailAndPasswordFragment
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
 class EmailAndPasswordFragmentRobot : BaseRobot() {

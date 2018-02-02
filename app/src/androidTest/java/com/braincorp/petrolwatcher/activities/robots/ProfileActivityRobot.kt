@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.robots
+package com.braincorp.petrolwatcher.activities.robots
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
@@ -11,6 +11,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.ProfileActivity
 import com.braincorp.petrolwatcher.activities.VehiclesActivity
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
 class ProfileActivityRobot : BaseRobot() {

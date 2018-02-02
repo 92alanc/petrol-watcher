@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.robots
+package com.braincorp.petrolwatcher.fragments.robots
 
 import android.content.Intent
 import android.support.test.espresso.Espresso.onView
@@ -9,6 +9,7 @@ import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.fragments.ImagePickerFragment
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 

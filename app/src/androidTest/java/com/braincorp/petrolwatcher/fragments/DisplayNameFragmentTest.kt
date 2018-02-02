@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.fragments
 
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.model.UiMode
-import com.braincorp.petrolwatcher.robots.DisplayNameFragmentRobot
+import com.braincorp.petrolwatcher.fragments.robots.DisplayNameFragmentRobot
 import org.junit.Test
 import org.junit.runner.RunWith
 
