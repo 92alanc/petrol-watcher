@@ -50,11 +50,14 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onClick(v: View?) {
-
+        when (v?.id) {
+            R.id.fabHome -> TODO("not implemented")
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.itemStationsNearby -> launchPetrolStationsActivity()
             R.id.itemProfile -> launchProfileActivity()
             R.id.itemSignOut -> promptSignOut()
         }
@@ -91,6 +94,11 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun launchProfileActivity() {
         val intent = ProfileActivity.getIntent(context = this, uiMode = UiMode.VIEW)
+        startActivity(intent)
+    }
+
+    private fun launchPetrolStationsActivity() {
+        val intent = PetrolStationsActivity.getIntent(context = this)
         startActivity(intent)
     }
 

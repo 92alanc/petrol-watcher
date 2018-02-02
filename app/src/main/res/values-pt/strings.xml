@@ -59,4 +59,5 @@
     <string name="delete">Remover</string>
     <string name="delete_vehicle">Remover veículo</string>
     <string name="are_you_sure">Tem certeza?</string>
+    <string name="no_petrol_stations">Nenhum posto de gasolina registrado ainda.\nSeja o primeiro a registrar um!</string>
 </resources>

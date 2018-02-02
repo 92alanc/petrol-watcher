@@ -65,4 +65,5 @@
     <string name="delete">Delete</string>
     <string name="delete_vehicle">Delete vehicle</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="no_petrol_stations">No petrol stations registered yet.\nBe the first to register one!</string>
 </resources>

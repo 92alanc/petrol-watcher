@@ -13,6 +13,7 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.HomeActivity
+import com.braincorp.petrolwatcher.activities.PetrolStationsActivity
 import com.braincorp.petrolwatcher.activities.ProfileActivity
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
@@ -45,6 +46,16 @@ class HomeActivityRobot : BaseRobot() {
 
     fun clickOnProfile(): HomeActivityRobot {
         onView(withText(R.string.profile)).perform(click())
+        return this
+    }
+
+    fun clickOnStationsNearby(): HomeActivityRobot {
+        onView(withText(R.string.stations_nearby)).perform(click())
+        return this
+    }
+
+    fun checkIfLaunchesPetrolStationsActivity(): HomeActivityRobot {
+        intended(hasComponent(PetrolStationsActivity::class.java.name))
         return this
     }
 

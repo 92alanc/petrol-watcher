@@ -44,6 +44,14 @@
             android:finishOnTaskLaunch="true"
             android:clearTaskOnLaunch="true"/>
 
+        <activity android:name=".activities.PetrolStationsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+        </activity>
+
         <service android:name=".services.StationLocatorService" />
     </application>
 
