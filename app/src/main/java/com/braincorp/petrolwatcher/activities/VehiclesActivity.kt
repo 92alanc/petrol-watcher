@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_PICK
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -30,8 +31,12 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         OnCompleteListener<Void>, OnItemClickListener, ValueEventListener {
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, VehiclesActivity::class.java)
+        private const val EXTRA_DATA = "data"
+
+        fun getIntent(context: Context, pickVehicle: Boolean = false): Intent {
+            val intent = Intent(context, VehiclesActivity::class.java)
+            if (pickVehicle) intent.action = ACTION_PICK
+            return intent
         }
     }
 
@@ -51,6 +56,13 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         prepareInitialMode()
     }
 
+    override fun onBackPressed() {
+        if (ACTION_PICK == intent.action) {
+            setResult(RESULT_CANCELED)
+            finish()
+        } else super.onBackPressed()
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fabVehicles -> handleFabClick()
@@ -59,8 +71,14 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
 
     override fun onItemClick(position: Int) {
         vehicle = vehicles!![position]
-        uiMode = UiMode.VIEW
-        prepareViewMode(vehicle!!)
+        if (ACTION_PICK == intent.action) {
+            val data = Intent().putExtra(EXTRA_DATA, vehicle)
+            setResult(RESULT_OK, data)
+            finish()
+        } else {
+            uiMode = UiMode.VIEW
+            prepareViewMode(vehicle!!)
+        }
     }
 
     override fun onComplete(task: Task<Void>) {
