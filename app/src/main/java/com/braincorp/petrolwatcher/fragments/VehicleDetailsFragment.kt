@@ -15,6 +15,7 @@ import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.model.FuelType
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
+import com.braincorp.petrolwatcher.model.VehicleType
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 import com.braincorp.petrolwatcher.utils.fuelTypeToString
@@ -224,8 +225,8 @@ class VehicleDetailsFragment : Fragment() {
 
     fun getVehicle(): Vehicle {
         if (uiMode == UiMode.VIEW) return vehicle!!
+        if (uiMode == UiMode.CREATE) vehicle = Vehicle()
 
-        vehicle = Vehicle()
         vehicle!!.name = editTextName.text.toString()
         vehicle!!.manufacturer = editTextManufacturer.text.toString()
         vehicle!!.year = editTextYear.text.toString().toInt()
@@ -238,6 +239,7 @@ class VehicleDetailsFragment : Fragment() {
 
         vehicle!!.fuelTypes = fuelTypesList
 
+        vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
         vehicle!!.kmPerLitre = editTextKmPerLitre.text.toString().toFloat()
 
         return vehicle!!

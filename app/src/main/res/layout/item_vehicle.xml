@@ -20,31 +20,18 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="ContentDescription"
-            tools:src="@drawable/ic_car"/>
+            tools:src="@drawable/ic_van"/>
 
         <TextView
             android:id="@+id/textViewManufacturer"
             style="@style/TextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Audi"/>
-
-        <TextView
-            android:id="@+id/textViewVehicleName"
-            style="@style/TextViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginLeft="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/textViewManufacturer"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            tools:text="Q7"/>
+            tools:text="Volkswagen Kombi"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

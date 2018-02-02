@@ -114,4 +114,11 @@ class EnumConverterTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    fun shouldConvertVanVehicleTypeToString() {
+        val expected = context.getString(R.string.van)
+        val actual = context.vehicleTypeToString(VehicleType.VAN)
+        assertEquals(expected, actual)
+    }
+
 }

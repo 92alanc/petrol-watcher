@@ -50,6 +50,7 @@ fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
         VehicleType.CAR -> getString(R.string.car)
         VehicleType.LORRY -> getString(R.string.lorry)
         VehicleType.MOTORCYCLE -> getString(R.string.motorcycle)
+        VehicleType.VAN -> getString(R.string.van)
     }
 }
 
@@ -58,6 +59,7 @@ fun Context.vehicleTypeToDrawable(vehicleType: VehicleType): Drawable {
         VehicleType.CAR -> R.drawable.ic_car
         VehicleType.LORRY -> R.drawable.ic_lorry
         VehicleType.MOTORCYCLE -> R.drawable.ic_motorcycle
+        VehicleType.VAN -> R.drawable.ic_van
     }
     return ContextCompat.getDrawable(this, drawableRes)!!
 }

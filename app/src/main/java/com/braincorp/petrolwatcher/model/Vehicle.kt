@@ -3,16 +3,27 @@ package com.braincorp.petrolwatcher.model
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import com.braincorp.petrolwatcher.utils.stringToFuelType
+import com.google.firebase.database.DataSnapshot
 import java.util.*
 import kotlin.collections.ArrayList
 
-data class Vehicle(var manufacturer: String = "", var name: String = "",
+data class Vehicle(var id: String = UUID.randomUUID().toString(),
+                   var manufacturer: String = "", var name: String = "",
                    var year: Int = 0,
                    var vehicleType: VehicleType = VehicleType.CAR,
                    var fuelTypes: ArrayList<FuelType> = ArrayList(),
                    var kmPerLitre: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
+        private const val KEY_ID = "id"
+        private const val KEY_MANUFACTURER = "manufacturer"
+        private const val KEY_NAME = "name"
+        private const val KEY_YEAR = "year"
+        private const val KEY_KM_PER_LITRE = "km_per_litre"
+        private const val KEY_VEHICLE_TYPE = "vehicle_type"
+        private const val KEY_FUEL_TYPES = "fuel_types"
+
         private const val KEY_AUTOGAS = "autogas"
         private const val KEY_DIESEL = "diesel"
         private const val KEY_ETHANOL = "ethanol"
@@ -27,9 +38,20 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
         }
     }
 
-    val id = UUID.randomUUID().toString()
+    constructor(snapshot: DataSnapshot): this() {
+        id = snapshot.child(KEY_ID).value.toString()
+        name = snapshot.child(KEY_NAME).value.toString()
+        manufacturer = snapshot.child(KEY_MANUFACTURER).value.toString()
+        year = snapshot.child(KEY_YEAR).value.toString().toInt()
+        kmPerLitre = snapshot.child(KEY_KM_PER_LITRE).value.toString().toFloat()
+        vehicleType = snapshot.child(KEY_VEHICLE_TYPE).getValue(VehicleType::class.java)!!
+        snapshot.child(KEY_FUEL_TYPES).children.forEach {
+            fuelTypes.add(stringToFuelType(it.value.toString()))
+        }
+    }
 
     constructor(parcel: Parcel) : this() {
+        id = parcel.readString()
         manufacturer = parcel.readString()
         name = parcel.readString()
         year = parcel.readInt()
@@ -67,17 +89,18 @@ data class Vehicle(var manufacturer: String = "", var name: String = "",
 
     fun toMap(): Map<String, Any> {
         val map = HashMap<String, Any>()
-        map["id"] = id
-        map["manufacturer"] = manufacturer
-        map["name"] = name
-        map["year"] = year
-        map["vehicle_type"] = vehicleType
-        map["fuel_types"] = fuelTypes
-        map["km_per_litre"] = kmPerLitre
+        map[KEY_ID] = id
+        map[KEY_MANUFACTURER] = manufacturer
+        map[KEY_NAME] = name
+        map[KEY_YEAR] = year
+        map[KEY_VEHICLE_TYPE] = vehicleType
+        map[KEY_FUEL_TYPES] = fuelTypes
+        map[KEY_KM_PER_LITRE] = kmPerLitre
         return map
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(manufacturer)
         parcel.writeString(name)
         parcel.writeInt(year)

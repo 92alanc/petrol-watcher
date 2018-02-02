@@ -4,6 +4,7 @@ enum class VehicleType {
 
     MOTORCYCLE,
     CAR,
-    LORRY
+    LORRY,
+    VAN
 
 }
