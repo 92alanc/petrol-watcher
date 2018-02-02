@@ -18,7 +18,7 @@ import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.model.VehicleType
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
-import com.braincorp.petrolwatcher.utils.fuelTypeToString
+import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 
 class VehicleDetailsFragment : Fragment() {
@@ -53,6 +53,7 @@ class VehicleDetailsFragment : Fragment() {
     private lateinit var checkBoxEthanol: CheckBox
     private lateinit var checkBoxPetrol: CheckBox
     private lateinit var editTextKmPerLitre: EditText
+    private lateinit var divider: View
 
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
     private var uiMode = UiMode.VIEW
@@ -84,7 +85,7 @@ class VehicleDetailsFragment : Fragment() {
 
     private fun bindViews(view: View) {
         textViewName = view.findViewById(R.id.textViewVehicleName)
-        textViewManufacturer = view.findViewById(R.id.textViewManufacturer)
+        textViewManufacturer = view.findViewById(R.id.textViewManufacturerAndName)
         textViewYear = view.findViewById(R.id.textViewYear)
         imageViewVehicleType = view.findViewById(R.id.imageViewVehicleType)
         textViewFuelTypes = view.findViewById(R.id.textViewFuelTypes)
@@ -99,6 +100,7 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxEthanol = view.findViewById(R.id.checkBoxEthanol)
         checkBoxPetrol = view.findViewById(R.id.checkBoxPetrol)
         editTextKmPerLitre = view.findViewById(R.id.editTextKmPerLitre)
+        divider = view.findViewById(R.id.divider)
     }
 
     private fun parseArgs() {
@@ -156,6 +158,7 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxEthanol.visibility = VISIBLE
         checkBoxPetrol.visibility = VISIBLE
         editTextKmPerLitre.visibility = VISIBLE
+        divider.visibility = VISIBLE
         populateSpinner()
     }
 
@@ -169,6 +172,7 @@ class VehicleDetailsFragment : Fragment() {
         checkBoxEthanol.visibility = GONE
         checkBoxPetrol.visibility = GONE
         editTextKmPerLitre.visibility = GONE
+        divider.visibility = GONE
     }
 
     private fun showNotEditableFields() {
@@ -205,16 +209,7 @@ class VehicleDetailsFragment : Fragment() {
         val drawable = context!!.vehicleTypeToDrawable(vehicle!!.vehicleType)
         imageViewVehicleType.setImageDrawable(drawable)
 
-        val sb = StringBuilder()
-        vehicle!!.fuelTypes
-                .map { context!!.fuelTypeToString(it) }
-                .forEachIndexed { i, fuelTypeString ->
-                    if (i == vehicle!!.fuelTypes.size)
-                        sb.append(fuelTypeString)
-                    else
-                        sb.append("$fuelTypeString, ")
-                }
-        textViewFuelTypes.text = sb.toString()
+        textViewFuelTypes.text = context!!.fuelTypeListToString(vehicle!!.fuelTypes)
 
         val unit = when (systemOfMeasurement) {
             SystemOfMeasurement.IMPERIAL -> context!!.getString(R.string.unit_miles_per_gallon)

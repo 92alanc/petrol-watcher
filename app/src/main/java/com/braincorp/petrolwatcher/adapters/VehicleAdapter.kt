@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.Vehicle
+import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 
 class VehicleAdapter(private val context: Context,
@@ -25,29 +27,30 @@ class VehicleAdapter(private val context: Context,
         return VehicleHolder(onItemClickListener, view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: VehicleHolder?, position: Int) {
         val vehicle = items[position]
 
         val drawable = context.vehicleTypeToDrawable(vehicle.vehicleType)
         holder?.imageViewVehicleType?.setImageDrawable(drawable)
 
-        holder?.textViewManufacturer?.text = vehicle.manufacturer
-        holder?.textViewName?.text = vehicle.name
+        holder?.textViewManufacturerAndName?.text = "${vehicle.manufacturer} ${vehicle.name}"
+        holder?.textViewFuelTypes?.text = context.fuelTypeListToString(vehicle.fuelTypes)
     }
 
     class VehicleHolder(private val onItemClickListener: OnItemClickListener,
                         itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val imageViewVehicleType: ImageView
-        val textViewManufacturer: TextView
-        val textViewName: TextView
+        val textViewManufacturerAndName: TextView
+        val textViewFuelTypes: TextView
 
         init {
             itemView.setOnClickListener(this)
 
             imageViewVehicleType = itemView.findViewById(R.id.imageViewVehicleType)
-            textViewManufacturer = itemView.findViewById(R.id.textViewManufacturer)
-            textViewName = itemView.findViewById(R.id.textViewVehicleName)
+            textViewManufacturerAndName = itemView.findViewById(R.id.textViewManufacturerAndName)
+            textViewFuelTypes = itemView.findViewById(R.id.textViewFuelTypes)
         }
 
         override fun onClick(v: View?) {

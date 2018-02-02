@@ -22,7 +22,7 @@
             tools:text="TT"/>
 
         <TextView
-            android:id="@+id/textViewManufacturer"
+            android:id="@+id/textViewManufacturerAndName"
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/textViewVehicleName"
@@ -33,7 +33,7 @@
             android:id="@+id/textViewYear"
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/textViewManufacturer"
+            app:layout_constraintTop_toBottomOf="@id/textViewManufacturerAndName"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="2018"/>
 
@@ -66,9 +66,9 @@
             tools:text="10 km/L"/>
 
         <EditText
-            android:id="@+id/editTextVehicleName"
+            android:id="@+id/editTextManufacturer"
             style="@style/EditTextWidthMatchParent"
-            android:hint="@string/name"
+            android:hint="@string/manufacturer"
             android:inputType="textCapWords"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
@@ -76,24 +76,22 @@
             app:layout_constraintRight_toRightOf="parent"/>
 
         <EditText
-            android:id="@+id/editTextManufacturer"
+            android:id="@+id/editTextVehicleName"
             style="@style/EditTextWidthMatchParent"
-            android:layout_marginTop="@dimen/margin_default"
-            android:hint="@string/manufacturer"
+            android:hint="@string/name"
             android:inputType="textCapWords"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/editTextVehicleName"
+            app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <EditText
             android:id="@+id/editTextYear"
             style="@style/EditTextWidthMatchParent"
-            android:layout_marginTop="@dimen/margin_default"
             android:hint="@string/year"
             android:inputType="number"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
+            app:layout_constraintTop_toBottomOf="@id/editTextVehicleName"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
@@ -108,6 +106,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@color/black"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
         <CheckBox
             android:id="@+id/checkBoxAutogas"
             android:layout_width="wrap_content"
@@ -115,7 +124,7 @@
             android:layout_marginTop="@dimen/margin_default"
             android:text="@string/autogas"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
+            app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.3"/>
@@ -137,7 +146,7 @@
             android:layout_marginTop="@dimen/margin_default"
             android:text="@string/ethanol"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
+            app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.7"/>

@@ -54,6 +54,18 @@ fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
     }
 }
 
+fun Context.fuelTypeListToString(fuelTypes: ArrayList<FuelType>): String {
+    val sb = StringBuilder()
+    fuelTypes.map { fuelTypeToString(it) }
+            .forEachIndexed { i, fuelTypeString ->
+                if (i == fuelTypes.size - 1)
+                    sb.append(fuelTypeString)
+                else
+                    sb.append("$fuelTypeString, ")
+            }
+    return sb.toString()
+}
+
 fun Context.vehicleTypeToDrawable(vehicleType: VehicleType): Drawable {
     val drawableRes = when (vehicleType) {
         VehicleType.CAR -> R.drawable.ic_car

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/radius_corner_default"
     app:cardUseCompatPadding="true">
@@ -23,15 +23,28 @@
             tools:src="@drawable/ic_van"/>
 
         <TextView
-            android:id="@+id/textViewManufacturer"
+            android:id="@+id/textViewManufacturerAndName"
             style="@style/TextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/imageViewVehicleType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="Volkswagen Kombi"/>
+
+        <TextView
+            android:id="@+id/textViewFuelTypes"
+            style="@style/TextViewDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_darkest"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewManufacturerAndName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Volkswagen Kombi"/>
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="ethanol, petrol"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

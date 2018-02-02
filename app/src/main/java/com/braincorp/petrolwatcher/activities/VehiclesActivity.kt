@@ -125,8 +125,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun populateRecyclerView(items: Array<Vehicle>) {
-        recyclerViewVehicles.layoutManager = LinearLayoutManager(this,
-                LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
         val adapter = VehicleAdapter(context = this, items = items, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
         // hideProgressBar()
