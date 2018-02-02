@@ -43,6 +43,7 @@ class StationLocatorService : IntentService(SERVICE_NAME) {
         locateStations(fuel, maxPrice, radius)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun locateStations(fuel: Pair<FuelType, FuelQuality>, maxPrice: Float, radius: Float) {
         TODO("not implemented")
     }

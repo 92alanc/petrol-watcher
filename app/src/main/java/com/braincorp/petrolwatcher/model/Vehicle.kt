@@ -3,9 +3,11 @@ package com.braincorp.petrolwatcher.model
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.TextUtils.isEmpty
 import com.braincorp.petrolwatcher.utils.stringToFuelType
 import com.google.firebase.database.DataSnapshot
 import java.util.*
+import java.util.Calendar.YEAR
 import kotlin.collections.ArrayList
 
 data class Vehicle(var id: String = UUID.randomUUID().toString(),
@@ -97,6 +99,14 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         map[KEY_FUEL_TYPES] = fuelTypes
         map[KEY_FUEL_CONSUMPTION] = fuelConsumption
         return map
+    }
+
+    fun allFieldsAreValid(): Boolean {
+        return !isEmpty(manufacturer)
+                && !isEmpty(name)
+                && year > 1900 && year <= Calendar.getInstance().get(YEAR)
+                && fuelTypes.isNotEmpty()
+                && fuelConsumption > 0f
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

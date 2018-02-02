@@ -17,6 +17,7 @@ import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.utils.removeFragment
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -95,9 +96,10 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
             }
 
             UiMode.CREATE, UiMode.EDIT -> {
-                save()
-                uiMode = null
-                prepareInitialMode()
+                if (save()) {
+                    uiMode = null
+                    prepareInitialMode()
+                }
             }
 
             null -> {
@@ -159,10 +161,17 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         // hideProgressBar()
     }
 
-    private fun save() {
+    private fun save(): Boolean {
         val vehicle = fragment?.getVehicle()
-        if (vehicle != null)
-            VehicleDatabase.insertOrUpdate(vehicle, this)
+        return if (vehicle != null) {
+            if (vehicle.allFieldsAreValid()) {
+                VehicleDatabase.insertOrUpdate(vehicle, this)
+                true
+            } else {
+                showInformationDialogue(R.string.information, R.string.all_fields_are_required)
+                false
+            }
+        } else false
     }
 
 }

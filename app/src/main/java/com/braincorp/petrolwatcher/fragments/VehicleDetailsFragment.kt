@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -227,7 +228,9 @@ class VehicleDetailsFragment : Fragment() {
 
         vehicle!!.name = editTextName.text.toString()
         vehicle!!.manufacturer = editTextManufacturer.text.toString()
-        vehicle!!.year = editTextYear.text.toString().toInt()
+        vehicle!!.year = if (!isEmpty(editTextYear.text.toString()))
+            editTextYear.text.toString().toInt()
+        else 0
 
         val fuelTypesList = ArrayList<FuelType>()
         if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.AUTOGAS)
@@ -238,7 +241,9 @@ class VehicleDetailsFragment : Fragment() {
         vehicle!!.fuelTypes = fuelTypesList
 
         vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
-        vehicle!!.fuelConsumption = editTextFuelConsumption.text.toString().toFloat()
+        vehicle!!.fuelConsumption = if (!isEmpty(editTextFuelConsumption.text.toString()))
+                editTextFuelConsumption.text.toString().toFloat()
+            else 0f
 
         return vehicle!!
     }
