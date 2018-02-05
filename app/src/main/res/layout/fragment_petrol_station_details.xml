@@ -16,7 +16,6 @@
         <TextView
             android:id="@+id/textViewName"
             style="@style/TextViewTitle"
-            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -27,7 +26,6 @@
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
             android:maxWidth="@dimen/width_max_petrol_station_address"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewName"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="331 Brighton Rd., Worthing BN11 2HP"/>
@@ -37,8 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/margin_default"
-            android:background="@color/black"
-            android:visibility="gone"
+            android:background="@color/grey_darkest"
             app:layout_constraintTop_toBottomOf="@id/textViewAddress"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -47,7 +44,6 @@
             android:id="@+id/textViewPrices"
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="LPG (regular): £ 0.629\ndiesel (regular): £ 1.25\npetrol (regular): 1.223\npetrol (premium): £ 1.332"/>
@@ -57,7 +53,6 @@
             style="@style/TextViewDefault"
             android:layout_marginTop="@dimen/margin_default"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewPrices"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -71,14 +66,74 @@
             android:layout_marginTop="0dp"
             android:hint="@string/name"
             android:inputType="textCapWords"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
 
         <EditText
             android:id="@+id/editTextAddress"
             style="@style/EditTextWidthMatchParent"
             android:hint="@string/address"
             android:inputType="textCapWords"
-            app:layout_constraintTop_toBottomOf="@id/editTextPetrolStationName"/>
+            app:layout_constraintTop_toBottomOf="@id/editTextPetrolStationName"
+            tools:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/spinnerFuelType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/editTextAddress"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/spinnerFuelQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/spinnerFuelType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/spinnerFuelType"
+            tools:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_add_dark"
+            android:contentDescription="@string/description_add"
+            app:layout_constraintTop_toTopOf="@id/spinnerFuelType"
+            app:layout_constraintBottom_toBottomOf="@id/spinnerFuelQuality"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/editTextPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            android:hint="@string/price"
+            android:inputType="numberDecimal"
+            app:layout_constraintTop_toTopOf="@id/spinnerFuelType"
+            app:layout_constraintBottom_toBottomOf="@id/spinnerFuelQuality"
+            app:layout_constraintLeft_toRightOf="@id/spinnerFuelQuality"
+            app:layout_constraintRight_toLeftOf="@id/buttonAdd"
+            tools:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/spinnerRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/spinnerFuelQuality"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:visibility="gone"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

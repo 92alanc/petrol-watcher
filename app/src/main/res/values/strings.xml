@@ -68,4 +68,6 @@
     <string name="no_petrol_stations">No petrol stations registered yet.\nBe the first to register one!</string>
     <string name="error_finding_petrol_stations">Error finding petrol stations</string>
     <string name="address">address</string>
+    <string name="description_add">add</string>
+    <string name="price">price</string>
 </resources>
