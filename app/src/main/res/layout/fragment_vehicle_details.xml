@@ -112,11 +112,11 @@
                 app:layout_constraintRight_toRightOf="parent"/>
 
             <CheckBox
-                android:id="@+id/checkBoxAutogas"
+                android:id="@+id/checkBoxLpg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
-                android:text="@string/autogas"
+                android:text="@string/lpg"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -130,8 +130,8 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/diesel"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/checkBoxAutogas"
-                app:layout_constraintLeft_toLeftOf="@id/checkBoxAutogas"/>
+                app:layout_constraintTop_toBottomOf="@id/checkBoxLpg"
+                app:layout_constraintLeft_toLeftOf="@id/checkBoxLpg"/>
 
             <CheckBox
                 android:id="@+id/checkBoxEthanol"

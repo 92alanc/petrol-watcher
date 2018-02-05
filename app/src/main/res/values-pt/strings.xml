@@ -39,7 +39,7 @@
     <string name="car">carro</string>
     <string name="lorry">caminhão</string>
     <string name="motorcycle">moto</string>
-    <string name="autogas">gás natural</string>
+    <string name="lpg">gás natural</string>
     <string name="petrol">gasolina</string>
     <string name="ethanol">etanol</string>
     <string name="premium">aditivado(a)</string>
@@ -60,4 +60,6 @@
     <string name="delete_vehicle">Remover veículo</string>
     <string name="are_you_sure">Tem certeza?</string>
     <string name="no_petrol_stations">Nenhum posto de gasolina registrado ainda.\nSeja o primeiro a registrar um!</string>
+    <string name="error_finding_petrol_stations">Erro ao encontrar postos de gasolina</string>
+    <string name="address">endereço</string>
 </resources>

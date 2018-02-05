@@ -31,9 +31,9 @@ class EnumConverterTest {
     }
 
     @Test
-    fun shouldConvertAutogasFuelTypeToString() {
-        val expected = context.getString(R.string.autogas)
-        val actual = context.fuelTypeToString(FuelType.AUTOGAS)
+    fun shouldConvertLpgFuelTypeToString() {
+        val expected = context.getString(R.string.lpg)
+        val actual = context.fuelTypeToString(FuelType.LPG)
         assertEquals(expected, actual)
     }
 
@@ -118,6 +118,41 @@ class EnumConverterTest {
     fun shouldConvertVanVehicleTypeToString() {
         val expected = context.getString(R.string.van)
         val actual = context.vehicleTypeToString(VehicleType.VAN)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun shouldConvertVeryBadRatingStringToRating() {
+        val expected = Rating.VERY_BAD
+        val actual = stringToRating("VERY_BAD")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun shouldConvertBadRatingStringToRating() {
+        val expected = Rating.BAD
+        val actual = stringToRating("BAD")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun shouldConvertOkRatingStringToRating() {
+        val expected = Rating.OK
+        val actual = stringToRating("OK")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun shouldConvertGoodRatingStringToRating() {
+        val expected = Rating.GOOD
+        val actual = stringToRating("GOOD")
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun shouldConvertVeryGoodRatingStringToRating() {
+        val expected = Rating.VERY_GOOD
+        val actual = stringToRating("VERY_GOOD")
         assertEquals(expected, actual)
     }
 

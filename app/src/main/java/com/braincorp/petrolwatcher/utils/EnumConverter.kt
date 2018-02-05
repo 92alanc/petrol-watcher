@@ -8,6 +8,23 @@ import com.braincorp.petrolwatcher.model.FuelQuality
 import com.braincorp.petrolwatcher.model.FuelType
 import com.braincorp.petrolwatcher.model.Rating
 import com.braincorp.petrolwatcher.model.VehicleType
+import java.util.*
+
+fun Context.fuelMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): String {
+    val sb = StringBuilder()
+    val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
+
+    for ((i, entry) in map.entries.withIndex()) {
+        val type = fuelTypeToString(entry.key.first)
+        val quality = fuelQualityToString(entry.key.second)
+        val price = entry.value
+
+        sb.append("$type ($quality): $currencySymbol $price")
+        if (i < map.size - 1) sb.append("\n")
+    }
+
+    return sb.toString()
+}
 
 fun Context.fuelQualityToString(fuelQuality: FuelQuality): String {
     return when (fuelQuality) {
@@ -18,20 +35,31 @@ fun Context.fuelQualityToString(fuelQuality: FuelQuality): String {
 
 fun Context.fuelTypeToString(fuelType: FuelType): String {
     return when (fuelType) {
-        FuelType.AUTOGAS -> getString(R.string.autogas)
         FuelType.DIESEL -> getString(R.string.diesel)
         FuelType.ETHANOL -> getString(R.string.ethanol)
+        FuelType.LPG -> getString(R.string.lpg)
         FuelType.PETROL -> getString(R.string.petrol)
     }
 }
 
 fun stringToFuelType(string: String): FuelType {
     return when (string) {
-        "AUTOGAS" -> FuelType.AUTOGAS
+        "LPG" -> FuelType.LPG
         "DIESEL" -> FuelType.DIESEL
         "ETHANOL" -> FuelType.ETHANOL
         "PETROL" -> FuelType.PETROL
         else -> FuelType.PETROL
+    }
+}
+
+fun stringToRating(string: String): Rating {
+    return when (string) {
+        "VERY_BAD" -> Rating.VERY_BAD
+        "BAD" -> Rating.BAD
+        "OK" -> Rating.OK
+        "GOOD" -> Rating.GOOD
+        "VERY_GOOD" -> Rating.VERY_GOOD
+        else -> Rating.OK
     }
 }
 

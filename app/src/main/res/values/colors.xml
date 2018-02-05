@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="amber">#FFC107</color>
     <color name="black">#000000</color>
+    <color name="green">#4CAF50</color>
+    <color name="green_light">#A5D6A7</color>
     <color name="grey">#EEEEEE</color>
     <color name="grey_dark">#BDBDBD</color>
     <color name="grey_darkest">#616161</color>
     <color name="orange">#FF9800</color>
+    <color name="red">#F44336</color>
+    <color name="red_dark">#B71C1C</color>
     <color name="teal">#1DE9B6</color>
     <color name="teal_dark">#00BFA5</color>
     <color name="white">#FFFFFF</color>

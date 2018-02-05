@@ -60,7 +60,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         vehicleType = parcel.readSerializable() as VehicleType
 
         val bundle = parcel.readBundle(javaClass.classLoader)
-        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(FuelType.AUTOGAS)
+        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(FuelType.LPG)
         if (bundle.containsKey(KEY_DIESEL)) fuelTypes.add(FuelType.DIESEL)
         if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(FuelType.ETHANOL)
         if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(FuelType.PETROL)
@@ -119,7 +119,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         val bundle = Bundle()
         fuelTypes.forEach {
             val key = when (it) {
-                FuelType.AUTOGAS -> KEY_AUTOGAS
+                FuelType.LPG -> KEY_AUTOGAS
                 FuelType.DIESEL -> KEY_DIESEL
                 FuelType.ETHANOL -> KEY_ETHANOL
                 FuelType.PETROL -> KEY_PETROL
@@ -131,9 +131,6 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         parcel.writeFloat(fuelConsumption)
     }
 
-
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
 }

@@ -89,7 +89,7 @@ class VehicleDetailsFragment : Fragment() {
         else 0
 
         val fuelTypesList = ArrayList<FuelType>()
-        if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.AUTOGAS)
+        if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.LPG)
         if (checkBoxDiesel.isChecked) fuelTypesList.add(FuelType.DIESEL)
         if (checkBoxEthanol.isChecked) fuelTypesList.add(FuelType.ETHANOL)
         if (checkBoxPetrol.isChecked) fuelTypesList.add(FuelType.PETROL)
@@ -136,7 +136,7 @@ class VehicleDetailsFragment : Fragment() {
         editTextManufacturer = view.findViewById(R.id.editTextManufacturer)
         editTextYear = view.findViewById(R.id.editTextYear)
         spinnerVehicleType = view.findViewById(R.id.spinnerVehicleType)
-        checkBoxAutogas = view.findViewById(R.id.checkBoxAutogas)
+        checkBoxAutogas = view.findViewById(R.id.checkBoxLpg)
         checkBoxDiesel = view.findViewById(R.id.checkBoxDiesel)
         checkBoxEthanol = view.findViewById(R.id.checkBoxEthanol)
         checkBoxPetrol = view.findViewById(R.id.checkBoxPetrol)
@@ -240,7 +240,7 @@ class VehicleDetailsFragment : Fragment() {
         spinnerVehicleType.setSelection(vehicle!!.vehicleType.ordinal)
         vehicle!!.fuelTypes.forEach {
             when (it) {
-                FuelType.AUTOGAS -> checkBoxAutogas.isChecked = true
+                FuelType.LPG -> checkBoxAutogas.isChecked = true
                 FuelType.DIESEL -> checkBoxDiesel.isChecked = true
                 FuelType.ETHANOL -> checkBoxEthanol.isChecked = true
                 FuelType.PETROL -> checkBoxPetrol.isChecked = true

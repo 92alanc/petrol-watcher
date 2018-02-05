@@ -41,7 +41,7 @@
     <string name="car">car</string>
     <string name="lorry">lorry</string>
     <string name="motorcycle">motorcycle</string>
-    <string name="autogas">autogas</string>
+    <string name="lpg">LPG</string>
     <string name="diesel" translatable="false">diesel</string>
     <string name="petrol">petrol</string>
     <string name="ethanol">ethanol</string>
@@ -66,4 +66,6 @@
     <string name="delete_vehicle">Delete vehicle</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="no_petrol_stations">No petrol stations registered yet.\nBe the first to register one!</string>
+    <string name="error_finding_petrol_stations">Error finding petrol stations</string>
+    <string name="address">address</string>
 </resources>
