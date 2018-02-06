@@ -54,7 +54,6 @@
             android:layout_marginTop="@dimen/margin_default"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/textViewPrices"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:textColor="@color/green"
@@ -77,51 +76,11 @@
             app:layout_constraintTop_toBottomOf="@id/editTextPetrolStationName"
             tools:visibility="gone"/>
 
-        <Spinner
-            android:id="@+id/spinnerFuelType"
-            android:layout_width="wrap_content"
+        <com.braincorp.petrolwatcher.view.PriceMapView
+            android:id="@+id/priceMapView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/editTextAddress"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:visibility="gone"/>
-
-        <Spinner
-            android:id="@+id/spinnerFuelQuality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/spinnerFuelType"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/spinnerFuelType"
-            tools:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/buttonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_add_dark"
-            android:contentDescription="@string/description_add"
-            app:layout_constraintTop_toTopOf="@id/spinnerFuelType"
-            app:layout_constraintBottom_toBottomOf="@id/spinnerFuelQuality"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:visibility="gone"/>
-
-        <EditText
-            android:id="@+id/editTextPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginLeft="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:layout_marginRight="@dimen/margin_default"
-            android:hint="@string/price"
-            android:inputType="numberDecimal"
-            app:layout_constraintTop_toTopOf="@id/spinnerFuelType"
-            app:layout_constraintBottom_toBottomOf="@id/spinnerFuelQuality"
-            app:layout_constraintLeft_toRightOf="@id/spinnerFuelQuality"
-            app:layout_constraintRight_toLeftOf="@id/buttonAdd"
             tools:visibility="gone"/>
 
         <Spinner

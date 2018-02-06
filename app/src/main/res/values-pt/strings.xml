@@ -64,4 +64,5 @@
     <string name="address">endereço</string>
     <string name="description_add">adicionar</string>
     <string name="price">preço</string>
+    <string name="description_remove">remover</string>
 </resources>

@@ -70,4 +70,5 @@
     <string name="address">address</string>
     <string name="description_add">add</string>
     <string name="price">price</string>
+    <string name="description_remove">remove</string>
 </resources>

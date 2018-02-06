@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.view.PriceMapView
 
 class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
 
@@ -34,10 +34,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var editTextName: EditText
     private lateinit var editTextAddress: EditText
-    private lateinit var spinnerFuelType: Spinner
-    private lateinit var spinnerFuelQuality: Spinner
-    private lateinit var buttonAdd: ImageButton
-    private lateinit var editTextPrice: EditText
+    private lateinit var priceMapView: PriceMapView
     private lateinit var spinnerRating: Spinner
 
     private var uiMode: UiMode = UiMode.VIEW
@@ -67,10 +64,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
 
         editTextName = view.findViewById(R.id.editTextPetrolStationName)
         editTextAddress = view.findViewById(R.id.editTextAddress)
-        spinnerFuelType = view.findViewById(R.id.spinnerFuelType)
-        spinnerFuelQuality = view.findViewById(R.id.spinnerFuelQuality)
-        buttonAdd = view.findViewById(R.id.buttonAdd)
-        editTextPrice = view.findViewById(R.id.editTextPrice)
+        priceMapView = view.findViewById(R.id.priceMapView)
         spinnerRating = view.findViewById(R.id.spinnerRating)
     }
 
