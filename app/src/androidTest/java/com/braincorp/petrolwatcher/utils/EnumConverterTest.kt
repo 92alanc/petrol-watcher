@@ -19,14 +19,14 @@ class EnumConverterTest {
     @Test
     fun shouldConvertPremiumFuelQualityToString() {
         val expected = context.getString(R.string.premium)
-        val actual = context.fuelQualityToString(FuelQuality.PREMIUM)
+        val actual = context.fuelQualityToUserFriendlyString(FuelQuality.PREMIUM)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertRegularFuelQualityToString() {
         val expected = context.getString(R.string.regular)
-        val actual = context.fuelQualityToString(FuelQuality.REGULAR)
+        val actual = context.fuelQualityToUserFriendlyString(FuelQuality.REGULAR)
         assertEquals(expected, actual)
     }
 

@@ -9,14 +9,15 @@ import com.braincorp.petrolwatcher.model.FuelType
 import com.braincorp.petrolwatcher.model.Rating
 import com.braincorp.petrolwatcher.model.VehicleType
 import java.util.*
+import kotlin.collections.HashMap
 
-fun Context.fuelMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): String {
+fun Context.fuelFloatMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): String {
     val sb = StringBuilder()
     val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
 
     for ((i, entry) in map.entries.withIndex()) {
         val type = fuelTypeToString(entry.key.first)
-        val quality = fuelQualityToString(entry.key.second)
+        val quality = fuelQualityToUserFriendlyString(entry.key.second)
         val price = entry.value
 
         sb.append("$type ($quality): $currencySymbol $price")
@@ -26,10 +27,53 @@ fun Context.fuelMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): Strin
     return sb.toString()
 }
 
-fun Context.fuelQualityToString(fuelQuality: FuelQuality): String {
+fun fuelFloatMapToStringFloatMap(input: Map<Pair<FuelType,
+        FuelQuality>, Float>): Map<String, Float> {
+    val output = HashMap<String, Float>()
+
+    for (entry in input) {
+        val type = entry.key.first.name
+        val quality = entry.key.second.name
+        val key = "$type,$quality"
+        val value = entry.value
+        output[key] = value
+    }
+
+    return output
+}
+
+fun stringFloatMapToFuelFloatMap(input: Map<String, Float>)
+        : Map<Pair<FuelType, FuelQuality>, Float> {
+    val output = HashMap<Pair<FuelType, FuelQuality>, Float>()
+
+    for (entry in input) {
+        val typeString = entry.key.split(",")[0]
+        val qualityString = entry.key.split(",")[1]
+
+        val type = stringToFuelType(typeString)
+        val quality = stringToFuelQuality(qualityString)
+
+        val key = Pair(type, quality)
+        val value = entry.value
+
+        output[key] = value
+    }
+
+    return output
+}
+
+fun Context.fuelQualityToUserFriendlyString(fuelQuality: FuelQuality): String {
     return when (fuelQuality) {
         FuelQuality.PREMIUM -> getString(R.string.premium)
         FuelQuality.REGULAR -> getString(R.string.regular)
+    }
+}
+
+fun stringToFuelQuality(string: String): FuelQuality {
+    return when (string) {
+        "REGULAR" -> FuelQuality.REGULAR
+        "PREMIUM" -> FuelQuality.PREMIUM
+        else -> FuelQuality.REGULAR
     }
 }
 

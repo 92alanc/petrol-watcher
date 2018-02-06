@@ -42,7 +42,7 @@ object PetrolStationDatabase {
     private fun insert(petrolStation: PetrolStation,
                        onCompleteListener: OnCompleteListener<Void>) {
         reference.child(petrolStation.id)
-                .setValue(petrolStation)
+                .setValue(petrolStation.toMap())
                 .addOnCompleteListener(onCompleteListener)
     }
 

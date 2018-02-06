@@ -63,6 +63,5 @@
     <string name="error_finding_petrol_stations">Error finding gas stations</string>
     <string name="address">address</string>
     <string name="description_add">add</string>
-    <string name="description_add">add</string>
     <string name="price">price</string>
 </resources>

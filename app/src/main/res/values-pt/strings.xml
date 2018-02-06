@@ -63,6 +63,5 @@
     <string name="error_finding_petrol_stations">Erro ao encontrar postos de gasolina</string>
     <string name="address">endereço</string>
     <string name="description_add">adicionar</string>
-    <string name="description_add">adicionar</string>
     <string name="price">preço</string>
 </resources>
