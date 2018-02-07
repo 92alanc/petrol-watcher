@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.TextUtils
 import com.braincorp.petrolwatcher.utils.fuelFloatMapToStringFloatMap
 import com.braincorp.petrolwatcher.utils.stringFloatMapToFuelFloatMap
 import com.braincorp.petrolwatcher.utils.stringToRating
@@ -57,6 +58,12 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         map[KEY_PRICES] = fuelFloatMapToStringFloatMap(prices)
         map[KEY_RATING] = rating
         return map
+    }
+
+    fun allFieldsAreValid(): Boolean {
+        return !TextUtils.isEmpty(name)
+               && !TextUtils.isEmpty(address)
+               && prices.isNotEmpty()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

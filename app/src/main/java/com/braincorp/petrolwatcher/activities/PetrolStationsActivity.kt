@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.View.GONE
@@ -18,6 +17,8 @@ import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.removeFragment
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_petrol_stations.*
 import kotlinx.android.synthetic.main.content_petrol_stations.*
 
 class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
-        OnItemClickListener, ValueEventListener {
+        OnItemClickListener, ValueEventListener, OnCompleteListener<Void> {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -33,7 +34,8 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
-    private var fragment: Fragment? = null
+    private var fragment: PetrolStationDetailsFragment? = null
+    private var petrolStation: PetrolStation? = null
     private var petrolStations: Array<PetrolStation>? = null
     private var uiMode: UiMode? = null
 
@@ -50,15 +52,13 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fabPetrolStations -> TODO("not implemented")
+            R.id.fabPetrolStations -> handleFabClick()
         }
     }
 
     override fun onItemClick(position: Int) {
-        val petrolStation = petrolStations!![position]
-        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, UiMode.VIEW)
-        recyclerViewPetrolStations.visibility = GONE
-        replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment)
+        petrolStation = petrolStations!![position]
+        prepareViewMode()
     }
 
     override fun onCancelled(error: DatabaseError?) {
@@ -81,6 +81,23 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
+    override fun onComplete(task: Task<Void>) {
+        if (task.isSuccessful) prepareInitialMode()
+        else showErrorDialogue(R.string.error_saving_petrol_station)
+    }
+
+    private fun handleFabClick() {
+        when (uiMode) {
+            UiMode.CREATE, UiMode.EDIT -> {
+                save()
+                prepareInitialMode()
+            }
+
+            UiMode.VIEW -> prepareEditMode()
+            null -> prepareCreateMode()
+        }
+    }
+
     private fun populateRecyclerView(items: Array<PetrolStation>) {
         recyclerViewPetrolStations.visibility = VISIBLE
         recyclerViewPetrolStations.layoutManager = LinearLayoutManager(this)
@@ -93,13 +110,49 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
         uiMode = null
         fabPetrolStations.setImageResource(R.drawable.ic_add)
 
-        removeFragment()
+        detachFragment()
         PetrolStationDatabase.select(valueEventListener = this)
     }
 
-    private fun removeFragment() {
+    private fun prepareCreateMode() {
+        uiMode = UiMode.CREATE
+        fabPetrolStations.setImageResource(R.drawable.ic_save)
+        recyclerViewPetrolStations.visibility = GONE
+        attachFragment()
+    }
+
+    private fun prepareEditMode() {
+        uiMode = UiMode.EDIT
+        fabPetrolStations.setImageResource(R.drawable.ic_save)
+        recyclerViewPetrolStations.visibility = GONE
+        attachFragment(petrolStation)
+    }
+
+    private fun prepareViewMode() {
+        uiMode = UiMode.VIEW
+        fabPetrolStations.setImageResource(R.drawable.ic_edit)
+        recyclerViewPetrolStations.visibility = GONE
+        attachFragment(petrolStation)
+    }
+
+    private fun attachFragment(petrolStation: PetrolStation? = null) {
+        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, uiMode!!)
+        placeholderPetrolStations.visibility = VISIBLE
+        replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment)
+    }
+
+    private fun detachFragment() {
         if (fragment != null) removeFragment(fragment!!)
         placeholderPetrolStations.visibility = GONE
+    }
+
+    private fun save() {
+        petrolStation = fragment?.getData()
+        if (petrolStation!!.allFieldsAreValid()) {
+            PetrolStationDatabase.insertOrUpdate(petrolStation!!, this)
+        } else {
+            showErrorDialogue(R.string.all_fields_are_required)
+        }
     }
 
 }

@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.Rating
-import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
 
 class RatingAdapter(context: Context) : ArrayAdapter<Rating>(context,
@@ -28,9 +27,6 @@ class RatingAdapter(context: Context) : ArrayAdapter<Rating>(context,
         val textView = row.findViewById<TextView>(R.id.textViewRating)
         val rating = values[position]
         textView.text = context.ratingToString(rating)
-
-        val colour = context.ratingToColour(rating)
-        textView.setTextColor(colour)
 
         return row
     }

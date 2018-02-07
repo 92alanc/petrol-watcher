@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.preferences
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.braincorp.petrolwatcher.model.SystemOfMeasurement
 
 class PreferenceManager(context: Context) {
 

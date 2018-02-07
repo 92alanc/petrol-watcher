@@ -19,7 +19,7 @@ import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.model.VehicleType
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
-import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
+import com.braincorp.petrolwatcher.model.SystemOfMeasurement
 import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 

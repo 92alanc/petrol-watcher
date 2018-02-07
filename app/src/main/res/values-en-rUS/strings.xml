@@ -65,4 +65,5 @@
     <string name="description_add">add</string>
     <string name="price">price</string>
     <string name="description_remove">remove</string>
+    <string name="error_saving_petrol_station">Error saving gas station</string>
 </resources>

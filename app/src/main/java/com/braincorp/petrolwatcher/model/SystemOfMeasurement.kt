@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.preferences
+package com.braincorp.petrolwatcher.model
 
 enum class SystemOfMeasurement {
 

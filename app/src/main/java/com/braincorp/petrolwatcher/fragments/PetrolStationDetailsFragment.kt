@@ -30,7 +30,8 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
                         uiMode: UiMode): PetrolStationDetailsFragment {
             val instance = PetrolStationDetailsFragment()
             val args = Bundle()
-            args.putParcelable(KEY_PETROL_STATION, petrolStation)
+            if (petrolStation != null)
+                args.putParcelable(KEY_PETROL_STATION, petrolStation)
             args.putSerializable(KEY_UI_MODE, uiMode)
             instance.arguments = args
             return instance
@@ -100,7 +101,8 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun parseArgs() {
-        petrolStation = arguments?.getParcelable(KEY_PETROL_STATION) as PetrolStation
+        if (arguments!!.containsKey(KEY_PETROL_STATION))
+            petrolStation = arguments?.getParcelable(KEY_PETROL_STATION) as PetrolStation
         uiMode = arguments?.getSerializable(KEY_UI_MODE) as UiMode
         if (petrolStation != null) prices = petrolStation!!.prices.entries.toMutableList()
     }
@@ -116,7 +118,6 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
     private fun prepareCreateMode() {
         hideNotEditableFields()
         showEditableFields()
-        fillNotEditableFields()
     }
 
     private fun prepareEditMode() {
@@ -128,6 +129,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
     private fun prepareViewMode() {
         hideEditableFields()
         showNotEditableFields()
+        fillNotEditableFields()
     }
 
     private fun showEditableFields() {
