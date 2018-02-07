@@ -12,6 +12,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.adapters.FuelQualityAdapter
+import com.braincorp.petrolwatcher.adapters.FuelTypeAdapter
 import kotlinx.android.synthetic.main.view_price_map.view.*
 
 class PriceMapView(context: Context, attrs: AttributeSet)
@@ -29,14 +31,7 @@ class PriceMapView(context: Context, attrs: AttributeSet)
     init {
         inflate(context, R.layout.view_price_map, this)
         bindViews()
-        fuelTypeSpinners.add(spinnerFuelType)
-        fuelQualitySpinners.add(spinnerFuelQuality)
-        editTexts.add(editTextPrice)
-        addButtons.add(buttonAdd)
-        removeButtons.add(buttonRemove)
-
         parseAttrs(attrs)
-
     }
 
     override fun onClick(v: View?) {
@@ -47,7 +42,15 @@ class PriceMapView(context: Context, attrs: AttributeSet)
     }
 
     private fun bindViews() {
+        spinnerFuelType.adapter = FuelTypeAdapter(context)
+        fuelTypeSpinners.add(spinnerFuelType)
 
+        spinnerFuelQuality.adapter = FuelQualityAdapter(context)
+        fuelQualitySpinners.add(spinnerFuelQuality)
+
+        editTexts.add(editTextPrice)
+        addButtons.add(buttonAdd)
+        removeButtons.add(buttonRemove)
     }
 
     private fun parseAttrs(attrs: AttributeSet) {
@@ -76,12 +79,14 @@ class PriceMapView(context: Context, attrs: AttributeSet)
 
     private fun addFuelTypeSpinner() {
         val spinner = Spinner(context)
+        spinner.adapter = FuelTypeAdapter(context)
 
         fuelTypeSpinners.add(spinner)
     }
 
     private fun addFuelQualitySpinner() {
         val spinner = Spinner(context)
+        spinner.adapter = FuelQualityAdapter(context)
 
         fuelQualitySpinners.add(spinner)
     }
