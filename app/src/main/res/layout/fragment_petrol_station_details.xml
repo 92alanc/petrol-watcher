@@ -19,7 +19,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:text="BP"/>
+            tools:text="BP"
+            tools:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewAddress"
@@ -28,7 +29,8 @@
             android:maxWidth="@dimen/width_max_petrol_station_address"
             app:layout_constraintTop_toBottomOf="@id/textViewName"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="331 Brighton Rd., Worthing BN11 2HP"/>
+            tools:text="331 Brighton Rd., Worthing BN11 2HP"
+            tools:visibility="gone"/>
 
         <View
             android:id="@+id/divider"
@@ -38,7 +40,8 @@
             android:background="@color/grey_darkest"
             app:layout_constraintTop_toBottomOf="@id/textViewAddress"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            tools:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewPrices"
@@ -46,7 +49,8 @@
             android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="LPG (regular): £ 0.629\ndiesel (regular): £ 1.25\npetrol (regular): 1.223\npetrol (premium): £ 1.332"/>
+            tools:text="LPG (regular): £ 0.629\ndiesel (regular): £ 1.25\npetrol (regular): 1.223\npetrol (premium): £ 1.332"
+            tools:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewRating"
@@ -57,7 +61,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:textColor="@color/green"
-            tools:text="Rating: very good"/>
+            tools:text="Rating: very good"
+            tools:visibility="gone"/>
 
         <EditText
             android:id="@+id/editTextPetrolStationName"
@@ -65,34 +70,42 @@
             android:layout_marginTop="0dp"
             android:hint="@string/name"
             android:inputType="textCapWords"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/editTextAddress"
             style="@style/EditTextWidthMatchParent"
             android:hint="@string/address"
             android:inputType="textCapWords"
-            app:layout_constraintTop_toBottomOf="@id/editTextPetrolStationName"
-            tools:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/editTextPetrolStationName" />
 
-        <com.braincorp.petrolwatcher.view.PriceMapView
-            android:id="@+id/priceMapView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewPrices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/editTextAddress"
-            tools:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/editTextAddress"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerViewPrices"
+            app:layout_constraintRight_toRightOf="@id/recyclerViewPrices"/>
 
         <Spinner
             android:id="@+id/spinnerRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/spinnerFuelQuality"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewPrices"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:visibility="gone"/>
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

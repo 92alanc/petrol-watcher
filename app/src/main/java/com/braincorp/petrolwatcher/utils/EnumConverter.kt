@@ -117,6 +117,17 @@ fun Context.ratingToString(rating: Rating): String {
     }
 }
 
+fun Context.ratingToColour(rating: Rating): Int {
+    val colour = when (rating) {
+        Rating.VERY_BAD -> R.color.red_dark
+        Rating.BAD -> R.color.red
+        Rating.OK -> R.color.amber
+        Rating.GOOD -> R.color.green_light
+        Rating.VERY_GOOD -> R.color.green
+    }
+    return ContextCompat.getColor(this, colour)
+}
+
 fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
     return when (vehicleType) {
         VehicleType.CAR -> getString(R.string.car)
