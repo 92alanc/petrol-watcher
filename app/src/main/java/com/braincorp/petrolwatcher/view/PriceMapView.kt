@@ -110,7 +110,7 @@ class PriceMapView(context: Context, attrs: AttributeSet)
     private fun addAddButton() {
         val button = ImageButton(context)
         button.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-        button.setImageResource(R.drawable.ic_add_dark)
+        button.setImageResource(R.drawable.ic_add)
 
         addButtons.add(button)
     }
