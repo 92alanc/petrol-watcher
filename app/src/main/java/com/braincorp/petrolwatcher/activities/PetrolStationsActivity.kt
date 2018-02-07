@@ -11,10 +11,12 @@ import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.PetrolStationAdapter
 import com.braincorp.petrolwatcher.database.PetrolStationDatabase
+import com.braincorp.petrolwatcher.fragments.PetrolStationDetailsFragment
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.removeFragment
+import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -48,13 +50,15 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fabVehicles -> TODO("not implemented")
+            R.id.fabPetrolStations -> TODO("not implemented")
         }
     }
 
     override fun onItemClick(position: Int) {
         val petrolStation = petrolStations!![position]
-        TODO("not implemented")
+        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, UiMode.VIEW)
+        recyclerViewPetrolStations.visibility = GONE
+        replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment)
     }
 
     override fun onCancelled(error: DatabaseError?) {
