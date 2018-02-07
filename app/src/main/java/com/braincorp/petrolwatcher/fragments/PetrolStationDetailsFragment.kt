@@ -118,6 +118,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
     private fun prepareCreateMode() {
         hideNotEditableFields()
         showEditableFields()
+        spinnerRating.setSelection(Rating.OK.ordinal)
     }
 
     private fun prepareEditMode() {
