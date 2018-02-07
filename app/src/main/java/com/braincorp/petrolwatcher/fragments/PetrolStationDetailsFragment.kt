@@ -94,7 +94,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
 
         editTextName = view.findViewById(R.id.editTextPetrolStationName)
         editTextAddress = view.findViewById(R.id.editTextAddress)
-        recyclerViewPrices = view.findViewById(R.id.priceMapView)
+        recyclerViewPrices = view.findViewById(R.id.recyclerViewPrices)
         buttonAdd = view.findViewById(R.id.buttonAdd)
         spinnerRating = view.findViewById(R.id.spinnerRating)
     }
