@@ -63,7 +63,8 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onCancelled(error: DatabaseError?) {
-        showErrorDialogue(R.string.error_finding_petrol_stations)
+        if (window.isActive)
+            showErrorDialogue(R.string.error_finding_petrol_stations)
     }
 
     override fun onDataChange(snapshot: DataSnapshot?) {
@@ -137,9 +138,9 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun attachFragment(petrolStation: PetrolStation? = null) {
-        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, uiMode)
+        fragment = PetrolStationDetailsFragment.newInstance(petrolStation, uiMode)
         placeholderPetrolStations.visibility = VISIBLE
-        replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment)
+        replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment!!)
     }
 
     private fun detachFragment() {

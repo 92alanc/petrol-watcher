@@ -142,6 +142,8 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener, Adaptable
         editTextName.visibility = VISIBLE
         editTextAddress.visibility = VISIBLE
         recyclerViewPrices.visibility = VISIBLE
+        recyclerViewPrices.adapter = FuelPriceAdapter(context!!, prices)
+        buttonAdd.visibility = VISIBLE
         spinnerRating.visibility = VISIBLE
         spinnerRating.adapter = RatingAdapter(context!!)
     }
@@ -150,6 +152,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener, Adaptable
         editTextName.visibility = GONE
         editTextAddress.visibility = GONE
         recyclerViewPrices.visibility = GONE
+        buttonAdd.visibility = GONE
         spinnerRating.visibility = GONE
     }
 
@@ -172,7 +175,6 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener, Adaptable
     private fun fillEditableFields() {
         editTextName.setText(petrolStation!!.name)
         editTextAddress.setText(petrolStation!!.address)
-        recyclerViewPrices.adapter = FuelPriceAdapter(context!!, prices)
         spinnerRating.setSelection(petrolStation!!.rating.ordinal)
     }
 

@@ -83,19 +83,8 @@
             android:id="@+id/recyclerViewPrices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/editTextAddress"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/buttonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
-            android:layout_marginBottom="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:layout_marginRight="@dimen/margin_default"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@id/recyclerViewPrices"
-            app:layout_constraintRight_toRightOf="@id/recyclerViewPrices"/>
 
         <Spinner
             android:id="@+id/spinnerRating"
@@ -103,10 +92,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:padding="@dimen/padding_spinner"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewPrices"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginRight="@dimen/margin_default"
+            app:fabSize="mini"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewPrices"
+            app:layout_constraintBottom_toTopOf="@id/spinnerRating"
+            app:layout_constraintRight_toRightOf="@id/recyclerViewPrices"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
