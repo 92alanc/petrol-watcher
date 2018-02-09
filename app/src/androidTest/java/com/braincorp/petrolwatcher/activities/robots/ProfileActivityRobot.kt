@@ -10,7 +10,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.ProfileActivity
 import com.braincorp.petrolwatcher.activities.VehiclesActivity
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
@@ -20,7 +20,7 @@ class ProfileActivityRobot : BaseRobot() {
     private val rule = IntentsTestRule<ProfileActivity>(ProfileActivity::class.java,
             false, false)
 
-    fun launchActivity(uiMode: UiMode): ProfileActivityRobot {
+    fun launchActivity(uiMode: AdaptableUi.Mode): ProfileActivityRobot {
         val intent = ProfileActivity.getIntent(context, uiMode)
         rule.launchActivity(intent)
         return this

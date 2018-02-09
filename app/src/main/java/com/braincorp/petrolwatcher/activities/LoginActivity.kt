@@ -3,15 +3,16 @@ package com.braincorp.petrolwatcher.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -67,7 +68,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private fun startProfileActivity() {
         val intent = ProfileActivity.getIntent(context = this,
-                                               uiMode = UiMode.CREATE)
+                                               uiMode = AdaptableUi.Mode.CREATE)
         startActivity(intent)
         clearEditTexts()
     }

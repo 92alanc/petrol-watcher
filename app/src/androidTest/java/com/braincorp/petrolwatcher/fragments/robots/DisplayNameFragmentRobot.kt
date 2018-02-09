@@ -4,7 +4,7 @@ import android.content.Intent
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.fragments.DisplayNameFragment
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
@@ -14,7 +14,7 @@ class DisplayNameFragmentRobot : BaseRobot() {
     private val rule = FragmentTestRule.create(DisplayNameFragment::class.java,
             false, false)
 
-    fun launchFragment(uiMode: UiMode): DisplayNameFragmentRobot {
+    fun launchFragment(uiMode: AdaptableUi.Mode): DisplayNameFragmentRobot {
         rule.launchActivity(Intent())
         val fragment = DisplayNameFragment.newInstance(uiMode)
         rule.launchFragment(fragment)

@@ -8,7 +8,7 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.fragments.ImagePickerFragment
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
@@ -19,7 +19,7 @@ class ImagePickerFragmentRobot : BaseRobot() {
     private val rule = FragmentTestRule.create(ImagePickerFragment::class.java,
             false, false)
 
-    fun launchFragment(uiMode: UiMode): ImagePickerFragmentRobot {
+    fun launchFragment(uiMode: AdaptableUi.Mode): ImagePickerFragmentRobot {
         rule.launchActivity(Intent())
         val fragment = ImagePickerFragment.newInstance(uiMode)
         rule.launchFragment(fragment)

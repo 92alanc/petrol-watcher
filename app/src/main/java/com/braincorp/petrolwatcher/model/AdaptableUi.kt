@@ -1,6 +1,5 @@
 package com.braincorp.petrolwatcher.model
 
-// TODO: to be implemented later
 interface AdaptableUi {
 
     fun prepareInitialMode()
@@ -10,5 +9,14 @@ interface AdaptableUi {
     fun prepareEditMode()
 
     fun prepareViewMode()
+
+    enum class Mode {
+
+        INITIAL,
+        CREATE,
+        EDIT,
+        VIEW
+
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.fragments
 
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.fragments.robots.DisplayNameFragmentRobot
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,19 +13,19 @@ class DisplayNameFragmentTest {
 
     @Test
     fun displayNameFieldShouldNotBeEditableWhenOnViewMode() {
-        robot.launchFragment(UiMode.VIEW)
+        robot.launchFragment(AdaptableUi.Mode.VIEW)
                 .checkIfDisplayNameFieldIsNotEditable()
     }
 
     @Test
     fun displayNameFieldShouldBeEditableWhenOnCreateMode() {
-        robot.launchFragment(UiMode.CREATE)
+        robot.launchFragment(AdaptableUi.Mode.CREATE)
                 .checkIfDisplayNameFieldIsEditable()
     }
 
     @Test
     fun displayNameFieldShouldBeEditableWhenOnEditMode() {
-        robot.launchFragment(UiMode.EDIT)
+        robot.launchFragment(AdaptableUi.Mode.EDIT)
                 .checkIfDisplayNameFieldIsEditable()
     }
 

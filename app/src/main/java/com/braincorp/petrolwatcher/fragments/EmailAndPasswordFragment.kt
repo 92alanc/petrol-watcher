@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.google.firebase.auth.FirebaseAuth
 
-class EmailAndPasswordFragment : Fragment() {
+class EmailAndPasswordFragment : Fragment(), AdaptableUi {
 
     companion object {
         private const val ARG_MODE = "mode"
 
-        fun newInstance(uiMode: UiMode): EmailAndPasswordFragment {
+        fun newInstance(uiMode: AdaptableUi.Mode): EmailAndPasswordFragment {
             val instance = EmailAndPasswordFragment()
             val args = Bundle()
             args.putSerializable(ARG_MODE, uiMode)
@@ -35,7 +35,7 @@ class EmailAndPasswordFragment : Fragment() {
     private lateinit var editTextPassword: EditText
     private lateinit var editTextConfirmPassword: EditText
 
-    private var uiMode = UiMode.VIEW
+    private var uiMode = AdaptableUi.Mode.VIEW
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -62,17 +62,23 @@ class EmailAndPasswordFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        uiMode = arguments?.getSerializable(ARG_MODE)!! as UiMode
+        uiMode = arguments?.getSerializable(ARG_MODE)!! as AdaptableUi.Mode
     }
 
     private fun prepareUi() {
         when (uiMode) {
-            UiMode.CREATE -> prepareNewAccountMode()
-            else -> prepareViewMode()
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
     }
 
-    private fun prepareNewAccountMode() {
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
         textViewEmail.visibility = GONE
 
         editTextEmail.visibility = VISIBLE
@@ -80,7 +86,11 @@ class EmailAndPasswordFragment : Fragment() {
         editTextConfirmPassword.visibility = VISIBLE
     }
 
-    private fun prepareViewMode() {
+    override fun prepareEditMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareViewMode() {
         textViewEmail.visibility = VISIBLE
         textViewEmail.text = user?.email
 

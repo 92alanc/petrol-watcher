@@ -12,17 +12,17 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ImagePickerFragment : Fragment(), View.OnClickListener {
+class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     companion object {
         private const val ARG_MODE = "mode"
 
-        fun newInstance(uiMode: UiMode): ImagePickerFragment {
+        fun newInstance(uiMode: AdaptableUi.Mode): ImagePickerFragment {
             val instance = ImagePickerFragment()
             val args = Bundle()
             args.putSerializable(ARG_MODE, uiMode)
@@ -32,7 +32,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
     }
 
     private var bitmap: Bitmap? = null
-    private var uiMode = UiMode.VIEW
+    private var uiMode = AdaptableUi.Mode.VIEW
     private var uri: Uri? = null
 
     private var rotation = 0f
@@ -58,13 +58,34 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
             })
 
             v?.id == R.id.buttonRotateClockwise -> {
-                if (rotation == 360f) rotation = 0f
-                else rotation += 90f
-                bitmap = rotateBitmap(bitmap!!, rotation)
+                rotateImage()
                 context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
                         rotation = rotation)
             }
         }
+    }
+
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
+        imageViewProfile.isClickable = true
+        buttonRotateClockwise.visibility = VISIBLE
+    }
+
+    override fun prepareEditMode() {
+        imageViewProfile.isClickable = true
+        buttonRotateClockwise.visibility = VISIBLE
+        bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
+        setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
+    }
+
+    override fun prepareViewMode() {
+        imageViewProfile.isClickable = false
+        buttonRotateClockwise.visibility = GONE
+        bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
+        setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
     }
 
     fun getImageBitmap(): Bitmap {
@@ -81,6 +102,12 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
         context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile)
     }
 
+    private fun rotateImage() {
+        if (rotation == 360f) rotation = 0f
+        else rotation += 90f
+        bitmap = rotateBitmap(bitmap!!, rotation)
+    }
+
     private fun bindViews(view: View) {
         imageViewProfile = view.findViewById(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
@@ -90,19 +117,15 @@ class ImagePickerFragment : Fragment(), View.OnClickListener {
     }
 
     private fun parseArgs() {
-        uiMode = arguments?.getSerializable(ARG_MODE) as UiMode
+        uiMode = arguments?.getSerializable(ARG_MODE) as AdaptableUi.Mode
     }
 
     private fun prepareUi() {
-        imageViewProfile.isClickable = (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT)
-
-        buttonRotateClockwise.visibility =
-                if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT) VISIBLE
-                else GONE
-
-        if (uiMode == UiMode.EDIT || uiMode == UiMode.VIEW) {
-            bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
-            setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
+        when (uiMode) {
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
     }
 

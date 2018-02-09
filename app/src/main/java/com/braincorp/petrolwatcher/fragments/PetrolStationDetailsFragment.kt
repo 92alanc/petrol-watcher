@@ -20,14 +20,14 @@ import com.braincorp.petrolwatcher.utils.fuelFloatMapToString
 import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
 
-class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
+class PetrolStationDetailsFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     companion object {
         private const val KEY_PETROL_STATION = "petrol_station"
         private const val KEY_UI_MODE = "ui_mode"
 
         fun newInstance(petrolStation: PetrolStation? = null,
-                        uiMode: UiMode): PetrolStationDetailsFragment {
+                        uiMode: AdaptableUi.Mode): PetrolStationDetailsFragment {
             val instance = PetrolStationDetailsFragment()
             val args = Bundle()
             if (petrolStation != null)
@@ -52,7 +52,7 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
 
     private var prices: MutableList<Map.Entry<Pair<FuelType, FuelQuality>, Float>> = mutableListOf()
     private var petrolStation: PetrolStation? = null
-    private var uiMode: UiMode = UiMode.VIEW
+    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.VIEW
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -71,9 +71,31 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
+        hideNotEditableFields()
+        showEditableFields()
+        spinnerRating.setSelection(Rating.OK.ordinal)
+    }
+
+    override fun prepareEditMode() {
+        hideNotEditableFields()
+        showEditableFields()
+        fillEditableFields()
+    }
+
+    override fun prepareViewMode() {
+        hideEditableFields()
+        showNotEditableFields()
+        fillNotEditableFields()
+    }
+
     fun getData(): PetrolStation {
-        if (uiMode == UiMode.VIEW) return petrolStation!!
-        else if (uiMode == UiMode.CREATE) petrolStation = PetrolStation()
+        if (uiMode == AdaptableUi.Mode.VIEW) return petrolStation!!
+        else if (uiMode == AdaptableUi.Mode.CREATE) petrolStation = PetrolStation()
 
         petrolStation!!.name = editTextName.text.toString()
         petrolStation!!.address = editTextAddress.text.toString()
@@ -103,34 +125,17 @@ class PetrolStationDetailsFragment : Fragment(), View.OnClickListener {
     private fun parseArgs() {
         if (arguments!!.containsKey(KEY_PETROL_STATION))
             petrolStation = arguments?.getParcelable(KEY_PETROL_STATION) as PetrolStation
-        uiMode = arguments?.getSerializable(KEY_UI_MODE) as UiMode
+        uiMode = arguments?.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
         if (petrolStation != null) prices = petrolStation!!.prices.entries.toMutableList()
     }
 
     private fun prepareUi() {
         when (uiMode) {
-            UiMode.CREATE -> prepareCreateMode()
-            UiMode.EDIT -> prepareEditMode()
-            UiMode.VIEW -> prepareViewMode()
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
-    }
-
-    private fun prepareCreateMode() {
-        hideNotEditableFields()
-        showEditableFields()
-        spinnerRating.setSelection(Rating.OK.ordinal)
-    }
-
-    private fun prepareEditMode() {
-        hideNotEditableFields()
-        showEditableFields()
-        fillEditableFields()
-    }
-
-    private fun prepareViewMode() {
-        hideEditableFields()
-        showNotEditableFields()
-        fillNotEditableFields()
     }
 
     private fun showEditableFields() {

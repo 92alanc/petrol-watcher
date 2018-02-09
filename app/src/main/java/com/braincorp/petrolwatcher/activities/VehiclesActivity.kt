@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.View.GONE
@@ -15,7 +16,7 @@ import com.braincorp.petrolwatcher.database.VehicleDatabase
 import com.braincorp.petrolwatcher.fragments.VehicleDetailsFragment
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -26,9 +27,9 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_vehicles.*
 import kotlinx.android.synthetic.main.content_vehicles.*
 
-class VehiclesActivity : BaseActivity(), View.OnClickListener,
+class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         OnFragmentInflatedListener, OnCompleteListener<Void>,
-        OnItemClickListener, ValueEventListener {
+        OnItemClickListener, ValueEventListener, AdaptableUi {
 
     companion object {
         private const val EXTRA_DATA = "data"
@@ -41,7 +42,7 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     }
 
     private var fragment: VehicleDetailsFragment? = null
-    private var uiMode: UiMode? = null
+    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
     private var vehicle: Vehicle? = null
     private var vehicles: Array<Vehicle>? = null
 
@@ -81,8 +82,8 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
             setResult(RESULT_OK, data)
             finish()
         } else {
-            uiMode = UiMode.VIEW
-            prepareViewMode(vehicle!!)
+            uiMode = AdaptableUi.Mode.VIEW
+            prepareViewMode()
         }
     }
 
@@ -111,28 +112,49 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         showErrorDialogue(R.string.error_finding_vehicles)
     }
 
+    override fun prepareInitialMode() {
+        uiMode = AdaptableUi.Mode.INITIAL
+        fabVehicles.setImageResource(R.drawable.ic_add)
+
+        removeFragment()
+        VehicleDatabase.select(valueEventListener = this)
+    }
+
+    override fun prepareCreateMode() {
+        uiMode = AdaptableUi.Mode.CREATE
+        recyclerViewVehicles.visibility = GONE
+        fabVehicles.setImageResource(R.drawable.ic_save)
+        loadFragment(uiMode)
+    }
+
+    override fun prepareEditMode() {
+        uiMode = AdaptableUi.Mode.EDIT
+        fabVehicles.setImageResource(R.drawable.ic_save)
+        loadFragment(uiMode, vehicle)
+        recyclerViewVehicles.visibility = GONE
+    }
+
+    override fun prepareViewMode() {
+        fabVehicles.setImageResource(R.drawable.ic_edit)
+
+        uiMode = AdaptableUi.Mode.VIEW
+        loadFragment(uiMode, vehicle)
+
+        recyclerViewVehicles.visibility = GONE
+    }
+
     private fun handleFabClick() {
         when (uiMode) {
-            UiMode.VIEW -> {
-                uiMode = UiMode.EDIT
-                prepareEditMode(vehicle!!)
-            }
+            AdaptableUi.Mode.VIEW -> prepareEditMode()
+            AdaptableUi.Mode.INITIAL -> prepareCreateMode()
 
-            UiMode.CREATE, UiMode.EDIT -> {
-                if (save()) {
-                    uiMode = null
-                    prepareInitialMode()
-                }
-            }
-
-            null -> {
-                uiMode = UiMode.CREATE
-                prepareCreateMode()
+            AdaptableUi.Mode.CREATE, AdaptableUi.Mode.EDIT -> {
+                if (save()) prepareInitialMode()
             }
         }
     }
 
-    private fun loadFragment(uiMode: UiMode, vehicle: Vehicle? = null) {
+    private fun loadFragment(uiMode: AdaptableUi.Mode, vehicle: Vehicle? = null) {
         placeholderVehicles.visibility = VISIBLE
         fragment = VehicleDetailsFragment.newInstance(uiMode, this, vehicle)
         replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!)
@@ -141,36 +163,6 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
     private fun removeFragment() {
         if (fragment != null) removeFragment(fragment!!)
         placeholderVehicles.visibility = GONE
-    }
-
-    private fun prepareViewMode(vehicle: Vehicle) {
-        fabVehicles.setImageResource(R.drawable.ic_edit)
-
-        uiMode = UiMode.VIEW
-        loadFragment(uiMode!!, vehicle)
-
-        recyclerViewVehicles.visibility = GONE
-    }
-
-    private fun prepareCreateMode() {
-        recyclerViewVehicles.visibility = GONE
-        fabVehicles.setImageResource(R.drawable.ic_save)
-        loadFragment(uiMode!!)
-    }
-
-    private fun prepareEditMode(vehicle: Vehicle) {
-        fabVehicles.setImageResource(R.drawable.ic_save)
-        loadFragment(uiMode!!, vehicle)
-        recyclerViewVehicles.visibility = GONE
-    }
-
-    private fun prepareInitialMode() {
-        uiMode = null
-        fabVehicles.setImageResource(R.drawable.ic_add)
-
-        removeFragment()
-        VehicleDatabase.select(valueEventListener = this)
-        // showProgressBar()
     }
 
     private fun promptDelete() {
@@ -187,7 +179,6 @@ class VehiclesActivity : BaseActivity(), View.OnClickListener,
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
         val adapter = VehicleAdapter(context = this, items = items, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
-        // hideProgressBar()
     }
 
     private fun save(): Boolean {

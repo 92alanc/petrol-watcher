@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.View.GONE
@@ -12,8 +13,8 @@ import com.braincorp.petrolwatcher.adapters.PetrolStationAdapter
 import com.braincorp.petrolwatcher.database.PetrolStationDatabase
 import com.braincorp.petrolwatcher.fragments.PetrolStationDetailsFragment
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
-import com.braincorp.petrolwatcher.model.UiMode
 import com.braincorp.petrolwatcher.utils.removeFragment
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
@@ -25,8 +26,8 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_petrol_stations.*
 import kotlinx.android.synthetic.main.content_petrol_stations.*
 
-class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
-        OnItemClickListener, ValueEventListener, OnCompleteListener<Void> {
+class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
+        AdaptableUi, OnItemClickListener, ValueEventListener, OnCompleteListener<Void> {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -37,7 +38,7 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
     private var fragment: PetrolStationDetailsFragment? = null
     private var petrolStation: PetrolStation? = null
     private var petrolStations: Array<PetrolStation>? = null
-    private var uiMode: UiMode? = null
+    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,13 +89,13 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
 
     private fun handleFabClick() {
         when (uiMode) {
-            UiMode.CREATE, UiMode.EDIT -> {
+            AdaptableUi.Mode.CREATE, AdaptableUi.Mode.EDIT -> {
                 save()
                 prepareInitialMode()
             }
 
-            UiMode.VIEW -> prepareEditMode()
-            null -> prepareCreateMode()
+            AdaptableUi.Mode.VIEW -> prepareEditMode()
+            AdaptableUi.Mode.INITIAL -> prepareCreateMode()
         }
     }
 
@@ -106,37 +107,37 @@ class PetrolStationsActivity : BaseActivity(), View.OnClickListener,
         recyclerViewPetrolStations.adapter = adapter
     }
 
-    private fun prepareInitialMode() {
-        uiMode = null
+    override fun prepareInitialMode() {
+        uiMode = AdaptableUi.Mode.INITIAL
         fabPetrolStations.setImageResource(R.drawable.ic_add)
 
         detachFragment()
         PetrolStationDatabase.select(valueEventListener = this)
     }
 
-    private fun prepareCreateMode() {
-        uiMode = UiMode.CREATE
+    override fun prepareCreateMode() {
+        uiMode = AdaptableUi.Mode.CREATE
         fabPetrolStations.setImageResource(R.drawable.ic_save)
         recyclerViewPetrolStations.visibility = GONE
         attachFragment()
     }
 
-    private fun prepareEditMode() {
-        uiMode = UiMode.EDIT
+    override fun prepareEditMode() {
+        uiMode = AdaptableUi.Mode.EDIT
         fabPetrolStations.setImageResource(R.drawable.ic_save)
         recyclerViewPetrolStations.visibility = GONE
         attachFragment(petrolStation)
     }
 
-    private fun prepareViewMode() {
-        uiMode = UiMode.VIEW
+    override fun prepareViewMode() {
+        uiMode = AdaptableUi.Mode.VIEW
         fabPetrolStations.setImageResource(R.drawable.ic_edit)
         recyclerViewPetrolStations.visibility = GONE
         attachFragment(petrolStation)
     }
 
     private fun attachFragment(petrolStation: PetrolStation? = null) {
-        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, uiMode!!)
+        val fragment = PetrolStationDetailsFragment.newInstance(petrolStation, uiMode)
         placeholderPetrolStations.visibility = VISIBLE
         replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment)
     }

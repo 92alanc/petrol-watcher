@@ -6,6 +6,7 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -14,7 +15,7 @@ import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.fragments.DisplayNameFragment
 import com.braincorp.petrolwatcher.fragments.EmailAndPasswordFragment
 import com.braincorp.petrolwatcher.fragments.ImagePickerFragment
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.storage.StorageManager
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -23,7 +24,8 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 
-class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener<Void> {
+class ProfileActivity : AppCompatActivity(), View.OnClickListener,
+        OnCompleteListener<Void>, AdaptableUi {
 
     companion object {
         private const val EXTRA_UI_MODE = "ui_mode"
@@ -37,17 +39,18 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         private const val TAG_NAME = "name"
 
         fun getIntent(context: Context,
-                      uiMode: UiMode): Intent {
+                      uiMode: AdaptableUi.Mode): Intent {
             val intent = Intent(context, ProfileActivity::class.java)
             return intent.putExtra(EXTRA_UI_MODE, uiMode)
         }
     }
 
-    private lateinit var uiMode: UiMode
+    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
 
     private var topFragment: ImagePickerFragment? = null
     private var bottomFragment: Fragment? = null
 
+    private var savedInstanceState: Bundle? = null
     private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,11 +58,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         setContentView(R.layout.activity_profile)
         fabProfile.setOnClickListener(this)
         buttonVehicles.setOnClickListener(this)
-        if (savedInstanceState != null)
-            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as UiMode
-        else
-            parseIntent()
-        prepareUi(savedInstanceState)
+        if (savedInstanceState != null) {
+            this.savedInstanceState = savedInstanceState
+            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
+        } else parseIntent()
+        prepareUi()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,6 +99,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
 
+        this.savedInstanceState = savedInstanceState
         val topFragmentTag = savedInstanceState?.getString(KEY_TOP_FRAGMENT)
         val bottomFragmentTag = savedInstanceState?.getString(KEY_BOTTOM_FRAGMENT)
 
@@ -105,11 +109,11 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         if (bottomFragmentTag != null)
             bottomFragment = supportFragmentManager.findFragmentByTag(bottomFragmentTag)
 
-        uiMode = savedInstanceState?.getSerializable(KEY_UI_MODE) as UiMode
+        uiMode = savedInstanceState?.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
     }
 
     override fun onBackPressed() {
-        if (uiMode == UiMode.EDIT) {
+        if (uiMode == AdaptableUi.Mode.EDIT) {
             showQuestionDialogue(title = R.string.changes_not_saved,
                     message = R.string.question_changes_not_saved,
                     positiveFunc = {
@@ -123,13 +127,15 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         when (view?.id) {
             R.id.fabProfile -> {
                 when (uiMode) {
-                    UiMode.CREATE -> {
+                    AdaptableUi.Mode.CREATE -> {
                         if (bottomFragment?.tag == TAG_EMAIL_PASSWORD) prepareLastStep()
                         else save()
                     }
 
-                    UiMode.EDIT -> save()
-                    UiMode.VIEW -> prepareEditMode(savedInstanceState = null)
+                    AdaptableUi.Mode.EDIT -> save()
+
+                    AdaptableUi.Mode.INITIAL,
+                    AdaptableUi.Mode.VIEW -> prepareEditMode()
                 }
             }
 
@@ -142,46 +148,17 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful) {
-            val intent = if (uiMode == UiMode.EDIT) HomeActivity.getIntent(context = this)
+            val intent = if (uiMode == AdaptableUi.Mode.EDIT) HomeActivity.getIntent(context = this)
             else LoginActivity.getIntent(context = this)
             startActivity(intent)
         }
     }
 
-    private fun bindFragments(bottomFragmentTag: String) {
-        if (topFragment != null) {
-            replaceFragmentPlaceholder(R.id.placeholderProfileTop, topFragment!!, TAG_PICTURE)
-        }
-        if (bottomFragment != null) {
-            replaceFragmentPlaceholder(R.id.placeholderProfileBottom, bottomFragment!!,
-                    bottomFragmentTag)
-        }
+    override fun prepareInitialMode() {
+        prepareViewMode()
     }
 
-    private fun parseIntent() {
-        uiMode = if (intent.hasExtra(EXTRA_UI_MODE))
-            intent.getSerializableExtra(EXTRA_UI_MODE) as UiMode
-        else
-            UiMode.VIEW
-    }
-
-    private fun prepareEditMode(savedInstanceState: Bundle?) {
-        uiMode = UiMode.EDIT
-
-        buttonVehicles.visibility = GONE
-
-        textViewProfileHeader.visibility = GONE
-
-        fabProfile.setImageResource(R.drawable.ic_save)
-
-        topFragment = ImagePickerFragment.newInstance(uiMode)
-        bottomFragment = DisplayNameFragment.newInstance(uiMode)
-
-        if (savedInstanceState == null)
-            bindFragments(TAG_NAME)
-    }
-
-    private fun prepareNewAccountMode(savedInstanceState: Bundle?) {
+    override fun prepareCreateMode() {
         textViewProfileHeader.visibility = VISIBLE
         textViewProfileHeader.setText(R.string.header_email_password)
 
@@ -196,7 +173,23 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
             bindFragments(TAG_EMAIL_PASSWORD)
     }
 
-    private fun prepareViewMode(savedInstanceState: Bundle?) {
+    override fun prepareEditMode() {
+        uiMode = AdaptableUi.Mode.EDIT
+
+        buttonVehicles.visibility = GONE
+
+        textViewProfileHeader.visibility = GONE
+
+        fabProfile.setImageResource(R.drawable.ic_save)
+
+        topFragment = ImagePickerFragment.newInstance(uiMode)
+        bottomFragment = DisplayNameFragment.newInstance(uiMode)
+
+        if (savedInstanceState == null)
+            bindFragments(TAG_NAME)
+    }
+
+    override fun prepareViewMode() {
         textViewProfileHeader.visibility = GONE
 
         buttonVehicles.visibility = VISIBLE
@@ -208,6 +201,23 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
 
         if (savedInstanceState == null)
             bindFragments(TAG_NAME)
+    }
+
+    private fun bindFragments(bottomFragmentTag: String) {
+        if (topFragment != null) {
+            replaceFragmentPlaceholder(R.id.placeholderProfileTop, topFragment!!, TAG_PICTURE)
+        }
+        if (bottomFragment != null) {
+            replaceFragmentPlaceholder(R.id.placeholderProfileBottom, bottomFragment!!,
+                    bottomFragmentTag)
+        }
+    }
+
+    private fun parseIntent() {
+        uiMode = if (intent.hasExtra(EXTRA_UI_MODE))
+            intent.getSerializableExtra(EXTRA_UI_MODE) as AdaptableUi.Mode
+        else
+            AdaptableUi.Mode.VIEW
     }
 
     private fun prepareLastStep() {
@@ -241,11 +251,12 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         }
     }
 
-    private fun prepareUi(savedInstanceState: Bundle?) {
+    private fun prepareUi() {
         when (uiMode) {
-            UiMode.CREATE -> prepareNewAccountMode(savedInstanceState)
-            UiMode.EDIT -> prepareEditMode(savedInstanceState)
-            UiMode.VIEW -> prepareViewMode(savedInstanceState)
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
     }
 
@@ -256,7 +267,7 @@ class ProfileActivity : BaseActivity(), View.OnClickListener, OnCompleteListener
         StorageManager.upload(bitmap, onSuccessAction = {
             AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
                     onSuccessAction =  {
-                        val intent = if (uiMode == UiMode.CREATE)
+                        val intent = if (uiMode == AdaptableUi.Mode.CREATE)
                             LoginActivity.getIntent(context = this)
                         else
                             HomeActivity.getIntent(context = this)

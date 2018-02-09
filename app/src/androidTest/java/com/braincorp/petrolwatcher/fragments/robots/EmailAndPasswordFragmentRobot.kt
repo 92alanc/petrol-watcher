@@ -4,7 +4,7 @@ import android.content.Intent
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.fragments.EmailAndPasswordFragment
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
@@ -14,7 +14,7 @@ class EmailAndPasswordFragmentRobot : BaseRobot() {
     private val rule = FragmentTestRule.create(EmailAndPasswordFragment::class.java,
             false, false)
 
-    fun launchFragment(uiMode: UiMode): EmailAndPasswordFragmentRobot {
+    fun launchFragment(uiMode: AdaptableUi.Mode): EmailAndPasswordFragmentRobot {
         rule.launchActivity(Intent())
         val fragment = EmailAndPasswordFragment.newInstance(uiMode)
         rule.launchFragment(fragment)

@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.google.firebase.auth.FirebaseAuth
 
-class DisplayNameFragment : Fragment() {
+class DisplayNameFragment : Fragment(), AdaptableUi {
 
     companion object {
         private const val ARG_MODE = "mode"
 
-        fun newInstance(uiMode: UiMode): DisplayNameFragment {
+        fun newInstance(uiMode: AdaptableUi.Mode): DisplayNameFragment {
             val instance = DisplayNameFragment()
             val args = Bundle()
             args.putSerializable(ARG_MODE, uiMode)
@@ -30,7 +30,7 @@ class DisplayNameFragment : Fragment() {
     private lateinit var textViewDisplayName: TextView
     private lateinit var editTextDisplayName: EditText
 
-    private lateinit var uiMode: UiMode
+    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
 
     private val user = FirebaseAuth.getInstance().currentUser
 
@@ -43,8 +43,31 @@ class DisplayNameFragment : Fragment() {
         return view
     }
 
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
+        textViewDisplayName.visibility = GONE
+        editTextDisplayName.visibility = VISIBLE
+    }
+
+    override fun prepareEditMode() {
+        textViewDisplayName.visibility = GONE
+
+        editTextDisplayName.visibility = VISIBLE
+        editTextDisplayName.setText(user?.displayName)
+    }
+
+    override fun prepareViewMode() {
+        textViewDisplayName.visibility = VISIBLE
+        textViewDisplayName.text = user?.displayName
+
+        editTextDisplayName.visibility = GONE
+    }
+
     fun getDisplayName(): String {
-        return if (uiMode == UiMode.CREATE || uiMode == UiMode.EDIT)
+        return if (uiMode == AdaptableUi.Mode.CREATE || uiMode == AdaptableUi.Mode.EDIT)
             editTextDisplayName.text.toString()
         else user?.displayName!!
     }
@@ -55,34 +78,16 @@ class DisplayNameFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        uiMode = arguments?.getSerializable(ARG_MODE) as UiMode
+        uiMode = arguments?.getSerializable(ARG_MODE) as AdaptableUi.Mode
     }
 
     private fun prepareUi() {
         when (uiMode) {
-            UiMode.CREATE -> prepareNewAccountMode()
-            UiMode.EDIT -> prepareEditMode()
-            UiMode.VIEW -> prepareViewMode()
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
-    }
-
-    private fun prepareNewAccountMode() {
-        textViewDisplayName.visibility = GONE
-        editTextDisplayName.visibility = VISIBLE
-    }
-
-    private fun prepareEditMode() {
-        textViewDisplayName.visibility = GONE
-
-        editTextDisplayName.visibility = VISIBLE
-        editTextDisplayName.setText(user?.displayName)
-    }
-
-    private fun prepareViewMode() {
-        textViewDisplayName.visibility = VISIBLE
-        textViewDisplayName.text = user?.displayName
-
-        editTextDisplayName.visibility = GONE
     }
 
 }

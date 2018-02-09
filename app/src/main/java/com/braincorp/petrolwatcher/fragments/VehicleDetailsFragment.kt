@@ -14,22 +14,18 @@ import android.widget.*
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
-import com.braincorp.petrolwatcher.model.FuelType
-import com.braincorp.petrolwatcher.model.UiMode
-import com.braincorp.petrolwatcher.model.Vehicle
-import com.braincorp.petrolwatcher.model.VehicleType
+import com.braincorp.petrolwatcher.model.*
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
-import com.braincorp.petrolwatcher.model.SystemOfMeasurement
 import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 
-class VehicleDetailsFragment : Fragment() {
+class VehicleDetailsFragment : Fragment(), AdaptableUi {
 
     companion object {
         private const val ARG_UI_MODE = "ui_mode"
         private const val ARG_VEHICLE = "vehicle"
 
-        fun newInstance(uiMode: UiMode,
+        fun newInstance(uiMode: AdaptableUi.Mode,
                         onFragmentInflatedListener: OnFragmentInflatedListener,
                         vehicle: Vehicle? = null): VehicleDetailsFragment {
             val instance = VehicleDetailsFragment()
@@ -62,7 +58,7 @@ class VehicleDetailsFragment : Fragment() {
 
     private var onFragmentInflatedListener: OnFragmentInflatedListener? = null
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
-    private var uiMode = UiMode.VIEW
+    private var uiMode = AdaptableUi.Mode.VIEW
     private var vehicle: Vehicle? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -78,9 +74,30 @@ class VehicleDetailsFragment : Fragment() {
         return view
     }
 
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
+        hideNotEditableViews()
+        showEditableFields()
+    }
+
+    override fun prepareEditMode() {
+        hideNotEditableViews()
+        showEditableFields()
+        fillEditableFields()
+    }
+
+    override fun prepareViewMode() {
+        hideEditableFields()
+        showNotEditableFields()
+        fillNotEditableFields()
+    }
+
     fun getVehicle(): Vehicle {
-        if (uiMode == UiMode.VIEW) return vehicle!!
-        if (uiMode == UiMode.CREATE) vehicle = Vehicle()
+        if (uiMode == AdaptableUi.Mode.VIEW) return vehicle!!
+        if (uiMode == AdaptableUi.Mode.CREATE) vehicle = Vehicle()
 
         vehicle!!.name = editTextName.text.toString()
         vehicle!!.manufacturer = editTextManufacturer.text.toString()
@@ -145,7 +162,7 @@ class VehicleDetailsFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        uiMode = arguments?.getSerializable(ARG_UI_MODE) as UiMode
+        uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
         vehicle = arguments?.getParcelable(ARG_VEHICLE)
         Log.d("ALAN", "found ${vehicle?.fuelTypes} and ${vehicle?.fuelConsumption}")
     }
@@ -157,27 +174,11 @@ class VehicleDetailsFragment : Fragment() {
 
     private fun prepareUi() {
         when (uiMode) {
-            UiMode.CREATE -> prepareCreateMode()
-            UiMode.EDIT -> prepareEditMode()
-            UiMode.VIEW -> prepareViewMode()
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
-    }
-
-    private fun prepareCreateMode() {
-        hideNotEditableViews()
-        showEditableFields()
-    }
-
-    private fun prepareEditMode() {
-        hideNotEditableViews()
-        showEditableFields()
-        fillEditableFields()
-    }
-
-    private fun prepareViewMode() {
-        hideEditableFields()
-        showNotEditableFields()
-        fillNotEditableFields()
     }
 
     private fun hideNotEditableViews() {

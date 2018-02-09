@@ -5,13 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.view.Gravity.START
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
-import com.braincorp.petrolwatcher.model.UiMode
+import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.showQuestionDialogue
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 
-class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener {
 
     companion object {
@@ -93,7 +94,7 @@ class HomeActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun launchProfileActivity() {
-        val intent = ProfileActivity.getIntent(context = this, uiMode = UiMode.VIEW)
+        val intent = ProfileActivity.getIntent(context = this, uiMode = AdaptableUi.Mode.VIEW)
         startActivity(intent)
     }
 
