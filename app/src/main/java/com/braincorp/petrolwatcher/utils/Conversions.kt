@@ -13,14 +13,14 @@ import kotlin.collections.HashMap
 
 fun Context.fuelFloatMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): String {
     val sb = StringBuilder()
-    val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
 
     for ((i, entry) in map.entries.withIndex()) {
         val type = fuelTypeToString(entry.key.first)
-        val quality = fuelQualityToUserFriendlyString(entry.key.second)
+        val quality = fuelQualityToString(entry.key.second)
         val price = entry.value
+        val formattedPrice = floatToCurrencyString(price)
 
-        sb.append("$type ($quality): $currencySymbol $price")
+        sb.append("$type ($quality): $formattedPrice")
         if (i < map.size - 1) sb.append("\n")
     }
 
@@ -62,7 +62,7 @@ fun stringFloatMapToFuelFloatMap(input: Map<String, Float>)
     return output
 }
 
-fun Context.fuelQualityToUserFriendlyString(fuelQuality: FuelQuality): String {
+fun Context.fuelQualityToString(fuelQuality: FuelQuality): String {
     return when (fuelQuality) {
         FuelQuality.PREMIUM -> getString(R.string.premium)
         FuelQuality.REGULAR -> getString(R.string.regular)
@@ -158,3 +158,12 @@ fun Context.vehicleTypeToDrawable(vehicleType: VehicleType): Drawable {
     }
     return ContextCompat.getDrawable(this, drawableRes)!!
 }
+
+fun floatToCurrencyString(value: Float): String {
+    val currency = Currency.getInstance(Locale.getDefault()).symbol
+    return "$currency $value"
+}
+
+fun kilometresToMiles(kilometres: Float) = kilometres * 0.621371f
+
+fun milesToKilometres(miles: Float) = miles * 1.60934f
