@@ -34,7 +34,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
         bindNavigationDrawer()
-        fabHome.setOnClickListener(this)
     }
 
     override fun onStop() {
@@ -52,7 +51,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fabHome -> TODO("not implemented")
+            R.id.imageViewProfile -> {
+                drawer_home.closeDrawer(START)
+                launchProfileActivity()
+            }
         }
     }
 
@@ -76,7 +78,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val user = FirebaseAuth.getInstance().currentUser
 
         val headerView = navigationView.getHeaderView(0)
+
         val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
+        imageViewProfile.setOnClickListener(this)
+
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 

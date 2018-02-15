@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageButton
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.utils.*
+import com.braincorp.petrolwatcher.utils.fillImageView
+import com.braincorp.petrolwatcher.utils.openCamera
+import com.braincorp.petrolwatcher.utils.openGallery
+import com.braincorp.petrolwatcher.utils.showImagePickerDialogue
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -35,10 +35,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
     private var uiMode = AdaptableUi.Mode.VIEW
     private var uri: Uri? = null
 
-    private var rotation = 0f
-
     private lateinit var imageViewProfile: CircleImageView
-    private lateinit var buttonRotateClockwise: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,17 +47,12 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
     }
 
     override fun onClick(v: View?) {
-        when {
-            v?.id == R.id.imageViewProfile -> activity!!.showImagePickerDialogue(cameraButtonAction = {
+        when (v?.id) {
+            R.id.imageViewProfile -> activity!!.showImagePickerDialogue(cameraButtonAction = {
                 activity!!.openCamera()
             }, galleryButtonAction = {
                 activity!!.openGallery()
             })
-
-            v?.id == R.id.buttonRotateClockwise -> {
-                rotateImage()
-                fillImageView(uri, imageViewProfile)
-            }
         }
     }
 
@@ -70,19 +62,16 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     override fun prepareCreateMode() {
         imageViewProfile.isClickable = true
-        buttonRotateClockwise.visibility = VISIBLE
     }
 
     override fun prepareEditMode() {
         imageViewProfile.isClickable = true
-        buttonRotateClockwise.visibility = VISIBLE
         bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
         setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
     }
 
     override fun prepareViewMode() {
         imageViewProfile.isClickable = false
-        buttonRotateClockwise.visibility = GONE
         bitmap = (imageViewProfile.drawable as BitmapDrawable).bitmap
         setImageUri(FirebaseAuth.getInstance().currentUser?.photoUrl)
     }
@@ -101,18 +90,9 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
         fillImageView(uri, imageViewProfile)
     }
 
-    private fun rotateImage() {
-        if (rotation == 360f) rotation = 0f
-        else rotation += 90f
-        bitmap = rotateBitmap(bitmap!!, rotation)
-    }
-
     private fun bindViews(view: View) {
         imageViewProfile = view.findViewById(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
-
-        buttonRotateClockwise = view.findViewById(R.id.buttonRotateClockwise)
-        buttonRotateClockwise.setOnClickListener(this)
     }
 
     private fun parseArgs() {

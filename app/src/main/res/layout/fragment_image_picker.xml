@@ -23,17 +23,5 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <ImageButton
-            android:id="@+id/buttonRotateClockwise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_rotate_clockwise"
-            android:contentDescription="@string/rotate_right"
-            app:layout_constraintTop_toTopOf="@id/imageViewProfile"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/imageViewProfile"
-            app:layout_constraintRight_toRightOf="parent"/>
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
