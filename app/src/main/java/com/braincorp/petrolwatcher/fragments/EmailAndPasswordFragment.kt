@@ -35,7 +35,7 @@ class EmailAndPasswordFragment : Fragment(), AdaptableUi {
     private lateinit var editTextPassword: EditText
     private lateinit var editTextConfirmPassword: EditText
 
-    private var uiMode = AdaptableUi.Mode.VIEW
+    private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,

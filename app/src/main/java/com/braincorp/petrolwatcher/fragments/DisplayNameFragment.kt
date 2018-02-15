@@ -30,7 +30,7 @@ class DisplayNameFragment : Fragment(), AdaptableUi {
     private lateinit var textViewDisplayName: TextView
     private lateinit var editTextDisplayName: EditText
 
-    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
+    private var uiMode = AdaptableUi.Mode.INITIAL
 
     private val user = FirebaseAuth.getInstance().currentUser
 

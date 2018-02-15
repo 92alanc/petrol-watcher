@@ -58,7 +58,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
 
     private var onFragmentInflatedListener: OnFragmentInflatedListener? = null
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
-    private var uiMode = AdaptableUi.Mode.VIEW
+    private var uiMode = AdaptableUi.Mode.INITIAL
     private var vehicle: Vehicle? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
