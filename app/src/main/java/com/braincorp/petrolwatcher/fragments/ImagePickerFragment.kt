@@ -59,8 +59,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
             v?.id == R.id.buttonRotateClockwise -> {
                 rotateImage()
-                context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile,
-                        rotation = rotation)
+                fillImageView(uri, imageViewProfile)
             }
         }
     }
@@ -99,7 +98,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     fun setImageUri(uri: Uri?) {
         this.uri = uri
-        context?.fillImageView(imageViewProfile, uri, placeholder = R.drawable.ic_profile)
+        fillImageView(uri, imageViewProfile)
     }
 
     private fun rotateImage() {

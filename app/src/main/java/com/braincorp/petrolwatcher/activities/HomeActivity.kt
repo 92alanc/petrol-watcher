@@ -80,8 +80,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 
-        fillImageView(imageViewProfile, user?.photoUrl,
-                placeholder = R.drawable.ic_profile)
+        fillImageView(user?.photoUrl, imageViewProfile)
 
         textViewDisplayName.text = user?.displayName
         textViewEmail.text = user?.email

@@ -2,7 +2,6 @@ package com.braincorp.petrolwatcher.utils
 
 import android.Manifest.permission.*
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.graphics.Bitmap
@@ -15,17 +14,18 @@ import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.support.annotation.DrawableRes
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
-import com.squareup.picasso.Picasso
+import com.nostra13.universalimageloader.core.DisplayImageOptions
+import com.nostra13.universalimageloader.core.ImageLoader
 import java.io.ByteArrayOutputStream
 
-fun Context.fillImageView(imageView: ImageView, uri: Uri?,
-                          @DrawableRes placeholder: Int = -1,
-                          rotation: Float = 0f) {
-    Picasso.with(this)
-            .load(uri)
-            .placeholder(placeholder)
-            .rotate(rotation)
-            .into(imageView)
+fun fillImageView(uri: Uri?, imageView: ImageView,
+                  @DrawableRes placeholder: Int = 0) {
+    val imageLoader = ImageLoader.getInstance()
+    val options = DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .build()
+    imageLoader.displayImage(uri?.toString(), imageView, options)
 }
 
 fun Activity.openCamera() {
