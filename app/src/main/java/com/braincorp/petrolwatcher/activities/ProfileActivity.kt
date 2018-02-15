@@ -45,7 +45,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
+    private var uiMode = AdaptableUi.Mode.INITIAL
 
     private var topFragment: ImagePickerFragment? = null
     private var bottomFragment: Fragment? = null

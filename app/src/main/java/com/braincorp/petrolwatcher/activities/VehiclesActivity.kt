@@ -42,7 +42,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private var fragment: VehicleDetailsFragment? = null
-    private var uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL
+    private var uiMode = AdaptableUi.Mode.INITIAL
     private var vehicle: Vehicle? = null
     private var vehicles: Array<Vehicle>? = null
 
