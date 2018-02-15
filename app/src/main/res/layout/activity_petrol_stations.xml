@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activities.VehiclesActivity">
+    tools:context=".activities.PetrolStationsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,15 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
-        
+
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_vehicles"/>
+    <include layout="@layout/content_petrol_stations"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabVehicles"
+        android:id="@+id/fabPetrolStations"
         style="@style/FloatingActionButton"
         android:src="@drawable/ic_add"
-        app:fabSize="normal"/>
-    
+        app:fabSize="normal" />
+
 </android.support.design.widget.CoordinatorLayout>

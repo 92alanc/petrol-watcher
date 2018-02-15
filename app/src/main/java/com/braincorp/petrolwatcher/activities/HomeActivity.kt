@@ -99,8 +99,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun launchPetrolStationsActivity() {
-        /*val intent = PetrolStationsActivity.getIntent(context = this)
-        startActivity(intent)*/
+        val intent = PetrolStationsActivity.getIntent(context = this)
+        startActivity(intent)
     }
 
     private fun promptSignOut() {
