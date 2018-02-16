@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.authentication
 
 import android.net.Uri
+import android.os.Looper
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -38,6 +39,11 @@ object AuthenticationManager {
         }
     }
 
+    fun sendEmailVerification(onSuccessAction: (Task<Void>) -> Unit) {
+        FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
+                ?.addOnCompleteListener(onSuccessAction)
+    }
+
     fun signIn(email: String, password: String,
                onSuccessAction: (AuthResult) -> Unit,
                onFailureAction: () -> Unit) {
@@ -46,7 +52,9 @@ object AuthenticationManager {
                     Thread {
                         while (true) {
                             if (it.user != null) {
+                                Looper.prepare()
                                 onSuccessAction(it)
+                                Looper.loop()
                                 break
                             }
                         }
@@ -82,6 +90,8 @@ object AuthenticationManager {
             }
         }.start()
     }
+
+    fun isEmailVerified(): Boolean = FirebaseAuth.getInstance().currentUser!!.isEmailVerified
 
     fun isSignedIn(): Boolean = FirebaseAuth.getInstance().currentUser != null
 

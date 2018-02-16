@@ -10,6 +10,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -39,7 +40,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkAuthenticationState() {
-        if (AuthenticationManager.isSignedIn())
+        if (AuthenticationManager.isSignedIn() && AuthenticationManager.isEmailVerified())
             startHomeActivity()
     }
 
@@ -51,14 +52,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun signIn() {
         val email = editTextEmail.text.toString()
         val password = editTextPassword.text.toString()
-        if (!isEmpty(email) && !isEmpty(password))
+        if (!isEmpty(email) && !isEmpty(password)) {
             AuthenticationManager.signIn(email, password, onSuccessAction = {
-                startHomeActivity()
+                if (it.user.isEmailVerified) {
+                    startHomeActivity()
+                } else {
+                    showInformationDialogue(title = R.string.email_not_verified,
+                            message = R.string.verify_email)
+                }
             }, onFailureAction = {
                 showErrorDialogue(R.string.invalid_email_or_password)
             })
-        else
+        } else {
             showErrorDialogue(R.string.invalid_email_or_password)
+        }
     }
 
     private fun startHomeActivity() {
@@ -68,7 +75,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startProfileActivity() {
         val intent = ProfileActivity.getIntent(context = this,
-                                               uiMode = AdaptableUi.Mode.CREATE)
+                uiMode = AdaptableUi.Mode.CREATE)
         startActivity(intent)
         clearEditTexts()
     }

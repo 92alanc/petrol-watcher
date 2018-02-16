@@ -64,4 +64,8 @@
     <string name="price">preço</string>
     <string name="description_remove">remover</string>
     <string name="error_saving_petrol_station">Erro ao salvar posto de gasolina</string>
+    <string name="account_created">Conta criada</string>
+    <string name="check_email">Um e-mail de verificação foi enviado para você. Por favor verifique sua caixa de entrada.</string>
+    <string name="email_not_verified">E-mail não verificado</string>
+    <string name="verify_email">Por favor verifique seu e-mail antes de fazer login.</string>
 </resources>

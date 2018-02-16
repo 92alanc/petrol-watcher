@@ -267,12 +267,21 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         StorageManager.upload(bitmap, onSuccessAction = {
             AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
                     onSuccessAction =  {
-                        val intent = if (uiMode == AdaptableUi.Mode.CREATE)
-                            LoginActivity.getIntent(context = this)
-                        else
-                            HomeActivity.getIntent(context = this)
-                        startActivity(intent)
-                        finish()
+                        if (uiMode == AdaptableUi.Mode.CREATE) {
+                            val intent = HomeActivity.getIntent(context = this)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            AuthenticationManager.sendEmailVerification {
+                                showInformationDialogue(title = R.string.account_created,
+                                        message = R.string.check_email,
+                                        onDismissAction = {
+                                            val intent = LoginActivity.getIntent(context = this)
+                                            startActivity(intent)
+                                            finish()
+                                        })
+                            }
+                        }
                     }, onFailureAction = {
                 showErrorDialogue(R.string.error_setting_profile_picture)
             })
