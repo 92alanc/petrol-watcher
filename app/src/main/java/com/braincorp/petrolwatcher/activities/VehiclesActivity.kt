@@ -34,6 +34,12 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     companion object {
         private const val EXTRA_DATA = "data"
 
+        private const val KEY_FRAGMENT = "fragment"
+        private const val KEY_UI_MODE = "ui_mode"
+        private const val KEY_VEHICLE = "vehicle"
+
+        private const val TAG_VEHICLE_DETAILS = "vehicle_details"
+
         fun getIntent(context: Context, pickVehicle: Boolean = false): Intent {
             val intent = Intent(context, VehiclesActivity::class.java)
             if (pickVehicle) intent.action = ACTION_PICK
@@ -54,14 +60,45 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fabVehicles.setOnClickListener(this)
-        prepareInitialMode()
+
+        if (savedInstanceState != null) {
+            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
+            vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+
+            val tag = savedInstanceState.getString(KEY_FRAGMENT)
+            if (tag != null)
+                fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
+        }
+        prepareUi()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putSerializable(KEY_UI_MODE, uiMode)
+        outState?.putParcelable(KEY_VEHICLE, vehicle)
+        outState?.putString(KEY_FRAGMENT, fragment?.tag)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
+            vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+
+            val tag = savedInstanceState.getString(KEY_FRAGMENT)
+            if (tag != null)
+                fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
+        }
     }
 
     override fun onBackPressed() {
         if (ACTION_PICK == intent.action) {
             setResult(RESULT_CANCELED)
             finish()
-        } else super.onBackPressed()
+        } else {
+            if (uiMode != AdaptableUi.Mode.INITIAL) prepareInitialMode()
+            else super.onBackPressed()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -114,6 +151,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun prepareInitialMode() {
         uiMode = AdaptableUi.Mode.INITIAL
+        fragment = null
         fabVehicles.setImageResource(R.drawable.ic_add)
 
         removeFragment()
@@ -130,17 +168,24 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     override fun prepareEditMode() {
         uiMode = AdaptableUi.Mode.EDIT
         fabVehicles.setImageResource(R.drawable.ic_save)
-        loadFragment(uiMode, vehicle)
         recyclerViewVehicles.visibility = GONE
+        loadFragment(uiMode, vehicle)
     }
 
     override fun prepareViewMode() {
-        fabVehicles.setImageResource(R.drawable.ic_edit)
-
         uiMode = AdaptableUi.Mode.VIEW
-        loadFragment(uiMode, vehicle)
-
+        fabVehicles.setImageResource(R.drawable.ic_edit)
         recyclerViewVehicles.visibility = GONE
+        loadFragment(uiMode, vehicle)
+    }
+
+    private fun prepareUi() {
+        when (uiMode) {
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
+        }
     }
 
     private fun handleFabClick() {
@@ -156,8 +201,11 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun loadFragment(uiMode: AdaptableUi.Mode, vehicle: Vehicle? = null) {
         placeholderVehicles.visibility = VISIBLE
-        fragment = VehicleDetailsFragment.newInstance(uiMode, this, vehicle)
-        replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!)
+        if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
+            fragment = VehicleDetailsFragment.newInstance(uiMode, this,
+                    vehicle)
+            replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!, TAG_VEHICLE_DETAILS)
+        }
     }
 
     private fun removeFragment() {
