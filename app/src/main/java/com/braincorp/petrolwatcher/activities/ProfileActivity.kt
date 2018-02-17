@@ -117,7 +117,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
             showQuestionDialogue(title = R.string.changes_not_saved,
                     message = R.string.question_changes_not_saved,
                     positiveFunc = {
-                        super.onBackPressed()
+                        prepareInitialMode()
                     },
                     negativeFunc = { })
         } else super.onBackPressed()
@@ -159,6 +159,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun prepareCreateMode() {
+        uiMode = AdaptableUi.Mode.CREATE
         textViewProfileHeader.visibility = VISIBLE
         textViewProfileHeader.setText(R.string.header_email_password)
 
@@ -190,6 +191,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun prepareViewMode() {
+        uiMode = AdaptableUi.Mode.VIEW
         textViewProfileHeader.visibility = GONE
 
         buttonVehicles.visibility = VISIBLE

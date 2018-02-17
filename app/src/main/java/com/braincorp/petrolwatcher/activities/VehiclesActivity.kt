@@ -134,7 +134,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onCancelled(error: DatabaseError?) {
-        showErrorDialogue(R.string.error_finding_vehicles)
+        if (!isFinishing)
+            showErrorDialogue(R.string.error_finding_vehicles)
     }
 
     override fun prepareInitialMode() {
