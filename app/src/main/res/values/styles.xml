@@ -62,4 +62,9 @@
         <item name="android:textSize">@dimen/text_size_title</item>
     </style>
 
+    <style name="TextViewWarning" parent="TextViewHeader">
+        <item name="android:textColor">@color/grey_darkest</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

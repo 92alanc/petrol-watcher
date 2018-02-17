@@ -32,7 +32,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         OnItemClickListener, ValueEventListener, AdaptableUi {
 
     companion object {
-        private const val EXTRA_DATA = "data"
+        const val EXTRA_DATA = "data"
 
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_UI_MODE = "ui_mode"
@@ -61,14 +61,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
         fabVehicles.setOnClickListener(this)
 
-        if (savedInstanceState != null) {
-            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
-            vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
-
-            val tag = savedInstanceState.getString(KEY_FRAGMENT)
-            if (tag != null)
-                fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
-        }
+        if (savedInstanceState != null)
+            parseSavedInstanceState(savedInstanceState)
         prepareUi()
     }
 
@@ -81,14 +75,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (savedInstanceState != null) {
-            uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
-            vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
-
-            val tag = savedInstanceState.getString(KEY_FRAGMENT)
-            if (tag != null)
-                fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
-        }
+        if (savedInstanceState != null)
+            parseSavedInstanceState(savedInstanceState)
     }
 
     override fun onBackPressed() {
@@ -240,6 +228,15 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
                 false
             }
         } else false
+    }
+
+    private fun parseSavedInstanceState(savedInstanceState: Bundle) {
+        uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
+        vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+
+        val tag = savedInstanceState.getString(KEY_FRAGMENT)
+        if (tag != null)
+            fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
     }
 
 }

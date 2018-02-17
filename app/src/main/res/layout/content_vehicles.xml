@@ -21,12 +21,10 @@
 
     <TextView
         android:id="@+id/textViewNoVehicles"
-        style="@style/TextViewHeader"
+        style="@style/TextViewWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_vehicles"
-        android:textAlignment="center"
-        android:textColor="@color/grey_darkest"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
