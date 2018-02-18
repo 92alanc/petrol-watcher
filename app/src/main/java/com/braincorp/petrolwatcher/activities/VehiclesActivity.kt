@@ -37,6 +37,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_UI_MODE = "ui_mode"
         private const val KEY_VEHICLE = "vehicle"
+        private const val KEY_VEHICLES = "vehicles"
 
         private const val TAG_VEHICLE_DETAILS = "vehicle_details"
 
@@ -71,6 +72,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         outState?.putSerializable(KEY_UI_MODE, uiMode)
         outState?.putParcelable(KEY_VEHICLE, vehicle)
         outState?.putString(KEY_FRAGMENT, fragment?.tag)
+        outState?.putParcelableArray(KEY_VEHICLES, vehicles)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -144,7 +146,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         fabVehicles.setImageResource(R.drawable.ic_add)
 
         removeFragment()
-        VehicleDatabase.select(valueEventListener = this)
+        if (vehicles == null)
+            VehicleDatabase.select(valueEventListener = this)
     }
 
     override fun prepareCreateMode() {
@@ -231,9 +234,15 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         } else false
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun parseSavedInstanceState(savedInstanceState: Bundle) {
         uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
         vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+        val array = savedInstanceState.getParcelableArray(KEY_VEHICLES)
+        if (array != null) {
+            vehicles = array as Array<Vehicle>
+            populateRecyclerView(vehicles!!)
+        }
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
