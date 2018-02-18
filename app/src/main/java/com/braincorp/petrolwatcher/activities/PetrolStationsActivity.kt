@@ -16,6 +16,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
     companion object {
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_PETROL_STATION = "petrol_station"
+        private const val KEY_PETROL_STATIONS = "petrol_stations"
         private const val KEY_UI_MODE = "ui_mode"
 
         private const val TAG_PETROL_STATION_DETAILS = "petrol_station_details"
@@ -46,6 +47,10 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        outState?.putSerializable(KEY_UI_MODE, uiMode)
+        outState?.putParcelable(KEY_PETROL_STATION, petrolStation)
+        outState?.putParcelableArray(KEY_PETROL_STATIONS, petrolStations)
+        outState?.putString(KEY_FRAGMENT, fragment?.tag)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -59,23 +64,25 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
     }
 
     override fun onClick(v: View?) {
-
+        when (v?.id) {
+            R.id.fabPetrolStations -> TODO("not implemented")
+        }
     }
 
     override fun prepareInitialMode() {
-
+        uiMode = AdaptableUi.Mode.INITIAL
     }
 
     override fun prepareCreateMode() {
-
+        uiMode = AdaptableUi.Mode.CREATE
     }
 
     override fun prepareEditMode() {
-
+        uiMode = AdaptableUi.Mode.EDIT
     }
 
     override fun prepareViewMode() {
-
+        uiMode = AdaptableUi.Mode.VIEW
     }
 
     private fun prepareUi() {
@@ -87,8 +94,13 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun parseSavedInstanceState(savedInstanceState: Bundle) {
         petrolStation = savedInstanceState.getParcelable(KEY_PETROL_STATION)
+        val array = savedInstanceState.getParcelableArray(KEY_PETROL_STATIONS)
+        if (array != null)
+            petrolStations = array as Array<PetrolStation>
+
         uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
