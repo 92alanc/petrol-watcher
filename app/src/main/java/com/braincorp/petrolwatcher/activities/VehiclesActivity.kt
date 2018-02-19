@@ -109,7 +109,6 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
             setResult(RESULT_OK, data)
             finish()
         } else {
-            uiMode = AdaptableUi.Mode.VIEW
             prepareViewMode()
         }
     }
@@ -128,7 +127,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         vehicles = list.toTypedArray()
         if (vehicles != null && vehicles!!.isNotEmpty()) {
             textViewNoVehicles.visibility = GONE
-            populateRecyclerView(vehicles!!)
+            populateRecyclerView()
         } else {
             textViewNoVehicles.visibility = VISIBLE
             recyclerViewVehicles.visibility = GONE
@@ -214,10 +213,10 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }, negativeFunc = { })
     }
 
-    private fun populateRecyclerView(items: Array<Vehicle>) {
+    private fun populateRecyclerView() {
         recyclerViewVehicles.visibility = VISIBLE
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
-        val adapter = VehicleAdapter(context = this, items = items, onItemClickListener = this)
+        val adapter = VehicleAdapter(context = this, items = vehicles!!, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
     }
 
@@ -241,7 +240,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         val array = savedInstanceState.getParcelableArray(KEY_VEHICLES)
         if (array != null) {
             vehicles = array as Array<Vehicle>
-            populateRecyclerView(vehicles!!)
+            populateRecyclerView()
         }
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)

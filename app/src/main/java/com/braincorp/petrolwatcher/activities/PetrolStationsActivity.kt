@@ -5,13 +5,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.adapters.PetrolStationAdapter
+import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
+import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_petrol_stations.*
+import kotlinx.android.synthetic.main.content_petrol_stations.*
 
-class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, AdaptableUi {
+class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
+        OnItemClickListener, AdaptableUi, ValueEventListener,
+        OnCompleteListener<Void> {
 
     companion object {
         private const val KEY_FRAGMENT = "fragment"
@@ -60,13 +74,48 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        if (uiMode != AdaptableUi.Mode.INITIAL) prepareInitialMode()
+        else super.onBackPressed()
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fabPetrolStations -> TODO("not implemented")
+            R.id.fabPetrolStations -> handleFabClick()
+            R.id.buttonDelete -> promptDelete()
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        petrolStation = petrolStations!![position]
+        prepareViewMode()
+    }
+
+    override fun onComplete(task: Task<Void>) {
+        if (task.isSuccessful)
+            recyclerViewPetrolStations.adapter.notifyDataSetChanged()
+    }
+
+    override fun onDataChange(snapshot: DataSnapshot?) {
+        val list = ArrayList<PetrolStation>()
+
+        snapshot?.children?.forEach {
+            val petrolStation = PetrolStation(it)
+            list.add(petrolStation)
+        }
+
+        petrolStations = list.toTypedArray()
+        if (petrolStations != null && petrolStations!!.isNotEmpty()) {
+            textViewNoPetrolStations.visibility = GONE
+            populateRecyclerView()
+        } else {
+            textViewNoPetrolStations.visibility = VISIBLE
+            recyclerViewPetrolStations.visibility = GONE
+        }
+    }
+
+    override fun onCancelled(error: DatabaseError?) {
+        if (!isFinishing)
+            showErrorDialogue(R.string.error_finding_petrol_stations)
     }
 
     override fun prepareInitialMode() {
@@ -106,6 +155,22 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, Adapta
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
             fragment = supportFragmentManager.findFragmentByTag(tag) // TODO: as PetrolStationDetailsFragment
+    }
+
+    private fun populateRecyclerView() {
+        recyclerViewPetrolStations.visibility = VISIBLE
+        recyclerViewPetrolStations.layoutManager = LinearLayoutManager(this)
+        val adapter = PetrolStationAdapter(context = this, items = petrolStations!!,
+                onItemClickListener = this)
+        recyclerViewPetrolStations.adapter = adapter
+    }
+
+    private fun handleFabClick() {
+
+    }
+
+    private fun promptDelete() {
+
     }
 
 }
