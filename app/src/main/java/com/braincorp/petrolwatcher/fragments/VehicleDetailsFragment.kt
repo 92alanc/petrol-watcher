@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -160,7 +159,6 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     private fun parseArgs() {
         uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
         vehicle = arguments?.getParcelable(ARG_VEHICLE)
-        Log.d("ALAN", "found ${vehicle?.fuelTypes} and ${vehicle?.fuelConsumption}")
     }
 
     private fun populateSpinner() {

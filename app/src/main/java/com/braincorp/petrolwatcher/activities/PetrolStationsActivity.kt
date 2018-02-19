@@ -17,10 +17,7 @@ import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
-import com.braincorp.petrolwatcher.utils.removeFragment
-import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
-import com.braincorp.petrolwatcher.utils.showErrorDialogue
-import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -125,7 +122,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onFragmentInflated(fragment: Fragment) {
-
+        (fragment as PetrolStationDetailsFragment).setDeleteButtonClickListener(this)
     }
 
     override fun prepareInitialMode() {
@@ -147,10 +144,16 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun prepareEditMode() {
         uiMode = AdaptableUi.Mode.EDIT
+        fabPetrolStations.setImageResource(R.drawable.ic_save)
+        recyclerViewPetrolStations.visibility = GONE
+        loadFragment(uiMode)
     }
 
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
+        fabPetrolStations.setImageResource(R.drawable.ic_edit)
+        recyclerViewPetrolStations.visibility = GONE
+        loadFragment(uiMode)
     }
 
     private fun prepareUi() {
@@ -220,7 +223,16 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun save(): Boolean {
-        TODO("not implemented")
+        val petrolStation = fragment?.getPetrolStation()
+        return if (petrolStation != null) {
+            if (petrolStation.allFieldsAreValid()) {
+                PetrolStationDatabase.insertOrUpdate(petrolStation, this)
+                true
+            } else {
+                showInformationDialogue(R.string.information, R.string.all_fields_are_required)
+                false
+            }
+        } else false
     }
 
 }

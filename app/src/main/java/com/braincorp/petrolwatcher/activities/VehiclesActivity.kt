@@ -160,14 +160,14 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         uiMode = AdaptableUi.Mode.EDIT
         fabVehicles.setImageResource(R.drawable.ic_save)
         recyclerViewVehicles.visibility = GONE
-        loadFragment(uiMode, vehicle)
+        loadFragment(uiMode)
     }
 
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
         fabVehicles.setImageResource(R.drawable.ic_edit)
         recyclerViewVehicles.visibility = GONE
-        loadFragment(uiMode, vehicle)
+        loadFragment(uiMode)
     }
 
     private fun prepareUi() {
@@ -190,7 +190,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun loadFragment(uiMode: AdaptableUi.Mode, vehicle: Vehicle? = null) {
+    private fun loadFragment(uiMode: AdaptableUi.Mode) {
         placeholderVehicles.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
             fragment = VehicleDetailsFragment.newInstance(uiMode, this,
