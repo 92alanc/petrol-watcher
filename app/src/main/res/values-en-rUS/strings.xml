@@ -68,4 +68,5 @@
     <string name="check_email">A verification e-mail has been sent to you. Please check your inbox.</string>
     <string name="email_not_verified">E-mail not verified</string>
     <string name="verify_email">Please verify your e-mail before signing in.</string>
+    <string name="delete_petrol_station">Delete gas station</string>
 </resources>

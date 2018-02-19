@@ -11,10 +11,16 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.PetrolStationAdapter
+import com.braincorp.petrolwatcher.database.PetrolStationDatabase
+import com.braincorp.petrolwatcher.fragments.PetrolStationDetailsFragment
+import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
+import com.braincorp.petrolwatcher.utils.removeFragment
+import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.braincorp.petrolwatcher.utils.showQuestionDialogue
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +31,7 @@ import kotlinx.android.synthetic.main.content_petrol_stations.*
 
 class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
         OnItemClickListener, AdaptableUi, ValueEventListener,
-        OnCompleteListener<Void> {
+        OnCompleteListener<Void>, OnFragmentInflatedListener {
 
     companion object {
         private const val KEY_FRAGMENT = "fragment"
@@ -40,7 +46,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private var fragment: Fragment? = null // TODO: replace with PetrolStationDetailsFragment
+    private var fragment: PetrolStationDetailsFragment? = null
     private var petrolStation: PetrolStation? = null
     private var petrolStations: Array<PetrolStation>? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
@@ -118,12 +124,25 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
             showErrorDialogue(R.string.error_finding_petrol_stations)
     }
 
+    override fun onFragmentInflated(fragment: Fragment) {
+
+    }
+
     override fun prepareInitialMode() {
         uiMode = AdaptableUi.Mode.INITIAL
+        fragment = null
+        fabPetrolStations.setImageResource(R.drawable.ic_add)
+
+        removeFragment()
+        if (petrolStations == null)
+            PetrolStationDatabase.select(valueEventListener = this)
     }
 
     override fun prepareCreateMode() {
         uiMode = AdaptableUi.Mode.CREATE
+        recyclerViewPetrolStations.visibility = GONE
+        fabPetrolStations.setImageResource(R.drawable.ic_save)
+        loadFragment(uiMode)
     }
 
     override fun prepareEditMode() {
@@ -154,7 +173,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
-            fragment = supportFragmentManager.findFragmentByTag(tag) // TODO: as PetrolStationDetailsFragment
+            fragment = supportFragmentManager.findFragmentByTag(tag) as PetrolStationDetailsFragment
     }
 
     private fun populateRecyclerView() {
@@ -166,11 +185,42 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun handleFabClick() {
+        when (uiMode) {
+            AdaptableUi.Mode.INITIAL -> prepareCreateMode()
+            AdaptableUi.Mode.VIEW -> prepareEditMode()
 
+            AdaptableUi.Mode.CREATE, AdaptableUi.Mode.EDIT -> {
+                if (save()) prepareInitialMode()
+            }
+        }
     }
 
     private fun promptDelete() {
+        showQuestionDialogue(R.string.delete_petrol_station, R.string.are_you_sure, positiveFunc = {
+            PetrolStationDatabase.delete(petrolStation!!, OnCompleteListener {
+                recyclerViewPetrolStations.adapter.notifyDataSetChanged()
+                prepareInitialMode()
+            })
+        }, negativeFunc = { })
+    }
 
+    private fun loadFragment(uiMode: AdaptableUi.Mode) {
+        placeholderPetrolStations.visibility = VISIBLE
+        if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
+            fragment = PetrolStationDetailsFragment.newInstance(uiMode, this,
+                    petrolStation)
+            replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment!!,
+                    TAG_PETROL_STATION_DETAILS)
+        }
+    }
+
+    private fun removeFragment() {
+        if (fragment != null) removeFragment(fragment!!)
+        placeholderPetrolStations.visibility = GONE
+    }
+
+    private fun save(): Boolean {
+        TODO("not implemented")
     }
 
 }

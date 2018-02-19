@@ -68,4 +68,5 @@
     <string name="check_email">Um e-mail de verificação foi enviado para você. Por favor verifique sua caixa de entrada.</string>
     <string name="email_not_verified">E-mail não verificado</string>
     <string name="verify_email">Por favor verifique seu e-mail antes de fazer login.</string>
+    <string name="delete_petrol_station">Remover posto</string>
 </resources>

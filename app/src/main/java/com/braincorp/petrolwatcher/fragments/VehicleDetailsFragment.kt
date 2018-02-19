@@ -29,7 +29,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
                         onFragmentInflatedListener: OnFragmentInflatedListener,
                         vehicle: Vehicle? = null): VehicleDetailsFragment {
             val instance = VehicleDetailsFragment()
-            instance.setOnFragmentInflatedListener(onFragmentInflatedListener)
+            instance.onFragmentInflatedListener = onFragmentInflatedListener
             val args = Bundle()
             args.putSerializable(ARG_UI_MODE, uiMode)
             args.putParcelable(ARG_VEHICLE, vehicle)
@@ -123,10 +123,6 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
 
     fun setDeleteButtonClickListener(clickListener: View.OnClickListener) {
         buttonDelete.setOnClickListener(clickListener)
-    }
-
-    fun setOnFragmentInflatedListener(onFragmentInflatedListener: OnFragmentInflatedListener?) {
-        this.onFragmentInflatedListener = onFragmentInflatedListener
     }
 
     private fun applyPreferences() {
