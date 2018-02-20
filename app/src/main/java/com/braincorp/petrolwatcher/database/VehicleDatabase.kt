@@ -11,7 +11,6 @@ object VehicleDatabase {
     private val reference: DatabaseReference
 
     init {
-        database.setPersistenceEnabled(true)
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         reference = database.getReference("vehicles").child(uid)
     }

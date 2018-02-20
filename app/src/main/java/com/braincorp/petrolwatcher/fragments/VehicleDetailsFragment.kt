@@ -104,11 +104,11 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
             editTextYear.text.toString().toInt()
         else 0
 
-        val fuelTypesList = ArrayList<FuelType>()
-        if (checkBoxAutogas.isChecked) fuelTypesList.add(FuelType.LPG)
-        if (checkBoxDiesel.isChecked) fuelTypesList.add(FuelType.DIESEL)
-        if (checkBoxEthanol.isChecked) fuelTypesList.add(FuelType.ETHANOL)
-        if (checkBoxPetrol.isChecked) fuelTypesList.add(FuelType.PETROL)
+        val fuelTypesList = ArrayList<Fuel.Type>()
+        if (checkBoxAutogas.isChecked) fuelTypesList.add(Fuel.Type.LPG)
+        if (checkBoxDiesel.isChecked) fuelTypesList.add(Fuel.Type.DIESEL)
+        if (checkBoxEthanol.isChecked) fuelTypesList.add(Fuel.Type.ETHANOL)
+        if (checkBoxPetrol.isChecked) fuelTypesList.add(Fuel.Type.PETROL)
 
         vehicle!!.fuelTypes = fuelTypesList
 
@@ -235,10 +235,10 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
         spinnerVehicleType.setSelection(vehicle!!.vehicleType.ordinal)
         vehicle!!.fuelTypes.forEach {
             when (it) {
-                FuelType.LPG -> checkBoxAutogas.isChecked = true
-                FuelType.DIESEL -> checkBoxDiesel.isChecked = true
-                FuelType.ETHANOL -> checkBoxEthanol.isChecked = true
-                FuelType.PETROL -> checkBoxPetrol.isChecked = true
+                Fuel.Type.LPG -> checkBoxAutogas.isChecked = true
+                Fuel.Type.DIESEL -> checkBoxDiesel.isChecked = true
+                Fuel.Type.ETHANOL -> checkBoxEthanol.isChecked = true
+                Fuel.Type.PETROL -> checkBoxPetrol.isChecked = true
             }
         }
         editTextFuelConsumption.setText(vehicle!!.fuelConsumption.toString())

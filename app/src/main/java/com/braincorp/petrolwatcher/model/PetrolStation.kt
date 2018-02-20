@@ -3,8 +3,8 @@ package com.braincorp.petrolwatcher.model
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.TextUtils
-import com.braincorp.petrolwatcher.utils.fuelFloatMapToStringFloatMap
-import com.braincorp.petrolwatcher.utils.stringFloatMapToFuelFloatMap
+import com.braincorp.petrolwatcher.utils.fuelSetToStringFloatMap
+import com.braincorp.petrolwatcher.utils.stringFloatMapToFuelList
 import com.braincorp.petrolwatcher.utils.stringToRating
 import com.google.firebase.database.DataSnapshot
 import java.util.*
@@ -12,24 +12,19 @@ import java.util.*
 data class PetrolStation(var id: String = UUID.randomUUID().toString(),
                          var name: String = "",
                          var address: String = "",
-                         var prices: Map<Pair<FuelType, FuelQuality>, Float> = emptyMap(),
+                         var fuels: MutableSet<Fuel> = emptySet<Fuel>().toMutableSet(),
                          var rating: Rating = Rating.OK) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
         private const val KEY_ID = "id"
         private const val KEY_NAME = "name"
         private const val KEY_ADDRESS = "address"
-        private const val KEY_PRICES = "prices"
+        private const val KEY_FUELS = "fuels"
         private const val KEY_RATING = "rating"
 
-        override fun createFromParcel(source: Parcel): PetrolStation {
-            return PetrolStation(source)
-        }
+        override fun createFromParcel(source: Parcel): PetrolStation = PetrolStation(source)
 
-        override fun newArray(size: Int): Array<PetrolStation?> {
-            return arrayOfNulls(size)
-        }
-
+        override fun newArray(size: Int): Array<PetrolStation?> = arrayOfNulls(size)
     }
 
     constructor(parcel: Parcel): this() {
@@ -37,7 +32,8 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         name = parcel.readString()
         address = parcel.readString()
         @Suppress("UNCHECKED_CAST")
-        prices = parcel.readHashMap(javaClass.classLoader) as Map<Pair<FuelType, FuelQuality>, Float>
+        val fuelList = parcel.readParcelableArray(javaClass.classLoader) as Array<Fuel>
+        fuels = fuelList.toMutableSet()
         rating = parcel.readSerializable() as Rating
     }
 
@@ -46,7 +42,8 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         name = snapshot.child(KEY_NAME).value.toString()
         address = snapshot.child(KEY_ADDRESS).value.toString()
         @Suppress("UNCHECKED_CAST")
-        prices = stringFloatMapToFuelFloatMap(snapshot.child(KEY_PRICES).value as Map<String, Float>)
+        val fuelList = stringFloatMapToFuelList(snapshot.child(KEY_FUELS).value as Map<String, Float>)
+        fuels = fuelList.toMutableSet()
         rating = stringToRating(snapshot.value.toString())
     }
 
@@ -55,7 +52,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         map[KEY_ID] = id
         map[KEY_NAME] = name
         map[KEY_ADDRESS] = address
-        map[KEY_PRICES] = fuelFloatMapToStringFloatMap(prices)
+        map[KEY_FUELS] = fuelSetToStringFloatMap(fuels)
         map[KEY_RATING] = rating
         return map
     }
@@ -63,14 +60,14 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
     fun allFieldsAreValid(): Boolean {
         return !TextUtils.isEmpty(name)
                && !TextUtils.isEmpty(address)
-               && prices.isNotEmpty()
+               && fuels.isNotEmpty()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeString(address)
-        parcel.writeMap(prices)
+        parcel.writeParcelableArray(fuels.toTypedArray(), 0)
         parcel.writeSerializable(rating)
     }
 

@@ -3,8 +3,7 @@ package com.braincorp.petrolwatcher.utils
 import android.support.test.InstrumentationRegistry.getTargetContext
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.FuelQuality
-import com.braincorp.petrolwatcher.model.FuelType
+import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.model.Rating
 import com.braincorp.petrolwatcher.model.VehicleType
 import org.junit.Assert.assertEquals
@@ -19,42 +18,42 @@ class EnumConverterTest {
     @Test
     fun shouldConvertPremiumFuelQualityToString() {
         val expected = context.getString(R.string.premium)
-        val actual = context.fuelQualityToString(FuelQuality.PREMIUM)
+        val actual = context.fuelQualityToString(Fuel.Quality.PREMIUM)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertRegularFuelQualityToString() {
         val expected = context.getString(R.string.regular)
-        val actual = context.fuelQualityToString(FuelQuality.REGULAR)
+        val actual = context.fuelQualityToString(Fuel.Quality.REGULAR)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertLpgFuelTypeToString() {
         val expected = context.getString(R.string.lpg)
-        val actual = context.fuelTypeToString(FuelType.LPG)
+        val actual = context.fuelTypeToString(Fuel.Type.LPG)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertDieselFuelTypeToString() {
         val expected = context.getString(R.string.diesel)
-        val actual = context.fuelTypeToString(FuelType.DIESEL)
+        val actual = context.fuelTypeToString(Fuel.Type.DIESEL)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertEthanolFuelTypeToString() {
         val expected = context.getString(R.string.ethanol)
-        val actual = context.fuelTypeToString(FuelType.ETHANOL)
+        val actual = context.fuelTypeToString(Fuel.Type.ETHANOL)
         assertEquals(expected, actual)
     }
 
     @Test
     fun shouldConvertPetrolFuelTypeToString() {
         val expected = context.getString(R.string.petrol)
-        val actual = context.fuelTypeToString(FuelType.PETROL)
+        val actual = context.fuelTypeToString(Fuel.Type.PETROL)
         assertEquals(expected, actual)
     }
 

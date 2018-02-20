@@ -2,17 +2,15 @@ package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.model.PetrolStation
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 object PetrolStationDatabase {
 
     private val database = FirebaseDatabase.getInstance()
-    private val reference: DatabaseReference
-
-    init {
-        database.setPersistenceEnabled(true)
-        reference = database.getReference("petrol_stations")
-    }
+    private val reference = database.getReference("petrol_stations")
 
     fun insertOrUpdate(petrolStation: PetrolStation,
                        onCompleteListener: OnCompleteListener<Void>) {

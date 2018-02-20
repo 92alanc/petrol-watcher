@@ -4,47 +4,29 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.FuelQuality
-import com.braincorp.petrolwatcher.model.FuelType
+import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.model.Rating
 import com.braincorp.petrolwatcher.model.VehicleType
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-fun Context.fuelFloatMapToString(map: Map<Pair<FuelType, FuelQuality>, Float>): String {
-    val sb = StringBuilder()
-
-    for ((i, entry) in map.entries.withIndex()) {
-        val type = fuelTypeToString(entry.key.first)
-        val quality = fuelQualityToString(entry.key.second)
-        val price = entry.value
-        val formattedPrice = floatToCurrencyString(price)
-
-        sb.append("$type ($quality): $formattedPrice")
-        if (i < map.size - 1) sb.append("\n")
-    }
-
-    return sb.toString()
-}
-
-fun fuelFloatMapToStringFloatMap(input: Map<Pair<FuelType,
-        FuelQuality>, Float>): Map<String, Float> {
+fun fuelSetToStringFloatMap(input: MutableSet<Fuel>): Map<String, Float> {
     val output = HashMap<String, Float>()
 
     for (entry in input) {
-        val type = entry.key.first.name
-        val quality = entry.key.second.name
+        val type = entry.type.name
+        val quality = entry.quality.name
         val key = "$type,$quality"
-        val value = entry.value
+        val value = entry.price
         output[key] = value
     }
 
     return output
 }
 
-fun stringFloatMapToFuelFloatMap(input: Map<String, Float>)
-        : Map<Pair<FuelType, FuelQuality>, Float> {
-    val output = HashMap<Pair<FuelType, FuelQuality>, Float>()
+fun stringFloatMapToFuelList(input: Map<String, Float>): ArrayList<Fuel> {
+    val output = ArrayList<Fuel>()
 
     for (entry in input) {
         val typeString = entry.key.split(",")[0]
@@ -52,47 +34,45 @@ fun stringFloatMapToFuelFloatMap(input: Map<String, Float>)
 
         val type = stringToFuelType(typeString)
         val quality = stringToFuelQuality(qualityString)
+        val price = entry.value
 
-        val key = Pair(type, quality)
-        val value = entry.value
-
-        output[key] = value
+        output.add(Fuel(type, quality, price))
     }
 
     return output
 }
 
-fun Context.fuelQualityToString(fuelQuality: FuelQuality): String {
+fun Context.fuelQualityToString(fuelQuality: Fuel.Quality): String {
     return when (fuelQuality) {
-        FuelQuality.PREMIUM -> getString(R.string.premium)
-        FuelQuality.REGULAR -> getString(R.string.regular)
+        Fuel.Quality.PREMIUM -> getString(R.string.premium)
+        Fuel.Quality.REGULAR -> getString(R.string.regular)
     }
 }
 
-fun stringToFuelQuality(string: String): FuelQuality {
+fun stringToFuelQuality(string: String): Fuel.Quality {
     return when (string) {
-        "REGULAR" -> FuelQuality.REGULAR
-        "PREMIUM" -> FuelQuality.PREMIUM
-        else -> FuelQuality.REGULAR
+        "REGULAR" -> Fuel.Quality.REGULAR
+        "PREMIUM" -> Fuel.Quality.PREMIUM
+        else -> Fuel.Quality.REGULAR
     }
 }
 
-fun Context.fuelTypeToString(fuelType: FuelType): String {
+fun Context.fuelTypeToString(fuelType: Fuel.Type): String {
     return when (fuelType) {
-        FuelType.DIESEL -> getString(R.string.diesel)
-        FuelType.ETHANOL -> getString(R.string.ethanol)
-        FuelType.LPG -> getString(R.string.lpg)
-        FuelType.PETROL -> getString(R.string.petrol)
+        Fuel.Type.DIESEL -> getString(R.string.diesel)
+        Fuel.Type.ETHANOL -> getString(R.string.ethanol)
+        Fuel.Type.LPG -> getString(R.string.lpg)
+        Fuel.Type.PETROL -> getString(R.string.petrol)
     }
 }
 
-fun stringToFuelType(string: String): FuelType {
+fun stringToFuelType(string: String): Fuel.Type {
     return when (string) {
-        "LPG" -> FuelType.LPG
-        "DIESEL" -> FuelType.DIESEL
-        "ETHANOL" -> FuelType.ETHANOL
-        "PETROL" -> FuelType.PETROL
-        else -> FuelType.PETROL
+        "LPG" -> Fuel.Type.LPG
+        "DIESEL" -> Fuel.Type.DIESEL
+        "ETHANOL" -> Fuel.Type.ETHANOL
+        "PETROL" -> Fuel.Type.PETROL
+        else -> Fuel.Type.PETROL
     }
 }
 
@@ -137,7 +117,7 @@ fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
     }
 }
 
-fun Context.fuelTypeListToString(fuelTypes: ArrayList<FuelType>): String {
+fun Context.fuelTypeListToString(fuelTypes: ArrayList<Fuel.Type>): String {
     val sb = StringBuilder()
     fuelTypes.map { fuelTypeToString(it) }
             .forEachIndexed { i, fuelTypeString ->

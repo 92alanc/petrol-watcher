@@ -14,7 +14,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
                    var manufacturer: String = "", var name: String = "",
                    var year: Int = 0,
                    var vehicleType: VehicleType = VehicleType.CAR,
-                   var fuelTypes: ArrayList<FuelType> = ArrayList(),
+                   var fuelTypes: ArrayList<Fuel.Type> = ArrayList(),
                    var fuelConsumption: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
@@ -60,10 +60,10 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         vehicleType = parcel.readSerializable() as VehicleType
 
         val bundle = parcel.readBundle(javaClass.classLoader)
-        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(FuelType.LPG)
-        if (bundle.containsKey(KEY_DIESEL)) fuelTypes.add(FuelType.DIESEL)
-        if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(FuelType.ETHANOL)
-        if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(FuelType.PETROL)
+        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(Fuel.Type.LPG)
+        if (bundle.containsKey(KEY_DIESEL)) fuelTypes.add(Fuel.Type.DIESEL)
+        if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(Fuel.Type.ETHANOL)
+        if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(Fuel.Type.PETROL)
 
         fuelConsumption = parcel.readFloat()
     }
@@ -119,10 +119,10 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         val bundle = Bundle()
         fuelTypes.forEach {
             val key = when (it) {
-                FuelType.LPG -> KEY_AUTOGAS
-                FuelType.DIESEL -> KEY_DIESEL
-                FuelType.ETHANOL -> KEY_ETHANOL
-                FuelType.PETROL -> KEY_PETROL
+                Fuel.Type.LPG -> KEY_AUTOGAS
+                Fuel.Type.DIESEL -> KEY_DIESEL
+                Fuel.Type.ETHANOL -> KEY_ETHANOL
+                Fuel.Type.PETROL -> KEY_PETROL
             }
             bundle.putSerializable(key, it)
         }
