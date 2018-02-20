@@ -42,6 +42,7 @@
             app:layout_constraintTop_toBottomOf="@id/textViewAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             tools:textColor="@color/amber"
             tools:text="@string/rating_ok"/>
 
