@@ -208,18 +208,18 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun loadFragment(uiMode: AdaptableUi.Mode) {
-        placeholderPetrolStations.visibility = VISIBLE
+        placeholderTop.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
             fragment = PetrolStationDetailsFragment.newInstance(uiMode, this,
                     petrolStation)
-            replaceFragmentPlaceholder(R.id.placeholderPetrolStations, fragment!!,
+            replaceFragmentPlaceholder(R.id.placeholderTop, fragment!!,
                     TAG_PETROL_STATION_DETAILS)
         }
     }
 
     private fun removeFragment() {
         if (fragment != null) removeFragment(fragment!!)
-        placeholderPetrolStations.visibility = GONE
+        placeholderTop.visibility = GONE
     }
 
     private fun save(): Boolean {

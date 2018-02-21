@@ -60,7 +60,7 @@
     <string name="no_petrol_stations">No petrol stations registered yet.\nBe the first to register one!</string>
     <string name="error_finding_petrol_stations">Error finding gas stations</string>
     <string name="address">address</string>
-    <string name="description_add">add</string>
+    <string name="add">add</string>
     <string name="price">price</string>
     <string name="description_remove">remove</string>
     <string name="error_saving_petrol_station">Error saving gas station</string>
@@ -69,4 +69,7 @@
     <string name="email_not_verified">E-mail not verified</string>
     <string name="verify_email">Please verify your e-mail before signing in.</string>
     <string name="delete_petrol_station">Delete gas station</string>
+    <string name="fuels">fuels</string>
+    <string name="locate">locate</string>
+    <string name="description_close">close</string>
 </resources>

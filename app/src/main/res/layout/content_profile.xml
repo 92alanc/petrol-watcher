@@ -42,7 +42,6 @@
         <Button
             android:id="@+id/buttonVehicles"
             style="@style/ButtonDefault"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/margin_default"
             android:text="@string/vehicles"
             app:layout_constraintTop_toBottomOf="@id/placeholderProfileBottom"
