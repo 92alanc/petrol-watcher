@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot
 import java.util.*
 
 data class PetrolStation(var id: String = UUID.randomUUID().toString(),
+                         var owner: String = "",
                          var name: String = "",
                          var address: String = "",
                          var fuels: MutableSet<Fuel> = emptySet<Fuel>().toMutableSet(),
@@ -17,6 +18,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
         private const val KEY_ID = "id"
+        private const val KEY_OWNER = "owner"
         private const val KEY_NAME = "name"
         private const val KEY_ADDRESS = "address"
         private const val KEY_FUELS = "fuels"
@@ -29,6 +31,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
 
     constructor(parcel: Parcel): this() {
         id = parcel.readString()
+        owner = parcel.readString()
         name = parcel.readString()
         address = parcel.readString()
         @Suppress("UNCHECKED_CAST")
@@ -39,6 +42,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
 
     constructor(snapshot: DataSnapshot): this() {
         id = snapshot.child(KEY_ID).value.toString()
+        owner = snapshot.child(KEY_OWNER).value.toString()
         name = snapshot.child(KEY_NAME).value.toString()
         address = snapshot.child(KEY_ADDRESS).value.toString()
         @Suppress("UNCHECKED_CAST")
@@ -50,6 +54,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
     fun toMap(): Map<String, Any> {
         val map = HashMap<String, Any>()
         map[KEY_ID] = id
+        map[KEY_OWNER] = owner
         map[KEY_NAME] = name
         map[KEY_ADDRESS] = address
         map[KEY_FUELS] = fuelSetToStringFloatMap(fuels)
@@ -60,11 +65,11 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
     fun allFieldsAreValid(): Boolean {
         return !TextUtils.isEmpty(name)
                && !TextUtils.isEmpty(address)
-               && fuels.isNotEmpty()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
+        parcel.writeString(owner)
         parcel.writeString(name)
         parcel.writeString(address)
         parcel.writeParcelableArray(fuels.toTypedArray(), 0)
