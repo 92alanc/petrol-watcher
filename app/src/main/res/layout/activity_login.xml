@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,55 +11,60 @@
         android:id="@+id/imageViewAppIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
         android:contentDescription="@string/app_icon"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@id/editTextEmail"
+        android:id="@+id/editTextEmail"
         style="@style/EditTextWidthMatchParent"
-        android:inputType="textEmailAddress"
         android:hint="@string/email"
-        app:layout_constraintTop_toBottomOf="@id/imageViewAppIcon"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewAppIcon"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <EditText
-        android:id="@id/editTextPassword"
+        android:id="@+id/editTextPassword"
         style="@style/EditTextWidthMatchParent"
-        android:inputType="textPassword"
         android:hint="@string/password"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignIn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0" />
 
     <Button
-        android:id="@id/buttonSignIn"
+        android:id="@+id/buttonSignIn"
         style="@style/ButtonOrange"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/sign_in"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0" />
 
     <Button
-        android:id="@id/buttonSignUp"
+        android:id="@+id/buttonSignUp"
         style="@style/ButtonGrey"
         android:layout_marginTop="@dimen/margin_default"
         android:text="@string/sign_up"
-        app:layout_constraintTop_toBottomOf="@id/buttonSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0" />
 
 </android.support.constraint.ConstraintLayout>
