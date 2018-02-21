@@ -13,7 +13,10 @@ import android.widget.*
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
-import com.braincorp.petrolwatcher.model.*
+import com.braincorp.petrolwatcher.model.AdaptableUi
+import com.braincorp.petrolwatcher.model.Fuel
+import com.braincorp.petrolwatcher.model.SystemOfMeasurement
+import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
@@ -112,7 +115,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
 
         vehicle!!.fuelTypes = fuelTypesList
 
-        vehicle!!.vehicleType = spinnerVehicleType.selectedItem as VehicleType
+        vehicle!!.vehicleType = spinnerVehicleType.selectedItem as Vehicle.Type
         vehicle!!.fuelConsumption = if (!TextUtils.isEmpty(editTextFuelConsumption.text.toString()))
             editTextFuelConsumption.text.toString().toFloat()
         else 0f

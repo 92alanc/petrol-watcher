@@ -13,7 +13,7 @@ import kotlin.collections.ArrayList
 data class Vehicle(var id: String = UUID.randomUUID().toString(),
                    var manufacturer: String = "", var name: String = "",
                    var year: Int = 0,
-                   var vehicleType: VehicleType = VehicleType.CAR,
+                   var vehicleType: Type = Type.CAR,
                    var fuelTypes: ArrayList<Fuel.Type> = ArrayList(),
                    var fuelConsumption: Float = 0f) : Parcelable {
 
@@ -26,7 +26,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         private const val KEY_VEHICLE_TYPE = "vehicle_type"
         private const val KEY_FUEL_TYPES = "fuel_types"
 
-        private const val KEY_AUTOGAS = "autogas"
+        private const val KEY_LPG = "lpg"
         private const val KEY_DIESEL = "diesel"
         private const val KEY_ETHANOL = "ethanol"
         private const val KEY_PETROL = "petrol"
@@ -46,7 +46,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         manufacturer = snapshot.child(KEY_MANUFACTURER).value.toString()
         year = snapshot.child(KEY_YEAR).value.toString().toInt()
         fuelConsumption = snapshot.child(KEY_FUEL_CONSUMPTION).value.toString().toFloat()
-        vehicleType = snapshot.child(KEY_VEHICLE_TYPE).getValue(VehicleType::class.java)!!
+        vehicleType = snapshot.child(KEY_VEHICLE_TYPE).getValue(Type::class.java)!!
         snapshot.child(KEY_FUEL_TYPES).children.forEach {
             fuelTypes.add(stringToFuelType(it.value.toString()))
         }
@@ -57,10 +57,10 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         manufacturer = parcel.readString()
         name = parcel.readString()
         year = parcel.readInt()
-        vehicleType = parcel.readSerializable() as VehicleType
+        vehicleType = parcel.readSerializable() as Type
 
         val bundle = parcel.readBundle(javaClass.classLoader)
-        if (bundle.containsKey(KEY_AUTOGAS)) fuelTypes.add(Fuel.Type.LPG)
+        if (bundle.containsKey(KEY_LPG)) fuelTypes.add(Fuel.Type.LPG)
         if (bundle.containsKey(KEY_DIESEL)) fuelTypes.add(Fuel.Type.DIESEL)
         if (bundle.containsKey(KEY_ETHANOL)) fuelTypes.add(Fuel.Type.ETHANOL)
         if (bundle.containsKey(KEY_PETROL)) fuelTypes.add(Fuel.Type.PETROL)
@@ -119,7 +119,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         val bundle = Bundle()
         fuelTypes.forEach {
             val key = when (it) {
-                Fuel.Type.LPG -> KEY_AUTOGAS
+                Fuel.Type.LPG -> KEY_LPG
                 Fuel.Type.DIESEL -> KEY_DIESEL
                 Fuel.Type.ETHANOL -> KEY_ETHANOL
                 Fuel.Type.PETROL -> KEY_PETROL
@@ -132,5 +132,12 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
     }
 
     override fun describeContents(): Int = 0
+
+    enum class Type {
+        MOTORCYCLE,
+        CAR,
+        VAN,
+        LORRY
+    }
 
 }

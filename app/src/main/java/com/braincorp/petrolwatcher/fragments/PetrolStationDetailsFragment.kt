@@ -4,8 +4,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
@@ -17,16 +22,17 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         private const val ARG_UI_MODE = "ui_mode"
         private const val ARG_PETROL_STATION = "petrol_station"
 
-        fun newInstance(uiMode: AdaptableUi.Mode,
-                        onFragmentInflatedListener: OnFragmentInflatedListener,
-                        petrolStation: PetrolStation? = null)
+        fun newInstance(uiMode: AdaptableUi.Mode, petrolStation: PetrolStation? = null,
+                        onFragmentInflatedListener: OnFragmentInflatedListener)
                 : PetrolStationDetailsFragment {
             val instance = PetrolStationDetailsFragment()
             val args = Bundle()
-            args.putSerializable(ARG_UI_MODE, uiMode)
+
             args.putParcelable(ARG_PETROL_STATION, petrolStation)
-            instance.arguments = args
+            args.putSerializable(ARG_UI_MODE, uiMode)
             instance.onFragmentInflatedListener = onFragmentInflatedListener
+
+            instance.arguments = args
             return instance
         }
     }
@@ -35,12 +41,19 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     private var petrolStation: PetrolStation? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
 
-    private lateinit var buttonDelete: ImageButton
+    private lateinit var textViewName: TextView
+    private lateinit var textViewAddress: TextView
+    private lateinit var textViewRating: TextView
+
+    private lateinit var editTextName: EditText
+    private lateinit var editTextAddress: EditText
+
+    private lateinit var buttonFuels: Button
+    private lateinit var buttonLocate: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_petrol_station_details, container,
-                false)
+        val view = inflater.inflate(R.layout.fragment_petrol_station_details, container, false)
         bindViews(view)
         parseArgs()
         prepareUi()
@@ -49,36 +62,56 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     }
 
     override fun prepareInitialMode() {
-        TODO("not implemented")
+        prepareViewMode()
     }
 
     override fun prepareCreateMode() {
-        TODO("not implemented")
+        textViewRating.visibility = GONE
+        hideNotEditableFields()
+        showEditableFields()
     }
 
     override fun prepareEditMode() {
-        TODO("not implemented")
+        textViewRating.visibility = VISIBLE
+        hideNotEditableFields()
+        showEditableFields()
+        fillEditableFields()
     }
 
     override fun prepareViewMode() {
-        TODO("not implemented")
+        textViewRating.visibility = VISIBLE
+        hideEditableFields()
+        showNotEditableFields()
+        fillNotEditableFields()
     }
 
-    fun getPetrolStation(): PetrolStation {
-        TODO("not implemented")
+    fun getName() = editTextName.text.toString()
+
+    fun getAddress() = editTextAddress.text.toString()
+
+    fun setFuelsButtonClickListener(onClickListener: View.OnClickListener) {
+        buttonFuels.setOnClickListener(onClickListener)
     }
 
-    fun setDeleteButtonClickListener(onClickListener: View.OnClickListener) {
-        buttonDelete.setOnClickListener(onClickListener)
+    fun setLocateButtonClickListener(onClickListener: View.OnClickListener) {
+        buttonLocate.setOnClickListener(onClickListener)
     }
 
     private fun bindViews(view: View) {
-        buttonDelete = view.findViewById(R.id.buttonDelete)
+        textViewName = view.findViewById(R.id.textViewName)
+        textViewAddress = view.findViewById(R.id.textViewAddress)
+        textViewRating = view.findViewById(R.id.textViewRating)
+
+        editTextName = view.findViewById(R.id.editTextName)
+        editTextAddress = view.findViewById(R.id.editTextAddress)
+
+        buttonFuels = view.findViewById(R.id.buttonFuels)
+        buttonLocate = view.findViewById(R.id.buttonLocate)
     }
 
     private fun parseArgs() {
-        uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
         petrolStation = arguments?.getParcelable(ARG_PETROL_STATION)
+        uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
     }
 
     private fun prepareUi() {
@@ -88,6 +121,44 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
             AdaptableUi.Mode.EDIT -> prepareEditMode()
             AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
+    }
+
+    private fun hideNotEditableFields() {
+        textViewName.visibility = GONE
+        textViewAddress.visibility = GONE
+    }
+
+    private fun showNotEditableFields() {
+        textViewName.visibility = VISIBLE
+        textViewAddress.visibility = VISIBLE
+    }
+
+    private fun hideEditableFields() {
+        editTextName.visibility = GONE
+        editTextAddress.visibility = GONE
+    }
+
+    private fun showEditableFields() {
+        editTextName.visibility = VISIBLE
+        editTextAddress.visibility = VISIBLE
+    }
+
+    private fun fillNotEditableFields() {
+        textViewName.text = petrolStation?.name
+        textViewAddress.text = petrolStation?.address
+    }
+
+    private fun fillEditableFields() {
+        editTextName.setText(petrolStation?.name)
+        editTextAddress.setText(petrolStation?.address)
+    }
+
+    private fun showRating() {
+
+    }
+
+    private fun hideRating() {
+
     }
 
 }

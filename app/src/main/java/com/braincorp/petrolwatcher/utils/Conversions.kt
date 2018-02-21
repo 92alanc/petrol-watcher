@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.model.Rating
-import com.braincorp.petrolwatcher.model.VehicleType
+import com.braincorp.petrolwatcher.model.Vehicle
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -108,12 +108,12 @@ fun Context.ratingToColour(rating: Rating): Int {
     return ContextCompat.getColor(this, colour)
 }
 
-fun Context.vehicleTypeToString(vehicleType: VehicleType): String {
+fun Context.vehicleTypeToString(vehicleType: Vehicle.Type): String {
     return when (vehicleType) {
-        VehicleType.CAR -> getString(R.string.car)
-        VehicleType.LORRY -> getString(R.string.lorry)
-        VehicleType.MOTORCYCLE -> getString(R.string.motorcycle)
-        VehicleType.VAN -> getString(R.string.van)
+        Vehicle.Type.CAR -> getString(R.string.car)
+        Vehicle.Type.LORRY -> getString(R.string.lorry)
+        Vehicle.Type.MOTORCYCLE -> getString(R.string.motorcycle)
+        Vehicle.Type.VAN -> getString(R.string.van)
     }
 }
 
@@ -129,12 +129,12 @@ fun Context.fuelTypeListToString(fuelTypes: ArrayList<Fuel.Type>): String {
     return sb.toString()
 }
 
-fun Context.vehicleTypeToDrawable(vehicleType: VehicleType): Drawable {
+fun Context.vehicleTypeToDrawable(vehicleType: Vehicle.Type): Drawable {
     val drawableRes = when (vehicleType) {
-        VehicleType.CAR -> R.drawable.ic_car
-        VehicleType.LORRY -> R.drawable.ic_lorry
-        VehicleType.MOTORCYCLE -> R.drawable.ic_motorcycle
-        VehicleType.VAN -> R.drawable.ic_van
+        Vehicle.Type.CAR -> R.drawable.ic_car
+        Vehicle.Type.LORRY -> R.drawable.ic_lorry
+        Vehicle.Type.MOTORCYCLE -> R.drawable.ic_motorcycle
+        Vehicle.Type.VAN -> R.drawable.ic_van
     }
     return ContextCompat.getDrawable(this, drawableRes)!!
 }

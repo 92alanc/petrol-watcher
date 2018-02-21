@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.VehicleType
+import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 import com.braincorp.petrolwatcher.utils.vehicleTypeToString
 
 class VehicleTypeAdapter(context: Context)
-    : ArrayAdapter<VehicleType>(context, R.layout.item_vehicle_type, R.id.textViewVehicleType,
-        VehicleType.values()) {
+    : ArrayAdapter<Vehicle.Type>(context, R.layout.item_vehicle_type, R.id.textViewVehicleType,
+        Vehicle.Type.values()) {
 
-    private val values = VehicleType.values()
+    private val values = Vehicle.Type.values()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val row = getDropDownView(position, convertView, parent)
