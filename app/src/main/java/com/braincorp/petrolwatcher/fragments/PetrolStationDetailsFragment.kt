@@ -8,12 +8,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
 
@@ -23,22 +21,19 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         private const val ARG_UI_MODE = "ui_mode"
         private const val ARG_PETROL_STATION = "petrol_station"
 
-        fun newInstance(uiMode: AdaptableUi.Mode, petrolStation: PetrolStation? = null,
-                        onFragmentInflatedListener: OnFragmentInflatedListener)
+        fun newInstance(uiMode: AdaptableUi.Mode, petrolStation: PetrolStation? = null)
                 : PetrolStationDetailsFragment {
             val instance = PetrolStationDetailsFragment()
             val args = Bundle()
 
             args.putParcelable(ARG_PETROL_STATION, petrolStation)
             args.putSerializable(ARG_UI_MODE, uiMode)
-            instance.onFragmentInflatedListener = onFragmentInflatedListener
 
             instance.arguments = args
             return instance
         }
     }
 
-    private var onFragmentInflatedListener: OnFragmentInflatedListener? = null
     private var petrolStation: PetrolStation? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
 
@@ -49,7 +44,6 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     private lateinit var editTextName: EditText
     private lateinit var editTextAddress: EditText
 
-    private lateinit var buttonFuels: Button
     private lateinit var buttonLocate: ImageButton
 
     private lateinit var groupEditableFields: Group
@@ -61,7 +55,6 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         bindViews(view)
         parseArgs()
         prepareUi()
-        onFragmentInflatedListener?.onFragmentInflated(this)
         return view
     }
 
@@ -73,6 +66,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         textViewRating.visibility = GONE
         hideNotEditableFields()
         showEditableFields()
+        hideRating()
     }
 
     override fun prepareEditMode() {
@@ -80,6 +74,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         hideNotEditableFields()
         showEditableFields()
         fillEditableFields()
+        showRating()
     }
 
     override fun prepareViewMode() {
@@ -87,19 +82,12 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         hideEditableFields()
         showNotEditableFields()
         fillNotEditableFields()
+        showRating()
     }
 
     fun getName() = editTextName.text.toString()
 
     fun getAddress() = editTextAddress.text.toString()
-
-    fun setFuelsButtonClickListener(onClickListener: View.OnClickListener) {
-        buttonFuels.setOnClickListener(onClickListener)
-    }
-
-    fun setLocateButtonClickListener(onClickListener: View.OnClickListener) {
-        buttonLocate.setOnClickListener(onClickListener)
-    }
 
     private fun bindViews(view: View) {
         textViewName = view.findViewById(R.id.textViewName)
@@ -109,7 +97,6 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         editTextName = view.findViewById(R.id.editTextName)
         editTextAddress = view.findViewById(R.id.editTextAddress)
 
-        buttonFuels = view.findViewById(R.id.buttonFuels)
         buttonLocate = view.findViewById(R.id.buttonLocate)
 
         groupEditableFields = view.findViewById(R.id.groupEditableFields)

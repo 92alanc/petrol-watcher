@@ -45,9 +45,14 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         owner = snapshot.child(KEY_OWNER).value.toString()
         name = snapshot.child(KEY_NAME).value.toString()
         address = snapshot.child(KEY_ADDRESS).value.toString()
+
+        val fuelsSnapshot = snapshot.child(KEY_FUELS).value
         @Suppress("UNCHECKED_CAST")
-        val fuelList = stringFloatMapToFuelList(snapshot.child(KEY_FUELS).value as Map<String, Float>)
+        val fuelList = if (fuelsSnapshot != null) {
+            stringFloatMapToFuelList(snapshot.child(KEY_FUELS).value as Map<String, Float>)
+        } else emptyList<Fuel>()
         fuels = fuelList.toMutableSet()
+
         rating = stringToRating(snapshot.value.toString())
     }
 
@@ -63,8 +68,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
     }
 
     fun allFieldsAreValid(): Boolean {
-        return !TextUtils.isEmpty(name)
-               && !TextUtils.isEmpty(address)
+        return !TextUtils.isEmpty(name) && !TextUtils.isEmpty(address)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

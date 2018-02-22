@@ -181,12 +181,10 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun handleFabClick() {
         when (uiMode) {
-            AdaptableUi.Mode.VIEW -> prepareEditMode()
             AdaptableUi.Mode.INITIAL -> prepareCreateMode()
-
-            AdaptableUi.Mode.CREATE, AdaptableUi.Mode.EDIT -> {
-                if (save()) prepareInitialMode()
-            }
+            AdaptableUi.Mode.CREATE,
+            AdaptableUi.Mode.EDIT -> if (save()) prepareInitialMode()
+            AdaptableUi.Mode.VIEW -> prepareEditMode()
         }
     }
 
