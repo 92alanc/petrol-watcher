@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_default">
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_default"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/imageViewVehicleType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_car"/>
 
@@ -24,9 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginLeft="@dimen/margin_default"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/imageViewVehicleType"
+        android:layout_gravity="center"
         tools:text="@string/car"/>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

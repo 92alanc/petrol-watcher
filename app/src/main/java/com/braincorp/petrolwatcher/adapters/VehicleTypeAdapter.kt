@@ -26,12 +26,13 @@ class VehicleTypeAdapter(context: Context)
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(context)
         val row = inflater.inflate(R.layout.item_vehicle_type, parent, false)
+        val vehicleType = values[position]
 
         val imageView = row.findViewById<ImageView>(R.id.imageViewVehicleType)
-        imageView.setImageDrawable(context.vehicleTypeToDrawable(values[position]))
+        imageView.setImageDrawable(context.vehicleTypeToDrawable(vehicleType))
 
         val textView = row.findViewById<TextView>(R.id.textViewVehicleType)
-        textView.text = context.vehicleTypeToString(values[position])
+        textView.text = context.vehicleTypeToString(vehicleType)
 
         return row
     }
