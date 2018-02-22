@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "193399674960",
+    "firebase_url": "https://petrol-watcher.firebaseio.com",
+    "project_id": "petrol-watcher",
+    "storage_bucket": "petrol-watcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193399674960:android:003a753dc7e0173f",
+        "android_client_info": {
+          "package_name": "com.braincorp.petrolwatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193399674960-3v9sjemgk8qsicc9kjclgt4ngu0riut6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.braincorp.petrolwatcher",
+            "certificate_hash": "fd41a344d98ebc76e0611f820fd85f7c03fe7bc7"
+          }
+        },
+        {
+          "client_id": "193399674960-3pakl80dpq5ga5rjejgv3tol504o04al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuwjBZZnQOYARohYOvVPBJLXVjEgWOnSg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193399674960-3pakl80dpq5ga5rjejgv3tol504o04al.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
