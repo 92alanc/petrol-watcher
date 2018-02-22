@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.fragments
 
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,9 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
 
     private lateinit var buttonFuels: Button
     private lateinit var buttonLocate: ImageButton
+
+    private lateinit var groupEditableFields: Group
+    private lateinit var groupNotEditableFields: Group
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -107,6 +111,9 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
 
         buttonFuels = view.findViewById(R.id.buttonFuels)
         buttonLocate = view.findViewById(R.id.buttonLocate)
+
+        groupEditableFields = view.findViewById(R.id.groupEditableFields)
+        groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
     }
 
     private fun parseArgs() {
@@ -124,23 +131,19 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     }
 
     private fun hideNotEditableFields() {
-        textViewName.visibility = GONE
-        textViewAddress.visibility = GONE
+        groupNotEditableFields.visibility = GONE
     }
 
     private fun showNotEditableFields() {
-        textViewName.visibility = VISIBLE
-        textViewAddress.visibility = VISIBLE
+        groupNotEditableFields.visibility = VISIBLE
     }
 
     private fun hideEditableFields() {
-        editTextName.visibility = GONE
-        editTextAddress.visibility = GONE
+        groupEditableFields.visibility = GONE
     }
 
     private fun showEditableFields() {
-        editTextName.visibility = VISIBLE
-        editTextAddress.visibility = VISIBLE
+        groupEditableFields.visibility = VISIBLE
     }
 
     private fun fillNotEditableFields() {
@@ -154,11 +157,11 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     }
 
     private fun showRating() {
-
+        textViewRating.visibility = VISIBLE
     }
 
     private fun hideRating() {
-
+        textViewRating.visibility = GONE
     }
 
 }
