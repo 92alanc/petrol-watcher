@@ -25,8 +25,8 @@
 
             <EditText
                 android:id="@+id/editTextName"
-                style="@style/EditTextWidthMatchParent"
-                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:inputType="textCapWords"
                 app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +58,9 @@
 
             <EditText
                 android:id="@+id/editTextAddress"
-                style="@style/EditTextWidthMatchParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/address"
                 android:inputType="textCapWords"
                 app:layout_constraintTop_toBottomOf="@id/editTextName"

@@ -26,7 +26,8 @@
 
         <EditText
             android:id="@+id/editTextDisplayName"
-            style="@style/EditTextWidthMatchParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="textCapWords"
             android:hint="@string/name"
             android:visibility="gone"

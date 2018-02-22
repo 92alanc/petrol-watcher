@@ -61,7 +61,8 @@
 
             <EditText
                 android:id="@+id/editTextManufacturer"
-                style="@style/EditTextWidthMatchParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/manufacturer"
                 android:inputType="textCapWords"
                 android:visibility="gone"
@@ -71,7 +72,9 @@
 
             <EditText
                 android:id="@+id/editTextVehicleName"
-                style="@style/EditTextWidthMatchParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/name"
                 android:inputType="textCapWords"
                 android:visibility="gone"
@@ -81,7 +84,9 @@
 
             <EditText
                 android:id="@+id/editTextYear"
-                style="@style/EditTextWidthMatchParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/year"
                 android:inputType="number"
                 android:visibility="gone"
@@ -157,7 +162,9 @@
 
             <EditText
                 android:id="@+id/editTextFuelConsumption"
-                style="@style/EditTextWidthMatchParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/fuel_consumption"
                 android:inputType="numberDecimal"
                 android:visibility="gone"
