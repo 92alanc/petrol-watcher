@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -12,10 +11,10 @@ import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.adapters.PetrolStationAdapter
 import com.braincorp.petrolwatcher.database.PetrolStationDatabase
+import com.braincorp.petrolwatcher.fragments.FuelsFragment
 import com.braincorp.petrolwatcher.fragments.PetrolStationDetailsFragment
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -48,7 +47,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     private var petrolStation: PetrolStation? = null
     private var petrolStations: Array<PetrolStation>? = null
     private var topFragment: PetrolStationDetailsFragment? = null
-    private var bottomFragment: Fragment? = null // TODO: replace with FuelsFragment
+    private var bottomFragment: FuelsFragment? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,6 +144,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         recyclerViewPetrolStations.visibility = GONE
         groupPlaceholders.visibility = VISIBLE
         buttonDelete.visibility = GONE
+        textViewNoPetrolStations.visibility = GONE
 
         fabPetrolStations.setImageResource(R.drawable.ic_save)
         loadFragments()
@@ -155,6 +155,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
         recyclerViewPetrolStations.visibility = GONE
         groupPlaceholders.visibility = VISIBLE
+        textViewNoPetrolStations.visibility = GONE
 
         fabPetrolStations.setImageResource(R.drawable.ic_save)
         loadFragments()
@@ -167,6 +168,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
         recyclerViewPetrolStations.visibility = GONE
         groupPlaceholders.visibility = VISIBLE
+        textViewNoPetrolStations.visibility = GONE
 
         fabPetrolStations.setImageResource(R.drawable.ic_edit)
         loadFragments()
@@ -193,7 +195,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         val bottomFragmentTag = savedInstanceState.getString(KEY_BOTTOM_FRAGMENT)
         if (bottomFragmentTag != null) {
             bottomFragment = supportFragmentManager.findFragmentByTag(bottomFragmentTag)
-            // TODO: as FuelsFragment
+                    as FuelsFragment
         }
     }
 
@@ -223,7 +225,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
     private fun loadBottomFragment() {
         if (bottomFragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            bottomFragment = Fragment() // TODO: replace with FuelsFragment
+            bottomFragment = FuelsFragment.newInstance(uiMode, petrolStation)
             replaceFragmentPlaceholder(R.id.placeholderBottom, bottomFragment!!, TAG_BOTTOM_FRAGMENT)
         }
     }
@@ -264,7 +266,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     private fun save(): Boolean {
         val name = topFragment!!.getName()
         val address = topFragment!!.getAddress()
-        val fuels = emptySet<Fuel>().toMutableSet()
+        val fuels = bottomFragment!!.getFuels()
 
         if (uiMode == AdaptableUi.Mode.CREATE) {
             val owner = FirebaseAuth.getInstance().currentUser!!.uid
@@ -274,7 +276,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
         petrolStation!!.name = name
         petrolStation!!.address = address
-        petrolStation!!.fuels = fuels
+        if (fuels != null) petrolStation!!.fuels = fuels
 
         return if (petrolStation!!.allFieldsAreValid()) {
             PetrolStationDatabase.insertOrUpdate(petrolStation!!, this)
