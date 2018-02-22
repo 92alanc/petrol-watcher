@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.fragments
 
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,8 @@ class EmailAndPasswordFragment : Fragment(), AdaptableUi {
     private lateinit var editTextPassword: EditText
     private lateinit var editTextConfirmPassword: EditText
 
+    private lateinit var groupPasswordFields: Group
+
     private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -59,6 +62,8 @@ class EmailAndPasswordFragment : Fragment(), AdaptableUi {
         editTextEmail = view.findViewById(R.id.editTextEmail)
         editTextPassword = view.findViewById(R.id.editTextPassword)
         editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword)
+
+        groupPasswordFields = view.findViewById(R.id.groupPasswordFields)
     }
 
     private fun parseArgs() {
@@ -80,10 +85,8 @@ class EmailAndPasswordFragment : Fragment(), AdaptableUi {
 
     override fun prepareCreateMode() {
         textViewEmail.visibility = GONE
-
         editTextEmail.visibility = VISIBLE
-        editTextPassword.visibility = VISIBLE
-        editTextConfirmPassword.visibility = VISIBLE
+        groupPasswordFields.visibility = VISIBLE
     }
 
     override fun prepareEditMode() {
@@ -95,8 +98,7 @@ class EmailAndPasswordFragment : Fragment(), AdaptableUi {
         textViewEmail.text = user?.email
 
         editTextEmail.visibility = GONE
-        editTextPassword.visibility = GONE
-        editTextConfirmPassword.visibility = GONE
+        groupPasswordFields.visibility = GONE
     }
 
 }
