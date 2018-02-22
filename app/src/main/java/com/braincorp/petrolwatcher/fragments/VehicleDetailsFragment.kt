@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -58,6 +59,9 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     private lateinit var editTextFuelConsumption: EditText
     private lateinit var divider: View
 
+    private lateinit var groupNotEditableFields: Group
+    private lateinit var groupEditableFields: Group
+
     private var onFragmentInflatedListener: OnFragmentInflatedListener? = null
     private var systemOfMeasurement: SystemOfMeasurement = SystemOfMeasurement.METRIC
     private var uiMode = AdaptableUi.Mode.INITIAL
@@ -83,18 +87,21 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     override fun prepareCreateMode() {
         hideNotEditableViews()
         showEditableFields()
+        buttonDelete.visibility = GONE
     }
 
     override fun prepareEditMode() {
         hideNotEditableViews()
         showEditableFields()
         fillEditableFields()
+        buttonDelete.visibility = VISIBLE
     }
 
     override fun prepareViewMode() {
         hideEditableFields()
         showNotEditableFields()
         fillNotEditableFields()
+        buttonDelete.visibility = VISIBLE
     }
 
     fun getVehicle(): Vehicle {
@@ -147,7 +154,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
         textViewFuelConsumption = view.findViewById(R.id.textViewFuelConsumption)
         buttonDelete = view.findViewById(R.id.buttonDelete)
 
-        editTextName = view.findViewById(R.id.editTextVehicleName)
+        editTextName = view.findViewById(R.id.editTextName)
         editTextManufacturer = view.findViewById(R.id.editTextManufacturer)
         editTextYear = view.findViewById(R.id.editTextYear)
         spinnerVehicleType = view.findViewById(R.id.spinnerVehicleType)
@@ -157,6 +164,9 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
         checkBoxPetrol = view.findViewById(R.id.checkBoxPetrol)
         editTextFuelConsumption = view.findViewById(R.id.editTextFuelConsumption)
         divider = view.findViewById(R.id.divider)
+
+        groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
+        groupEditableFields = view.findViewById(R.id.groupEditableFields)
     }
 
     private fun parseArgs() {
@@ -179,25 +189,11 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     }
 
     private fun hideNotEditableViews() {
-        textViewManufacturerAndName.visibility = GONE
-        textViewYear.visibility = GONE
-        imageViewVehicleType.visibility = GONE
-        textViewFuelTypes.visibility = GONE
-        textViewFuelConsumption.visibility = GONE
-        buttonDelete.visibility = GONE
+        groupNotEditableFields.visibility = GONE
     }
 
     private fun showEditableFields() {
-        editTextName.visibility = VISIBLE
-        editTextManufacturer.visibility = VISIBLE
-        editTextYear.visibility = VISIBLE
-        spinnerVehicleType.visibility = VISIBLE
-        checkBoxAutogas.visibility = VISIBLE
-        checkBoxDiesel.visibility = VISIBLE
-        checkBoxEthanol.visibility = VISIBLE
-        checkBoxPetrol.visibility = VISIBLE
-        editTextFuelConsumption.visibility = VISIBLE
-        divider.visibility = VISIBLE
+        groupEditableFields.visibility = VISIBLE
         populateSpinner()
 
         val unit = when (systemOfMeasurement) {
@@ -210,25 +206,11 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     }
 
     private fun hideEditableFields() {
-        editTextName.visibility = GONE
-        editTextManufacturer.visibility = GONE
-        editTextYear.visibility = GONE
-        spinnerVehicleType.visibility = GONE
-        checkBoxAutogas.visibility = GONE
-        checkBoxDiesel.visibility = GONE
-        checkBoxEthanol.visibility = GONE
-        checkBoxPetrol.visibility = GONE
-        editTextFuelConsumption.visibility = GONE
-        divider.visibility = GONE
+        groupEditableFields.visibility = GONE
     }
 
     private fun showNotEditableFields() {
-        textViewManufacturerAndName.visibility = VISIBLE
-        textViewYear.visibility = VISIBLE
-        imageViewVehicleType.visibility = VISIBLE
-        textViewFuelTypes.visibility = VISIBLE
-        textViewFuelConsumption.visibility = VISIBLE
-        buttonDelete.visibility = VISIBLE
+        groupNotEditableFields.visibility = VISIBLE
     }
 
     private fun fillEditableFields() {

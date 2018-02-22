@@ -65,19 +65,17 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/manufacturer"
                 android:inputType="textCapWords"
-                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
             <EditText
-                android:id="@+id/editTextVehicleName"
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/name"
                 android:inputType="textCapWords"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -89,8 +87,7 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:hint="@string/year"
                 android:inputType="number"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/editTextVehicleName"
+                app:layout_constraintTop_toBottomOf="@id/editTextName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
@@ -100,7 +97,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:padding="@dimen/padding_spinner"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/editTextYear"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -111,7 +107,6 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/margin_default"
                 android:background="@color/black"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/spinnerVehicleType"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -122,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/lpg"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -134,7 +128,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/diesel"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/checkBoxLpg"
                 app:layout_constraintLeft_toLeftOf="@id/checkBoxLpg"/>
 
@@ -144,7 +137,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/ethanol"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -156,23 +148,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/petrol"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/checkBoxEthanol"
                 app:layout_constraintLeft_toLeftOf="@id/checkBoxEthanol"/>
-
-            <EditText
-                android:id="@+id/editTextFuelConsumption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
-                android:hint="@string/fuel_consumption"
-                android:inputType="numberDecimal"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/checkBoxDiesel"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0"/>
 
             <ImageButton
                 android:id="@+id/buttonDelete"
@@ -183,6 +160,34 @@
                 android:src="@drawable/ic_delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/editTextFuelConsumption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
+                android:hint="@string/fuel_consumption"
+                android:inputType="numberDecimal"
+                app:layout_constraintTop_toBottomOf="@id/checkBoxDiesel"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/buttonDelete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0"/>
+
+            <android.support.constraint.Group
+                android:id="@+id/groupNotEditableFields"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="imageViewVehicleType, textViewManufacturerAndName, textViewYear, textViewFuelTypes, textViewFuelConsumption"/>
+
+            <android.support.constraint.Group
+                android:id="@+id/groupEditableFields"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="editTextManufacturer, editTextName, editTextYear, spinnerVehicleType, checkBoxLpg, checkBoxDiesel, checkBoxEthanol, checkBoxPetrol, editTextFuelConsumption, divider"
+                tools:visibility="gone"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
