@@ -145,8 +145,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         fabVehicles.setImageResource(R.drawable.ic_add)
 
         removeFragment()
-        if (vehicles == null)
-            VehicleDatabase.select(valueEventListener = this)
+        if (vehicles == null) VehicleDatabase.select(valueEventListener = this)
+        else populateRecyclerView()
     }
 
     override fun prepareCreateMode() {
