@@ -2,7 +2,6 @@
 .gradle/
 build/
 captures/
-app/google-services.json
 app/release.properties
 app/release
 local.properties
