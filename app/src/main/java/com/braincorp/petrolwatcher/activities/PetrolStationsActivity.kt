@@ -290,6 +290,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     private fun promptDelete() {
         showQuestionDialogue(R.string.delete_petrol_station, R.string.are_you_sure, positiveFunc = {
             PetrolStationDatabase.delete(petrolStation!!, OnCompleteListener {
+                // TODO: remove from petrolStations array
                 recyclerViewPetrolStations.adapter.notifyDataSetChanged()
                 prepareInitialMode()
             })
