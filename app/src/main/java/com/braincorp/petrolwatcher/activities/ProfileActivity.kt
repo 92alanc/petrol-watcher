@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils.isEmpty
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -226,6 +227,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         val email = (bottomFragment as EmailAndPasswordFragment).getEmail()
         val password = (bottomFragment as EmailAndPasswordFragment).getPassword()
         val passwordConfirmation = (bottomFragment as EmailAndPasswordFragment).getPasswordConfirmation()
+
+        if (isEmpty(email) || isEmpty(password) || isEmpty(passwordConfirmation)) {
+            showErrorDialogue(R.string.all_fields_are_required)
+            return
+        }
 
         if (password != passwordConfirmation) {
             showErrorDialogue(R.string.password_and_confirmation_dont_match)
