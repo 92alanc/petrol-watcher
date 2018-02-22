@@ -7,9 +7,10 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/radius_corner_default"
     app:cardUseCompatPadding="true">
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="@dimen/padding_default">
 
         <TextView
@@ -17,9 +18,7 @@
             style="@style/TextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_gravity="center"
             tools:text="BP"/>
 
         <TextView
@@ -39,12 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/textViewAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_gravity="center"
             tools:textColor="@color/amber"
             tools:text="@string/rating_ok"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
