@@ -8,7 +8,7 @@
     app:cardCornerRadius="@dimen/radius_corner_default"
     app:cardUseCompatPadding="true"
     tools:context=".fragments.ImagePickerFragment">
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/padding_default">
@@ -18,10 +18,7 @@
             android:layout_width="@dimen/size_circle_image_view"
             android:layout_height="@dimen/size_circle_image_view"
             android:src="@drawable/ic_profile"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_gravity="center"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 </android.support.v7.widget.CardView>
