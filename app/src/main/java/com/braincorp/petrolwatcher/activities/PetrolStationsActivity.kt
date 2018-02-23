@@ -58,6 +58,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fabPetrolStations.setOnClickListener(this)
+        buttonDelete.setOnClickListener(this)
 
         if (savedInstanceState != null)
             parseSavedInstanceState(savedInstanceState)
@@ -239,11 +240,17 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     private fun removeTopFragment() {
-        if (topFragment != null) removeFragment(topFragment!!)
+        if (topFragment != null) {
+            removeFragment(topFragment!!)
+            topFragment = null
+        }
     }
 
     private fun removeBottomFragment() {
-        if (bottomFragment != null) removeFragment(bottomFragment!!)
+        if (bottomFragment != null) {
+            removeFragment(bottomFragment!!)
+            bottomFragment = null
+        }
     }
 
     private fun removeFragments() {

@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
+import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
 
 class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListener {
@@ -159,6 +160,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
     private fun showRating() {
         textViewRating.visibility = VISIBLE
         textViewRating.text = context!!.ratingToString(petrolStation!!.rating)
+        textViewRating.setTextColor(context!!.ratingToColour(petrolStation!!.rating))
     }
 
     private fun hideRating() {
