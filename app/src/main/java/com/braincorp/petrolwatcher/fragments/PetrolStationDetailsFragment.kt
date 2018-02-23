@@ -14,8 +14,9 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
+import com.braincorp.petrolwatcher.utils.ratingToString
 
-class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
+class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListener {
 
     companion object {
         private const val ARG_UI_MODE = "ui_mode"
@@ -45,6 +46,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
     private lateinit var editTextAddress: EditText
 
     private lateinit var buttonLocate: ImageButton
+    private lateinit var buttonCurrentLocation: ImageButton
 
     private lateinit var groupEditableFields: Group
     private lateinit var groupNotEditableFields: Group
@@ -56,6 +58,13 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         parseArgs()
         prepareUi()
         return view
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.buttonLocate -> TODO("not implemented")
+            R.id.buttonCurrentLocation -> TODO("not implemented")
+        }
     }
 
     override fun prepareInitialMode() {
@@ -98,6 +107,10 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
         editTextAddress = view.findViewById(R.id.editTextAddress)
 
         buttonLocate = view.findViewById(R.id.buttonLocate)
+        buttonLocate.setOnClickListener(this)
+
+        buttonCurrentLocation = view.findViewById(R.id.buttonCurrentLocation)
+        buttonCurrentLocation.setOnClickListener(this)
 
         groupEditableFields = view.findViewById(R.id.groupEditableFields)
         groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
@@ -145,6 +158,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi {
 
     private fun showRating() {
         textViewRating.visibility = VISIBLE
+        textViewRating.text = context!!.ratingToString(petrolStation!!.rating)
     }
 
     private fun hideRating() {

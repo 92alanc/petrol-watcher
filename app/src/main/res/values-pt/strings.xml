@@ -72,4 +72,5 @@
     <string name="fuels">combustíveis</string>
     <string name="locate">localizar</string>
     <string name="description_close">fechar</string>
+    <string name="description_current_location">usar localização atual</string>
 </resources>
