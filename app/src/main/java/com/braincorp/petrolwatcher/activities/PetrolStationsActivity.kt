@@ -81,7 +81,6 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         if (uiMode != AdaptableUi.Mode.INITIAL) prepareInitialMode()
         else super.onBackPressed()
     }
@@ -128,12 +127,12 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     override fun prepareInitialMode() {
         uiMode = AdaptableUi.Mode.INITIAL
 
+        fabPetrolStations.setImageResource(R.drawable.ic_add)
+        removeFragments()
+
         recyclerViewPetrolStations.visibility = VISIBLE
         groupPlaceholders.visibility = GONE
         buttonDelete.visibility = GONE
-
-        fabPetrolStations.setImageResource(R.drawable.ic_add)
-        removeFragments()
 
         if (petrolStations == null) PetrolStationDatabase.select(this)
         else populateRecyclerView()
