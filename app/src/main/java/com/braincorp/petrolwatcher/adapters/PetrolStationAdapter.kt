@@ -12,7 +12,8 @@ import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
 
-class PetrolStationAdapter(private val context: Context, private val items: Array<PetrolStation>,
+class PetrolStationAdapter(private val context: Context,
+                           private val items: ArrayList<PetrolStation>,
                            private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<PetrolStationAdapter.PetrolStationHolder>() {
 

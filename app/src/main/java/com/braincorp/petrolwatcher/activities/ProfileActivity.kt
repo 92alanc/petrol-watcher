@@ -114,14 +114,24 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onBackPressed() {
-        if (uiMode == AdaptableUi.Mode.EDIT) {
-            showQuestionDialogue(title = R.string.changes_not_saved,
-                    message = R.string.question_changes_not_saved,
-                    positiveFunc = {
-                        prepareInitialMode()
-                    },
-                    negativeFunc = { })
-        } else super.onBackPressed()
+        when (uiMode) {
+            AdaptableUi.Mode.EDIT -> {
+                showQuestionDialogue(title = R.string.changes_not_saved,
+                        message = R.string.question_changes_not_saved,
+                        positiveFunc = {
+                            prepareInitialMode()
+                        },
+                        negativeFunc = { })
+            }
+
+            AdaptableUi.Mode.VIEW -> super.onBackPressed()
+
+            else -> {
+                val intent = LoginActivity.getIntent(context = this)
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 
     override fun onClick(view: View?) {

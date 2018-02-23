@@ -51,7 +51,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private var fragment: VehicleDetailsFragment? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
     private var vehicle: Vehicle? = null
-    private var vehicles: Array<Vehicle>? = null
+    private var vehicles: ArrayList<Vehicle>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         outState?.putSerializable(KEY_UI_MODE, uiMode)
         outState?.putParcelable(KEY_VEHICLE, vehicle)
         outState?.putString(KEY_FRAGMENT, fragment?.tag)
-        outState?.putParcelableArray(KEY_VEHICLES, vehicles)
+        outState?.putParcelableArrayList(KEY_VEHICLES, vehicles)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -124,7 +124,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
             val vehicle = Vehicle(it)
             list.add(vehicle)
         }
-        vehicles = list.toTypedArray()
+        vehicles = list
         if (vehicles != null && vehicles!!.isNotEmpty()) {
             textViewNoVehicles.visibility = GONE
             populateRecyclerView()
@@ -205,7 +205,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun promptDelete() {
         showQuestionDialogue(R.string.delete_vehicle, R.string.are_you_sure, positiveFunc = {
             VehicleDatabase.delete(vehicle!!, OnCompleteListener {
-                // TODO: remove from vehicles array
+                vehicles!!.remove(vehicle!!)
                 recyclerViewVehicles.adapter.notifyDataSetChanged()
                 prepareInitialMode()
             })
@@ -236,10 +236,13 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun parseSavedInstanceState(savedInstanceState: Bundle) {
         uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
         vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
-        val array = savedInstanceState.getParcelableArray(KEY_VEHICLES)
-        if (array != null) {
-            vehicles = array as Array<Vehicle>
+        vehicles = savedInstanceState.getParcelableArrayList(KEY_VEHICLES)
+        if (vehicles != null && vehicles!!.isNotEmpty()) {
+            textViewNoVehicles.visibility = GONE
             populateRecyclerView()
+        } else {
+            textViewNoVehicles.visibility = VISIBLE
+            recyclerViewVehicles.visibility = GONE
         }
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)

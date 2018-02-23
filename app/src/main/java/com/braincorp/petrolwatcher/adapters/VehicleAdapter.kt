@@ -15,7 +15,7 @@ import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 
 class VehicleAdapter(private val context: Context,
-                     private val items: Array<Vehicle>,
+                     private val items: ArrayList<Vehicle>,
                      private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<VehicleAdapter.VehicleHolder>() {
 

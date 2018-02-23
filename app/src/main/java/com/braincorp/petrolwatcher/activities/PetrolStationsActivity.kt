@@ -45,7 +45,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     private var petrolStation: PetrolStation? = null
-    private var petrolStations: Array<PetrolStation>? = null
+    private var petrolStations: ArrayList<PetrolStation>? = null
     private var topFragment: PetrolStationDetailsFragment? = null
     private var bottomFragment: FuelsFragment? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
@@ -68,7 +68,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         super.onSaveInstanceState(outState)
         outState?.putSerializable(KEY_UI_MODE, uiMode)
         outState?.putParcelable(KEY_PETROL_STATION, petrolStation)
-        outState?.putParcelableArray(KEY_PETROL_STATIONS, petrolStations)
+        outState?.putParcelableArrayList(KEY_PETROL_STATIONS, petrolStations)
         outState?.putString(KEY_TOP_FRAGMENT, topFragment?.tag)
         outState?.putString(KEY_BOTTOM_FRAGMENT, bottomFragment?.tag)
     }
@@ -103,7 +103,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
             val petrolStation = PetrolStation(it)
             list.add(petrolStation)
         }
-        petrolStations = list.toTypedArray()
+        petrolStations = list
 
         if (petrolStations != null && petrolStations!!.isNotEmpty()) {
             textViewNoPetrolStations.visibility = GONE
@@ -180,10 +180,13 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     private fun parseSavedInstanceState(savedInstanceState: Bundle) {
         uiMode = savedInstanceState.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
         petrolStation = savedInstanceState.getParcelable(KEY_PETROL_STATION)
-        val array = savedInstanceState.getParcelableArray(KEY_PETROL_STATIONS)
-        if (array != null) {
-            petrolStations = array as Array<PetrolStation>
+        petrolStations = savedInstanceState.getParcelableArrayList(KEY_PETROL_STATIONS)
+        if (petrolStations != null && petrolStations!!.isNotEmpty()) {
+            textViewNoPetrolStations.visibility = GONE
             populateRecyclerView()
+        } else {
+            textViewNoPetrolStations.visibility = VISIBLE
+            recyclerViewPetrolStations.visibility = GONE
         }
 
         val topFragmentTag = savedInstanceState.getString(KEY_TOP_FRAGMENT)
@@ -290,7 +293,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     private fun promptDelete() {
         showQuestionDialogue(R.string.delete_petrol_station, R.string.are_you_sure, positiveFunc = {
             PetrolStationDatabase.delete(petrolStation!!, OnCompleteListener {
-                // TODO: remove from petrolStations array
+                petrolStations!!.remove(petrolStation!!)
                 recyclerViewPetrolStations.adapter.notifyDataSetChanged()
                 prepareInitialMode()
             })
