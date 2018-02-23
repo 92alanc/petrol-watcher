@@ -1,4 +1,7 @@
 <resources>
+    <string name="maps_api_key"
+        translatable="false">AIzaSyCs5brz7JNkzH19nQ2kwMeimw0zQyT_Klw</string>
+
     <string name="app_name">Petrol Watcher</string>
 
     <string name="app_icon">app icon</string>
