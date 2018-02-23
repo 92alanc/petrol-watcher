@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:padding="@dimen/padding_default">
 
-    <FrameLayout
-        android:id="@+id/placeholderHome"
+    <fragment
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 </FrameLayout>
