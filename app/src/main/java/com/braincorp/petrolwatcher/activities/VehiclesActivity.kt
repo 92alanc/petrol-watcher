@@ -204,8 +204,9 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun promptDelete() {
         showQuestionDialogue(R.string.delete_vehicle, R.string.are_you_sure, positiveFunc = {
+            val vehicleToRemove = vehicle!!
             VehicleDatabase.delete(vehicle!!, OnCompleteListener {
-                vehicles!!.remove(vehicle!!)
+                vehicles!!.remove(vehicleToRemove)
                 recyclerViewVehicles.adapter.notifyDataSetChanged()
                 prepareInitialMode()
             })
