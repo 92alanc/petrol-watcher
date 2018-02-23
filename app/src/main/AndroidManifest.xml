@@ -36,26 +36,27 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.ProfileActivity"/>
+                android:value=".activities.ProfileActivity" />
         </activity>
 
         <activity android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:finishOnTaskLaunch="true"
-            android:clearTaskOnLaunch="true"/>
+            android:clearTaskOnLaunch="true" />
 
         <activity android:name=".activities.PetrolStationsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
+                android:value=".activities.HomeActivity" />
         </activity>
 
         <service android:name=".services.StationLocatorService" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>

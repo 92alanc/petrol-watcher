@@ -31,6 +31,7 @@ extensions.libs = [
                 espresso_contrib: '3.0.1',
                 espresso_core: '3.0.1',
                 espresso_intents: '3.0.1',
+                maps: '11.8.0',
                 support: '27.0.2',
                 test_runner: '1.0.1'
         ],
