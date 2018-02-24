@@ -9,8 +9,8 @@ import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.HomeActivity
 import com.braincorp.petrolwatcher.activities.LoginActivity
+import com.braincorp.petrolwatcher.activities.MapActivity
 import com.braincorp.petrolwatcher.activities.ProfileActivity
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
@@ -56,8 +56,8 @@ class LoginActivityRobot : BaseRobot() {
         return this
     }
 
-    fun checkIfLaunchesHomeActivity() {
-        intended(hasComponent(HomeActivity::class.java.name))
+    fun checkIfLaunchesMapActivity() {
+        intended(hasComponent(MapActivity::class.java.name))
     }
 
     fun checkIfLaunchesProfileActivity() {

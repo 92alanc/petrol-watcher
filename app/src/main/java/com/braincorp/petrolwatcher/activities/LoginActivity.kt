@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun checkAuthenticationState() {
         if (AuthenticationManager.isSignedIn() && AuthenticationManager.isEmailVerified())
-            startHomeActivity()
+            startMapActivity()
     }
 
     private fun clearEditTexts() {
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         if (!isEmpty(email) && !isEmpty(password)) {
             AuthenticationManager.signIn(email, password, onSuccessAction = {
                 if (it.user.isEmailVerified) {
-                    startHomeActivity()
+                    startMapActivity()
                 } else {
                     showInformationDialogue(title = R.string.email_not_verified,
                             message = R.string.verify_email)
@@ -68,8 +68,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun startHomeActivity() {
-        val intent = HomeActivity.getIntent(context = this)
+    private fun startMapActivity() {
+        val intent = MapActivity.getIntent(context = this)
         startActivity(intent)
     }
 

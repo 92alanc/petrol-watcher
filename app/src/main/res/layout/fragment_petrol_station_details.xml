@@ -62,22 +62,19 @@
                 android:background="@color/white"
                 android:src="@drawable/ic_current_location"
                 android:contentDescription="@string/description_current_location"
-                app:layout_constraintTop_toTopOf="@id/editTextAddress"
-                app:layout_constraintBottom_toBottomOf="@id/editTextAddress"
+                app:layout_constraintTop_toTopOf="@+id/searchViewAddress"
+                app:layout_constraintBottom_toBottomOf="@+id/searchViewAddress"
                 app:layout_constraintRight_toRightOf="parent"/>
 
-            <EditText
-                android:id="@+id/editTextAddress"
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchViewAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginRight="@dimen/margin_default"
-                android:hint="@string/address"
-                android:inputType="textCapWords"
                 app:layout_constraintTop_toBottomOf="@id/editTextName"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/buttonCurrentLocation"/>
+                app:layout_constraintRight_toLeftOf="@id/buttonCurrentLocation"/>
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -103,13 +100,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="editTextName, editTextAddress, buttonCurrentLocation"
-                tools:visibility="gone"/>
+                />
 
             <android.support.constraint.Group
                 android:id="@+id/groupNotEditableFields"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textViewName, textViewAddress, buttonLocate" />
+                app:constraint_referenced_ids="textViewName, textViewAddress, buttonLocate"
+                tools:visibility="gone"/>
 
         </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

@@ -12,69 +12,69 @@ import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.HomeActivity
+import com.braincorp.petrolwatcher.activities.MapActivity
 import com.braincorp.petrolwatcher.activities.PetrolStationsActivity
 import com.braincorp.petrolwatcher.activities.ProfileActivity
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
-class HomeActivityRobot : BaseRobot() {
+class MapActivityRobot : BaseRobot() {
 
     @Rule
-    private val rule = ActivityTestRule<HomeActivity>(HomeActivity::class.java,
+    private val rule = ActivityTestRule<MapActivity>(MapActivity::class.java,
             false, false)
 
-    fun launchActivity(): HomeActivityRobot {
+    fun launchActivity(): MapActivityRobot {
         rule.launchActivity(Intent())
         return this
     }
 
-    fun openNavigationBar(): HomeActivityRobot {
+    fun openNavigationBar(): MapActivityRobot {
         onView(withId(R.id.drawer_home)).perform(open())
         return this
     }
 
-    fun clickOnSignOut(): HomeActivityRobot {
+    fun clickOnSignOut(): MapActivityRobot {
         onView(withId(R.id.navigationView)).perform(navigateTo(R.id.itemSignOut))
         return this
     }
 
-    fun clickOnYesDialogueButton(): HomeActivityRobot {
+    fun clickOnYesDialogueButton(): MapActivityRobot {
         onView(withText(R.string.yes)).perform(click())
         return this
     }
 
-    fun clickOnProfile(): HomeActivityRobot {
+    fun clickOnProfile(): MapActivityRobot {
         onView(withText(R.string.profile)).perform(click())
         return this
     }
 
-    fun clickOnStationsNearby(): HomeActivityRobot {
+    fun clickOnStationsNearby(): MapActivityRobot {
         onView(withText(R.string.stations_nearby)).perform(click())
         return this
     }
 
-    fun checkIfLaunchesPetrolStationsActivity(): HomeActivityRobot {
+    fun checkIfLaunchesPetrolStationsActivity(): MapActivityRobot {
         intended(hasComponent(PetrolStationsActivity::class.java.name))
         return this
     }
 
-    fun checkIfLaunchesLoginActivity(): HomeActivityRobot {
+    fun checkIfLaunchesLoginActivity(): MapActivityRobot {
         intended(hasComponent(LoginActivityRobot::class.java.name))
         return this
     }
 
-    fun checkIfNavigationBarIsOpen(): HomeActivityRobot {
+    fun checkIfNavigationBarIsOpen(): MapActivityRobot {
         onView(withId(R.id.drawer_home)).check(matches(isOpen()))
         return this
     }
 
-    fun checkIfShowsQuestionDialogue(): HomeActivityRobot {
+    fun checkIfShowsQuestionDialogue(): MapActivityRobot {
         onView(withText(R.string.question_sign_out)).check(matches(isDisplayed()))
         return this
     }
 
-    fun checkIfLaunchesProfileActivity(): HomeActivityRobot {
+    fun checkIfLaunchesProfileActivity(): MapActivityRobot {
         intended(hasComponent(ProfileActivity::class.java.name))
         return this
     }

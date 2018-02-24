@@ -105,7 +105,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
         textViewRating = view.findViewById(R.id.textViewRating)
 
         editTextName = view.findViewById(R.id.editTextName)
-        editTextAddress = view.findViewById(R.id.editTextAddress)
+        editTextAddress = view.findViewById(R.id.searchViewAddress)
 
         buttonLocate = view.findViewById(R.id.buttonLocate)
         buttonLocate.setOnClickListener(this)

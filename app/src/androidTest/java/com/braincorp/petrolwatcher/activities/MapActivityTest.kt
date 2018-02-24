@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.activities
 
 import android.support.test.espresso.intent.Intents
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.activities.robots.HomeActivityRobot
+import com.braincorp.petrolwatcher.activities.robots.MapActivityRobot
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.google.firebase.auth.FirebaseAuth
 import org.junit.After
@@ -13,9 +13,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class HomeActivityTest {
+class MapActivityTest {
 
-    private val robot = HomeActivityRobot()
+    private val robot = MapActivityRobot()
 
     @Before
     fun setup() {

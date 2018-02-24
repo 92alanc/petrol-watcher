@@ -39,17 +39,15 @@
                 android:value=".activities.ProfileActivity" />
         </activity>
 
-        <activity android:name=".activities.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:finishOnTaskLaunch="true"
-            android:clearTaskOnLaunch="true" />
+        <activity android:name=".activities.MapActivity"
+            android:theme="@style/AppTheme.MapActivity" />
 
         <activity android:name=".activities.PetrolStationsActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".activities.HomeActivity">
+            android:parentActivityName=".activities.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity" />
+                android:value=".activities.MapActivity" />
         </activity>
 
         <service android:name=".services.StationLocatorService" />

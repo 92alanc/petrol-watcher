@@ -159,7 +159,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful) {
-            val intent = if (uiMode == AdaptableUi.Mode.EDIT) HomeActivity.getIntent(context = this)
+            val intent = if (uiMode == AdaptableUi.Mode.EDIT) MapActivity.getIntent(context = this)
             else LoginActivity.getIntent(context = this)
             startActivity(intent)
         }
@@ -286,7 +286,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
             AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
                     onSuccessAction =  {
                         if (uiMode == AdaptableUi.Mode.CREATE) {
-                            val intent = HomeActivity.getIntent(context = this)
+                            val intent = MapActivity.getIntent(context = this)
                             startActivity(intent)
                             finish()
                         } else {

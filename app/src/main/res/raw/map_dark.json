@@ -24,11 +24,11 @@
     ]
   },
   {
-    "featureType": "administrative",
-    "elementType": "geometry",
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels",
     "stylers": [
       {
-        "visibility": "on"
+        "visibility": "off"
       }
     ]
   },
@@ -43,6 +43,7 @@
   },
   {
     "featureType": "poi",
+    "elementType": "labels.text",
     "stylers": [
       {
         "visibility": "off"
@@ -55,6 +56,38 @@
     "stylers": [
       {
         "color": "#d59563"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.attraction",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.government",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.medical",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -73,6 +106,30 @@
     "stylers": [
       {
         "color": "#6b9a76"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.place_of_worship",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.school",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.sports_complex",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -136,6 +193,15 @@
     "stylers": [
       {
         "color": "#f3d19c"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },

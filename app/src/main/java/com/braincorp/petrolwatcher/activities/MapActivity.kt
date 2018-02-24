@@ -36,12 +36,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, OnMapReadyCallback {
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return Intent(context, HomeActivity::class.java)
+            return Intent(context, MapActivity::class.java)
         }
     }
 
@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
-        map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+        map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_light))
         loadMap(map)
     }
 
