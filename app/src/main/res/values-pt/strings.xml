@@ -73,4 +73,8 @@
     <string name="locate">localizar</string>
     <string name="description_close">fechar</string>
     <string name="description_current_location">usar localização atual</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="system_of_measurement">Sistema de medida</string>
+    <string name="theme">Tema</string>
 </resources>

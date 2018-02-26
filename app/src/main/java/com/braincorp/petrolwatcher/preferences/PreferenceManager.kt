@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.preferences
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.braincorp.petrolwatcher.model.SystemOfMeasurement
 
 class PreferenceManager(context: Context) {
 
@@ -42,6 +41,21 @@ class PreferenceManager(context: Context) {
         sharedPreferences.edit().putInt(KEY_SYSTEM_OF_MEASUREMENT, intValue).apply()
     }
 
-    // TODO: implement get/set theme
+    fun getTheme(): Theme {
+        val result = sharedPreferences.getInt(KEY_THEME, THEME_LIGHT)
+        return when (result) {
+            THEME_LIGHT -> Theme.LIGHT
+            THEME_DARK -> Theme.DARK
+            else -> Theme.LIGHT
+        }
+    }
+
+    fun setTheme(theme: Theme) {
+        val intValue = when (theme) {
+            Theme.LIGHT -> THEME_LIGHT
+            Theme.DARK -> THEME_DARK
+        }
+        sharedPreferences.edit().putInt(KEY_THEME, intValue).apply()
+    }
 
 }

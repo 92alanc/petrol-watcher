@@ -16,7 +16,7 @@ import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.model.SystemOfMeasurement
+import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.utils.fuelTypeListToString
