@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 
+@Suppress("unused")
 class App : Application() {
 
     override fun onCreate() {
