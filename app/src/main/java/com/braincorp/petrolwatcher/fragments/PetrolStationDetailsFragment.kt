@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.fragments
 import android.os.Bundle
 import android.support.constraint.Group
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,8 +17,13 @@ import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
+import com.google.android.gms.location.places.ui.PlaceSelectionListener
 
-class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListener {
+class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
+        View.OnClickListener, PlaceSelectionListener {
 
     companion object {
         private const val ARG_UI_MODE = "ui_mode"
@@ -36,7 +42,9 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
         }
     }
 
+    private var address: String? = null
     private var petrolStation: PetrolStation? = null
+    private var rootView: View? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
 
     private lateinit var textViewName: TextView
@@ -44,7 +52,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
     private lateinit var textViewRating: TextView
 
     private lateinit var editTextName: EditText
-    private lateinit var editTextAddress: EditText
+    private lateinit var placeAutocompleteAddress: PlaceAutocompleteFragment
 
     private lateinit var buttonLocate: ImageButton
     private lateinit var buttonCurrentLocation: ImageButton
@@ -54,11 +62,18 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_petrol_station_details, container, false)
-        bindViews(view)
+        if (rootView != null) {
+            val parent = rootView!!.parent as ViewGroup
+            parent.removeView(rootView)
+        }
+
+        rootView = inflater.inflate(R.layout.fragment_petrol_station_details, container,
+                    false)
+        bindViews(rootView!!)
         parseArgs()
         prepareUi()
-        return view
+
+        return rootView
     }
 
     override fun onClick(v: View?) {
@@ -66,6 +81,14 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
             R.id.buttonLocate -> TODO("not implemented")
             R.id.buttonCurrentLocation -> TODO("not implemented")
         }
+    }
+
+    override fun onPlaceSelected(place: Place?) {
+        address = place?.address?.toString()
+    }
+
+    override fun onError(status: Status?) {
+        Log.e(javaClass.name, status?.statusMessage)
     }
 
     override fun prepareInitialMode() {
@@ -97,7 +120,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
 
     fun getName() = editTextName.text.toString()
 
-    fun getAddress() = editTextAddress.text.toString()
+    fun getAddress() = address
 
     private fun bindViews(view: View) {
         textViewName = view.findViewById(R.id.textViewName)
@@ -105,7 +128,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
         textViewRating = view.findViewById(R.id.textViewRating)
 
         editTextName = view.findViewById(R.id.editTextName)
-        editTextAddress = view.findViewById(R.id.searchViewAddress)
+
+        bindPlaceAutocompleteFragment()
 
         buttonLocate = view.findViewById(R.id.buttonLocate)
         buttonLocate.setOnClickListener(this)
@@ -115,6 +139,13 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
 
         groupEditableFields = view.findViewById(R.id.groupEditableFields)
         groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
+    }
+
+    private fun bindPlaceAutocompleteFragment() { // FIXME: not working on edit mode
+        placeAutocompleteAddress = activity!!.fragmentManager
+                .findFragmentById(R.id.placeAutocompleteAddress) as PlaceAutocompleteFragment
+        placeAutocompleteAddress.setOnPlaceSelectedListener(this)
+        placeAutocompleteAddress.setHint(context!!.getString(R.string.address))
     }
 
     private fun parseArgs() {
@@ -154,7 +185,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi, View.OnClickListen
 
     private fun fillEditableFields() {
         editTextName.setText(petrolStation?.name)
-        editTextAddress.setText(petrolStation?.address)
+        placeAutocompleteAddress.setText(petrolStation?.address)
     }
 
     private fun showRating() {

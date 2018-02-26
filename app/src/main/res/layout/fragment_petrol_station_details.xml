@@ -62,14 +62,16 @@
                 android:background="@color/white"
                 android:src="@drawable/ic_current_location"
                 android:contentDescription="@string/description_current_location"
-                app:layout_constraintTop_toTopOf="@+id/searchViewAddress"
-                app:layout_constraintBottom_toBottomOf="@+id/searchViewAddress"
+                app:layout_constraintTop_toTopOf="@+id/placeAutocompleteAddress"
+                app:layout_constraintBottom_toBottomOf="@+id/placeAutocompleteAddress"
                 app:layout_constraintRight_toRightOf="parent"/>
 
-            <android.support.v7.widget.SearchView
-                android:id="@+id/searchViewAddress"
+            <fragment
+                android:id="@+id/placeAutocompleteAddress"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:layout_marginRight="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/editTextName"
@@ -99,7 +101,7 @@
                 android:id="@+id/groupEditableFields"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="editTextName, editTextAddress, buttonCurrentLocation"
+                app:constraint_referenced_ids="editTextName, placeAutocompleteAddress, buttonCurrentLocation"
                 />
 
             <android.support.constraint.Group

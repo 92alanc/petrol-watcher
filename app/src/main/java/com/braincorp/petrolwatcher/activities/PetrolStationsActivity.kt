@@ -274,7 +274,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
     private fun save(): Boolean {
         val name = topFragment!!.getName()
-        val address = topFragment!!.getAddress()
+        val address = if (topFragment!!.getAddress() == null) "" else topFragment!!.getAddress()
         val fuels = bottomFragment!!.getFuels()
 
         if (uiMode == AdaptableUi.Mode.CREATE) {
@@ -284,7 +284,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         }
 
         petrolStation!!.name = name
-        petrolStation!!.address = address
+        petrolStation!!.address = address!!
         if (fuels != null) petrolStation!!.fuels = fuels
 
         return if (petrolStation!!.allFieldsAreValid()) {

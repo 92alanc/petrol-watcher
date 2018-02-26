@@ -72,6 +72,8 @@ dependencies {
     implementation "com.android.support:design:$libs.android.support"
     implementation "com.android.support.constraint:constraint-layout:$libs.android.constraint_layout"
     implementation "com.google.android.gms:play-services-maps:$libs.android.maps"
+    implementation "com.google.maps.android:android-maps-utils:$libs.android.maps_utils"
+    implementation "com.google.android.gms:play-services-places:$libs.android.places"
     implementation "com.google.android.gms:play-services-location:$libs.android.location"
     implementation "com.google.firebase:firebase-auth:$libs.firebase_auth"
     implementation "com.google.firebase:firebase-database:$libs.firebase_database"
