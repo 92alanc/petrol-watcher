@@ -21,6 +21,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <TextView
+        android:id="@+id/textViewNoPetrolStations"
+        style="@style/TextViewWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_petrol_stations"
+        android:layout_gravity="center"/>
+
     <include layout="@layout/content_petrol_stations"/>
 
     <android.support.design.widget.FloatingActionButton
