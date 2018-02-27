@@ -1,17 +1,12 @@
 package com.braincorp.petrolwatcher.activities
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Gravity.START
 import android.view.MenuItem
 import android.view.View
@@ -19,17 +14,10 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.utils.REQUEST_CODE_LOCATION
-import com.braincorp.petrolwatcher.utils.fillImageView
-import com.braincorp.petrolwatcher.utils.hasLocationPermission
-import com.braincorp.petrolwatcher.utils.showQuestionDialogue
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
@@ -45,7 +33,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var map: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +52,8 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     }
 
     override fun onBackPressed() {
-        if (drawer_home.isDrawerOpen(START))
-            drawer_home.closeDrawer(START)
-        else
-            finish()
+        if (drawer_home.isDrawerOpen(START)) drawer_home.closeDrawer(START)
+        else super.onBackPressed()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
@@ -160,57 +145,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private fun startMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-    }
-
-    private fun loadMap(map: GoogleMap?) {
-        if (SDK_INT >= M && !hasLocationPermission()) {
-            requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
-                    REQUEST_CODE_LOCATION)
-        } else loadMapWithCurrentLocation(map)
-    }
-
-    private fun loadMapWithCurrentLocation(map: GoogleMap?) {
-        if (map == null) return
-
-        try {
-            map.isMyLocationEnabled = true
-            map.uiSettings.isMyLocationButtonEnabled = true
-            zoomToDeviceLocation(map)
-        } catch (e: SecurityException) {
-            Log.e(javaClass.name, e.message)
-        }
-    }
-
-    private fun loadMapWithoutCurrentLocation(map: GoogleMap?) {
-        if (map == null) return
-
-        try {
-            map.isMyLocationEnabled = false
-            map.uiSettings.isMyLocationButtonEnabled = false
-        } catch (e: SecurityException) {
-            Log.e(javaClass.name, e.message)
-        }
-    }
-
-    private fun zoomToDeviceLocation(map: GoogleMap) {
-        try {
-            val locationResult = fusedLocationProviderClient.lastLocation
-            locationResult.addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val location = it.result
-                    val latLng = LatLng(location.latitude, location.longitude)
-                    val cameraPosition = CameraUpdateFactory.newLatLngZoom(latLng, 18f)
-                    map.moveCamera(cameraPosition)
-                } else {
-                    val worthing = LatLng(50.823514, -0.377380)
-                    val cameraPosition = CameraUpdateFactory.newLatLngZoom(worthing, 18f)
-                    map.moveCamera(cameraPosition)
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e(javaClass.name, e.message)
-        }
     }
 
 }

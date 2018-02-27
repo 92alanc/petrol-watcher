@@ -198,4 +198,11 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         textViewRating.visibility = GONE
     }
 
+    private fun showAddress() {
+        val baseUrl = "https://www.google.com/maps/dir/?api=1"
+        val origin = "&origin=${0}"
+        val destination = "&destination=${0}"
+        val mode = "&travelmode=driving"
+    }
+
 }
