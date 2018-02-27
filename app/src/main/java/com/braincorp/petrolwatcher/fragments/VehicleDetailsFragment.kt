@@ -1,9 +1,9 @@
 package com.braincorp.petrolwatcher.fragments
 
 import android.annotation.SuppressLint
+import android.app.Fragment
 import android.os.Bundle
 import android.support.constraint.Group
-import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +16,9 @@ import com.braincorp.petrolwatcher.adapters.VehicleTypeAdapter
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 import com.braincorp.petrolwatcher.model.Vehicle
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
+import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 import com.braincorp.petrolwatcher.utils.fuelTypeListToString
 import com.braincorp.petrolwatcher.utils.vehicleTypeToDrawable
 
@@ -69,7 +69,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val preferenceManager = PreferenceManager(context!!)
+        val preferenceManager = PreferenceManager(activity)
         systemOfMeasurement = preferenceManager.getSystemOfMeasurement()
         val view = inflater.inflate(R.layout.fragment_vehicle_details, container, false)
         bindViews(view)
@@ -137,11 +137,11 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     private fun applyPreferences() {
         when (systemOfMeasurement) {
             SystemOfMeasurement.IMPERIAL -> {
-                editTextFuelConsumption.hint = context!!.getString(R.string.miles_per_gallon)
+                editTextFuelConsumption.hint = activity.getString(R.string.miles_per_gallon)
             }
 
             SystemOfMeasurement.METRIC -> {
-                editTextFuelConsumption.hint = context!!.getString(R.string.km_per_litre)
+                editTextFuelConsumption.hint = activity.getString(R.string.km_per_litre)
             }
         }
     }
@@ -175,7 +175,7 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
     }
 
     private fun populateSpinner() {
-        val adapter = VehicleTypeAdapter(context!!)
+        val adapter = VehicleTypeAdapter(activity)
         spinnerVehicleType.adapter = adapter
     }
 
@@ -197,11 +197,11 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
         populateSpinner()
 
         val unit = when (systemOfMeasurement) {
-            SystemOfMeasurement.IMPERIAL -> context!!.getString(R.string.unit_miles_per_gallon)
-            SystemOfMeasurement.METRIC -> context!!.getString(R.string.unit_km_per_litre)
+            SystemOfMeasurement.IMPERIAL -> activity.getString(R.string.unit_miles_per_gallon)
+            SystemOfMeasurement.METRIC -> activity.getString(R.string.unit_km_per_litre)
         }
 
-        val hint = "${context!!.getString(R.string.fuel_consumption)} ($unit)"
+        val hint = "${activity.getString(R.string.fuel_consumption)} ($unit)"
         editTextFuelConsumption.hint = hint
     }
 
@@ -234,14 +234,14 @@ class VehicleDetailsFragment : Fragment(), AdaptableUi {
         textViewManufacturerAndName.text = "${vehicle!!.manufacturer} ${vehicle!!.name}"
         textViewYear.text = vehicle!!.year.toString()
 
-        val drawable = context!!.vehicleTypeToDrawable(vehicle!!.vehicleType)
+        val drawable = activity.vehicleTypeToDrawable(vehicle!!.vehicleType)
         imageViewVehicleType.setImageDrawable(drawable)
 
-        textViewFuelTypes.text = context!!.fuelTypeListToString(vehicle!!.fuelTypes)
+        textViewFuelTypes.text = activity.fuelTypeListToString(vehicle!!.fuelTypes)
 
         val unit = when (systemOfMeasurement) {
-            SystemOfMeasurement.IMPERIAL -> context!!.getString(R.string.unit_miles_per_gallon)
-            SystemOfMeasurement.METRIC -> context!!.getString(R.string.unit_km_per_litre)
+            SystemOfMeasurement.IMPERIAL -> activity.getString(R.string.unit_miles_per_gallon)
+            SystemOfMeasurement.METRIC -> activity.getString(R.string.unit_km_per_litre)
         }
         textViewFuelConsumption.text = "${vehicle!!.fuelConsumption} $unit"
     }

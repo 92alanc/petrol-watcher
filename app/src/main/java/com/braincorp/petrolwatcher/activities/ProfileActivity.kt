@@ -1,11 +1,11 @@
 package com.braincorp.petrolwatcher.activities
 
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
 import android.view.View
@@ -105,10 +105,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         val bottomFragmentTag = savedInstanceState?.getString(KEY_BOTTOM_FRAGMENT)
 
         if (topFragmentTag != null)
-            topFragment = supportFragmentManager.findFragmentByTag(topFragmentTag) as ImagePickerFragment
+            topFragment = fragmentManager.findFragmentByTag(topFragmentTag) as ImagePickerFragment
 
         if (bottomFragmentTag != null)
-            bottomFragment = supportFragmentManager.findFragmentByTag(bottomFragmentTag)
+            bottomFragment = fragmentManager.findFragmentByTag(bottomFragmentTag)
 
         uiMode = savedInstanceState?.getSerializable(KEY_UI_MODE) as AdaptableUi.Mode
     }

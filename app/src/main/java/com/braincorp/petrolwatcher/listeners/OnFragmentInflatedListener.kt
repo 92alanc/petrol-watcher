@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.listeners
 
-import android.support.v4.app.Fragment
+import android.app.Fragment
 
 interface OnFragmentInflatedListener {
 

@@ -1,8 +1,8 @@
 package com.braincorp.petrolwatcher.fragments
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.constraint.Group
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -141,11 +141,11 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
     }
 
-    private fun bindPlaceAutocompleteFragment() { // FIXME: not working on edit mode
-        placeAutocompleteAddress = activity!!.fragmentManager
+    private fun bindPlaceAutocompleteFragment() { // TODO: check compatibility with API 17
+        placeAutocompleteAddress = childFragmentManager
                 .findFragmentById(R.id.placeAutocompleteAddress) as PlaceAutocompleteFragment
         placeAutocompleteAddress.setOnPlaceSelectedListener(this)
-        placeAutocompleteAddress.setHint(context!!.getString(R.string.address))
+        placeAutocompleteAddress.setHint(activity.getString(R.string.address))
     }
 
     private fun parseArgs() {
@@ -190,8 +190,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
 
     private fun showRating() {
         textViewRating.visibility = VISIBLE
-        textViewRating.text = context!!.ratingToString(petrolStation!!.rating)
-        textViewRating.setTextColor(context!!.ratingToColour(petrolStation!!.rating))
+        textViewRating.text = activity.ratingToString(petrolStation!!.rating)
+        textViewRating.setTextColor(activity.ratingToColour(petrolStation!!.rating))
     }
 
     private fun hideRating() {

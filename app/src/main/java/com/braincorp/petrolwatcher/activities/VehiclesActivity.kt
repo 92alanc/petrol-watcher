@@ -1,10 +1,10 @@
 package com.braincorp.petrolwatcher.activities
 
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -248,7 +248,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
-            fragment = supportFragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
+            fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
     }
 
 }
