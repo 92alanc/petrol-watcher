@@ -183,7 +183,8 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         petrolStations = savedInstanceState.getParcelableArrayList(KEY_PETROL_STATIONS)
         if (petrolStations != null && petrolStations!!.isNotEmpty()) {
             textViewNoPetrolStations.visibility = GONE
-            populateRecyclerView()
+            if (uiMode == AdaptableUi.Mode.INITIAL) populateRecyclerView()
+            else recyclerViewPetrolStations.visibility = GONE
         } else {
             textViewNoPetrolStations.visibility = VISIBLE
             recyclerViewPetrolStations.visibility = GONE
@@ -191,13 +192,13 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
         val topFragmentTag = savedInstanceState.getString(KEY_TOP_FRAGMENT)
         if (topFragmentTag != null) {
-            topFragment = supportFragmentManager.findFragmentByTag(topFragmentTag)
+            topFragment = fragmentManager.findFragmentByTag(topFragmentTag)
                     as PetrolStationDetailsFragment
         }
 
         val bottomFragmentTag = savedInstanceState.getString(KEY_BOTTOM_FRAGMENT)
         if (bottomFragmentTag != null) {
-            bottomFragment = supportFragmentManager.findFragmentByTag(bottomFragmentTag)
+            bottomFragment = fragmentManager.findFragmentByTag(bottomFragmentTag)
                     as FuelsFragment
         }
     }

@@ -8,108 +8,107 @@
     app:cardCornerRadius="@dimen/radius_corner_default"
     app:cardUseCompatPadding="true"
     tools:context=".fragments.PetrolStationDetailsFragment">
-        <android.support.constraint.ConstraintLayout
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_default">
+
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="BP"/>
+
+        <EditText
+            android:id="@+id/editTextName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/padding_default">
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:inputType="textCapWords"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/textViewName"
-                style="@style/TextViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="BP"/>
+        <TextView
+            android:id="@+id/textViewAddress"
+            style="@style/TextViewDefault"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/textViewName"
+            tools:text="60 Normandy Road - Worthing"/>
 
-            <EditText
-                android:id="@+id/editTextName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:inputType="textCapWords"
-                app:layout_constraintTop_toTopOf="parent"/>
+        <ImageButton
+            android:id="@+id/buttonLocate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_locate"
+            android:contentDescription="@string/locate"
+            app:layout_constraintTop_toTopOf="@id/textViewAddress"
+            app:layout_constraintBottom_toBottomOf="@id/textViewAddress"
+            app:layout_constraintLeft_toRightOf="@id/textViewAddress"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="1"/>
 
-            <TextView
-                android:id="@+id/textViewAddress"
-                style="@style/TextViewDefault"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
-                app:layout_constraintTop_toBottomOf="@id/textViewName"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="@id/textViewName"
-                tools:text="60 Normandy Road - Worthing"/>
+        <ImageButton
+            android:id="@+id/buttonCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_current_location"
+            android:contentDescription="@string/description_current_location"
+            app:layout_constraintTop_toTopOf="@+id/placeAutocompleteAddress"
+            app:layout_constraintBottom_toBottomOf="@+id/placeAutocompleteAddress"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-            <ImageButton
-                android:id="@+id/buttonLocate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:src="@drawable/ic_locate"
-                android:contentDescription="@string/locate"
-                app:layout_constraintTop_toTopOf="@id/textViewAddress"
-                app:layout_constraintBottom_toBottomOf="@id/textViewAddress"
-                app:layout_constraintLeft_toRightOf="@id/textViewAddress"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="1"/>
+        <fragment
+            android:id="@+id/placeAutocompleteAddress"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/editTextName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/buttonCurrentLocation"/>
 
-            <ImageButton
-                android:id="@+id/buttonCurrentLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:src="@drawable/ic_current_location"
-                android:contentDescription="@string/description_current_location"
-                app:layout_constraintTop_toTopOf="@+id/placeAutocompleteAddress"
-                app:layout_constraintBottom_toBottomOf="@+id/placeAutocompleteAddress"
-                app:layout_constraintRight_toRightOf="parent"/>
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="100dp"/>
 
-            <fragment
-                android:id="@+id/placeAutocompleteAddress"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
-                android:layout_marginEnd="@dimen/margin_default"
-                android:layout_marginRight="@dimen/margin_default"
-                app:layout_constraintTop_toBottomOf="@id/editTextName"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/buttonCurrentLocation"/>
+        <TextView
+            android:id="@+id/textViewRating"
+            style="@style/TextViewDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="rating: good"
+            tools:textColor="@color/green" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="100dp"/>
+        <android.support.constraint.Group
+            android:id="@+id/groupEditableFields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="editTextName, placeAutocompleteAddress, buttonCurrentLocation"
+            />
 
-            <TextView
-                android:id="@+id/textViewRating"
-                style="@style/TextViewDefault"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guideline"
-                tools:text="rating: good"
-                tools:textColor="@color/green" />
+        <android.support.constraint.Group
+            android:id="@+id/groupNotEditableFields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewName, textViewAddress, buttonLocate"
+            tools:visibility="gone"/>
 
-            <android.support.constraint.Group
-                android:id="@+id/groupEditableFields"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="editTextName, placeAutocompleteAddress, buttonCurrentLocation"
-                />
-
-            <android.support.constraint.Group
-                android:id="@+id/groupNotEditableFields"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textViewName, textViewAddress, buttonLocate"
-                tools:visibility="gone"/>
-
-        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

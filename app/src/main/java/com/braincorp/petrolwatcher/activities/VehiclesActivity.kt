@@ -240,7 +240,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         vehicles = savedInstanceState.getParcelableArrayList(KEY_VEHICLES)
         if (vehicles != null && vehicles!!.isNotEmpty()) {
             textViewNoVehicles.visibility = GONE
-            populateRecyclerView()
+            if (uiMode == AdaptableUi.Mode.INITIAL) populateRecyclerView()
+            else recyclerViewVehicles.visibility = GONE
         } else {
             textViewNoVehicles.visibility = VISIBLE
             recyclerViewVehicles.visibility = GONE
