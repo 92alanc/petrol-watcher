@@ -22,7 +22,7 @@
     <include layout="@layout/content_home"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabHome"
+        android:id="@+id/fabMap"
         style="@style/FloatingActionButton"
         android:src="@drawable/ic_current_location"
         app:fabSize="normal"/>

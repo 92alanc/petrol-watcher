@@ -1,8 +1,12 @@
 package com.braincorp.petrolwatcher.activities
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
@@ -10,6 +14,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Gravity.START
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
@@ -18,7 +24,9 @@ import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -42,6 +50,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setSupportActionBar(toolbar)
         bindNavigationDrawer()
 
+        fabMap.setOnClickListener(this)
         startMap()
     }
 
@@ -62,19 +71,39 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         if (requestCode == REQUEST_CODE_LOCATION) {
             val permissionGranted = grantResults[0] == PERMISSION_GRANTED
                     && grantResults[1] == PERMISSION_GRANTED
-            if (permissionGranted) loadMapWithCurrentLocation(map)
-            else loadMapWithoutCurrentLocation(map)
+            if (permissionGranted) {
+                fabMap.visibility = VISIBLE
+                loadMapWithCurrentLocation(map)
+            } else {
+                fabMap.visibility = GONE
+                loadMapWithoutCurrentLocation(map)
+            }
         }
     }
 
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
         map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_light))
-        loadMap(map)
+        if (SDK_INT >= M && !hasLocationPermission()) {
+            fabMap.visibility = GONE
+            requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
+                    REQUEST_CODE_LOCATION)
+        } else {
+            fabMap.visibility = VISIBLE
+            loadMapWithCurrentLocation(map)
+        }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.fabMap -> {
+                getCurrentLocation(OnCompleteListener {
+                    val location = it.result
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    map?.zoomToLocation(latLng)
+                })
+            }
+
             R.id.imageViewProfile -> {
                 drawer_home.closeDrawer(START)
                 launchProfileActivity()

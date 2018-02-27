@@ -1,11 +1,7 @@
 package com.braincorp.petrolwatcher.utils
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.location.Location
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.google.android.gms.location.LocationServices
@@ -30,13 +26,6 @@ fun Context.getCurrentLocation(onCompleteListener: OnCompleteListener<Location>)
 fun GoogleMap.zoomToLocation(latLng: LatLng) {
     val cameraPosition = CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM)
     moveCamera(cameraPosition)
-}
-
-fun AppCompatActivity.loadMap(map: GoogleMap?) {
-    if (SDK_INT >= M && !hasLocationPermission()) {
-        requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
-                REQUEST_CODE_LOCATION)
-    } else loadMapWithCurrentLocation(map)
 }
 
 fun AppCompatActivity.loadMapWithCurrentLocation(map: GoogleMap?) {
