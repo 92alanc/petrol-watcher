@@ -19,6 +19,7 @@ import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.getCurrentLocation
 import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
+import com.braincorp.petrolwatcher.utils.showDirections
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
@@ -202,10 +203,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
     }
 
     private fun locateStation() {
-        val baseUrl = "https://www.google.com/maps/dir/?api=1"
-        val origin = "&origin=${0}"
-        val destination = "&destination=${0}"
-        val mode = "&travelmode=driving"
+        activity.showDirections(petrolStation!!.address)
     }
 
     private fun useCurrentLocation() {
