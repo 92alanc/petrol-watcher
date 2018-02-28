@@ -145,7 +145,7 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         groupNotEditableFields = view.findViewById(R.id.groupNotEditableFields)
     }
 
-    private fun bindPlaceAutocompleteFragment() { // TODO: check compatibility with API 17
+    private fun bindPlaceAutocompleteFragment() {
         placeAutocompleteAddress = childFragmentManager
                 .findFragmentById(R.id.placeAutocompleteAddress) as PlaceAutocompleteFragment
         placeAutocompleteAddress.setOnPlaceSelectedListener(this)
