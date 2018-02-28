@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.fragments
 
 import android.app.Fragment
+import android.location.Geocoder
 import android.os.Bundle
 import android.support.constraint.Group
 import android.util.Log
@@ -15,12 +16,14 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
+import com.braincorp.petrolwatcher.utils.getCurrentLocation
 import com.braincorp.petrolwatcher.utils.ratingToColour
 import com.braincorp.petrolwatcher.utils.ratingToString
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
+import com.google.android.gms.tasks.OnCompleteListener
 
 class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         View.OnClickListener, PlaceSelectionListener {
@@ -78,8 +81,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.buttonLocate -> TODO("not implemented")
-            R.id.buttonCurrentLocation -> TODO("not implemented")
+            R.id.buttonLocate -> locateStation()
+            R.id.buttonCurrentLocation -> useCurrentLocation()
         }
     }
 
@@ -198,11 +201,22 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         textViewRating.visibility = GONE
     }
 
-    private fun showAddress() {
+    private fun locateStation() {
         val baseUrl = "https://www.google.com/maps/dir/?api=1"
         val origin = "&origin=${0}"
         val destination = "&destination=${0}"
         val mode = "&travelmode=driving"
+    }
+
+    private fun useCurrentLocation() {
+        activity.getCurrentLocation(OnCompleteListener {
+            val location = it.result
+            val geocoder = Geocoder(activity)
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude,
+                                                     1)
+            address = addresses[0].getAddressLine(0)
+            placeAutocompleteAddress.setText(address)
+        })
     }
 
 }
