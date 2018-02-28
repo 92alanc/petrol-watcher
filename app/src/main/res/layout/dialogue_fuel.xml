@@ -18,8 +18,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerFuelQuality"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline"/>
+        app:layout_constraintRight_toLeftOf="@id/guideline"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0"/>
 
     <Spinner
         android:id="@+id/spinnerFuelQuality"
@@ -39,8 +42,21 @@
         android:hint="@string/price"
         android:inputType="numberDecimal"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOk"
         app:layout_constraintLeft_toRightOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/textViewOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_dialogue"
+        android:background="@android:color/transparent"
+        android:text="@string/ok"
+        android:textColor="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/editTextPrice"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -39,8 +39,8 @@ class FuelAdapter(private val context: Context,
                      private val onItemClickListener: OnItemClickListener)
         : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        val textViewFuel = itemView.findViewById<TextView>(R.id.textViewFuel)
-        val textViewPrice = itemView.findViewById<TextView>(R.id.textViewPrice)
+        val textViewFuel: TextView = itemView.findViewById(R.id.textViewFuel)
+        val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
 
         init {
             itemView.setOnClickListener(this)
