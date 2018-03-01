@@ -82,7 +82,8 @@ class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
 
             if (fuels!!.none { f -> f.type == type && f.quality == quality }) {
                 fuels!!.add(fuel!!)
-                recyclerViewFuels.adapter.notifyDataSetChanged()
+                if (recyclerViewFuels.adapter != null)
+                    recyclerViewFuels.adapter.notifyDataSetChanged()
             }
         }
     }
