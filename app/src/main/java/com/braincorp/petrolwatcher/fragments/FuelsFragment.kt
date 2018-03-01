@@ -64,7 +64,7 @@ class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
         activity.showFuelDialogue(fuel = fuel, onDismissListener = this)
     }
 
-    override fun onDismiss(dialogue: DialogInterface) { // TODO: 99% it's not working
+    override fun onDismiss(dialogue: DialogInterface) { // TODO: 99% sure it's not working
         val fuelDialogue = dialogue as FuelDialogue
         val type = fuelDialogue.getFuelType()
         val quality = fuelDialogue.getFuelQuality()
