@@ -229,7 +229,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
     private fun loadBottomFragment() {
         if (bottomFragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            bottomFragment = FuelsFragment.newInstance(uiMode, petrolStation?.fuels)
+            bottomFragment = FuelsFragment.newInstance(petrolStation?.fuels)
             replaceFragmentPlaceholder(R.id.placeholderBottom, bottomFragment!!, TAG_BOTTOM_FRAGMENT)
         }
     }

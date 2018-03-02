@@ -1,36 +1,33 @@
 package com.braincorp.petrolwatcher.fragments
 
+import android.app.Activity.RESULT_OK
 import android.app.Fragment
-import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.activities.FuelsActivity
+import com.braincorp.petrolwatcher.adapters.FuelAdapter
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.utils.showFuelDialogue
-import com.braincorp.petrolwatcher.view.FuelDialogue
 
-class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
-        DialogInterface.OnDismissListener, OnItemClickListener {
+class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
 
     companion object {
         private const val ARG_FUELS = "fuels"
-        private const val ARG_UI_MODE = "ui_mode"
 
-        fun newInstance(uiMode: AdaptableUi.Mode,
-                        fuels: MutableSet<Fuel>?): FuelsFragment {
+        private const val REQUEST_CODE_FUEL = 999
+
+        fun newInstance(fuels: MutableSet<Fuel>?): FuelsFragment {
             val instance = FuelsFragment()
             val args = Bundle()
 
             args.putParcelableArray(ARG_FUELS, fuels?.toTypedArray())
-            args.putSerializable(ARG_UI_MODE, uiMode)
 
             instance.arguments = args
             return instance
@@ -40,17 +37,34 @@ class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
     private lateinit var recyclerViewFuels: RecyclerView
     private lateinit var buttonAdd: Button
 
-    private var fuel: Fuel? = null
+    private var selectedFuel: Fuel? = null
     private var fuels: MutableSet<Fuel>? = null
-    private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_fuels, container, false)
         bindViews(view)
         parseArgs()
-        prepareUi()
+        populateRecyclerView()
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_FUEL && resultCode == RESULT_OK) {
+            selectedFuel = data!!.getParcelableExtra(FuelsActivity.EXTRA_FUEL)
+            if (!fuels!!.contains(selectedFuel!!)) {
+                fuels!!.add(selectedFuel!!)
+            } else {
+                val fuelToUpdate = fuels!!.find {
+                    it.type == selectedFuel!!.type && it.quality == selectedFuel!!.quality
+                }!!
+
+                fuelToUpdate.price = selectedFuel!!.price
+            }
+
+            recyclerViewFuels.adapter.notifyDataSetChanged()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -60,48 +74,9 @@ class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        fuel = fuels!!.toList()[position]
-        activity.showFuelDialogue(fuel = fuel, onDismissListener = this)
-    }
-
-    override fun onDismiss(dialogue: DialogInterface) { // TODO: 99% sure it's not working
-        val fuelDialogue = dialogue as FuelDialogue
-        val type = fuelDialogue.getFuelType()
-        val quality = fuelDialogue.getFuelQuality()
-        val price = fuelDialogue.getPrice()
-
-        if (fuel != null) {
-            fuels!!.forEach {
-                if (it.type == type && it.quality == quality) {
-                    it.price = price
-                }
-            }
-        } else {
-            fuel = Fuel(type, quality, price)
-            if (fuels == null) fuels = ArrayList<Fuel>().toMutableSet()
-
-            if (fuels!!.none { f -> f.type == type && f.quality == quality }) {
-                fuels!!.add(fuel!!)
-                if (recyclerViewFuels.adapter != null)
-                    recyclerViewFuels.adapter.notifyDataSetChanged()
-            }
-        }
-    }
-
-    override fun prepareInitialMode() {
-        prepareViewMode()
-    }
-
-    override fun prepareCreateMode() {
-        recyclerViewFuels.visibility = GONE
-    }
-
-    override fun prepareEditMode() {
-        prepareViewMode()
-    }
-
-    override fun prepareViewMode() {
-        populateRecyclerView()
+        selectedFuel = fuels!!.toList()[position]
+        val intent = FuelsActivity.getIntent(context = activity, uiMode = AdaptableUi.Mode.EDIT)
+        startActivityForResult(intent, REQUEST_CODE_FUEL)
     }
 
     fun getFuels(): MutableSet<Fuel>? = fuels
@@ -118,24 +93,17 @@ class FuelsFragment : Fragment(), AdaptableUi, View.OnClickListener,
         val array = arguments?.getParcelableArray(ARG_FUELS)
         if (array != null)
             fuels = array.toMutableSet() as MutableSet<Fuel>
-        uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
-    }
-
-    private fun prepareUi() {
-        when (uiMode) {
-            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
-            AdaptableUi.Mode.CREATE -> prepareCreateMode()
-            AdaptableUi.Mode.EDIT -> prepareEditMode()
-            AdaptableUi.Mode.VIEW -> prepareViewMode()
-        }
     }
 
     private fun addFuel() {
-        activity.showFuelDialogue(onDismissListener = this)
+        val intent = FuelsActivity.getIntent(context = activity, uiMode = AdaptableUi.Mode.CREATE)
+        startActivityForResult(intent, REQUEST_CODE_FUEL)
     }
 
     private fun populateRecyclerView() {
-        recyclerViewFuels.visibility = VISIBLE
+        if (fuels == null) fuels = mutableSetOf()
+        val adapter = FuelAdapter(activity, fuels!!, onItemClickListener = this)
+        recyclerViewFuels.adapter = adapter
     }
 
 }

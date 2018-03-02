@@ -12,6 +12,7 @@
     <dimen name="margin_dialogue">32dp</dimen>
     <dimen name="margin_fab">16dp</dimen>
     <dimen name="margin_header_bottom">32dp</dimen>
+    <dimen name="margin_gap_spinners">16dp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_default">16dp</dimen>

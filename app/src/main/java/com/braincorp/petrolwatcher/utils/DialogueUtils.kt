@@ -1,12 +1,9 @@
 package com.braincorp.petrolwatcher.utils
 
 import android.content.Context
-import android.content.DialogInterface
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.view.FuelDialogue
 import com.braincorp.petrolwatcher.view.ImagePickerDialogue
 
 fun Context.showErrorDialogue(@StringRes message: Int) {
@@ -24,13 +21,6 @@ fun Context.showImagePickerDialogue(cameraButtonAction: () -> Unit,
         dialogue.setCameraClickAction(cameraButtonAction)
         dialogue.setGalleryClickAction(galleryButtonAction)
     })
-    dialogue.show()
-}
-
-fun Context.showFuelDialogue(fuel: Fuel? = null,
-                             onDismissListener: DialogInterface.OnDismissListener) {
-    val dialogue = FuelDialogue(context = this, fuel = fuel)
-    dialogue.setOnDismissListener(onDismissListener)
     dialogue.show()
 }
 

@@ -49,6 +49,8 @@
                 android:value=".activities.MapActivity" />
         </activity>
 
+        <activity android:name=".activities.FuelsActivity"/>
+
         <service android:name=".services.StationLocatorService" />
 
         <meta-data
