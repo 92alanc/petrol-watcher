@@ -8,22 +8,37 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/radius_corner_default"
     tools:context=".fragments.FuelsFragment">
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:padding="@dimen/padding_default">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewFuels"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
             android:id="@+id/buttonAdd"
             style="@style/ButtonDefault"
             android:layout_marginTop="@dimen/margin_default"
             android:layout_gravity="center"
-            android:text="@string/add" />
-    </LinearLayout>
+            android:text="@string/add"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewFuels"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewNoPrices"
+            style="@style/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_prices_registered"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

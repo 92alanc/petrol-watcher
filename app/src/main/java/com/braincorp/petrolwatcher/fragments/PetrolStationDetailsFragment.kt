@@ -100,6 +100,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
     }
 
     override fun prepareCreateMode() {
+        uiMode = AdaptableUi.Mode.CREATE
+
         textViewRating.visibility = GONE
         hideNotEditableFields()
         showEditableFields()
@@ -107,7 +109,10 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
     }
 
     override fun prepareEditMode() {
+        uiMode = AdaptableUi.Mode.EDIT
+
         textViewRating.visibility = VISIBLE
+        address = petrolStation!!.address
         hideNotEditableFields()
         showEditableFields()
         fillEditableFields()
@@ -115,6 +120,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
     }
 
     override fun prepareViewMode() {
+        uiMode = AdaptableUi.Mode.VIEW
+
         textViewRating.visibility = VISIBLE
         hideEditableFields()
         showNotEditableFields()

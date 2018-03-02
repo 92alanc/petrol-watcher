@@ -9,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.activities.FuelsActivity
 import com.braincorp.petrolwatcher.adapters.FuelAdapter
@@ -18,18 +21,20 @@ import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Fuel
 
-class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
+class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, AdaptableUi {
 
     companion object {
         private const val ARG_FUELS = "fuels"
+        private const val ARG_UI_MODE = "ui_mode"
 
         private const val REQUEST_CODE_FUEL = 999
 
-        fun newInstance(fuels: MutableSet<Fuel>?): FuelsFragment {
+        fun newInstance(fuels: MutableSet<Fuel>?, uiMode: AdaptableUi.Mode): FuelsFragment {
             val instance = FuelsFragment()
             val args = Bundle()
 
             args.putParcelableArray(ARG_FUELS, fuels?.toTypedArray())
+            args.putSerializable(ARG_UI_MODE, uiMode)
 
             instance.arguments = args
             return instance
@@ -38,9 +43,11 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
 
     private lateinit var recyclerViewFuels: RecyclerView
     private lateinit var buttonAdd: Button
+    private lateinit var textViewNoPrices: TextView
 
     private var selectedFuel: Fuel? = null
     private var fuels: MutableSet<Fuel>? = null
+    private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,6 +55,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
         bindViews(view)
         parseArgs()
         populateRecyclerView()
+        prepareUi()
         return view
     }
 
@@ -86,7 +94,42 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
         startActivityForResult(intent, REQUEST_CODE_FUEL)
     }
 
+    override fun prepareInitialMode() {
+        prepareViewMode()
+    }
+
+    override fun prepareCreateMode() {
+        prepareEditMode()
+    }
+
+    override fun prepareEditMode() {
+        uiMode = AdaptableUi.Mode.EDIT
+
+        buttonAdd.visibility = VISIBLE
+        textViewNoPrices.visibility = GONE
+        recyclerViewFuels.isClickable = true
+    }
+
+    override fun prepareViewMode() {
+        uiMode = AdaptableUi.Mode.VIEW
+
+        buttonAdd.visibility = GONE
+        recyclerViewFuels.isClickable = false
+
+        textViewNoPrices.visibility = if (fuels == null || fuels!!.isEmpty()) VISIBLE
+        else GONE
+    }
+
     fun getFuels(): MutableSet<Fuel>? = fuels
+
+    private fun prepareUi() {
+        when (uiMode) {
+            AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            AdaptableUi.Mode.CREATE -> prepareCreateMode()
+            AdaptableUi.Mode.EDIT -> prepareEditMode()
+            AdaptableUi.Mode.VIEW -> prepareViewMode()
+        }
+    }
 
     private fun bindViews(view: View) {
         recyclerViewFuels = view.findViewById(R.id.recyclerViewFuels)
@@ -97,6 +140,8 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
 
         buttonAdd = view.findViewById(R.id.buttonAdd)
         buttonAdd.setOnClickListener(this)
+
+        textViewNoPrices = view.findViewById(R.id.textViewNoPrices)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -104,6 +149,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
         val array = arguments?.getParcelableArray(ARG_FUELS)
         if (array != null)
             fuels = array.toMutableSet() as MutableSet<Fuel>
+        uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
     }
 
     private fun addFuel() {

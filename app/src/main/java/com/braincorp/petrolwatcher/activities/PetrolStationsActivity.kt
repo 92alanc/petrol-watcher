@@ -81,8 +81,11 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     override fun onBackPressed() {
-        if (uiMode != AdaptableUi.Mode.INITIAL) prepareInitialMode()
-        else super.onBackPressed()
+        when {
+            uiMode != AdaptableUi.Mode.INITIAL -> prepareInitialMode()
+            uiMode == AdaptableUi.Mode.EDIT -> prepareViewMode()
+            else -> super.onBackPressed()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -229,7 +232,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
     private fun loadBottomFragment() {
         if (bottomFragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            bottomFragment = FuelsFragment.newInstance(petrolStation?.fuels)
+            bottomFragment = FuelsFragment.newInstance(petrolStation?.fuels, uiMode)
             replaceFragmentPlaceholder(R.id.placeholderBottom, bottomFragment!!, TAG_BOTTOM_FRAGMENT)
         }
     }
