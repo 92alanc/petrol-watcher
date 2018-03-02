@@ -11,6 +11,8 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.utils.floatToCurrencyString
+import com.braincorp.petrolwatcher.utils.fuelQualityToString
+import com.braincorp.petrolwatcher.utils.fuelTypeToString
 
 class FuelAdapter(private val context: Context,
                   private val items: MutableSet<Fuel>,
@@ -29,7 +31,7 @@ class FuelAdapter(private val context: Context,
         val fuel = list[position]
 
         @SuppressLint("SetTextI18n")
-        holder?.textViewFuel?.text = "${fuel.type} (${fuel.quality}:)"
+        holder?.textViewFuel?.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"
         holder?.textViewPrice?.text = floatToCurrencyString(fuel.price)
     }
 

@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +55,12 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_FUEL && resultCode == RESULT_OK) {
             selectedFuel = data!!.getParcelableExtra(FuelsActivity.EXTRA_FUEL)
-            if (!fuels!!.contains(selectedFuel!!)) {
+
+            val isDuplicate = fuels!!.any {
+                it.type == selectedFuel!!.type && it.quality == selectedFuel!!.quality
+            }
+
+            if (!isDuplicate) {
                 fuels!!.add(selectedFuel!!)
             } else {
                 val fuelToUpdate = fuels!!.find {
@@ -63,7 +70,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
                 fuelToUpdate.price = selectedFuel!!.price
             }
 
-            recyclerViewFuels.adapter.notifyDataSetChanged()
+            populateRecyclerView()
         }
     }
 
@@ -83,6 +90,10 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener {
 
     private fun bindViews(view: View) {
         recyclerViewFuels = view.findViewById(R.id.recyclerViewFuels)
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerViewFuels.layoutManager = layoutManager
+        val divider = DividerItemDecoration(activity, layoutManager.orientation)
+        recyclerViewFuels.addItemDecoration(divider)
 
         buttonAdd = view.findViewById(R.id.buttonAdd)
         buttonAdd.setOnClickListener(this)
