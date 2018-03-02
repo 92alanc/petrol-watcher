@@ -89,6 +89,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
     }
 
     override fun onItemClick(position: Int) {
+        if (uiMode != AdaptableUi.Mode.EDIT) return
         selectedFuel = fuels!!.toList()[position]
         val intent = FuelsActivity.getIntent(context = activity, uiMode = AdaptableUi.Mode.EDIT)
         startActivityForResult(intent, REQUEST_CODE_FUEL)
@@ -107,14 +108,12 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
 
         buttonAdd.visibility = VISIBLE
         textViewNoPrices.visibility = GONE
-        recyclerViewFuels.isClickable = true
     }
 
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
 
         buttonAdd.visibility = GONE
-        recyclerViewFuels.isClickable = false
 
         textViewNoPrices.visibility = if (fuels == null || fuels!!.isEmpty()) VISIBLE
         else GONE
