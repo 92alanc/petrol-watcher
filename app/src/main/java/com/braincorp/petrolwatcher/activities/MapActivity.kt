@@ -25,7 +25,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
@@ -83,7 +82,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
-        map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_light))
+        applyMapTheme(map)
         if (SDK_INT >= M && !hasLocationPermission()) {
             fabMap.visibility = GONE
             requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),

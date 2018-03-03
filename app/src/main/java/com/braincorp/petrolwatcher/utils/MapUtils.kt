@@ -7,10 +7,14 @@ import android.location.Location
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.preferences.MapTheme
+import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.tasks.OnCompleteListener
 
 private const val DEFAULT_ZOOM = 15f
@@ -61,6 +65,16 @@ fun Context.showDirections(destinationAddress: String) {
     val uri = Uri.parse("$baseUrl&$destination&$travelMode")
     val intent = Intent(ACTION_VIEW, uri)
     startActivity(intent)
+}
+
+fun Context.applyMapTheme(map: GoogleMap?) {
+    val preferenceManager = PreferenceManager(this)
+    val mapTheme = preferenceManager.getMapTheme()
+    val res = when (mapTheme) {
+        MapTheme.LIGHT -> R.raw.map_light
+        MapTheme.DARK -> R.raw.map_dark
+    }
+    map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, res))
 }
 
 private fun AppCompatActivity.zoomToDeviceLocation(map: GoogleMap) {
