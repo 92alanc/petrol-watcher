@@ -10,12 +10,12 @@ class PreferenceManager(context: Context) {
         const val FILE_NAME = "preferences"
 
         const val KEY_SYSTEM_OF_MEASUREMENT = "system_of_measurement"
-        const val KEY_THEME = "theme"
+        const val KEY_MAP_THEME = "map_theme"
 
         const val SYSTEM_IMPERIAL = 1
         const val SYSTEM_METRIC = 2
-        const val THEME_LIGHT = 3
-        const val THEME_DARK = 4
+        const val MAP_THEME_LIGHT = 3
+        const val MAP_THEME_DARK = 4
 
     }
 
@@ -41,21 +41,21 @@ class PreferenceManager(context: Context) {
         sharedPreferences.edit().putInt(KEY_SYSTEM_OF_MEASUREMENT, intValue).apply()
     }
 
-    fun getTheme(): Theme {
-        val result = sharedPreferences.getInt(KEY_THEME, THEME_LIGHT)
+    fun getMapTheme(): MapTheme {
+        val result = sharedPreferences.getInt(KEY_MAP_THEME, MAP_THEME_LIGHT)
         return when (result) {
-            THEME_LIGHT -> Theme.LIGHT
-            THEME_DARK -> Theme.DARK
-            else -> Theme.LIGHT
+            MAP_THEME_LIGHT -> MapTheme.LIGHT
+            MAP_THEME_DARK -> MapTheme.DARK
+            else -> MapTheme.LIGHT
         }
     }
 
-    fun setTheme(theme: Theme) {
-        val intValue = when (theme) {
-            Theme.LIGHT -> THEME_LIGHT
-            Theme.DARK -> THEME_DARK
+    fun setMapTheme(mapTheme: MapTheme) {
+        val intValue = when (mapTheme) {
+            MapTheme.LIGHT -> MAP_THEME_LIGHT
+            MapTheme.DARK -> MAP_THEME_DARK
         }
-        sharedPreferences.edit().putInt(KEY_THEME, intValue).apply()
+        sharedPreferences.edit().putInt(KEY_MAP_THEME, intValue).apply()
     }
 
 }

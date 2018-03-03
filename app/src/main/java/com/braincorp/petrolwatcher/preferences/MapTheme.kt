@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.preferences
 
-enum class Theme {
+enum class MapTheme {
 
     LIGHT,
     DARK

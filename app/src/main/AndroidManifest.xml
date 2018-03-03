@@ -16,7 +16,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:mapTheme="@style/AppTheme">
 
         <activity android:name=".activities.LoginActivity"
             android:finishOnTaskLaunch="true"
@@ -32,17 +32,17 @@
 
         <activity android:name=".activities.VehiclesActivity"
             android:parentActivityName=".activities.ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:mapTheme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ProfileActivity" />
         </activity>
 
         <activity android:name=".activities.MapActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:mapTheme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".activities.PetrolStationsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:mapTheme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -51,7 +51,7 @@
 
         <activity android:name=".activities.FuelsActivity"/>
         <activity android:name=".activities.SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:mapTheme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
