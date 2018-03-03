@@ -8,7 +8,7 @@
     android:background="@drawable/shape_navigation_header"
     android:gravity="bottom"
     android:padding="@dimen/padding_default"
-    android:mapTheme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewProfile"
