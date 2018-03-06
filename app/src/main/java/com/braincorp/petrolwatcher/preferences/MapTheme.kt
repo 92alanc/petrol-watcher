@@ -8,7 +8,22 @@ enum class MapTheme : Configuration {
     LIGHT,
     DARK;
 
-    override fun getText(context: Context): String {
+    companion object {
+        fun toMap(): Map<Configuration, Int> {
+            return mapOf(Pair(LIGHT, R.drawable.map_light),
+                    Pair(DARK, R.drawable.map_dark))
+        }
+    }
+
+    override fun findByIndex(index: Int): Configuration {
+        return when (index) {
+            LIGHT.ordinal -> LIGHT
+            DARK.ordinal -> DARK
+            else -> LIGHT
+        }
+    }
+
+    override fun getDescription(context: Context): String {
         val stringRes = when (this) {
             LIGHT -> R.string.theme_light
             DARK -> R.string.theme_dark
@@ -16,5 +31,7 @@ enum class MapTheme : Configuration {
 
         return context.getString(stringRes)
     }
+
+    override fun getName(context: Context): String = context.getString(R.string.map_theme)
 
 }

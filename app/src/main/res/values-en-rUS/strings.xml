@@ -76,7 +76,7 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="system_of_measurement">System of measurement</string>
-    <string name="mapTheme">Theme</string>
+    <string name="map_theme">Map theme</string>
     <string name="no_prices_registered">No prices registered</string>
     <string name="metric">Metric</string>
     <string name="imperial">Imperial</string>

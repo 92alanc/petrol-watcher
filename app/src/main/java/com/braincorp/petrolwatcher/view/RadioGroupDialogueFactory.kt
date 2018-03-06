@@ -10,16 +10,18 @@ object RadioGroupDialogueFactory {
                      @StringRes title: Int,
                      type: DialogueType,
                      data: Map<Configuration, Int?>): RadioGroupDialogue {
-        val dialogue = getView(context, type)
+        val dialogue = getView(context, type, data)
         dialogue.setTitle(title)
-        dialogue.inflate(data)
+        dialogue.inflate()
         return dialogue
     }
 
-    private fun getView(context: Context, type: DialogueType): RadioGroupDialogue {
+    private fun getView(context: Context,
+                        type: DialogueType,
+                        data: Map<Configuration, Int?>): RadioGroupDialogue {
         return when (type) {
-            DialogueType.HORIZONTAL -> HorizontalRadioGroupDialogue(context)
-            DialogueType.VERTICAL -> VerticalRadioGroupDialogue(context)
+            DialogueType.HORIZONTAL -> HorizontalRadioGroupDialogue(context, data)
+            DialogueType.VERTICAL -> VerticalRadioGroupDialogue(context, data)
         }
     }
 

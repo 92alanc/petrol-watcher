@@ -1,9 +1,14 @@
 package com.braincorp.petrolwatcher.preferences
 
 import android.content.Context
+import java.io.Serializable
 
-interface Configuration {
+interface Configuration : Serializable {
 
-    fun getText(context: Context): String
+    fun findByIndex(index: Int): Configuration
+
+    fun getDescription(context: Context): String
+
+    fun getName(context: Context): String
 
 }

@@ -76,7 +76,7 @@
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
     <string name="system_of_measurement">Sistema de medida</string>
-    <string name="mapTheme">Tema</string>
+    <string name="map_theme">Tema do mapa</string>
     <string name="no_prices_registered">Nenhum preço registrado</string>
     <string name="metric">Métrico</string>
     <string name="imperial">Imperial</string>

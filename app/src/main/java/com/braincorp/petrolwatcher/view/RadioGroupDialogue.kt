@@ -14,10 +14,12 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.preferences.Configuration
 import kotlin.math.roundToInt
 
-open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes: Int)
+open class RadioGroupDialogue(context: Context,
+                              @LayoutRes private val layoutRes: Int,
+                              private val data: Map<Configuration, Int?>)
     : Dialog(context), DialogInterface.OnDismissListener {
 
-    var onItemSelectedListener: OnItemSelectedListener? = null
+    var onConfigurationSelectedListener: OnConfigurationSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +31,20 @@ open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes
     override fun onDismiss(dialogue: DialogInterface?) {
         val radioGroup = getRadioGroup()
         var index = 0
+        val configurations = data.entries.toTypedArray()
+
         while (index < radioGroup.childCount) {
             val radioButton = radioGroup.getChildAt(index) as RadioButton
             if (radioButton.isChecked) {
-                onItemSelectedListener?.onItemSelected(index)
+                val configuration = configurations[index].key
+                onConfigurationSelectedListener?.onConfigurationSelected(configuration)
                 break
             }
             index++
         }
     }
 
-    fun inflate(data: Map<Configuration, Int?>) {
+    fun inflate() {
         val radioGroup = getRadioGroup()
         data.entries.forEachIndexed { index, entry ->
             val radioButton = makeRadioButton(entry, index)
@@ -66,7 +71,7 @@ open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes
         if (index > 0) layoutParams.topMargin = margin
         radioButton.layoutParams = layoutParams
 
-        radioButton.text = entry.key.getText(context)
+        radioButton.text = entry.key.getDescription(context)
         val value = entry.value
         if (value != null) {
             val drawable = ContextCompat.getDrawable(context, value)
@@ -77,8 +82,8 @@ open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes
         return radioButton
     }
 
-    interface OnItemSelectedListener {
-        fun onItemSelected(index: Int)
+    interface OnConfigurationSelectedListener {
+        fun onConfigurationSelected(configuration: Configuration)
     }
 
 }
