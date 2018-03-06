@@ -1,3 +1,9 @@
 package com.braincorp.petrolwatcher.preferences
 
-interface Configuration { }
+import android.content.Context
+
+interface Configuration {
+
+    fun getText(context: Context): String
+
+}

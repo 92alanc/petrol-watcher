@@ -78,4 +78,6 @@
     <string name="system_of_measurement">Sistema de medida</string>
     <string name="mapTheme">Tema</string>
     <string name="no_prices_registered">Nenhum preço registrado</string>
+    <string name="metric">Métrico</string>
+    <string name="imperial">Imperial</string>
 </resources>
