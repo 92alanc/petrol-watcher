@@ -50,8 +50,10 @@
         </activity>
 
         <activity android:name=".activities.FuelsActivity"/>
+
         <activity android:name=".activities.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/settings"
             android:parentActivityName=".activities.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

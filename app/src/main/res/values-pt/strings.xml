@@ -80,4 +80,5 @@
     <string name="no_prices_registered">Nenhum preço registrado</string>
     <string name="metric">Métrico</string>
     <string name="imperial">Imperial</string>
+    <string name="settings">Configurações</string>
 </resources>

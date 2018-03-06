@@ -12,6 +12,7 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity.START
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
@@ -28,8 +29,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.app_bar_map.*
 
 class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, OnMapReadyCallback {
@@ -44,7 +45,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_map)
 
         setSupportActionBar(toolbar)
         bindNavigationDrawer()
@@ -62,6 +63,18 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onBackPressed() {
         if (drawer_home.isDrawerOpen(START)) drawer_home.closeDrawer(START)
         else super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_map, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.itemSettings -> launchSettingsActivity()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
@@ -156,6 +169,11 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     private fun launchPetrolStationsActivity() {
         val intent = PetrolStationsActivity.getIntent(context = this)
+        startActivity(intent)
+    }
+
+    private fun launchSettingsActivity() {
+        val intent = SettingsActivity.getIntent(context = this)
         startActivity(intent)
     }
 

@@ -12,7 +12,6 @@ object RadioGroupDialogueFactory {
                      data: Map<Configuration, Int?>): RadioGroupDialogue {
         val dialogue = getView(context, type, data)
         dialogue.setTitle(title)
-        dialogue.inflate()
         return dialogue
     }
 
