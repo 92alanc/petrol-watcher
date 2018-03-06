@@ -62,4 +62,8 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextViewDescription" parent="TextViewDefault">
+        <item name="android:textColor">@color/grey_dark</item>
+    </style>
+
 </resources>

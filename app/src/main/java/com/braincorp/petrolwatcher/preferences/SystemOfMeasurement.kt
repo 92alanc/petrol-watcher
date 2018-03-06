@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.preferences
 
-enum class SystemOfMeasurement {
+enum class SystemOfMeasurement : Configuration {
 
     IMPERIAL,
     METRIC

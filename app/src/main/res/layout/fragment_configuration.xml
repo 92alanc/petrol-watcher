@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        style="@style/TextViewTitle"
+        tools:text="@string/system_of_measurement"/>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        style="@style/TextViewDescription"
+        android:layout_marginTop="@dimen/margin_default"
+        tools:text="Metric" />
 
 </LinearLayout>
