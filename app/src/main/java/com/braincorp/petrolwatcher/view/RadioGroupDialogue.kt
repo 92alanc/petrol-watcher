@@ -15,6 +15,7 @@ import com.braincorp.petrolwatcher.preferences.Configuration
 import kotlin.math.roundToInt
 
 open class RadioGroupDialogue(context: Context,
+                              private val type: DialogueType,
                               @LayoutRes private val layoutRes: Int,
                               private val data: Map<Configuration, Int?>)
     : Dialog(context), DialogInterface.OnDismissListener {
@@ -46,6 +47,9 @@ open class RadioGroupDialogue(context: Context,
 
     fun inflate() {
         val radioGroup = getRadioGroup()
+        radioGroup.invalidate()
+        if (radioGroup.childCount > 0)
+            radioGroup.removeAllViews()
         data.entries.forEachIndexed { index, entry ->
             val radioButton = makeRadioButton(entry, index)
             radioGroup.addView(radioButton)
@@ -68,7 +72,12 @@ open class RadioGroupDialogue(context: Context,
                 .getDimension(R.dimen.margin_default)
                 .roundToInt()
 
-        if (index > 0) layoutParams.topMargin = margin
+        if (index > 0) {
+            when (type) {
+                DialogueType.HORIZONTAL -> layoutParams.marginStart = margin
+                DialogueType.VERTICAL -> layoutParams.topMargin = margin
+            }
+        }
         radioButton.layoutParams = layoutParams
 
         radioButton.text = entry.key.getDescription(context)

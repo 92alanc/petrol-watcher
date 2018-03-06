@@ -6,4 +6,7 @@ import com.braincorp.petrolwatcher.preferences.Configuration
 
 class HorizontalRadioGroupDialogue(context: Context,
                                    data: Map<Configuration, Int?>)
-    : RadioGroupDialogue(context, R.layout.dialogue_radio_group_horizontal, data)
+    : RadioGroupDialogue(context,
+        DialogueType.HORIZONTAL,
+        R.layout.dialogue_radio_group_horizontal,
+        data)
