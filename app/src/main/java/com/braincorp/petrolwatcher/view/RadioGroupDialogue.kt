@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.view
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
@@ -14,12 +15,28 @@ import com.braincorp.petrolwatcher.preferences.Configuration
 import kotlin.math.roundToInt
 
 open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes: Int)
-    : Dialog(context) {
+    : Dialog(context), DialogInterface.OnDismissListener {
+
+    var onItemSelectedListener: OnItemSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         setContentView(layoutRes)
+        setOnDismissListener(this)
+    }
+
+    override fun onDismiss(dialogue: DialogInterface?) {
+        val radioGroup = getRadioGroup()
+        var index = 0
+        while (index < radioGroup.childCount) {
+            val radioButton = radioGroup.getChildAt(index) as RadioButton
+            if (radioButton.isChecked) {
+                onItemSelectedListener?.onItemSelected(index)
+                break
+            }
+            index++
+        }
     }
 
     fun inflate(data: Map<Configuration, Int?>) {
@@ -58,6 +75,10 @@ open class RadioGroupDialogue(context: Context, @LayoutRes private val layoutRes
         }
 
         return radioButton
+    }
+
+    interface OnItemSelectedListener {
+        fun onItemSelected(index: Int)
     }
 
 }
