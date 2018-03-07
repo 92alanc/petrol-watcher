@@ -5,14 +5,18 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.preferences.Configuration
-import kotlin.math.roundToInt
+import com.braincorp.petrolwatcher.preferences.MapTheme
+import com.braincorp.petrolwatcher.preferences.PreferenceManager
+import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 
 open class RadioGroupDialogue(context: Context,
                               private val type: DialogueType,
@@ -22,11 +26,16 @@ open class RadioGroupDialogue(context: Context,
 
     var onConfigurationSelectedListener: OnConfigurationSelectedListener? = null
 
+    private lateinit var preferenceManager: PreferenceManager
+    private lateinit var textViewTitle: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         setContentView(layoutRes)
         setOnDismissListener(this)
+        preferenceManager = PreferenceManager(context)
+        textViewTitle = findViewById(R.id.textViewTitle)
     }
 
     override fun onDismiss(dialogue: DialogInterface?) {
@@ -43,6 +52,10 @@ open class RadioGroupDialogue(context: Context,
             }
             index++
         }
+    }
+
+    override fun setTitle(@StringRes title: Int) {
+        textViewTitle.text = context.getString(title)
     }
 
     fun inflate() {
@@ -70,7 +83,7 @@ open class RadioGroupDialogue(context: Context,
         val layoutParams = RadioGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
         val margin = context.resources
                 .getDimension(R.dimen.margin_default)
-                .roundToInt()
+                .toInt()
 
         if (index > 0) {
             when (type) {
@@ -84,9 +97,18 @@ open class RadioGroupDialogue(context: Context,
         val value = entry.value
         if (value != null) {
             val drawable = ContextCompat.getDrawable(context, value)
-            radioButton.setCompoundDrawables(null, null, null, drawable)
+            radioButton.setCompoundDrawables(null, null, null, drawable) // FIXME
             radioButton.compoundDrawablePadding = margin
         }
+
+        val defaultValue = when (entry.key) {
+            is MapTheme -> preferenceManager.getMapTheme()
+            is SystemOfMeasurement -> preferenceManager.getSystemOfMeasurement()
+            else -> null
+        }
+
+        if (entry.key == defaultValue)
+            radioButton.isChecked = true
 
         return radioButton
     }

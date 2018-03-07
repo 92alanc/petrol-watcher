@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.activities
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -13,11 +12,10 @@ import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.view.DialogueType
-import com.braincorp.petrolwatcher.view.RadioGroupDialogue
 import com.braincorp.petrolwatcher.view.RadioGroupDialogueFactory
 import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsActivity : AppCompatActivity(), DialogInterface.OnShowListener {
+class SettingsActivity : AppCompatActivity() {
 
     companion object {
         private const val KEY_MEASUREMENT = "key_measurement"
@@ -59,10 +57,6 @@ class SettingsActivity : AppCompatActivity(), DialogInterface.OnShowListener {
             parseSavedInstanceState(savedInstanceState)
     }
 
-    override fun onShow(dialogue: DialogInterface?) {
-        (dialogue as? RadioGroupDialogue)?.inflate()
-    }
-
     private fun loadFragments() {
         loadMeasurementFragment()
         loadMapThemeFragment()
@@ -73,10 +67,12 @@ class SettingsActivity : AppCompatActivity(), DialogInterface.OnShowListener {
         val fragment = SystemOfMeasurementConfigurationFragment.newInstance(systemOfMeasurement)
 
         val dialogue = RadioGroupDialogueFactory.makeDialogue(context = this,
-                title = R.string.system_of_measurement,
                 type = DialogueType.VERTICAL,
                 data = SystemOfMeasurement.toMap())
-        dialogue.setOnShowListener(this)
+        dialogue.setOnShowListener {
+            dialogue.setTitle(R.string.system_of_measurement)
+            dialogue.inflate()
+        }
         fragment.dialogue = dialogue
 
         replaceFragmentPlaceholder(R.id.placeholderMeasurement,
@@ -89,10 +85,12 @@ class SettingsActivity : AppCompatActivity(), DialogInterface.OnShowListener {
         val fragment = MapThemeConfigurationFragment.newInstance(mapTheme)
 
         val dialogue = RadioGroupDialogueFactory.makeDialogue(context = this,
-                title = R.string.map_theme,
                 type = DialogueType.HORIZONTAL,
                 data = MapTheme.toMap())
-        dialogue.setOnShowListener(this)
+        dialogue.setOnShowListener {
+            dialogue.setTitle(R.string.map_theme)
+            dialogue.inflate()
+        }
         fragment.dialogue = dialogue
 
         replaceFragmentPlaceholder(R.id.placeholderMapTheme,
