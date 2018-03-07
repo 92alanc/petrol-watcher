@@ -2,11 +2,11 @@ package com.braincorp.petrolwatcher.view
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
+import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.RadioButton
@@ -22,35 +22,27 @@ open class RadioGroupDialogue(context: Context,
                               private val type: DialogueType,
                               @LayoutRes private val layoutRes: Int,
                               private val data: Map<Configuration, Int?>)
-    : Dialog(context), DialogInterface.OnDismissListener {
+    : Dialog(context), View.OnClickListener {
 
     var onConfigurationSelectedListener: OnConfigurationSelectedListener? = null
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var textViewTitle: TextView
+    private lateinit var textViewOk: TextView
+    private lateinit var textViewCancel: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         setContentView(layoutRes)
-        setOnDismissListener(this)
         preferenceManager = PreferenceManager(context)
-        textViewTitle = findViewById(R.id.textViewTitle)
+        bindViews()
     }
 
-    override fun onDismiss(dialogue: DialogInterface?) {
-        val radioGroup = getRadioGroup()
-        var index = 0
-        val configurations = data.entries.toTypedArray()
-
-        while (index < radioGroup.childCount) {
-            val radioButton = radioGroup.getChildAt(index) as RadioButton
-            if (radioButton.isChecked) {
-                val configuration = configurations[index].key
-                onConfigurationSelectedListener?.onConfigurationSelected(configuration)
-                break
-            }
-            index++
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.textViewCancel -> dismiss()
+            R.id.textViewOk -> notifySelectedConfiguration()
         }
     }
 
@@ -67,6 +59,34 @@ open class RadioGroupDialogue(context: Context,
             val radioButton = makeRadioButton(entry, index)
             radioGroup.addView(radioButton)
         }
+    }
+
+    private fun bindViews() {
+        textViewTitle = findViewById(R.id.textViewTitle)
+
+        textViewOk = findViewById(R.id.textViewOk)
+        textViewOk.setOnClickListener(this)
+
+        textViewCancel = findViewById(R.id.textViewCancel)
+        textViewCancel.setOnClickListener(this)
+    }
+
+    private fun notifySelectedConfiguration() {
+        val radioGroup = getRadioGroup()
+        var index = 0
+        val configurations = data.entries.toTypedArray()
+
+        while (index < radioGroup.childCount) {
+            val radioButton = radioGroup.getChildAt(index) as RadioButton
+            if (radioButton.isChecked) {
+                val configuration = configurations[index].key
+                onConfigurationSelectedListener?.onConfigurationSelected(configuration)
+                break
+            }
+            index++
+        }
+
+        dismiss()
     }
 
     private fun getRadioGroup(): RadioGroup = findViewById(R.id.radioGroup)

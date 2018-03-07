@@ -81,4 +81,5 @@
     <string name="metric">Métrico</string>
     <string name="imperial">Imperial</string>
     <string name="settings">Configurações</string>
+    <string name="cancel">Cancelar</string>
 </resources>

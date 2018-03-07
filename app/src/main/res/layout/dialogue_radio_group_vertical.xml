@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/padding_default"
     tools:context=".view.VerticalRadioGroupDialogue">
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textViewTitle"
             style="@style/TextViewTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             tools:text="@string/system_of_measurement"/>
 
         <RadioGroup
@@ -21,7 +23,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textViewOk"
+            style="@style/TextViewDialogueButton"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/ok"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewCancel"
+            style="@style/TextViewDialogueButton"
+            android:layout_marginTop="@dimen/margin_default"
+            android:text="@string/cancel"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/textViewOk"
+            app:layout_constraintHorizontal_bias="0.6"/>
+
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>
