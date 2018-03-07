@@ -14,9 +14,6 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.preferences.Configuration
-import com.braincorp.petrolwatcher.preferences.MapTheme
-import com.braincorp.petrolwatcher.preferences.PreferenceManager
-import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
 
 open class RadioGroupDialogue(context: Context,
                               private val type: DialogueType,
@@ -26,7 +23,6 @@ open class RadioGroupDialogue(context: Context,
 
     var onConfigurationSelectedListener: OnConfigurationSelectedListener? = null
 
-    private lateinit var preferenceManager: PreferenceManager
     private lateinit var textViewTitle: TextView
     private lateinit var textViewOk: TextView
     private lateinit var textViewCancel: TextView
@@ -35,7 +31,6 @@ open class RadioGroupDialogue(context: Context,
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         setContentView(layoutRes)
-        preferenceManager = PreferenceManager(context)
         bindViews()
     }
 
@@ -120,15 +115,6 @@ open class RadioGroupDialogue(context: Context,
             radioButton.setCompoundDrawables(null, null, null, drawable) // FIXME
             radioButton.compoundDrawablePadding = margin
         }
-
-        val defaultValue = when (entry.key) {
-            is MapTheme -> preferenceManager.getMapTheme()
-            is SystemOfMeasurement -> preferenceManager.getSystemOfMeasurement()
-            else -> null
-        }
-
-        if (entry.key == defaultValue)
-            radioButton.isChecked = true
 
         return radioButton
     }

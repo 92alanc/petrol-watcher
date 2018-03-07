@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        
+
         preferenceManager = PreferenceManager(context = this)
         if (savedInstanceState != null) parseSavedInstanceState(savedInstanceState)
         else loadFragments()
@@ -64,7 +64,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun loadMeasurementFragment() {
         val systemOfMeasurement = preferenceManager.getSystemOfMeasurement()
-        val fragment = SystemOfMeasurementConfigurationFragment.newInstance(systemOfMeasurement)
+        measurementFragment = SystemOfMeasurementConfigurationFragment.newInstance(systemOfMeasurement)
 
         val dialogue = RadioGroupDialogueFactory.makeDialogue(context = this,
                 type = DialogueType.VERTICAL,
@@ -73,16 +73,16 @@ class SettingsActivity : AppCompatActivity() {
             dialogue.setTitle(R.string.system_of_measurement)
             dialogue.inflate()
         }
-        fragment.dialogue = dialogue
+        measurementFragment.dialogue = dialogue
 
         replaceFragmentPlaceholder(R.id.placeholderMeasurement,
-                fragment,
+                measurementFragment,
                 TAG_MEASUREMENT)
     }
 
     private fun loadMapThemeFragment() {
         val mapTheme = preferenceManager.getMapTheme()
-        val fragment = MapThemeConfigurationFragment.newInstance(mapTheme)
+        mapThemeFragment = MapThemeConfigurationFragment.newInstance(mapTheme)
 
         val dialogue = RadioGroupDialogueFactory.makeDialogue(context = this,
                 type = DialogueType.HORIZONTAL,
@@ -91,10 +91,10 @@ class SettingsActivity : AppCompatActivity() {
             dialogue.setTitle(R.string.map_theme)
             dialogue.inflate()
         }
-        fragment.dialogue = dialogue
+        mapThemeFragment.dialogue = dialogue
 
         replaceFragmentPlaceholder(R.id.placeholderMapTheme,
-                fragment,
+                mapThemeFragment,
                 TAG_MAP_THEME)
     }
 
