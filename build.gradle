@@ -26,7 +26,7 @@ task clean(type: Delete) {
 
 extensions.libs = [
         android: [
-                card_view: '27.0.2',
+                card_view: '27.1.0',
                 constraint_layout: '1.1.0-beta5',
                 espresso_contrib: '3.0.1',
                 espresso_core: '3.0.1',
@@ -35,7 +35,7 @@ extensions.libs = [
                 maps_utils: '0.5',
                 places: '11.8.0',
                 location: '11.8.0',
-                support: '27.0.2',
+                support: '27.1.0',
                 test_runner: '1.0.1'
         ],
         circle_image_view: '2.2.0',
