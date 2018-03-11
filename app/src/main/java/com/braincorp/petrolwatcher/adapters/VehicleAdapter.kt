@@ -21,21 +21,21 @@ class VehicleAdapter(private val context: Context,
 
     override fun getItemCount(): Int = items.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VehicleHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.item_vehicle, parent, false)
         return VehicleHolder(onItemClickListener, view)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: VehicleHolder?, position: Int) {
+    override fun onBindViewHolder(holder: VehicleHolder, position: Int) {
         val vehicle = items[position]
 
         val drawable = context.vehicleTypeToDrawable(vehicle.vehicleType)
-        holder?.imageViewVehicleType?.setImageDrawable(drawable)
+        holder.imageViewVehicleType.setImageDrawable(drawable)
 
-        holder?.textViewManufacturerAndName?.text = "${vehicle.manufacturer} ${vehicle.name}"
-        holder?.textViewFuelTypes?.text = context.fuelTypeListToString(vehicle.fuelTypes)
+        holder.textViewManufacturerAndName.text = "${vehicle.manufacturer} ${vehicle.name}"
+        holder.textViewFuelTypes.text = context.fuelTypeListToString(vehicle.fuelTypes)
     }
 
     class VehicleHolder(private val onItemClickListener: OnItemClickListener,

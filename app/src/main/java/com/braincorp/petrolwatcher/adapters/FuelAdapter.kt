@@ -21,18 +21,18 @@ class FuelAdapter(private val context: Context,
 
     private val list = items.toList()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FuelHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FuelHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.item_fuel, parent, false)
         return FuelHolder(view, onItemClickListener)
     }
 
-    override fun onBindViewHolder(holder: FuelHolder?, position: Int) {
+    override fun onBindViewHolder(holder: FuelHolder, position: Int) {
         val fuel = list[position]
 
         @SuppressLint("SetTextI18n")
-        holder?.textViewFuel?.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"
-        holder?.textViewPrice?.text = floatToCurrencyString(fuel.price)
+        holder.textViewFuel.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"
+        holder.textViewPrice.text = floatToCurrencyString(fuel.price)
     }
 
     override fun getItemCount(): Int = items.size

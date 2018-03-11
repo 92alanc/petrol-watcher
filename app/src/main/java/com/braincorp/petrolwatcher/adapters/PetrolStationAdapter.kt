@@ -17,18 +17,18 @@ class PetrolStationAdapter(private val context: Context,
                            private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<PetrolStationAdapter.PetrolStationHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PetrolStationHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetrolStationHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.item_petrol_station, parent, false)
         return PetrolStationHolder(view, onItemClickListener)
     }
 
-    override fun onBindViewHolder(holder: PetrolStationHolder?, position: Int) {
+    override fun onBindViewHolder(holder: PetrolStationHolder, position: Int) {
         val petrolStation = items[position]
-        holder?.textViewName?.text = petrolStation.name
-        holder?.textViewAddress?.text = petrolStation.address
-        holder?.textViewRating?.text = context.ratingToString(petrolStation.rating)
-        holder?.textViewRating?.setTextColor(context.ratingToColour(petrolStation.rating))
+        holder.textViewName.text = petrolStation.name
+        holder.textViewAddress.text = petrolStation.address
+        holder.textViewRating.text = context.ratingToString(petrolStation.rating)
+        holder.textViewRating.setTextColor(context.ratingToColour(petrolStation.rating))
     }
 
     override fun getItemCount(): Int = items.size
