@@ -1,4 +1,6 @@
 <resources>
+    <string name="google_maps_key" translatable="false">AIzaSyCo7P-7fdXBw43ewvTM4uLRKajq4YNpqOY</string>
+
     <string name="app_name">Petrol Watcher</string>
 
     <string name="app_icon">app icon</string>
