@@ -45,6 +45,11 @@ class SettingsActivity : AppCompatActivity() {
         else loadFragments()
     }
 
+    override fun onBackPressed() {
+        val intent = MapActivity.getIntent(context = this)
+        startActivity(intent)
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putString(KEY_MEASUREMENT, measurementFragment.tag)
