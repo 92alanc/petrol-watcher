@@ -51,6 +51,11 @@ android {
     }
 
     sourceSets {
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        debug.java.srcDirs += 'src/debug/kotlin'
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+
         debug {
             manifest.srcFile 'src/androidTest/AndroidManifest.xml'
         }
