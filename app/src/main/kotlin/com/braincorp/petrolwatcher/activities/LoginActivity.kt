@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils.isEmpty
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.model.AdaptableUi
@@ -52,8 +54,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun signIn() {
         val email = editTextEmail.text.toString()
         val password = editTextPassword.text.toString()
+
+        showProgressBar()
+
         if (!isEmpty(email) && !isEmpty(password)) {
             AuthenticationManager.signIn(email, password, onSuccessAction = {
+                runOnUiThread {
+                    hideProgressBar()
+                }
                 if (it.user.isEmailVerified) {
                     startMapActivity()
                 } else {
@@ -61,9 +69,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             message = R.string.verify_email)
                 }
             }, onFailureAction = {
+                runOnUiThread {
+                    hideProgressBar()
+                }
                 showErrorDialogue(R.string.invalid_email_or_password)
             })
         } else {
+            runOnUiThread {
+                hideProgressBar()
+            }
             showErrorDialogue(R.string.invalid_email_or_password)
         }
     }
@@ -83,6 +97,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun setOnClickListeners() {
         buttonSignIn.setOnClickListener(this)
         buttonSignUp.setOnClickListener(this)
+    }
+
+    private fun showProgressBar() {
+        groupLogin.visibility = GONE
+        progressBar.visibility = VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = GONE
+        groupLogin.visibility = VISIBLE
     }
 
 }
