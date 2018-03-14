@@ -23,27 +23,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-extensions.libs = [
-        android: [
-                card_view: '27.1.0',
-                constraint_layout: '1.1.0-beta5',
-                espresso_contrib: '3.0.1',
-                espresso_core: '3.0.1',
-                espresso_intents: '3.0.1',
-                maps: '11.8.0',
-                maps_utils: '0.5',
-                places: '11.8.0',
-                location: '11.8.0',
-                support: '27.1.0',
-                test_runner: '1.0.1'
-        ],
-        circle_image_view: '2.2.0',
-        firebase_auth: '11.8.0',
-        firebase_database: '11.8.0',
-        firebase_storage: '11.8.0',
-        fragment_test_rule: '1.1.0',
-        fragment_test_rule_extras: '1.1.0',
-        junit: '4.12',
-        image_loader: '1.9.5'
-]
