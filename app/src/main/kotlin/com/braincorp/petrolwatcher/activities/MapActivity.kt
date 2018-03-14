@@ -96,6 +96,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onMapReady(map: GoogleMap?) {
         this.map = map
         applyMapTheme(map)
+
         if (SDK_INT >= M && !hasLocationPermission()) {
             fabMap.visibility = GONE
             requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),

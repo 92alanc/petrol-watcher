@@ -114,6 +114,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         } else {
             textViewNoPetrolStations.visibility = VISIBLE
             recyclerViewPetrolStations.visibility = GONE
+            hideProgressBar()
         }
     }
 
@@ -125,11 +126,13 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful)
             recyclerViewPetrolStations.adapter.notifyDataSetChanged()
+        hideProgressBar()
     }
 
     override fun prepareInitialMode() {
         uiMode = AdaptableUi.Mode.INITIAL
 
+        showProgressBar()
         fabPetrolStations.setImageResource(R.drawable.ic_add)
         removeFragments()
 
@@ -207,6 +210,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     private fun populateRecyclerView() {
+        hideProgressBar()
         recyclerViewPetrolStations.visibility = VISIBLE
         recyclerViewPetrolStations.layoutManager = LinearLayoutManager(this)
         val adapter = PetrolStationAdapter(context = this, items = petrolStations!!,
@@ -277,6 +281,8 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     }
 
     private fun save(): Boolean {
+        showProgressBar()
+
         val name = topFragment!!.getName()
         val address = if (topFragment!!.getAddress() == null) "" else topFragment!!.getAddress()
         val fuels = bottomFragment!!.getFuels()
@@ -309,6 +315,16 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
                 prepareInitialMode()
             })
         }, negativeFunc = { })
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = GONE
+        groupPetrolStations.visibility = VISIBLE
+    }
+
+    private fun showProgressBar() {
+        groupPetrolStations.visibility = GONE
+        progressBar.visibility = VISIBLE
     }
 
 }
