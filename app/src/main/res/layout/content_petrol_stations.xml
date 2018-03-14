@@ -24,7 +24,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:listitem="@layout/item_petrol_station" />
+                tools:listitem="@layout/item_petrol_station"/>
 
             <FrameLayout
                 android:id="@+id/placeholderTop"

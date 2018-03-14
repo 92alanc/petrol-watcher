@@ -12,14 +12,16 @@
         android:id="@+id/spinnerFuelType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_fuel_type"/>
 
     <Spinner
         android:id="@+id/spinnerFuelQuality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_gap_spinners"
-        app:layout_constraintTop_toBottomOf="@id/spinnerFuelType"/>
+        app:layout_constraintTop_toBottomOf="@id/spinnerFuelType"
+        tools:listitem="@layout/item_fuel_quality"/>
 
     <EditText
         android:id="@+id/editTextPrice"

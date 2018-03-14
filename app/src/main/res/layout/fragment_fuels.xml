@@ -15,9 +15,14 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewFuels"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:listitem="@layout/item_fuel"
+            tools:itemCount="4"/>
 
         <Button
             android:id="@+id/buttonAdd"

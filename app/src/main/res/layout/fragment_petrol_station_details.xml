@@ -100,8 +100,7 @@
             android:id="@+id/groupEditableFields"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="editTextName, placeAutocompleteAddress, buttonCurrentLocation"
-            />
+            app:constraint_referenced_ids="editTextName, placeAutocompleteAddress, buttonCurrentLocation" />
 
         <android.support.constraint.Group
             android:id="@+id/groupNotEditableFields"

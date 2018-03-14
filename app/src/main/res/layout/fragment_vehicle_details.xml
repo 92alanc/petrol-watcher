@@ -99,7 +99,8 @@
                 android:padding="@dimen/padding_spinner"
                 app:layout_constraintTop_toBottomOf="@id/editTextYear"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                tools:listitem="@layout/item_vehicle_type"/>
 
             <View
                 android:id="@+id/divider"

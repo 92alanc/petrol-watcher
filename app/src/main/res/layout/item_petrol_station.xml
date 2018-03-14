@@ -45,8 +45,8 @@
             app:layout_constraintTop_toBottomOf="@id/textViewAddress"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:textColor="@color/amber"
-            tools:text="@string/rating_ok"/>
+            tools:textColor="@color/green"
+            tools:text="rating: good"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
