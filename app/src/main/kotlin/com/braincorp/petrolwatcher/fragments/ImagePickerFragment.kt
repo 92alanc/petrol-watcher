@@ -37,6 +37,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
     private var uri: Uri? = null
 
     private lateinit var imageViewProfile: CircleImageView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -88,12 +89,14 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     fun setImageUri(uri: Uri?) {
         this.uri = uri
-        fillImageView(uri, imageViewProfile, progressBar = ProgressBar(activity)) // TODO
+        activity.fillImageView(uri, imageViewProfile, progressBar = progressBar)
     }
 
     private fun bindViews(view: View) {
         imageViewProfile = view.findViewById(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
+
+        progressBar = view.findViewById(R.id.progressBar)
     }
 
     private fun parseArgs() {

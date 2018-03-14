@@ -10,6 +10,19 @@
     android:padding="@dimen/padding_default"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/imageViewProfile"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewProfile"
+        app:layout_constraintLeft_toLeftOf="@id/imageViewProfile"
+        app:layout_constraintRight_toRightOf="@id/imageViewProfile"
+        tools:progress="25"/>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewProfile"
         android:layout_width="@dimen/size_circle_image_view_small"
