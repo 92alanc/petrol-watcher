@@ -116,6 +116,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful)
             recyclerViewVehicles.adapter.notifyDataSetChanged()
+        hideProgressBar()
     }
 
     override fun onDataChange(snapshot: DataSnapshot?) {
@@ -131,17 +132,21 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         } else {
             textViewNoVehicles.visibility = VISIBLE
             recyclerViewVehicles.visibility = GONE
+            hideProgressBar()
         }
     }
 
     override fun onCancelled(error: DatabaseError?) {
-        if (!isFinishing)
+        if (!isFinishing) {
             showErrorDialogue(R.string.error_finding_vehicles)
+            hideProgressBar()
+        }
     }
 
     override fun prepareInitialMode() {
         uiMode = AdaptableUi.Mode.INITIAL
-        fragment = null
+
+        showProgressBar()
         fabVehicles.setImageResource(R.drawable.ic_add)
 
         removeFragment()
@@ -199,6 +204,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun removeFragment() {
         if (fragment != null) removeFragment(fragment!!)
+        fragment = null
         placeholderVehicles.visibility = GONE
     }
 
@@ -218,16 +224,20 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
         val adapter = VehicleAdapter(context = this, items = vehicles!!, onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
+
+        hideProgressBar()
     }
 
     private fun save(): Boolean {
         val vehicle = fragment?.getVehicle()
+        showProgressBar()
         return if (vehicle != null) {
             if (vehicle.allFieldsAreValid()) {
                 VehicleDatabase.insertOrUpdate(vehicle, this)
                 true
             } else {
                 showInformationDialogue(R.string.information, R.string.all_fields_are_required)
+                hideProgressBar()
                 false
             }
         } else false
@@ -250,6 +260,26 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
             fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = GONE
+
+        if (recyclerViewVehicles.visibility == GONE)
+            recyclerViewVehicles.visibility = VISIBLE
+
+        if (placeholderVehicles.visibility == GONE)
+            placeholderVehicles.visibility = VISIBLE
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = VISIBLE
+
+        if (recyclerViewVehicles.visibility == VISIBLE)
+            recyclerViewVehicles.visibility = GONE
+
+        if (placeholderVehicles.visibility == VISIBLE)
+            placeholderVehicles.visibility = GONE
     }
 
 }

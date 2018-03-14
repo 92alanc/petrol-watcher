@@ -172,8 +172,8 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
 
-        recyclerViewPetrolStations.visibility = GONE
         groupPlaceholders.visibility = VISIBLE
+        recyclerViewPetrolStations.visibility = GONE
         textViewNoPetrolStations.visibility = GONE
 
         fabPetrolStations.setImageResource(R.drawable.ic_edit)
@@ -319,12 +319,22 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
     private fun hideProgressBar() {
         progressBar.visibility = GONE
-        groupPetrolStations.visibility = VISIBLE
+
+        if (recyclerViewPetrolStations.visibility == GONE)
+            recyclerViewPetrolStations.visibility = VISIBLE
+
+        if (groupPlaceholders.visibility == GONE)
+            groupPlaceholders.visibility = VISIBLE
     }
 
     private fun showProgressBar() {
-        groupPetrolStations.visibility = GONE
         progressBar.visibility = VISIBLE
+
+        if (recyclerViewPetrolStations.visibility == VISIBLE)
+            recyclerViewPetrolStations.visibility = GONE
+
+        if (groupPlaceholders.visibility == VISIBLE)
+            groupPlaceholders.visibility = GONE
     }
 
 }

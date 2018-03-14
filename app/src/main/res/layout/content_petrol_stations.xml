@@ -62,14 +62,8 @@
                 android:id="@+id/groupPlaceholders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="placeholderTop, placeholderBottom"
+                app:constraint_referenced_ids="placeholderTop,placeholderBottom"
                 tools:visibility="gone"/>
-
-            <android.support.constraint.Group
-                android:id="@+id/groupPetrolStations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="recyclerViewPetrolStations,groupPlaceholders"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
