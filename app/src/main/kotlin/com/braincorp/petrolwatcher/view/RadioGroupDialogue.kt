@@ -13,6 +13,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.listeners.OnConfigurationSelectedListener
 import com.braincorp.petrolwatcher.preferences.Configuration
 
 open class RadioGroupDialogue(context: Context,
@@ -112,15 +113,11 @@ open class RadioGroupDialogue(context: Context,
         val value = entry.value
         if (value != null) {
             val drawable = ContextCompat.getDrawable(context, value)
-            radioButton.setCompoundDrawables(null, null, null, drawable) // FIXME
+            radioButton.setCompoundDrawables(null, null, null, drawable)
             radioButton.compoundDrawablePadding = margin
         }
 
         return radioButton
-    }
-
-    interface OnConfigurationSelectedListener {
-        fun onConfigurationSelected(configuration: Configuration)
     }
 
 }

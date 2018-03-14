@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.listeners.OnConfigurationSelectedListener
 import com.braincorp.petrolwatcher.preferences.Configuration
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.view.RadioGroupDialogue
 
 abstract class ConfigurationFragment : Fragment(), View.OnClickListener,
-        RadioGroupDialogue.OnConfigurationSelectedListener {
+                                       OnConfigurationSelectedListener {
 
     companion object {
         // This argument should be passed in all implementation instances
