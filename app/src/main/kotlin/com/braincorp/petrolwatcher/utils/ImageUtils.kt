@@ -13,12 +13,16 @@ import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.support.annotation.DrawableRes
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
+import android.widget.ProgressBar
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener
 import java.io.ByteArrayOutputStream
 
 fun fillImageView(uri: Uri?, imageView: ImageView,
-                  @DrawableRes placeholder: Int = 0) {
+                  @DrawableRes placeholder: Int = 0,
+                  progressBar: ProgressBar) {
     val imageLoader = ImageLoader.getInstance()
     val options = DisplayImageOptions.Builder()
             .showImageOnLoading(placeholder)
@@ -27,7 +31,14 @@ fun fillImageView(uri: Uri?, imageView: ImageView,
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .build()
-    imageLoader.displayImage(uri?.toString(), imageView, options)
+
+    val imageLoadingListener: ImageLoadingListener? = null
+    val progressListener = ImageLoadingProgressListener { _, _, current, total ->
+        progressBar.progress = ((current * 100) / total)
+    }
+
+    imageLoader.displayImage(uri?.toString(), imageView, options,
+            imageLoadingListener, progressListener)
 }
 
 fun Activity.openCamera() {

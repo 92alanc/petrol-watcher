@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
@@ -148,10 +149,12 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
 
+        val progressBar = headerView.findViewById<ProgressBar>(R.id.progressBar) // TODO
+
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)
 
-        fillImageView(user?.photoUrl, imageViewProfile)
+        fillImageView(user?.photoUrl, imageViewProfile, progressBar = progressBar)
 
         textViewDisplayName.text = user?.displayName
         textViewEmail.text = user?.email

@@ -1,13 +1,14 @@
 package com.braincorp.petrolwatcher.fragments
 
+import android.app.Fragment
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.fillImageView
@@ -87,7 +88,7 @@ class ImagePickerFragment : Fragment(), View.OnClickListener, AdaptableUi {
 
     fun setImageUri(uri: Uri?) {
         this.uri = uri
-        fillImageView(uri, imageViewProfile)
+        fillImageView(uri, imageViewProfile, progressBar = ProgressBar(activity)) // TODO
     }
 
     private fun bindViews(view: View) {
