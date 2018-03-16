@@ -141,7 +141,9 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         groupPlaceholders.visibility = GONE
         buttonDelete.visibility = GONE
 
-        if (petrolStations == null) PetrolStationDatabase.select(this)
+        if (petrolStations == null) PetrolStationDatabase.select(context = this,
+                filterByLocation = hasLocationPermission(),
+                valueEventListener = this)
         else populateRecyclerView()
     }
 
