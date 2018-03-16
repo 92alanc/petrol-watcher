@@ -6,6 +6,7 @@ import android.text.TextUtils
 import com.braincorp.petrolwatcher.utils.fuelSetToStringFloatMap
 import com.braincorp.petrolwatcher.utils.stringFloatMapToFuelList
 import com.braincorp.petrolwatcher.utils.stringToRating
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DataSnapshot
 import java.util.*
 
@@ -13,6 +14,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
                          var owner: String = "",
                          var name: String = "",
                          var address: String = "",
+                         var latLng: LatLng = LatLng(0.0, 0.0),
                          var locale: Locale = Locale.getDefault(),
                          var fuels: MutableSet<Fuel> = emptySet<Fuel>().toMutableSet(),
                          var rating: Rating = Rating.OK) : Parcelable {
@@ -22,6 +24,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         private const val KEY_OWNER = "owner"
         private const val KEY_NAME = "name"
         private const val KEY_ADDRESS = "address"
+        private const val KEY_LAT_LNG = "lat_lng"
         private const val KEY_LOCALE = "locale"
         private const val KEY_FUELS = "fuels"
         private const val KEY_RATING = "rating"
@@ -36,6 +39,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         owner = parcel.readString()
         name = parcel.readString()
         address = parcel.readString()
+        latLng = parcel.readParcelable(javaClass.classLoader)
         locale = Locale.forLanguageTag(parcel.readString())
         @Suppress("UNCHECKED_CAST")
         val fuelList = parcel.readParcelableArray(javaClass.classLoader) as Array<Fuel>
@@ -48,6 +52,13 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         owner = snapshot.child(KEY_OWNER).value.toString()
         name = snapshot.child(KEY_NAME).value.toString()
         address = snapshot.child(KEY_ADDRESS).value.toString()
+
+        val latLngString = snapshot.child(KEY_LAT_LNG).value.toString()
+        val latLngElements = latLngString.split(",")
+        val lat = latLngElements[0].toDouble()
+        val lng = latLngElements[1].toDouble()
+        latLng = LatLng(lat, lng)
+
         locale = Locale.forLanguageTag(snapshot.child(KEY_LOCALE).value.toString())
 
         val fuelsSnapshot = snapshot.child(KEY_FUELS).value
@@ -66,6 +77,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         map[KEY_OWNER] = owner
         map[KEY_NAME] = name
         map[KEY_ADDRESS] = address
+        map[KEY_LAT_LNG] = "${latLng.latitude},${latLng.longitude}"
         map[KEY_LOCALE] = locale
         map[KEY_FUELS] = fuelSetToStringFloatMap(fuels)
         map[KEY_RATING] = rating
@@ -81,6 +93,7 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         parcel.writeString(owner)
         parcel.writeString(name)
         parcel.writeString(address)
+        parcel.writeParcelable(latLng, 0)
         parcel.writeString(locale.toLanguageTag())
         parcel.writeParcelableArray(fuels.toTypedArray(), 0)
         parcel.writeSerializable(rating)

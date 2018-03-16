@@ -24,7 +24,9 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
+import java.util.*
 
 class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         View.OnClickListener, PlaceSelectionListener {
@@ -47,6 +49,8 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
     }
 
     private var address: String? = null
+    private var latLng: LatLng? = null
+    private var locale: Locale = Locale.getDefault()
     private var petrolStation: PetrolStation? = null
     private var rootView: View? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
@@ -133,6 +137,10 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
 
     fun getAddress() = address
 
+    fun getLatLng() = latLng
+
+    fun getLocale() = locale
+
     private fun bindViews(view: View) {
         textViewName = view.findViewById(R.id.textViewName)
         textViewAddress = view.findViewById(R.id.textViewAddress)
@@ -217,9 +225,11 @@ class PetrolStationDetailsFragment : Fragment(), AdaptableUi,
         activity.getCurrentLocation(OnCompleteListener {
             val location = it.result
             val geocoder = Geocoder(activity)
+            latLng = LatLng(location.latitude, location.longitude)
             val addresses = geocoder.getFromLocation(location.latitude, location.longitude,
                                                      1)
             address = addresses[0].getAddressLine(0)
+            locale = addresses[0].locale
             placeAutocompleteAddress.setText(address)
         })
     }

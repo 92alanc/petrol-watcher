@@ -17,6 +17,7 @@ import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -287,6 +288,11 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         val address = if (topFragment!!.getAddress() == null) "" else topFragment!!.getAddress()
         val fuels = bottomFragment!!.getFuels()
 
+        val latLng = if (topFragment!!.getLatLng() == null) LatLng(0.0, 0.0)
+        else topFragment!!.getLatLng()
+
+
+
         if (uiMode == AdaptableUi.Mode.CREATE) {
             val owner = FirebaseAuth.getInstance().currentUser!!.uid
             petrolStation = PetrolStation()
@@ -295,6 +301,8 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
 
         petrolStation!!.name = name
         petrolStation!!.address = address!!
+        petrolStation!!.latLng = latLng!!
+        petrolStation!!.locale = topFragment!!.getLocale()
         if (fuels != null) petrolStation!!.fuels = fuels
 
         return if (petrolStation!!.allFieldsAreValid()) {
