@@ -32,7 +32,7 @@ class FuelAdapter(private val context: Context,
 
         @SuppressLint("SetTextI18n")
         holder.textViewFuel.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"
-        holder.textViewPrice.text = floatToCurrencyString(fuel.price)
+        holder.textViewPrice.text = context.floatToCurrencyString(fuel.price)
     }
 
     override fun getItemCount(): Int = items.size

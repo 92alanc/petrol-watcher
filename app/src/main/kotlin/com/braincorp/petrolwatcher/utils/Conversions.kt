@@ -7,9 +7,6 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.model.Rating
 import com.braincorp.petrolwatcher.model.Vehicle
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 fun fuelSetToStringFloatMap(input: MutableSet<Fuel>): Map<String, Float> {
     val output = HashMap<String, Float>()
@@ -137,11 +134,6 @@ fun Context.vehicleTypeToDrawable(vehicleType: Vehicle.Type): Drawable {
         Vehicle.Type.VAN -> R.drawable.ic_van
     }
     return ContextCompat.getDrawable(this, drawableRes)!!
-}
-
-fun floatToCurrencyString(value: Float): String {
-    val currency = Currency.getInstance(Locale.getDefault()).symbol
-    return "$currency $value"
 }
 
 fun kilometresToMiles(kilometres: Float) = kilometres * 0.621371f
