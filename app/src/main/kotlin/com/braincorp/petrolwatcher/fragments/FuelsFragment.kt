@@ -20,20 +20,23 @@ import com.braincorp.petrolwatcher.adapters.FuelAdapter
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.model.Fuel
+import com.braincorp.petrolwatcher.model.PetrolStation
+import java.util.*
 
 class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, AdaptableUi {
 
     companion object {
-        private const val ARG_FUELS = "fuels"
+        private const val ARG_PETROL_STATION = "petrol_station"
         private const val ARG_UI_MODE = "ui_mode"
 
         private const val REQUEST_CODE_FUEL = 999
 
-        fun newInstance(fuels: MutableSet<Fuel>?, uiMode: AdaptableUi.Mode): FuelsFragment {
+        fun newInstance(petrolStation: PetrolStation?,
+                        uiMode: AdaptableUi.Mode): FuelsFragment {
             val instance = FuelsFragment()
             val args = Bundle()
 
-            args.putParcelableArray(ARG_FUELS, fuels?.toTypedArray())
+            args.putParcelable(ARG_PETROL_STATION, petrolStation)
             args.putSerializable(ARG_UI_MODE, uiMode)
 
             instance.arguments = args
@@ -47,6 +50,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
 
     private var selectedFuel: Fuel? = null
     private var fuels: MutableSet<Fuel>? = null
+    private var locale: Locale? = Locale.getDefault()
     private var uiMode = AdaptableUi.Mode.INITIAL
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -143,11 +147,10 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
         textViewNoPrices = view.findViewById(R.id.textViewNoPrices)
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun parseArgs() {
-        val array = arguments?.getParcelableArray(ARG_FUELS)
-        if (array != null)
-            fuels = array.toMutableSet() as MutableSet<Fuel>
+        val petrolStation = arguments?.getParcelable<PetrolStation>(ARG_PETROL_STATION)
+        fuels = petrolStation?.fuels
+        locale = petrolStation?.locale
         uiMode = arguments?.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
     }
 
@@ -158,7 +161,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
 
     private fun populateRecyclerView() {
         if (fuels == null) fuels = mutableSetOf()
-        val adapter = FuelAdapter(activity, fuels!!, onItemClickListener = this)
+        val adapter = FuelAdapter(activity, fuels!!, locale!!, onItemClickListener = this)
         recyclerViewFuels.adapter = adapter
     }
 

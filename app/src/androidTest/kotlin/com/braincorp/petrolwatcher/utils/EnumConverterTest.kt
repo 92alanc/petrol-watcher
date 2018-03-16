@@ -58,13 +58,6 @@ class EnumConverterTest {
     }
 
     @Test
-    fun shouldConvertVeryBadRatingToString() {
-        val expected = context.getString(R.string.very_bad)
-        val actual = context.ratingToString(Rating.VERY_BAD)
-        assertEquals(expected, actual)
-    }
-
-    @Test
     fun shouldConvertBadRatingToString() {
         val expected = context.getString(R.string.bad)
         val actual = context.ratingToString(Rating.BAD)
@@ -82,13 +75,6 @@ class EnumConverterTest {
     fun shouldConvertGoodRatingToString() {
         val expected = context.getString(R.string.good)
         val actual = context.ratingToString(Rating.GOOD)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertVeryGoodRatingToString() {
-        val expected = context.getString(R.string.very_good)
-        val actual = context.ratingToString(Rating.VERY_GOOD)
         assertEquals(expected, actual)
     }
 
@@ -121,13 +107,6 @@ class EnumConverterTest {
     }
 
     @Test
-    fun shouldConvertVeryBadRatingStringToRating() {
-        val expected = Rating.VERY_BAD
-        val actual = stringToRating("VERY_BAD")
-        assertEquals(expected, actual)
-    }
-
-    @Test
     fun shouldConvertBadRatingStringToRating() {
         val expected = Rating.BAD
         val actual = stringToRating("BAD")
@@ -145,13 +124,6 @@ class EnumConverterTest {
     fun shouldConvertGoodRatingStringToRating() {
         val expected = Rating.GOOD
         val actual = stringToRating("GOOD")
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertVeryGoodRatingStringToRating() {
-        val expected = Rating.VERY_GOOD
-        val actual = stringToRating("VERY_GOOD")
         assertEquals(expected, actual)
     }
 

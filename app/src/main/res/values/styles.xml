@@ -68,12 +68,12 @@
     </style>
 
     <style name="TextViewWarning" parent="TextViewHeader">
-        <item name="android:textColor">@color/grey_darkest</item>
+        <item name="android:textColor">@color/grey_dark</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="TextViewDescription" parent="TextViewDefault">
-        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:textColor">@color/grey</item>
     </style>
 
 </resources>

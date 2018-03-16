@@ -13,9 +13,11 @@ import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.utils.floatToCurrencyString
 import com.braincorp.petrolwatcher.utils.fuelQualityToString
 import com.braincorp.petrolwatcher.utils.fuelTypeToString
+import java.util.*
 
 class FuelAdapter(private val context: Context,
                   private val items: MutableSet<Fuel>,
+                  private val locale: Locale,
                   private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<FuelAdapter.FuelHolder>() {
 
@@ -32,7 +34,7 @@ class FuelAdapter(private val context: Context,
 
         @SuppressLint("SetTextI18n")
         holder.textViewFuel.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"
-        holder.textViewPrice.text = context.floatToCurrencyString(fuel.price)
+        holder.textViewPrice.text = floatToCurrencyString(locale, fuel.price)
     }
 
     override fun getItemCount(): Int = items.size

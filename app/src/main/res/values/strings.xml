@@ -36,10 +36,8 @@
     <string name="header_picture_name">Now just your picture and name, then we\'re done!</string>
     <string name="error_signing_in">Error signing in. Try again.</string>
     <string name="rating_ok">okay</string>
-    <string name="very_bad">very bad</string>
     <string name="bad">bad</string>
     <string name="good">good</string>
-    <string name="very_good">very good</string>
     <string name="car">car</string>
     <string name="lorry">lorry</string>
     <string name="motorcycle">motorcycle</string>

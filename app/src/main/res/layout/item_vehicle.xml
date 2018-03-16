@@ -35,7 +35,7 @@
             style="@style/TextViewDefault"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey_darkest"
+            android:textColor="@color/grey_dark"
             android:layout_marginTop="@dimen/margin_default"
             android:layout_gravity="center"
             tools:text="ethanol, petrol"/>

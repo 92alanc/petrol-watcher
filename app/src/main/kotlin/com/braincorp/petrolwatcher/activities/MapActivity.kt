@@ -149,7 +149,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
         imageViewProfile.setOnClickListener(this)
 
-        val progressBar = headerView.findViewById<ProgressBar>(R.id.progressBar) // TODO
+        val progressBar = headerView.findViewById<ProgressBar>(R.id.progressBar)
 
         val textViewDisplayName = headerView.findViewById<TextView>(R.id.textViewDisplayName)
         val textViewEmail = headerView.findViewById<TextView>(R.id.textViewEmail)

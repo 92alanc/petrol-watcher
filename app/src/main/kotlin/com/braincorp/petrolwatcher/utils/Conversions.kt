@@ -75,32 +75,26 @@ fun stringToFuelType(string: String): Fuel.Type {
 
 fun stringToRating(string: String): Rating {
     return when (string) {
-        "VERY_BAD" -> Rating.VERY_BAD
         "BAD" -> Rating.BAD
         "OK" -> Rating.OK
         "GOOD" -> Rating.GOOD
-        "VERY_GOOD" -> Rating.VERY_GOOD
         else -> Rating.OK
     }
 }
 
 fun Context.ratingToString(rating: Rating): String {
     return when (rating) {
-        Rating.VERY_BAD -> getString(R.string.very_bad)
         Rating.BAD -> getString(R.string.bad)
         Rating.OK -> getString(R.string.rating_ok)
         Rating.GOOD -> getString(R.string.good)
-        Rating.VERY_GOOD -> getString(R.string.very_good)
     }
 }
 
 fun Context.ratingToColour(rating: Rating): Int {
     val colour = when (rating) {
-        Rating.VERY_BAD -> R.color.red_dark
         Rating.BAD -> R.color.red
         Rating.OK -> R.color.amber
-        Rating.GOOD -> R.color.green_light
-        Rating.VERY_GOOD -> R.color.green
+        Rating.GOOD -> R.color.green
     }
     return ContextCompat.getColor(this, colour)
 }
