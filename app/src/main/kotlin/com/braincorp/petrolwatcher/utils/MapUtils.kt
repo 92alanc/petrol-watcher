@@ -77,6 +77,20 @@ fun Context.applyMapTheme(map: GoogleMap?) {
     map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, res))
 }
 
+fun getDistanceInMetres(start: LatLng, end: LatLng): Float {
+    val startLatitude = start.latitude
+    val startLongitude = start.longitude
+
+    val endLatitude = end.latitude
+    val endLongitude = end.longitude
+
+    val results = FloatArray(4)
+
+    Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results)
+
+    return results[0]
+}
+
 private fun AppCompatActivity.zoomToDeviceLocation(map: GoogleMap) {
     getCurrentLocation(OnCompleteListener {
         if (it.isSuccessful) {
