@@ -161,7 +161,7 @@ class FuelsFragment : Fragment(), View.OnClickListener, OnItemClickListener, Ada
 
     private fun populateRecyclerView() {
         if (fuels == null) fuels = mutableSetOf()
-        val adapter = FuelAdapter(activity, fuels!!, locale!!, onItemClickListener = this)
+        val adapter = FuelAdapter(activity, fuels!!, locale, onItemClickListener = this)
         recyclerViewFuels.adapter = adapter
     }
 

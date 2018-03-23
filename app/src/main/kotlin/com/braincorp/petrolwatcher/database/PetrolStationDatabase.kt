@@ -2,7 +2,6 @@ package com.braincorp.petrolwatcher.database
 
 import android.content.Context
 import com.braincorp.petrolwatcher.model.PetrolStation
-import com.braincorp.petrolwatcher.services.StationLocatorService
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -38,12 +37,12 @@ object PetrolStationDatabase {
     fun select(context: Context,
                filterByLocation: Boolean,
                valueEventListener: ValueEventListener) {
-        if (filterByLocation) {
+        /*if (filterByLocation) { TODO: uncomment when StationLocatorService is ready
             context.startService(StationLocatorService.getIntent(context,
                     radius = StationLocatorService.MAX_RADIUS))
-        } else {
+        } else {*/
             reference.addValueEventListener(valueEventListener)
-        }
+        //}
     }
 
     private fun insert(petrolStation: PetrolStation,

@@ -17,7 +17,7 @@ import java.util.*
 
 class FuelAdapter(private val context: Context,
                   private val items: MutableSet<Fuel>,
-                  private val locale: Locale,
+                  private val locale: Locale?,
                   private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<FuelAdapter.FuelHolder>() {
 
@@ -31,6 +31,7 @@ class FuelAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: FuelHolder, position: Int) {
         val fuel = list[position]
+        val locale = this.locale ?: Locale.getDefault()
 
         @SuppressLint("SetTextI18n")
         holder.textViewFuel.text = "${context.fuelTypeToString(fuel.type)} (${context.fuelQualityToString(fuel.quality)}):"

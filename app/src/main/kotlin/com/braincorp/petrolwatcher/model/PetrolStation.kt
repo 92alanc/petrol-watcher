@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.model
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.TextUtils
+import android.text.TextUtils.isEmpty
 import com.braincorp.petrolwatcher.utils.fuelSetToStringFloatMap
 import com.braincorp.petrolwatcher.utils.stringFloatMapToFuelList
 import com.braincorp.petrolwatcher.utils.stringToRating
@@ -54,10 +55,12 @@ data class PetrolStation(var id: String = UUID.randomUUID().toString(),
         address = snapshot.child(KEY_ADDRESS).value.toString()
 
         val latLngString = snapshot.child(KEY_LAT_LNG).value.toString()
-        val latLngElements = latLngString.split(",")
-        val lat = latLngElements[0].toDouble()
-        val lng = latLngElements[1].toDouble()
-        latLng = LatLng(lat, lng)
+        if (!isEmpty(latLngString)) {
+            val latLngElements = latLngString.split(",")
+            val lat = latLngElements[0].toDouble()
+            val lng = latLngElements[1].toDouble()
+            latLng = LatLng(lat, lng)
+        }
 
         locale = Locale.forLanguageTag(snapshot.child(KEY_LOCALE).value.toString())
 
