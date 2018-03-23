@@ -10,22 +10,24 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.utils.fuelTypeToString
 
-class FuelTypeAdapter(context: Context) : ArrayAdapter<Fuel.Type>(context, R.layout.item_fuel_type,
-        R.id.textViewFuelType, Fuel.Type.values()) {
+class FuelTypeAdapter(context: Context) : ArrayAdapter<Fuel.Type>(context,
+                                                                  R.layout.item_spinner_simple,
+                                                                  R.id.textView,
+                                                                  Fuel.Type.values()) {
 
     private val items = Fuel.Type.values()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val row = getDropDownView(position, convertView, parent)
-        return row.findViewById(R.id.textViewFuelType)
+        return row.findViewById(R.id.textView)
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(context)
-        val row = inflater.inflate(R.layout.item_fuel_type, parent, false)
+        val row = inflater.inflate(R.layout.item_spinner_simple, parent, false)
 
         val fuelType = items[position]
-        val textView = row.findViewById<TextView>(R.id.textViewFuelType)
+        val textView = row.findViewById<TextView>(R.id.textView)
         textView.text = context.fuelTypeToString(fuelType)
 
         return row

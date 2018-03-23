@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_fuel_type"/>
+        tools:listitem="@layout/item_spinner_simple"/>
 
     <Spinner
         android:id="@+id/spinnerFuelQuality"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_gap_spinners"
         app:layout_constraintTop_toBottomOf="@id/spinnerFuelType"
-        tools:listitem="@layout/item_fuel_quality"/>
+        tools:listitem="@layout/item_spinner_simple"/>
 
     <EditText
         android:id="@+id/editTextPrice"

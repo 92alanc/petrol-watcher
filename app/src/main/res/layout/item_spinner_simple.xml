@@ -7,10 +7,10 @@
     android:padding="@dimen/padding_default">
 
     <TextView
-        android:id="@+id/textViewFuelQuality"
+        android:id="@+id/textView"
         style="@style/TextViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/regular"/>
+        tools:text="Spinner item"/>
 
 </FrameLayout>

@@ -11,21 +11,23 @@ import com.braincorp.petrolwatcher.model.Fuel
 import com.braincorp.petrolwatcher.utils.fuelQualityToString
 
 class FuelQualityAdapter(context: Context) : ArrayAdapter<Fuel.Quality>(context,
-        R.layout.item_fuel_quality, R.id.textViewFuelQuality, Fuel.Quality.values()) {
+                                                                        R.layout.item_spinner_simple,
+                                                                        R.id.textView,
+                                                                        Fuel.Quality.values()) {
 
     private val items = Fuel.Quality.values()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val row = getDropDownView(position, convertView, parent)
-        return row.findViewById(R.id.textViewFuelQuality)
+        return row.findViewById(R.id.textView)
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(context)
-        val row = inflater.inflate(R.layout.item_fuel_quality, parent, false)
+        val row = inflater.inflate(R.layout.item_spinner_simple, parent, false)
 
         val fuelQuality = items[position]
-        val textView = row.findViewById<TextView>(R.id.textViewFuelQuality)
+        val textView = row.findViewById<TextView>(R.id.textView)
         textView.text = context.fuelQualityToString(fuelQuality)
 
         return row
