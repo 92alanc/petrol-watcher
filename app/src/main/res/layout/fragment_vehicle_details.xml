@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/radius_corner_default"
+    app:cardBackgroundColor="@color/cardview_light_background"
     tools:context=".fragments.VehicleDetailsFragment">
     <ScrollView
         android:layout_width="match_parent"

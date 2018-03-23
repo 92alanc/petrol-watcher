@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/radius_corner_default"
+    app:cardBackgroundColor="@color/cardview_light_background"
     app:cardUseCompatPadding="true">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
