@@ -127,9 +127,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
             AdaptableUi.Mode.VIEW -> super.onBackPressed()
 
             else -> {
-                val intent = LoginActivity.getIntent(context = this)
-                startActivity(intent)
-                finish()
+                launchLoginActivity(finishCurrent = true)
             }
         }
     }
@@ -151,17 +149,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
             }
 
             R.id.buttonVehicles -> {
-                val intent = VehiclesActivity.getIntent(context = this)
-                startActivity(intent)
+                launchVehiclesActivity(pickVehicle = false, finishCurrent = false)
             }
         }
     }
 
     override fun onComplete(task: Task<Void>) {
         if (task.isSuccessful) {
-            val intent = if (uiMode == AdaptableUi.Mode.EDIT) MapActivity.getIntent(context = this)
-            else LoginActivity.getIntent(context = this)
-            startActivity(intent)
+            if (uiMode == AdaptableUi.Mode.EDIT) launchMapActivity(finishCurrent = false)
+            else launchLoginActivity(finishCurrent = false)
         }
     }
 
@@ -286,17 +282,13 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
             AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
                     onSuccessAction =  {
                         if (uiMode == AdaptableUi.Mode.CREATE) {
-                            val intent = MapActivity.getIntent(context = this)
-                            startActivity(intent)
-                            finish()
+                            launchMapActivity(finishCurrent = true)
                         } else {
                             AuthenticationManager.sendEmailVerification {
                                 showInformationDialogue(title = R.string.account_created,
                                         message = R.string.check_email,
                                         onDismissAction = {
-                                            val intent = LoginActivity.getIntent(context = this)
-                                            startActivity(intent)
-                                            finish()
+                                            launchLoginActivity(finishCurrent = true)
                                         })
                             }
                         }

@@ -10,6 +10,7 @@ import com.braincorp.petrolwatcher.fragments.SystemOfMeasurementConfigurationFra
 import com.braincorp.petrolwatcher.preferences.MapTheme
 import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.braincorp.petrolwatcher.preferences.SystemOfMeasurement
+import com.braincorp.petrolwatcher.utils.launchMapActivity
 import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
 import com.braincorp.petrolwatcher.view.DialogueType
 import com.braincorp.petrolwatcher.view.RadioGroupDialogueFactory
@@ -46,8 +47,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = MapActivity.getIntent(context = this)
-        startActivity(intent)
+        launchMapActivity(finishCurrent = true)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

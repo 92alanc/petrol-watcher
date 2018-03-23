@@ -25,9 +25,6 @@ import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_map.*
@@ -52,7 +49,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         bindNavigationDrawer()
 
         fabMap.setOnClickListener(this)
-        startMap()
+        supportFragmentManager.startMap(mapId = R.id.map, onMapReadyCallback = this)
     }
 
     override fun onStop() {
@@ -73,7 +70,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.itemSettings -> launchSettingsActivity()
+            R.id.itemSettings -> launchSettingsActivity(finishCurrent = false)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -82,8 +79,9 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_LOCATION) {
-            val permissionGranted = grantResults[0] == PERMISSION_GRANTED
-                    && grantResults[1] == PERMISSION_GRANTED
+            val permissionGranted = (grantResults[0] == PERMISSION_GRANTED
+                                     && grantResults[1] == PERMISSION_GRANTED)
+
             if (permissionGranted) {
                 fabMap.visibility = VISIBLE
                 loadMapWithCurrentLocation(map)
@@ -110,25 +108,23 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fabMap -> {
-                getCurrentLocation(OnCompleteListener {
-                    val location = it.result
-                    val latLng = LatLng(location.latitude, location.longitude)
-                    map?.zoomToLocation(latLng)
-                })
-            }
+            R.id.fabMap -> showCurrentLocation(map)
 
             R.id.imageViewProfile -> {
                 drawer_home.closeDrawer(START)
-                launchProfileActivity()
+                launchProfileActivity(AdaptableUi.Mode.VIEW, finishCurrent = false)
             }
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itemStationsNearby -> launchPetrolStationsActivity()
-            R.id.itemProfile -> launchProfileActivity()
+            R.id.itemStationsNearby -> launchPetrolStationsActivity(finishCurrent = false)
+
+            R.id.itemProfile -> {
+                launchProfileActivity(uiMode = AdaptableUi.Mode.VIEW, finishCurrent = false)
+            }
+
             R.id.itemSignOut -> promptSignOut()
         }
         return true
@@ -160,41 +156,14 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         textViewEmail.text = user?.email
     }
 
-    private fun launchLoginActivity() {
-        val intent = LoginActivity.getIntent(context = this)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun launchProfileActivity() {
-        val intent = ProfileActivity.getIntent(context = this, uiMode = AdaptableUi.Mode.VIEW)
-        startActivity(intent)
-    }
-
-    private fun launchPetrolStationsActivity() {
-        val intent = PetrolStationsActivity.getIntent(context = this)
-        startActivity(intent)
-    }
-
-    private fun launchSettingsActivity() {
-        val intent = SettingsActivity.getIntent(context = this)
-        startActivity(intent)
-    }
-
     private fun promptSignOut() {
         showQuestionDialogue(R.string.sign_out, R.string.question_sign_out,
                 positiveFunc = {
                     AuthenticationManager.signOut {
-                        launchLoginActivity()
-                        finish()
+                        launchLoginActivity(finishCurrent = true)
                     }
                 },
                 negativeFunc = { })
-    }
-
-    private fun startMap() {
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
     }
 
 }

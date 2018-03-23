@@ -11,6 +11,8 @@ import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.model.AdaptableUi
+import com.braincorp.petrolwatcher.utils.launchMapActivity
+import com.braincorp.petrolwatcher.utils.launchProfileActivity
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
 import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import kotlinx.android.synthetic.main.activity_login.*
@@ -37,13 +39,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.buttonSignIn -> signIn()
-            R.id.buttonSignUp -> startProfileActivity()
+            R.id.buttonSignUp -> {
+                launchProfileActivity(uiMode = AdaptableUi.Mode.CREATE, finishCurrent = false)
+                clearEditTexts()
+            }
         }
     }
 
     private fun checkAuthenticationState() {
         if (AuthenticationManager.isSignedIn() && AuthenticationManager.isEmailVerified())
-            startMapActivity()
+            launchMapActivity(finishCurrent = false)
     }
 
     private fun clearEditTexts() {
@@ -63,7 +68,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     hideProgressBar()
                 }
                 if (it.user.isEmailVerified) {
-                    startMapActivity()
+                    launchMapActivity(finishCurrent = false)
                 } else {
                     showInformationDialogue(title = R.string.email_not_verified,
                             message = R.string.verify_email)
@@ -80,18 +85,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
             showErrorDialogue(R.string.invalid_email_or_password)
         }
-    }
-
-    private fun startMapActivity() {
-        val intent = MapActivity.getIntent(context = this)
-        startActivity(intent)
-    }
-
-    private fun startProfileActivity() {
-        val intent = ProfileActivity.getIntent(context = this,
-                uiMode = AdaptableUi.Mode.CREATE)
-        startActivity(intent)
-        clearEditTexts()
     }
 
     private fun setOnClickListeners() {

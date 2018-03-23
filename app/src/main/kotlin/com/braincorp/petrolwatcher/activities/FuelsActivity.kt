@@ -127,6 +127,7 @@ class FuelsActivity : AppCompatActivity(), View.OnClickListener, AdaptableUi {
     private fun save() {
         val fuelType = spinnerFuelType.selectedItem as Fuel.Type
         val fuelQuality = spinnerFuelQuality.selectedItem as Fuel.Quality
+
         val price = if (isEmpty(editTextPrice.text.toString())) 0f
         else editTextPrice.text.toString().toFloat()
 

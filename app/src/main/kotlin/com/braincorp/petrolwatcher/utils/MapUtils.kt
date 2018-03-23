@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.location.Location
 import android.net.Uri
+import android.support.annotation.IdRes
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.braincorp.petrolwatcher.R
@@ -13,6 +15,8 @@ import com.braincorp.petrolwatcher.preferences.PreferenceManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.tasks.OnCompleteListener
@@ -58,6 +62,14 @@ fun loadMapWithoutCurrentLocation(map: GoogleMap?) {
     }
 }
 
+fun Context.showCurrentLocation(map: GoogleMap?) {
+    getCurrentLocation(OnCompleteListener {
+        val location = it.result
+        val latLng = LatLng(location.latitude, location.longitude)
+        map?.zoomToLocation(latLng)
+    })
+}
+
 fun Context.showDirections(destinationAddress: String) {
     val baseUrl = "https://www.google.com/maps/dir/?api=1"
     val destination = "destination=${Uri.encode(destinationAddress)}"
@@ -89,6 +101,12 @@ fun getDistanceInMetres(start: LatLng, end: LatLng): Float {
     Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results)
 
     return results[0]
+}
+
+fun FragmentManager.startMap(@IdRes mapId: Int,
+                             onMapReadyCallback: OnMapReadyCallback) {
+    val mapFragment = findFragmentById(mapId) as SupportMapFragment
+    mapFragment.getMapAsync(onMapReadyCallback)
 }
 
 private fun AppCompatActivity.zoomToDeviceLocation(map: GoogleMap) {
