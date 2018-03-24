@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/radius_corner_default"
-    tools:context=".fragments.FuelsFragment">
+    tools:context=".feature.petrolstations.fragments.FuelsFragment">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,9 +9,9 @@ import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.*
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.LoginActivity
-import com.braincorp.petrolwatcher.activities.MapActivity
-import com.braincorp.petrolwatcher.activities.ProfileActivity
+import com.braincorp.petrolwatcher.feature.users.activities.LoginActivity
+import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
+import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
@@ -26,7 +26,8 @@ class LoginActivityRobot : BaseRobot() {
     }
 
     @Rule
-    val rule = IntentsTestRule<LoginActivity>(LoginActivity::class.java,
+    val rule = IntentsTestRule<LoginActivity>(
+            LoginActivity::class.java,
             false, false)
 
     fun launchActivity(): LoginActivityRobot {

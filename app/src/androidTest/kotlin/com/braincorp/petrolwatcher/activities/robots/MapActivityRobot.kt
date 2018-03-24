@@ -12,16 +12,17 @@ import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.MapActivity
-import com.braincorp.petrolwatcher.activities.PetrolStationsActivity
-import com.braincorp.petrolwatcher.activities.ProfileActivity
+import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
+import com.braincorp.petrolwatcher.feature.petrolstations.activities.PetrolStationsActivity
+import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
 
 class MapActivityRobot : BaseRobot() {
 
     @Rule
-    private val rule = ActivityTestRule<MapActivity>(MapActivity::class.java,
+    private val rule = ActivityTestRule<MapActivity>(
+            MapActivity::class.java,
             false, false)
 
     fun launchActivity(): MapActivityRobot {

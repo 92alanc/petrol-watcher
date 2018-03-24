@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.model.Rating
-import com.braincorp.petrolwatcher.model.Vehicle
+import com.braincorp.petrolwatcher.feature.petrolstations.model.Fuel
+import com.braincorp.petrolwatcher.feature.petrolstations.model.Rating
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
 fun fuelSetToStringFloatMap(input: MutableSet<Fuel>): Map<String, Float> {
     val output = HashMap<String, Float>()
@@ -33,7 +33,9 @@ fun stringFloatMapToFuelList(input: Map<String, Float>): ArrayList<Fuel> {
         val quality = stringToFuelQuality(qualityString)
         val price = entry.value
 
-        output.add(Fuel(type, quality, price))
+        output.add(Fuel(type,
+                        quality,
+                        price))
     }
 
     return output

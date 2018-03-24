@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.view
 
 import android.content.Context
-import com.braincorp.petrolwatcher.preferences.Configuration
+import com.braincorp.petrolwatcher.feature.settings.model.Configuration
 
 object RadioGroupDialogueFactory {
 

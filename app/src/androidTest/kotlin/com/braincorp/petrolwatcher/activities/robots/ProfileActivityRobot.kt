@@ -8,8 +8,8 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.activities.ProfileActivity
-import com.braincorp.petrolwatcher.activities.VehiclesActivity
+import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
+import com.braincorp.petrolwatcher.feature.vehicles.activities.VehiclesActivity
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
@@ -17,7 +17,8 @@ import org.junit.Rule
 class ProfileActivityRobot : BaseRobot() {
 
     @Rule
-    private val rule = IntentsTestRule<ProfileActivity>(ProfileActivity::class.java,
+    private val rule = IntentsTestRule<ProfileActivity>(
+            ProfileActivity::class.java,
             false, false)
 
     fun launchActivity(uiMode: AdaptableUi.Mode): ProfileActivityRobot {
