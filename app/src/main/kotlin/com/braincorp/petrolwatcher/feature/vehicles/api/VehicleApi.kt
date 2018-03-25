@@ -1,5 +1,8 @@
 package com.braincorp.petrolwatcher.feature.vehicles.api
 
+import com.braincorp.petrolwatcher.feature.vehicles.api.model.Make
+import com.braincorp.petrolwatcher.feature.vehicles.api.model.Model
+import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -9,6 +12,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface VehicleApi {
 
@@ -53,5 +57,17 @@ interface VehicleApi {
 
     @GET("?callback=?&cmd=getYears")
     fun getYears(): Call<Years>
+
+    @GET("?callback=?&cmd=getMakes&year={year}")
+    fun getMakes(@Path("year") year: Int): Call<List<Make>>
+
+    @GET("?callback=?&cmd=getModels&year={year}&make={make}")
+    fun getModels(@Path("year") year: Int,
+                  @Path("make") makeId: String): Call<List<Model>>
+
+    @GET("?callback=?cmd=getTrims&year={year}&make={make}&model={model}")
+    fun getDetails(@Path("year") year: Int,
+                   @Path("make") makeId: String,
+                   @Path("model") modelName: String): Call<List<ModelDetails>>
 
 }
