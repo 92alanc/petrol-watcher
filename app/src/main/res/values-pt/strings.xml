@@ -81,4 +81,6 @@
     <string name="settings">Configurações</string>
     <string name="cancel">Cancelar</string>
     <string name="error_loading_image">Erro ao carregar imagem</string>
+    <string name="manual_input">preenchimento manual</string>
+    <string name="automatic_input">preenchimento automático</string>
 </resources>

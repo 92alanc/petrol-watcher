@@ -81,4 +81,6 @@
     <string name="settings">Settings</string>
     <string name="cancel">Cancel</string>
     <string name="error_loading_image">Error loading image</string>
+    <string name="manual_input">manual input</string>
+    <string name="automatic_input">automatic input</string>
 </resources>
