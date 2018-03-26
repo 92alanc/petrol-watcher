@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
-import com.braincorp.petrolwatcher.listeners.OnStationsFoundListener
-import com.braincorp.petrolwatcher.model.Fuel
+import com.braincorp.petrolwatcher.feature.petrolstations.listeners.OnStationsFoundListener
+import com.braincorp.petrolwatcher.feature.petrolstations.model.Fuel
 
 class StationLocatorService : IntentService(SERVICE_NAME) {
 

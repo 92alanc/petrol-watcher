@@ -2,7 +2,12 @@ package com.braincorp.petrolwatcher.utils
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
-import com.braincorp.petrolwatcher.activities.*
+import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
+import com.braincorp.petrolwatcher.feature.petrolstations.activities.PetrolStationsActivity
+import com.braincorp.petrolwatcher.feature.settings.activities.SettingsActivity
+import com.braincorp.petrolwatcher.feature.users.activities.LoginActivity
+import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
+import com.braincorp.petrolwatcher.feature.vehicles.activities.VehiclesActivity
 import com.braincorp.petrolwatcher.model.AdaptableUi
 
 fun AppCompatActivity.launchLoginActivity(finishCurrent: Boolean) {

@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.fragments.robots
 import android.content.Intent
 import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.fragments.EmailAndPasswordFragment
+import com.braincorp.petrolwatcher.feature.users.fragments.EmailAndPasswordFragment
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.robots.BaseRobot
 import org.junit.Rule
@@ -12,7 +12,7 @@ class EmailAndPasswordFragmentRobot : BaseRobot() {
 
     @Rule
     private val rule = FragmentTestRule.create(EmailAndPasswordFragment::class.java,
-            false, false)
+                                               false, false)
 
     fun launchFragment(uiMode: AdaptableUi.Mode): EmailAndPasswordFragmentRobot {
         rule.launchActivity(Intent())

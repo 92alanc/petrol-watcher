@@ -17,7 +17,7 @@ class ImagePickerFragmentRobot : BaseRobot() {
 
     @Rule
     private val rule = FragmentTestRule.create(ImagePickerFragment::class.java,
-            false, false)
+                                               false, false)
 
     fun launchFragment(uiMode: AdaptableUi.Mode): ImagePickerFragmentRobot {
         rule.launchActivity(Intent())

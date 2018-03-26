@@ -3,9 +3,9 @@ package com.braincorp.petrolwatcher.utils
 import android.support.test.InstrumentationRegistry.getTargetContext
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.model.Fuel
-import com.braincorp.petrolwatcher.model.Rating
-import com.braincorp.petrolwatcher.model.Vehicle
+import com.braincorp.petrolwatcher.feature.petrolstations.model.Fuel
+import com.braincorp.petrolwatcher.feature.petrolstations.model.Rating
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

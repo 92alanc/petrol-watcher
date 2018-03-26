@@ -8,7 +8,7 @@
     app:cardCornerRadius="@dimen/radius_corner_default"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/cardview_light_background"
-    tools:context=".fragments.PetrolStationDetailsFragment">
+    tools:context=".feature.petrolstations.fragments.PetrolStationDetailsFragment">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

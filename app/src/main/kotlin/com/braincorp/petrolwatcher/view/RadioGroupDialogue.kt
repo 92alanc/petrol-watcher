@@ -13,8 +13,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.listeners.OnConfigurationSelectedListener
-import com.braincorp.petrolwatcher.preferences.Configuration
+import com.braincorp.petrolwatcher.feature.settings.listeners.OnConfigurationSelectedListener
+import com.braincorp.petrolwatcher.feature.settings.model.Configuration
 
 open class RadioGroupDialogue(context: Context,
                               private val type: DialogueType,
