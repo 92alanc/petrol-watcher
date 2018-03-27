@@ -14,10 +14,10 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.adapters.VehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.database.VehicleDatabase
 import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsFragment
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -197,9 +197,9 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         placeholderVehicles.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
             fragment = VehicleDetailsFragment.newInstance(uiMode, this,
-                                                          vehicle)
+                    vehicle)
             replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!,
-                                       TAG_VEHICLE_DETAILS)
+                    TAG_VEHICLE_DETAILS)
         }
     }
 
@@ -224,8 +224,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         recyclerViewVehicles.visibility = VISIBLE
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
         val adapter = VehicleAdapter(context = this,
-                                                                                           items = vehicles!!,
-                                                                                           onItemClickListener = this)
+                items = vehicles!!,
+                onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
 
         hideProgressBar()
