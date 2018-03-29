@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="spinnerYear,spinnerManufacturer,spinnerName"
-                tools:visibility="gone"/>
+                tools:visibility="visible"/>
 
             <EditText
                 android:id="@+id/editTextYear"
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="editTextYear,editTextManufacturer,editTextName,editTextFuelCapacity,editTextFuelEfficiencyMotorway,editTextFuelEfficiencyCity"
-                tools:visibility="visible"/>
+                tools:visibility="gone"/>
 
             <TextView
                 android:id="@+id/textViewManufacturerAndName"
@@ -199,11 +199,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/textViewFuelConsumptionMotorway"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 tools:text="Fuel consumption (city): 18L/100km"/>
+
+            <ImageButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="@string/delete"
+                app:layout_constraintTop_toBottomOf="@id/guideline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="1"/>
 
             <android.support.constraint.Group
                 android:id="@+id/groupTextViews"
