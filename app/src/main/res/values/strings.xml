@@ -91,4 +91,7 @@
     <string name="error_loading_image">Error loading image</string>
     <string name="manual_input">manual input</string>
     <string name="automatic_input">automatic input</string>
+    <string name="fuel_capacity">fuel capacity</string>
+    <string name="fuel_efficiency_motorway">fuel efficiency (motorway) - L/100km</string>
+    <string name="fuel_efficiency_city">fuel efficiency (city) - L/100km</string>
 </resources>

@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.75"/>
+                app:layout_constraintGuide_end="55dp"/>
 
             <Spinner
                 android:id="@+id/spinnerYear"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="spinnerYear,spinnerManufacturer,spinnerName"
-                tools:visibility="visible"/>
+                tools:visibility="gone"/>
 
             <EditText
                 android:id="@+id/editTextYear"
@@ -94,6 +94,42 @@
                 android:inputType="textCapWords"
                 android:hint="@string/name"
                 app:layout_constraintTop_toBottomOf="@id/editTextManufacturer"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFuelCapacity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/editTextFuelCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
+                android:inputType="number"
+                android:hint="@string/fuel_capacity"
+                app:layout_constraintTop_toBottomOf="@id/editTextName"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFuelEfficiencyMotorway"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/editTextFuelEfficiencyMotorway"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
+                android:inputType="number"
+                android:hint="@string/fuel_efficiency_motorway"
+                app:layout_constraintTop_toBottomOf="@id/editTextFuelCapacity"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFuelEfficiencyCity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/editTextFuelEfficiencyCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
+                android:inputType="number"
+                android:hint="@string/fuel_efficiency_city"
+                app:layout_constraintTop_toBottomOf="@id/editTextFuelEfficiencyMotorway"
                 app:layout_constraintBottom_toTopOf="@id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -102,8 +138,8 @@
                 android:id="@+id/groupManualInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="editTextYear,editTextManufacturer,editTextName"
-                tools:visibility="gone"/>
+                app:constraint_referenced_ids="editTextYear,editTextManufacturer,editTextName,editTextFuelCapacity,editTextFuelEfficiencyMotorway,editTextFuelEfficiencyCity"
+                tools:visibility="visible"/>
 
             <TextView
                 android:id="@+id/textViewManufacturerAndName"

@@ -23,19 +23,19 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi {
     }
 
     override fun prepareInitialMode() {
-
+        prepareViewMode()
     }
 
     override fun prepareCreateMode() {
-
+        uiMode = AdaptableUi.Mode.CREATE
     }
 
     override fun prepareEditMode() {
-
+        uiMode = AdaptableUi.Mode.EDIT
     }
 
     override fun prepareViewMode() {
-
+        uiMode = AdaptableUi.Mode.VIEW
     }
 
     private fun prepareUi() {
