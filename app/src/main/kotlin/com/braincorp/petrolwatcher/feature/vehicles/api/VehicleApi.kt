@@ -1,8 +1,8 @@
 package com.braincorp.petrolwatcher.feature.vehicles.api
 
-import com.braincorp.petrolwatcher.feature.vehicles.api.model.Make
-import com.braincorp.petrolwatcher.feature.vehicles.api.model.Model
+import com.braincorp.petrolwatcher.feature.vehicles.api.model.Makes
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
+import com.braincorp.petrolwatcher.feature.vehicles.api.model.Models
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface VehicleApi {
 
@@ -58,16 +58,16 @@ interface VehicleApi {
     @GET("?callback=?&cmd=getYears")
     fun getYears(): Call<Years>
 
-    @GET("?callback=?&cmd=getMakes&year={year}")
-    fun getMakes(@Path("year") year: Int): Call<List<Make>>
+    @GET("?callback=?&cmd=getMakes")
+    fun getMakes(@Query("year") year: Int): Call<Makes>
 
-    @GET("?callback=?&cmd=getModels&year={year}&make={make}")
-    fun getModels(@Path("year") year: Int,
-                  @Path("make") makeId: String): Call<List<Model>>
+    @GET("?callback=?&cmd=getModels")
+    fun getModels(@Query("year") year: Int,
+                  @Query("make") makeId: String): Call<Models>
 
-    @GET("?callback=?cmd=getTrims&year={year}&make={make}&model={model}")
-    fun getDetails(@Path("year") year: Int,
-                   @Path("make") makeId: String,
-                   @Path("model") modelName: String): Call<List<ModelDetails>>
+    @GET("?callback=?&cmd=getTrims")
+    fun getDetails(@Query("year") year: Int,
+                   @Query("make") makeId: String,
+                   @Query("model") modelName: String): Call<ModelDetails>
 
 }
