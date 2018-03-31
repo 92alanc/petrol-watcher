@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.vehicles.model
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
+import kotlin.collections.HashMap
 
 data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
                            var manufacturer: String = "",
@@ -51,5 +52,19 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
     }
 
     override fun describeContents(): Int = 0
+
+    fun toMap(): Map<String, Any> {
+        val map = HashMap<String, Any>()
+
+        map[KEY_ID] = id
+        map[KEY_MANUFACTURER] = manufacturer
+        map[KEY_NAME] = name
+        map[KEY_YEAR] = year
+        map[KEY_FUEL_CAPACITY] = fuelCapacity
+        map[KEY_CONSUMPTION_MOTORWAY] = litresPer100KmMotorway
+        map[KEY_CONSUMPTION_CITY] = litresPer100KmCity
+
+        return map
+    }
 
 }

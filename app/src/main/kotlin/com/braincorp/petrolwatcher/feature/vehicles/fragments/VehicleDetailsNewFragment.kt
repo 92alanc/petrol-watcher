@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import com.braincorp.petrolwatcher.R
@@ -14,6 +16,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.model.Makes
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Models
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
+import com.braincorp.petrolwatcher.feature.vehicles.model.NewVehicleModel
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import kotlinx.android.synthetic.main.fragment_vehicle_details_new.*
 import retrofit2.Call
@@ -25,15 +28,29 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     companion object {
         private const val LOG_TAG = "VehicleDetailsFragment"
 
-        private const val KEY_UI_MODE = "ui_mode"
+        private const val ARG_UI_MODE = "ui_mode"
+        private const val ARG_VEHICLE = "vehicle"
 
         private const val KEY_YEAR = "year"
         private const val KEY_YEARS_LIST = "years_list"
+
+        fun newInstance(uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL,
+                        vehicle: NewVehicleModel? = null): VehicleDetailsNewFragment {
+            val instance = VehicleDetailsNewFragment()
+
+            val args = Bundle()
+            args.putSerializable(ARG_UI_MODE, uiMode)
+            args.putParcelable(ARG_VEHICLE, vehicle)
+            instance.arguments = args
+
+            return instance
+        }
     }
 
     private val api = VehicleApi.getApi()
 
     private var uiMode = AdaptableUi.Mode.INITIAL
+    private var vehicle = NewVehicleModel()
 
     private var year: Int = -1
     private val yearsList = ArrayList<Int>()
@@ -53,13 +70,14 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        parseArgs()
         prepareUi()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
-        outState?.putSerializable(KEY_UI_MODE, uiMode)
+        outState?.putSerializable(ARG_UI_MODE, uiMode)
 
         outState?.putInt(KEY_YEAR, year)
         outState?.putIntegerArrayList(KEY_YEARS_LIST, yearsList)
@@ -81,6 +99,13 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
+
+        groupAutomaticInput.visibility = GONE
+        groupManualInput.visibility = GONE
+        buttonInputType.visibility = GONE
+        groupTextViews.visibility = VISIBLE
+
+        fillTextViews()
     }
 
     override fun onNothingSelected(adapterView: AdapterView<*>) { }
@@ -111,6 +136,11 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
             AdaptableUi.Mode.EDIT -> prepareEditMode()
             AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
+    }
+
+    private fun parseArgs() {
+        uiMode = arguments!!.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
+        vehicle = arguments!!.getParcelable(ARG_VEHICLE)
     }
 
     private fun loadYears() {
@@ -194,6 +224,18 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
                 }
             }
         })
+    }
+
+    private fun fillTextViews() {
+        textViewManufacturerAndName.text = getString(R.string.manufacturer_and_name_format,
+                                                     vehicle.manufacturer,
+                                                     vehicle.name)
+        textViewYear.text = getString(R.string.year_format, vehicle.year)
+        textViewFuelCapacity.text = getString(R.string.fuel_capacity_format, vehicle.fuelCapacity)
+        textViewFuelConsumptionMotorway.text = getString(R.string.fuel_efficiency_motorway_format,
+                                                         vehicle.litresPer100KmMotorway)
+        textViewFuelConsumptionCity.text = getString(R.string.fuel_efficiency_city_format,
+                                                     vehicle.litresPer100KmCity)
     }
 
 }

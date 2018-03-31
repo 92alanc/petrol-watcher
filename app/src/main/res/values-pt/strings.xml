@@ -86,4 +86,8 @@
     <string name="fuel_capacity">capacidade de combustível</string>
     <string name="fuel_efficiency_motorway">autonomia (estrada) - L/100km</string>
     <string name="fuel_efficiency_city">autonomia (cidade) - L/100km</string>
+    <string name="year_format" formatted="true">ano: %1$d</string>
+    <string name="fuel_capacity_format">capacidade de combustível (L): %1$d</string>
+    <string name="fuel_efficiency_motorway_format">autonomia (estrada) - L/100km: %1$d</string>
+    <string name="fuel_efficiency_city_format">autonomia (cidade) - L/100km: %1$d</string>
 </resources>

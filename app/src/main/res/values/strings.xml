@@ -94,4 +94,9 @@
     <string name="fuel_capacity">fuel capacity</string>
     <string name="fuel_efficiency_motorway">fuel efficiency (motorway) - L/100km</string>
     <string name="fuel_efficiency_city">fuel efficiency (city) - L/100km</string>
+    <string name="manufacturer_and_name_format" translatable="false" formatted="true">%1$s %2$s</string>
+    <string name="year_format" formatted="true">year: %1$d</string>
+    <string name="fuel_capacity_format">fuel capacity (L): %1$d</string>
+    <string name="fuel_efficiency_motorway_format">fuel efficiency (motorway) - L/100km: %1$d</string>
+    <string name="fuel_efficiency_city_format">fuel efficiency (city) - L/100km: %1$d</string>
 </resources>
