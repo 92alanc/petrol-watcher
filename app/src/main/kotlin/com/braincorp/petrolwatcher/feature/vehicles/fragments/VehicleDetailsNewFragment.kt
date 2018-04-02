@@ -129,6 +129,8 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         }
     }
 
+    fun getVehicle(): NewVehicleModel? = vehicle
+
     private fun prepareUi() {
         when (uiMode) {
             AdaptableUi.Mode.INITIAL -> prepareInitialMode()

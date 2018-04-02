@@ -11,14 +11,18 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.vehicles.adapters.VehicleAdapter
+import com.braincorp.petrolwatcher.feature.vehicles.adapters.NewVehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.database.VehicleDatabase
 import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsFragment
-import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsNewFragment
+import com.braincorp.petrolwatcher.feature.vehicles.model.NewVehicleModel
 import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.utils.*
+import com.braincorp.petrolwatcher.utils.removeFragment
+import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
+import com.braincorp.petrolwatcher.utils.showErrorDialogue
+import com.braincorp.petrolwatcher.utils.showQuestionDialogue
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -48,10 +52,10 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private var fragment: VehicleDetailsFragment? = null
+    private var fragment: VehicleDetailsNewFragment? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
-    private var vehicle: Vehicle? = null
-    private var vehicles: ArrayList<Vehicle>? = null
+    private var vehicle: NewVehicleModel? = null
+    private var vehicles: ArrayList<NewVehicleModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,9 +124,9 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onDataChange(snapshot: DataSnapshot?) {
-        val list = ArrayList<Vehicle>()
+        val list = ArrayList<NewVehicleModel>()
         snapshot?.children?.forEach {
-            val vehicle = Vehicle(it)
+            val vehicle = NewVehicleModel(it)
             list.add(vehicle)
         }
         vehicles = list
@@ -196,8 +200,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun loadFragment(uiMode: AdaptableUi.Mode) {
         placeholderVehicles.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            fragment = VehicleDetailsFragment.newInstance(uiMode, this,
-                    vehicle)
+            fragment = VehicleDetailsNewFragment.newInstance(uiMode, vehicle)
             replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!,
                     TAG_VEHICLE_DETAILS)
         }
@@ -223,8 +226,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun populateRecyclerView() {
         recyclerViewVehicles.visibility = VISIBLE
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
-        val adapter = VehicleAdapter(context = this,
-                items = vehicles!!,
+        val adapter = NewVehicleAdapter(context = this,
+                data = vehicles!!,
                 onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter
 
@@ -235,15 +238,12 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         val vehicle = fragment?.getVehicle()
         showProgressBar()
         return if (vehicle != null) {
-            if (vehicle.allFieldsAreValid()) {
-                VehicleDatabase.insertOrUpdate(vehicle, this)
-                true
-            } else {
-                showInformationDialogue(R.string.information, R.string.all_fields_are_required)
-                hideProgressBar()
-                false
-            }
-        } else false
+            VehicleDatabase.insertOrUpdate(vehicle, this)
+            true
+        } else {
+            hideProgressBar()
+            false
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -262,7 +262,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
-            fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
+            fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsNewFragment
     }
 
     private fun hideProgressBar() {

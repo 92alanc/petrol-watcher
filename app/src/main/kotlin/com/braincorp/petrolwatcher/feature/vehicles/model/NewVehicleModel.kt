@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.vehicles.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.database.DataSnapshot
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -39,6 +40,16 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
         fuelCapacity = parcel.readInt()
         litresPer100KmMotorway = parcel.readInt()
         litresPer100KmCity = parcel.readInt()
+    }
+
+    constructor(snapshot: DataSnapshot): this() {
+        id = snapshot.child(KEY_ID).value.toString()
+        manufacturer = snapshot.child(KEY_MANUFACTURER).value.toString()
+        name = snapshot.child(KEY_NAME).value.toString()
+        year = snapshot.child(KEY_YEAR).value.toString().toInt()
+        fuelCapacity = snapshot.child(KEY_FUEL_CAPACITY).value.toString().toInt()
+        litresPer100KmMotorway = snapshot.child(KEY_CONSUMPTION_MOTORWAY).value.toString().toInt()
+        litresPer100KmCity = snapshot.child(KEY_CONSUMPTION_CITY).value.toString().toInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
