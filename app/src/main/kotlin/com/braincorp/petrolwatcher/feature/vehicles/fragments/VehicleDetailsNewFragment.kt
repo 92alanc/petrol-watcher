@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.fragment_vehicle_details_new.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.roundToInt
 
-class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSelectedListener {
+class VehicleDetailsNewFragment : Fragment(), AdaptableUi,
+        AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     companion object {
         private const val LOG_TAG = "VehicleDetailsFragment"
@@ -32,11 +32,13 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         private const val ARG_UI_MODE = "ui_mode"
         private const val ARG_VEHICLE = "vehicle"
 
+        private const val KEY_INPUT_TYPE = "input_type"
         private const val KEY_YEAR = "year"
         private const val KEY_YEARS_LIST = "years_list"
 
         fun newInstance(uiMode: AdaptableUi.Mode = AdaptableUi.Mode.INITIAL,
-                        vehicle: NewVehicleModel? = null): VehicleDetailsNewFragment {
+                        vehicle: NewVehicleModel? = null,
+                        deleteButtonClickListener: View.OnClickListener): VehicleDetailsNewFragment {
             val instance = VehicleDetailsNewFragment()
 
             val args = Bundle()
@@ -44,6 +46,8 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
             if (vehicle != null)
                 args.putParcelable(ARG_VEHICLE, vehicle)
             instance.arguments = args
+
+            instance.deleteButtonClickListener = deleteButtonClickListener
 
             return instance
         }
@@ -55,7 +59,9 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     private var vehicle = NewVehicleModel()
 
     private var year: Int = -1
-    private val yearsList = ArrayList<Int>()
+    private var yearsList = ArrayList<Int>()
+
+    private var inputType = InputType.AUTOMATIC
 
     private lateinit var manufacturer: String
     private val manufacturersList = ArrayList<String>()
@@ -65,6 +71,8 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     private lateinit var modelDetails: ModelDetails.Trims
 
+    private lateinit var deleteButtonClickListener: View.OnClickListener
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
                               savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_vehicle_details_new, container, false)
@@ -73,17 +81,28 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         parseArgs()
+        if (savedInstanceState != null)
+            parseSavedInstanceState(savedInstanceState)
         prepareUi()
         setupSpinners()
+        buttonDelete.setOnClickListener(deleteButtonClickListener)
+        buttonInputType.setOnClickListener(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
         outState?.putSerializable(ARG_UI_MODE, uiMode)
+        outState?.putSerializable(KEY_INPUT_TYPE, inputType)
 
         outState?.putInt(KEY_YEAR, year)
         outState?.putIntegerArrayList(KEY_YEARS_LIST, yearsList)
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.buttonInputType -> changeInputType()
+        }
     }
 
     override fun prepareInitialMode() {
@@ -94,7 +113,13 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         uiMode = AdaptableUi.Mode.CREATE
 
         groupManualInput.visibility = GONE
+        groupLabelsManual.visibility = GONE
         groupTextViews.visibility = GONE
+        buttonDelete.visibility = GONE
+
+        groupAutomaticInput.visibility = VISIBLE
+        groupLabelsAuto.visibility = VISIBLE
+        buttonInputType.visibility = VISIBLE
 
         if (yearsList.isEmpty())
             loadYears()
@@ -102,14 +127,28 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     override fun prepareEditMode() {
         uiMode = AdaptableUi.Mode.EDIT
+
+        groupAutomaticInput.visibility = GONE
+        groupLabelsAuto.visibility = GONE
+        groupTextViews.visibility = GONE
+        buttonInputType.visibility = GONE
+
+        groupLabelsManual.visibility = VISIBLE
+        groupManualInput.visibility = VISIBLE
+        buttonDelete.visibility = VISIBLE
+
+        fillEditTexts()
     }
 
     override fun prepareViewMode() {
         uiMode = AdaptableUi.Mode.VIEW
 
         groupAutomaticInput.visibility = GONE
+        groupLabelsAuto.visibility = GONE
         groupManualInput.visibility = GONE
+        groupLabelsManual.visibility = GONE
         buttonInputType.visibility = GONE
+
         groupTextViews.visibility = VISIBLE
 
         fillTextViews()
@@ -137,6 +176,26 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     }
 
     fun getVehicle(): NewVehicleModel? {
+        if (uiMode == AdaptableUi.Mode.EDIT || inputType == InputType.MANUAL) {
+            // TODO: handle cases where EditTexts are empty
+            year = editTextYear.text.toString().toInt()
+            manufacturer = editTextManufacturer.text.toString()
+            model = editTextName.text.toString()
+
+            modelDetails = ModelDetails.Trims()
+            modelDetails.fuelCapacityLitres = editTextFuelCapacity.text
+                    .toString()
+                    .toInt()
+
+            modelDetails.litresPer100KmCity = editTextAverageConsumptionCity.text
+                    .toString()
+                    .toFloat()
+
+            modelDetails.litresPer100KmMotorway = editTextAverageConsumptionMotorway.text
+                    .toString()
+                    .toFloat()
+        }
+
         vehicle.year = year
         vehicle.manufacturer = manufacturer
         vehicle.name = model
@@ -147,6 +206,35 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         return vehicle
     }
 
+    private fun changeInputType() {
+        if (inputType == InputType.AUTOMATIC) toggleManualInput()
+        else toggleAutomaticInput()
+    }
+
+    private fun toggleAutomaticInput() {
+        inputType = InputType.AUTOMATIC
+
+        buttonInputType.setText(R.string.manual_input)
+
+        groupLabelsManual.visibility = GONE
+        groupManualInput.visibility = GONE
+
+        groupLabelsAuto.visibility = VISIBLE
+        groupAutomaticInput.visibility = VISIBLE
+    }
+
+    private fun toggleManualInput() {
+        inputType = InputType.MANUAL
+
+        buttonInputType.setText(R.string.automatic_input)
+
+        groupLabelsAuto.visibility = GONE
+        groupAutomaticInput.visibility = GONE
+
+        groupLabelsManual.visibility = VISIBLE
+        groupManualInput.visibility = VISIBLE
+    }
+
     private fun prepareUi() {
         when (uiMode) {
             AdaptableUi.Mode.INITIAL -> prepareInitialMode()
@@ -154,6 +242,13 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
             AdaptableUi.Mode.EDIT -> prepareEditMode()
             AdaptableUi.Mode.VIEW -> prepareViewMode()
         }
+    }
+
+    private fun parseSavedInstanceState(savedInstanceState: Bundle) {
+        inputType = savedInstanceState.getSerializable(KEY_INPUT_TYPE) as InputType
+        uiMode = savedInstanceState.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
+        year = savedInstanceState.getInt(KEY_YEAR)
+        yearsList = savedInstanceState.getIntegerArrayList(KEY_YEARS_LIST)
     }
 
     private fun parseArgs() {
@@ -250,39 +345,61 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
                     val list = response.body()!!.list
                     if (list.isNotEmpty())
                         modelDetails = list[0]
-
-                    val city = modelDetails.litresPer100KmCity
-                    val motorway = modelDetails.litresPer100KmMotorway
-                    val mixed = modelDetails.litresPer100KmMixed
-
-                    if (city == -1) {
-                        if (motorway != -1)
-                            modelDetails.litresPer100KmCity = motorway
-                        else
-                            modelDetails.litresPer100KmCity = mixed.roundToInt()
-                    }
-
-                    if (motorway == -1) {
-                        if (city != -1)
-                            modelDetails.litresPer100KmMotorway = city
-                        else
-                            modelDetails.litresPer100KmMotorway = mixed.roundToInt()
-                    }
                 }
             }
         })
     }
 
     private fun fillTextViews() {
+        var manufacturer = vehicle.manufacturer
+        manufacturer = manufacturer.replace(manufacturer[0], manufacturer[0].toUpperCase())
         textViewManufacturerAndName.text = getString(R.string.manufacturer_and_name_format,
-                                                     vehicle.manufacturer,
-                                                     vehicle.name)
+                manufacturer,
+                vehicle.name)
         textViewYear.text = getString(R.string.year_format, vehicle.year)
-        textViewFuelCapacity.text = getString(R.string.fuel_capacity_format, vehicle.fuelCapacity)
-        textViewFuelConsumptionMotorway.text = getString(R.string.fuel_efficiency_motorway_format,
-                                                         vehicle.litresPer100KmMotorway)
-        textViewFuelConsumptionCity.text = getString(R.string.fuel_efficiency_city_format,
-                                                     vehicle.litresPer100KmCity)
+
+        // TODO: make fields with unknown value explicit to user
+        val fuelCapacity = if (vehicle.fuelCapacity == -1) getString(R.string.unknown_enter_data_manually)
+        else vehicle.fuelCapacity.toString()
+
+        textViewFuelCapacity.text = fuelCapacity
+
+        val averageConsumptionMotorway = if (vehicle.litresPer100KmMotorway == -1f)
+            getString(R.string.unknown_enter_data_manually)
+        else vehicle.litresPer100KmMotorway.toString()
+
+        textViewAverageConsumptionMotorway.text = averageConsumptionMotorway
+
+        val averageConsumptionCity = if (vehicle.litresPer100KmCity == -1f)
+            getString(R.string.unknown_enter_data_manually)
+        else vehicle.litresPer100KmCity.toString()
+
+        textViewAverageConsumptionCity.text = averageConsumptionCity
+    }
+
+    private fun fillEditTexts() {
+        editTextYear.setText(vehicle.year.toString())
+        editTextManufacturer.setText(vehicle.manufacturer)
+        editTextName.setText(vehicle.name)
+
+        val fuelCapacity = if (vehicle.fuelCapacity != -1) vehicle.fuelCapacity.toString()
+        else null
+        editTextFuelCapacity.setText(fuelCapacity)
+
+        val consumptionMotorway = if (vehicle.litresPer100KmMotorway != -1f)
+            String.format("%.1f", vehicle.litresPer100KmMotorway)
+        else null
+        editTextAverageConsumptionMotorway.setText(consumptionMotorway)
+
+        val consumptionCity = if (vehicle.litresPer100KmCity != -1f)
+            String.format("%.1f", vehicle.litresPer100KmCity)
+        else null
+        editTextAverageConsumptionCity.setText(consumptionCity)
+    }
+
+    private enum class InputType {
+        AUTOMATIC,
+        MANUAL
     }
 
 }

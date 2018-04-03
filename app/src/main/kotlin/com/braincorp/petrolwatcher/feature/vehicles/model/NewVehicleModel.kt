@@ -11,8 +11,8 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
                            var name: String = "",
                            var year: Int = 0,
                            var fuelCapacity: Int = 0,
-                           var litresPer100KmMotorway: Int = 0,
-                           var litresPer100KmCity: Int = 0) : Parcelable {
+                           var litresPer100KmMotorway: Float = 0f,
+                           var litresPer100KmCity: Float = 0f) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<NewVehicleModel> {
         private const val KEY_ID = "id"
@@ -38,8 +38,8 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
         name = parcel.readString()
         year = parcel.readInt()
         fuelCapacity = parcel.readInt()
-        litresPer100KmMotorway = parcel.readInt()
-        litresPer100KmCity = parcel.readInt()
+        litresPer100KmMotorway = parcel.readFloat()
+        litresPer100KmCity = parcel.readFloat()
     }
 
     constructor(snapshot: DataSnapshot): this() {
@@ -48,8 +48,8 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
         name = snapshot.child(KEY_NAME).value.toString()
         year = snapshot.child(KEY_YEAR).value.toString().toInt()
         fuelCapacity = snapshot.child(KEY_FUEL_CAPACITY).value.toString().toInt()
-        litresPer100KmMotorway = snapshot.child(KEY_CONSUMPTION_MOTORWAY).value.toString().toInt()
-        litresPer100KmCity = snapshot.child(KEY_CONSUMPTION_CITY).value.toString().toInt()
+        litresPer100KmMotorway = snapshot.child(KEY_CONSUMPTION_MOTORWAY).value.toString().toFloat()
+        litresPer100KmCity = snapshot.child(KEY_CONSUMPTION_CITY).value.toString().toFloat()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -58,8 +58,8 @@ data class NewVehicleModel(var id: String = UUID.randomUUID().toString(),
         parcel.writeString(name)
         parcel.writeInt(year)
         parcel.writeInt(fuelCapacity)
-        parcel.writeInt(litresPer100KmMotorway)
-        parcel.writeInt(litresPer100KmCity)
+        parcel.writeFloat(litresPer100KmMotorway)
+        parcel.writeFloat(litresPer100KmCity)
     }
 
     override fun describeContents(): Int = 0

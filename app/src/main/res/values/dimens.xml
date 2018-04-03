@@ -3,6 +3,7 @@
     <!-- Width -->
     <dimen name="width_max_navigation_header_text">160dp</dimen>
     <dimen name="width_max_petrol_station_address">130dp</dimen>
+    <dimen name="width_max_average_consumption_label">150dp</dimen>
 
     <!-- Height -->
     <dimen name="height_navigation_header">160dp</dimen>

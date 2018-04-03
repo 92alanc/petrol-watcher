@@ -25,7 +25,9 @@ class NewVehicleAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: VehicleHolder, position: Int) {
         val vehicle = data[position]
-        val manufacturerAndName = "${vehicle.manufacturer} ${vehicle.name}"
+        var manufacturer = vehicle.manufacturer
+        manufacturer = manufacturer.replace(manufacturer[0], manufacturer[0].toUpperCase())
+        val manufacturerAndName = "$manufacturer ${vehicle.name}"
 
         holder.textViewManufacturerAndName.text = manufacturerAndName
         holder.textViewYear.text = vehicle.year.toString()

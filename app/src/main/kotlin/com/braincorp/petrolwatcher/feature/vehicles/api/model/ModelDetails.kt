@@ -36,8 +36,8 @@ data class ModelDetails(@SerializedName("Trims") val list: List<Trims>) {
                      @SerializedName("model_width_mm") var widthInMm: Int = -1,
                      @SerializedName("model_height_mm") var heightInMm: Int = -1,
                      @SerializedName("model_wheelbase_mm") var wheelbaseInMm: Int = -1,
-                     @SerializedName("model_lkm_hwy") var litresPer100KmMotorway: Int = -1,
-                     @SerializedName("model_lkm_city") var litresPer100KmCity: Int = -1,
+                     @SerializedName("model_lkm_hwy") var litresPer100KmMotorway: Float = -1f,
+                     @SerializedName("model_lkm_city") var litresPer100KmCity: Float = -1f,
                      @SerializedName("model_lkm_mixed") var litresPer100KmMixed: Float = -1f,
                      @SerializedName("model_fuel_cap_l") var fuelCapacityLitres: Int = -1,
                      @SerializedName("model_sold_in_us") var soldInUsa: Int = -1,
@@ -87,8 +87,8 @@ data class ModelDetails(@SerializedName("Trims") val list: List<Trims>) {
             widthInMm = parcel.readInt()
             heightInMm = parcel.readInt()
             wheelbaseInMm = parcel.readInt()
-            litresPer100KmMotorway = parcel.readInt()
-            litresPer100KmCity = parcel.readInt()
+            litresPer100KmMotorway = parcel.readFloat()
+            litresPer100KmCity = parcel.readFloat()
             fuelCapacityLitres = parcel.readInt()
             soldInUsa = parcel.readInt()
             co2 = parcel.readString()
@@ -128,8 +128,8 @@ data class ModelDetails(@SerializedName("Trims") val list: List<Trims>) {
             dest.writeInt(widthInMm)
             dest.writeInt(heightInMm)
             dest.writeInt(wheelbaseInMm)
-            dest.writeInt(litresPer100KmMotorway)
-            dest.writeInt(litresPer100KmCity)
+            dest.writeFloat(litresPer100KmMotorway)
+            dest.writeFloat(litresPer100KmCity)
             dest.writeInt(fuelCapacityLitres)
             dest.writeInt(soldInUsa)
             dest.writeString(co2)

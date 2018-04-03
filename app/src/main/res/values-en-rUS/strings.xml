@@ -83,11 +83,12 @@
     <string name="error_loading_image">Error loading image</string>
     <string name="manual_input">manual input</string>
     <string name="automatic_input">automatic input</string>
-    <string name="fuel_capacity">fuel capacity</string>
-    <string name="fuel_efficiency_motorway">fuel efficiency (highway) - L/100km</string>
-    <string name="fuel_efficiency_city">fuel efficiency (city) - L/100km</string>
+    <string name="fuel_capacity">fuel capacity (L)</string>
+    <string name="average_consumption_motorway">average consumption (highway) - L/100km</string>
+    <string name="average_consumption_city">average consumption (city) - L/100km</string>
     <string name="year_format" formatted="true">year: %1$d</string>
     <string name="fuel_capacity_format">fuel capacity (L): %1$d</string>
-    <string name="fuel_efficiency_motorway_format">fuel efficiency (highway) - L/100km: %1$d</string>
-    <string name="fuel_efficiency_city_format">fuel efficiency (city) - L/100km: %1$d</string>
+    <string name="average_consumption_motorway_format">average consumption (highway) - L/100km: %1$.1f</string>
+    <string name="average_consumption_city_format">average consumption (city) - L/100km: %1$.1f</string>
+    <string name="unknown_enter_data_manually">[unknown - please fill this field manually]</string>
 </resources>

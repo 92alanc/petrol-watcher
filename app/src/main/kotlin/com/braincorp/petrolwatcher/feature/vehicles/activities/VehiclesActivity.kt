@@ -201,7 +201,8 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun loadFragment(uiMode: AdaptableUi.Mode) {
         placeholderVehicles.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            fragment = VehicleDetailsNewFragment.newInstance(uiMode, vehicle)
+            fragment = VehicleDetailsNewFragment.newInstance(uiMode, vehicle,
+                    deleteButtonClickListener = this)
             replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!,
                     TAG_VEHICLE_DETAILS)
         }

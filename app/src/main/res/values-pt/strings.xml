@@ -83,11 +83,12 @@
     <string name="error_loading_image">Erro ao carregar imagem</string>
     <string name="manual_input">preenchimento manual</string>
     <string name="automatic_input">preenchimento automático</string>
-    <string name="fuel_capacity">capacidade de combustível</string>
-    <string name="fuel_efficiency_motorway">autonomia (estrada) - L/100km</string>
-    <string name="fuel_efficiency_city">autonomia (cidade) - L/100km</string>
+    <string name="fuel_capacity">capacidade de combustível (L)</string>
+    <string name="average_consumption_motorway">consumo médio (estrada) - L/100km</string>
+    <string name="average_consumption_city">consumo médio (cidade) - L/100km</string>
     <string name="year_format" formatted="true">ano: %1$d</string>
     <string name="fuel_capacity_format">capacidade de combustível (L): %1$d</string>
-    <string name="fuel_efficiency_motorway_format">autonomia (estrada) - L/100km: %1$d</string>
-    <string name="fuel_efficiency_city_format">autonomia (cidade) - L/100km: %1$d</string>
+    <string name="average_consumption_motorway_format">consumo médio (estrada) - L/100km: %1$.1f</string>
+    <string name="average_consumption_city_format">consumo médio (cidade) - L/100km: %1$.1f</string>
+    <string name="unknown_enter_data_manually">[desconhecido - por favor preencha este campo manualmente]</string>
 </resources>
