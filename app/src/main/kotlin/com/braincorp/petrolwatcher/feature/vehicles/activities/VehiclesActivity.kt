@@ -162,6 +162,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         uiMode = AdaptableUi.Mode.CREATE
         recyclerViewVehicles.visibility = GONE
         fabVehicles.setImageResource(R.drawable.ic_save)
+        textViewNoVehicles.visibility = GONE
         loadFragment(uiMode)
     }
 

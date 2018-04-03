@@ -23,44 +23,87 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_end="55dp"/>
 
+            <TextView
+                android:id="@+id/labelYear"
+                style="@style/TextViewDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerYear"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinnerYear"
+                app:layout_constraintHorizontal_bias="0"/>
+
             <Spinner
                 android:id="@+id/spinnerYear"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerManufacturer"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierLabels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside"
                 tools:listitem="@layout/item_spinner_simple"/>
 
+            <TextView
+                android:id="@+id/labelManufacturer"
+                style="@style/TextViewDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manufacturer"
+                app:layout_constraintTop_toTopOf="@+id/spinnerManufacturer"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerManufacturer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinnerManufacturer"
+                app:layout_constraintHorizontal_bias="0"/>
+
             <Spinner
                 android:id="@+id/spinnerManufacturer"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/spinnerYear"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerModel"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierLabels"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/item_spinner_simple" />
 
+            <TextView
+                android:id="@+id/labelModel"
+                style="@style/TextViewDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                app:layout_constraintTop_toTopOf="@+id/spinnerModel"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerModel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinnerModel"
+                app:layout_constraintHorizontal_bias="0"/>
+
             <Spinner
                 android:id="@+id/spinnerModel"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/spinnerManufacturer"
                 app:layout_constraintBottom_toTopOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierLabels"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/item_spinner_simple"/>
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrierLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="labelYear,labelManufacturer,labelModel"/>
 
             <android.support.constraint.Group
                 android:id="@+id/groupAutomaticInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="spinnerYear,spinnerManufacturer,spinnerModel"
+                app:constraint_referenced_ids="spinnerYear,spinnerManufacturer,spinnerModel,labelYear,labelManufacturer,labelModel"
                 tools:visibility="visible"/>
 
             <EditText

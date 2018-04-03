@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_vehicle_details_new.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.roundToInt
 
 class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSelectedListener {
 
@@ -40,7 +41,8 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
             val args = Bundle()
             args.putSerializable(ARG_UI_MODE, uiMode)
-            args.putParcelable(ARG_VEHICLE, vehicle)
+            if (vehicle != null)
+                args.putParcelable(ARG_VEHICLE, vehicle)
             instance.arguments = args
 
             return instance
@@ -72,6 +74,7 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         super.onViewCreated(view, savedInstanceState)
         parseArgs()
         prepareUi()
+        setupSpinners()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -89,6 +92,10 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     override fun prepareCreateMode() {
         uiMode = AdaptableUi.Mode.CREATE
+
+        groupManualInput.visibility = GONE
+        groupTextViews.visibility = GONE
+
         if (yearsList.isEmpty())
             loadYears()
     }
@@ -129,7 +136,16 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
         }
     }
 
-    fun getVehicle(): NewVehicleModel? = vehicle
+    fun getVehicle(): NewVehicleModel? {
+        vehicle.year = year
+        vehicle.manufacturer = manufacturer
+        vehicle.name = model
+        vehicle.fuelCapacity = modelDetails.fuelCapacityLitres
+        vehicle.litresPer100KmCity = modelDetails.litresPer100KmCity
+        vehicle.litresPer100KmMotorway = modelDetails.litresPer100KmMotorway
+
+        return vehicle
+    }
 
     private fun prepareUi() {
         when (uiMode) {
@@ -142,7 +158,14 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
     private fun parseArgs() {
         uiMode = arguments!!.getSerializable(ARG_UI_MODE) as AdaptableUi.Mode
-        vehicle = arguments!!.getParcelable(ARG_VEHICLE)
+        if (arguments!!.containsKey(ARG_VEHICLE))
+            vehicle = arguments!!.getParcelable(ARG_VEHICLE)
+    }
+
+    private fun setupSpinners() {
+        spinnerYear.onItemSelectedListener = this
+        spinnerManufacturer.onItemSelectedListener = this
+        spinnerModel.onItemSelectedListener = this
     }
 
     private fun loadYears() {
@@ -187,6 +210,7 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     }
 
     private fun populateManufacturerSpinner(data: List<String>) {
+        spinnerManufacturer.adapter = null
         val adapter = GenericSpinnerAdapter(activity, data)
         spinnerManufacturer.adapter = adapter
     }
@@ -210,6 +234,7 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
     }
 
     private fun populateModelSpinner(data: List<String>) {
+        spinnerModel.adapter = null
         val adapter = GenericSpinnerAdapter(activity, data)
         spinnerModel.adapter = adapter
     }
@@ -222,7 +247,27 @@ class VehicleDetailsNewFragment : Fragment(), AdaptableUi, AdapterView.OnItemSel
 
             override fun onResponse(call: Call<ModelDetails>, response: Response<ModelDetails>) {
                 if (response.isSuccessful) {
-                    modelDetails = response.body()!!.list[0]
+                    val list = response.body()!!.list
+                    if (list.isNotEmpty())
+                        modelDetails = list[0]
+
+                    val city = modelDetails.litresPer100KmCity
+                    val motorway = modelDetails.litresPer100KmMotorway
+                    val mixed = modelDetails.litresPer100KmMixed
+
+                    if (city == -1) {
+                        if (motorway != -1)
+                            modelDetails.litresPer100KmCity = motorway
+                        else
+                            modelDetails.litresPer100KmCity = mixed.roundToInt()
+                    }
+
+                    if (motorway == -1) {
+                        if (city != -1)
+                            modelDetails.litresPer100KmMotorway = city
+                        else
+                            modelDetails.litresPer100KmMotorway = mixed.roundToInt()
+                    }
                 }
             }
         })

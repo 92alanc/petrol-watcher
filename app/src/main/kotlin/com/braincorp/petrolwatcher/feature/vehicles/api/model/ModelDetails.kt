@@ -38,6 +38,7 @@ data class ModelDetails(@SerializedName("Trims") val list: List<Trims>) {
                      @SerializedName("model_wheelbase_mm") var wheelbaseInMm: Int = -1,
                      @SerializedName("model_lkm_hwy") var litresPer100KmMotorway: Int = -1,
                      @SerializedName("model_lkm_city") var litresPer100KmCity: Int = -1,
+                     @SerializedName("model_lkm_mixed") var litresPer100KmMixed: Float = -1f,
                      @SerializedName("model_fuel_cap_l") var fuelCapacityLitres: Int = -1,
                      @SerializedName("model_sold_in_us") var soldInUsa: Int = -1,
                      @SerializedName("model_co2") var co2: String? = null,

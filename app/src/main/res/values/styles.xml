@@ -4,11 +4,13 @@
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="cardViewStyle">@style/CardView</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="cardViewStyle">@style/CardView</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
