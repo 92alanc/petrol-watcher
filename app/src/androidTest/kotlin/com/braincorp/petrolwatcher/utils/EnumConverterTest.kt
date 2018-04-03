@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class EnumConverterTest {
+class ConversionsTest {
 
     private val context = getTargetContext()
 
