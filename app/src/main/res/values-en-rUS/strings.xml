@@ -34,9 +34,6 @@
     <string name="rating_ok">okay</string>
     <string name="bad">bad</string>
     <string name="good">good</string>
-    <string name="car">car</string>
-    <string name="lorry">truck</string>
-    <string name="motorcycle">motorcycle</string>
     <string name="lpg">LPG</string>
     <string name="petrol">gas</string>
     <string name="ethanol">ethanol</string>

@@ -1,6 +1,5 @@
 package com.braincorp.petrolwatcher.feature.vehicles.activities
 
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
@@ -14,9 +13,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.adapters.NewVehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.database.VehicleDatabase
 import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsFragment
-import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsNewFragment
-import com.braincorp.petrolwatcher.feature.vehicles.model.NewVehicleModel
-import com.braincorp.petrolwatcher.listeners.OnFragmentInflatedListener
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.removeFragment
@@ -32,8 +29,8 @@ import kotlinx.android.synthetic.main.activity_vehicles.*
 import kotlinx.android.synthetic.main.content_vehicles.*
 
 class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
-        OnFragmentInflatedListener, OnCompleteListener<Void>,
-        OnItemClickListener, ValueEventListener, AdaptableUi {
+        OnCompleteListener<Void>, OnItemClickListener,
+        ValueEventListener, AdaptableUi {
 
     companion object {
         const val EXTRA_DATA = "data"
@@ -52,10 +49,10 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private var fragment: VehicleDetailsNewFragment? = null
+    private var fragment: VehicleDetailsFragment? = null
     private var uiMode = AdaptableUi.Mode.INITIAL
-    private var vehicle: NewVehicleModel? = null
-    private var vehicles: ArrayList<NewVehicleModel>? = null
+    private var vehicle: Vehicle? = null
+    private var vehicles: ArrayList<Vehicle>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,10 +99,6 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    override fun onFragmentInflated(fragment: Fragment) {
-        (fragment as VehicleDetailsFragment).setDeleteButtonClickListener(this)
-    }
-
     override fun onItemClick(position: Int) {
         vehicle = vehicles!![position]
         if (ACTION_PICK == intent.action) {
@@ -124,9 +117,9 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onDataChange(snapshot: DataSnapshot?) {
-        val list = ArrayList<NewVehicleModel>()
+        val list = ArrayList<Vehicle>()
         snapshot?.children?.forEach {
-            val vehicle = NewVehicleModel(it)
+            val vehicle = Vehicle(it)
             list.add(vehicle)
         }
         vehicles = list
@@ -201,7 +194,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun loadFragment(uiMode: AdaptableUi.Mode) {
         placeholderVehicles.visibility = VISIBLE
         if (fragment == null || uiMode == AdaptableUi.Mode.EDIT) {
-            fragment = VehicleDetailsNewFragment.newInstance(uiMode, vehicle,
+            fragment = VehicleDetailsFragment.newInstance(uiMode, vehicle,
                     deleteButtonClickListener = this)
             replaceFragmentPlaceholder(R.id.placeholderVehicles, fragment!!,
                     TAG_VEHICLE_DETAILS)
@@ -264,7 +257,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
 
         val tag = savedInstanceState.getString(KEY_FRAGMENT)
         if (tag != null)
-            fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsNewFragment
+            fragment = fragmentManager.findFragmentByTag(tag) as VehicleDetailsFragment
     }
 
     private fun hideProgressBar() {

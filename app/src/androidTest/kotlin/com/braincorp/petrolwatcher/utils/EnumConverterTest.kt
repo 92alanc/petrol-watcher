@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.petrolstations.model.Fuel
 import com.braincorp.petrolwatcher.feature.petrolstations.model.Rating
-import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -75,34 +74,6 @@ class EnumConverterTest {
     fun shouldConvertGoodRatingToString() {
         val expected = context.getString(R.string.good)
         val actual = context.ratingToString(Rating.GOOD)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertCarVehicleTypeToString() {
-        val expected = context.getString(R.string.car)
-        val actual = context.vehicleTypeToString(Vehicle.Type.CAR)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertLorryVehicleTypeToString() {
-        val expected = context.getString(R.string.lorry)
-        val actual = context.vehicleTypeToString(Vehicle.Type.LORRY)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertMotorcycleVehicleTypeToString() {
-        val expected = context.getString(R.string.motorcycle)
-        val actual = context.vehicleTypeToString(Vehicle.Type.MOTORCYCLE)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun shouldConvertVanVehicleTypeToString() {
-        val expected = context.getString(R.string.van)
-        val actual = context.vehicleTypeToString(Vehicle.Type.VAN)
         assertEquals(expected, actual)
     }
 

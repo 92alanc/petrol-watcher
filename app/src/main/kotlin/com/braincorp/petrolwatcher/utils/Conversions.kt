@@ -1,12 +1,10 @@
 package com.braincorp.petrolwatcher.utils
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.petrolstations.model.Fuel
 import com.braincorp.petrolwatcher.feature.petrolstations.model.Rating
-import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
 fun fuelSetToStringFloatMap(input: MutableSet<Fuel>): Map<String, Float> {
     val output = HashMap<String, Float>()
@@ -101,15 +99,6 @@ fun Context.ratingToColour(rating: Rating): Int {
     return ContextCompat.getColor(this, colour)
 }
 
-fun Context.vehicleTypeToString(vehicleType: Vehicle.Type): String {
-    return when (vehicleType) {
-        Vehicle.Type.CAR -> getString(R.string.car)
-        Vehicle.Type.LORRY -> getString(R.string.lorry)
-        Vehicle.Type.MOTORCYCLE -> getString(R.string.motorcycle)
-        Vehicle.Type.VAN -> getString(R.string.van)
-    }
-}
-
 fun Context.fuelTypeListToString(fuelTypes: ArrayList<Fuel.Type>): String {
     val sb = StringBuilder()
     fuelTypes.map { fuelTypeToString(it) }
@@ -120,16 +109,6 @@ fun Context.fuelTypeListToString(fuelTypes: ArrayList<Fuel.Type>): String {
                     sb.append("$fuelTypeString, ")
             }
     return sb.toString()
-}
-
-fun Context.vehicleTypeToDrawable(vehicleType: Vehicle.Type): Drawable {
-    val drawableRes = when (vehicleType) {
-        Vehicle.Type.CAR -> R.drawable.ic_car
-        Vehicle.Type.LORRY -> R.drawable.ic_lorry
-        Vehicle.Type.MOTORCYCLE -> R.drawable.ic_motorcycle
-        Vehicle.Type.VAN -> R.drawable.ic_van
-    }
-    return ContextCompat.getDrawable(this, drawableRes)!!
 }
 
 fun kilometresToMiles(kilometres: Float) = kilometres * 0.621371f

@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.feature.vehicles.database
 
-import com.braincorp.petrolwatcher.feature.vehicles.model.NewVehicleModel
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -15,7 +15,7 @@ object VehicleDatabase {
         reference = database.getReference("vehicles").child(uid)
     }
 
-    fun insertOrUpdate(vehicle: NewVehicleModel, onCompleteListener: OnCompleteListener<Void>) {
+    fun insertOrUpdate(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         reference.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError?) { }
 
@@ -32,7 +32,7 @@ object VehicleDatabase {
         })
     }
 
-    fun delete(vehicle: NewVehicleModel, onCompleteListener: OnCompleteListener<Void>) {
+    fun delete(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         reference.child(vehicle.id)
                 .removeValue()
                 .addOnCompleteListener(onCompleteListener)
@@ -42,13 +42,13 @@ object VehicleDatabase {
         reference.addValueEventListener(valueEventListener)
     }
 
-    private fun insert(vehicle: NewVehicleModel, onCompleteListener: OnCompleteListener<Void>) {
+    private fun insert(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         reference.child(vehicle.id)
                 .setValue(vehicle.toMap())
                 .addOnCompleteListener(onCompleteListener)
     }
 
-    private fun update(vehicle: NewVehicleModel, onCompleteListener: OnCompleteListener<Void>) {
+    private fun update(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         reference.child(vehicle.id)
                 .updateChildren(vehicle.toMap())
                 .addOnCompleteListener(onCompleteListener)

@@ -38,9 +38,6 @@
     <string name="rating_ok">okay</string>
     <string name="bad">bad</string>
     <string name="good">good</string>
-    <string name="car">car</string>
-    <string name="lorry">lorry</string>
-    <string name="motorcycle">motorcycle</string>
     <string name="lpg">LPG</string>
     <string name="diesel" translatable="false">diesel</string>
     <string name="petrol">petrol</string>
@@ -55,7 +52,6 @@
     <string name="unit_km_per_litre" translatable="false">km/L</string>
     <string name="unit_miles_per_gallon" translatable="false">mpg</string>
     <string name="error_finding_vehicles">Error finding your vehicles</string>
-    <string name="van" translatable="false">van</string>
     <string name="fuel_consumption">fuel consumption</string>
     <string name="no_vehicles">No vehicles.\nTap the + button to add</string>
     <string name="all_fields_are_required">All fields are required</string>

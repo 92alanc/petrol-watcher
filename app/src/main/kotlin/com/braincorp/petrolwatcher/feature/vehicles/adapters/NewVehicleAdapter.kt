@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.vehicles.model.NewVehicleModel
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 
 class NewVehicleAdapter(private val context: Context,
-                        private val data: ArrayList<NewVehicleModel>,
+                        private val data: ArrayList<Vehicle>,
                         private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<NewVehicleAdapter.VehicleHolder>() {
 
@@ -19,7 +19,7 @@ class NewVehicleAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleHolder {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.item_vehicle_new, parent, false)
+        val view = inflater.inflate(R.layout.item_vehicle, parent, false)
         return VehicleHolder(view, onItemClickListener)
     }
 

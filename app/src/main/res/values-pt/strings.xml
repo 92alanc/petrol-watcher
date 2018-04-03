@@ -34,9 +34,6 @@
     <string name="rating_ok">razoável</string>
     <string name="bad">ruim</string>
     <string name="good">boa</string>
-    <string name="car">carro</string>
-    <string name="lorry">caminhão</string>
-    <string name="motorcycle">moto</string>
     <string name="lpg">gás natural</string>
     <string name="petrol">gasolina</string>
     <string name="ethanol">etanol</string>
