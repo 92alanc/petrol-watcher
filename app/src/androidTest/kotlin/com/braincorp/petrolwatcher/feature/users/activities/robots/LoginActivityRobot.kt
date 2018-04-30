@@ -11,9 +11,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
 import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
 
-fun login(func: LoginActivityRobot.() -> Unit) = LoginActivityRobot().apply {
-    func()
-}
+fun login(func: LoginActivityRobot.() -> Unit) = LoginActivityRobot().apply { func() }
 
 class LoginActivityRobot {
 
