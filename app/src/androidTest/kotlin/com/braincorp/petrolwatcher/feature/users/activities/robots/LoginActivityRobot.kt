@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.users.activities
+package com.braincorp.petrolwatcher.feature.users.activities.robots
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.support.test.espresso.intent.Intents.intended
@@ -9,6 +9,7 @@ import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displ
 import br.com.concretesolutions.kappuccino.utils.runtimePermission
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
+import com.braincorp.petrolwatcher.feature.users.activities.ProfileActivity
 
 fun login(func: LoginActivityRobot.() -> Unit) = LoginActivityRobot().apply {
     func()

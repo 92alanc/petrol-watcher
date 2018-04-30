@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.users.activities
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.base.BaseActivityTest
+import com.braincorp.petrolwatcher.feature.users.activities.robots.login
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
