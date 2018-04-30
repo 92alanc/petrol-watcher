@@ -62,31 +62,31 @@ android {
 }
 
 dependencies {
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
-    androidTestImplementation 'com.21buttons:fragment-test-rule:1.1.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "com.21buttons:fragment-test-rule:$fragment_test_rule_version"
 
-    debugImplementation 'com.21buttons:fragment-test-rule-extras:1.1.0'
+    debugImplementation "com.21buttons:fragment-test-rule-extras:$fragment_test_rule_version"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:cardview-v7:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+    implementation "com.google.android.gms:play-services-maps:$google_play_services_version"
     implementation 'com.google.maps.android:android-maps-utils:0.5'
-    implementation 'com.google.android.gms:play-services-places:15.0.0'
-    implementation 'com.google.android.gms:play-services-location:15.0.0'
-    implementation 'com.google.firebase:firebase-auth:15.0.0'
-    implementation 'com.google.firebase:firebase-database:15.0.0'
-    implementation 'com.google.firebase:firebase-storage:15.0.0'
+    implementation "com.google.android.gms:play-services-places:$google_play_services_version"
+    implementation "com.google.android.gms:play-services-location:$google_play_services_version"
+    implementation "com.google.firebase:firebase-auth:$google_play_services_version"
+    implementation "com.google.firebase:firebase-database:$google_play_services_version"
+    implementation "com.google.firebase:firebase-storage:$google_play_services_version"
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     testImplementation 'junit:junit:4.12'
 }
