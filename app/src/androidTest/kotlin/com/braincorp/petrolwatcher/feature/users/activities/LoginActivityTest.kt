@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.users.activities
 
 import android.support.test.runner.AndroidJUnit4
+import com.braincorp.petrolwatcher.authentication.AuthenticationManager
 import com.braincorp.petrolwatcher.base.BaseActivityTest
 import org.junit.Before
 import org.junit.Test
@@ -11,25 +12,82 @@ class LoginActivityTest : BaseActivityTest<LoginActivity>(LoginActivity::class.j
 
     @Before
     override fun before() {
-        super.before()
-        // TODO: sign out
+        AuthenticationManager.signOut {
+            super.before()
+        }
     }
 
     @Test
     fun whenClickingOnSignUp_ShouldRedirectToSignUpScreen() {
         login {
         } clickOnSignUp {
-            redirectsToSignUpScreen()
+            checkIfRedirectsToSignUpScreen()
         }
     }
 
     @Test
-    fun withCorrectEmailAndPassword_ShouldHaveSuccessfulLogin_WhenClickingOnSignIn() {
+    fun withCorrectEmailAndPassword_ShouldHaveSuccessfulLogin() {
         login {
             typeEmail("alcam.ukdev@gmail.com")
             typePassword("abcd1234")
         } clickOnSignIn {
-            loginIsSuccessful()
+            checkIfLoginIsSuccessful()
+        }
+    }
+
+    @Test
+    fun withInvalidEmail_ShouldShowErrorDialogue() {
+        login {
+            typeEmail("invalid")
+            typePassword("abcd1234")
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withInvalidPassword_ShouldShowErrorDialogue() {
+        login {
+            typeEmail("alcam.ukdev@gmail.com")
+            typePassword("invalid")
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withInvalidEmailAndPassword_ShouldShowErrorDialogue() {
+        login {
+            typeEmail("invalid")
+            typePassword("invalid")
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withEmptyEmail_ShouldShowErrorDialogue() {
+        login {
+            typePassword("abcd1234")
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withEmptyPassword_ShouldShowErrorDialogue() {
+        login {
+            typeEmail("alcam.ukdev@gmail.com")
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withEmptyEmailAndPassword_ShouldShowErrorDialogue() {
+        login {
+        } clickOnSignIn {
+            checkIfShowsErrorDialogue()
         }
     }
 

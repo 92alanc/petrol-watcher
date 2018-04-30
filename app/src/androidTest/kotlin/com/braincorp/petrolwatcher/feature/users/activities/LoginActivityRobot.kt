@@ -1,9 +1,12 @@
 package com.braincorp.petrolwatcher.feature.users.activities
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.support.test.espresso.intent.Intents.intended
 import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
+import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
+import br.com.concretesolutions.kappuccino.utils.runtimePermission
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.map.activities.MapActivity
 
@@ -45,12 +48,21 @@ class LoginActivityRobot {
 
     class LoginResult {
 
-        fun loginIsSuccessful() {
-            intended(hasComponent(MapActivity::class.java.name))
+        fun checkIfLoginIsSuccessful() {
+            runtimePermission(ACCESS_FINE_LOCATION) {
+                grant()
+                intended(hasComponent(MapActivity::class.java.name))
+            }
         }
 
-        fun redirectsToSignUpScreen() {
+        fun checkIfRedirectsToSignUpScreen() {
             intended(hasComponent(ProfileActivity::class.java.name))
+        }
+
+        fun checkIfShowsErrorDialogue() {
+            displayed {
+                text(R.string.invalid_email_or_password)
+            }
         }
 
     }
