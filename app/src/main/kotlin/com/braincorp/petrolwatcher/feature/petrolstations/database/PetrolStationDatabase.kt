@@ -49,7 +49,7 @@ object PetrolStationDatabase {
     private fun insert(petrolStation: PetrolStation,
                        onCompleteListener: OnCompleteListener<Void>) {
         reference.child(petrolStation.id)
-                .setValue(petrolStation.toMap())
+                .setValue(petrolStation.toMap()) // FIXME
                 .addOnCompleteListener(onCompleteListener)
     }
 
