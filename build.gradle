@@ -1,5 +1,10 @@
 buildscript {
-    ext.kotlin_version = '1.2.40'
+    ext.espresso_version = '3.0.2'
+    ext.fragment_test_rule_version = '1.1.0'
+    ext.google_play_services_version = '15.0.1'
+    ext.kotlin_version = '1.2.41'
+    ext.retrofit_version = '2.4.0'
+    ext.support_library_version = '27.1.1'
 
     repositories {
         google()
