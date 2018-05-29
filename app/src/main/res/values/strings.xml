@@ -1,5 +1,9 @@
 <resources>
     <string name="google_maps_key" translatable="false">AIzaSyCo7P-7fdXBw43ewvTM4uLRKajq4YNpqOY</string>
 
-    <string name="app_name">Petrol Watcher</string>
+    <string name="app_name" translatable="false">Petrol Watcher</string>
+
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="sign_in_facebook">Sign in with Facebook</string>
+    <string name="sign_in_email">Sign in with email</string>
 </resources>

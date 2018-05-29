@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Margin -->
+    <dimen name="margin_default">8dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_button">4dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+</resources>

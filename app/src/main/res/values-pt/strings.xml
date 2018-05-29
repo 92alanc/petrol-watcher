@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in_google">Entrar com Google</string>
+    <string name="sign_in_facebook">Entrar com Facebook</string>
+    <string name="sign_in_email">Entrar com email</string>
+</resources>
