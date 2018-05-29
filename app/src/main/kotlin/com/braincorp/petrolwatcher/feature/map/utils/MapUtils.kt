@@ -115,8 +115,10 @@ private fun AppCompatActivity.zoomToDeviceLocation(map: GoogleMap) {
     getCurrentLocation(OnCompleteListener {
         if (it.isSuccessful) {
             val location = it.result
-            val latLng = LatLng(location.latitude, location.longitude)
-            map.zoomToLocation(latLng)
+            if (location != null) {
+                val latLng = LatLng(location.latitude, location.longitude)
+                map.zoomToLocation(latLng)
+            }
         }
     })
 }
