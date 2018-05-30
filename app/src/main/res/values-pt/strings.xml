@@ -3,4 +3,9 @@
     <string name="sign_in_google">Entrar com Google</string>
     <string name="sign_in_facebook">Entrar com Facebook</string>
     <string name="sign_in_email">Entrar com email</string>
+    <string name="app_name">Petrol Watcher</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Senha</string>
+    <string name="sign_in">Entrar</string>
+    <string name="sign_up">Criar conta</string>
 </resources>
