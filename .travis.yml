@@ -25,8 +25,8 @@ android:
     - google-gdk-license-.+
 
   before_install:
-    - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL"
-    - echo yes | sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
+    - echo yes | sdkmanager "platforms;android-27"
+    - echo yes | sdkmanager "build-tools;27.0.3"
     - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.1.0"
     - mkdir "$ANDROID_HOME/licenses" || true
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -51,4 +51,4 @@ android:
     - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
   script:
-    - ./gradlew clean assembleDebug connectedDebugAndroidTest -PdisablePreDex --stacktrace
+    - ./gradlew clean assembleDebug connectedDebugAndroidTest --stacktrace
