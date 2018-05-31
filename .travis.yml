@@ -2,22 +2,17 @@ language: android
 jdk: oraclejdk8
 
 android:
-  env:
-    global:
-      - ANDROID_API_LEVEL=27
-      - BUILD_TOOLS_VERSION=27.0.3
-
   components:
     - tools
     - platform-tools
     - tools
 
-    - build-tools-$BUILD_TOOLS_VERSION
-    - android-$ANDROID_API_LEVEL
+    - build-tools-27.0.3
+    - android-27
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-19
-    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-addon-google_apis-google-27
 
   licenses:
     - android-sdk-preview-license-.+
@@ -37,8 +32,8 @@ android:
   install:
     - echo y | android update sdk -u -a -t tools
     - echo y | android update sdk -u -a -t platform-tools
-    - echo y | android update sdk -u -a -t build-tools-$BUILD_TOOLS_VERSION
-    - echo y | android update sdk -u -a -t android-$ANDROID_API_LEVEL
+    - echo y | android update sdk -u -a -t build-tools-27.0.3
+    - echo y | android update sdk -u -a -t android-27
     - echo y | android update sdk -u -a -t extra-google-m2repository
     - echo y | android update sdk -u -a -t extra-android-m2repository
 
@@ -47,8 +42,6 @@ android:
     - emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
-    - mkdir -p "$ANDROID_HOME/licenses"
-    - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
   script:
     - ./gradlew clean assembleDebug connectedDebugAndroidTest --stacktrace
