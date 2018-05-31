@@ -2,7 +2,6 @@
 .gradle/
 build/
 captures/
-app/release.properties
 app/release
 local.properties
 *.iml
