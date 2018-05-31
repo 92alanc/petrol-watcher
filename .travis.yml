@@ -3,6 +3,11 @@ android:
   components:
     - tools
     - platform-tools
+    - build-tools-27.0.3
+  licenses:
+   - android-sdk-preview-license-.+
+   - android-sdk-license-.+
+   - google-gdk-license-.+
 
   before_script:
     - echo no | android create avd --force -n test android-26 --abi armeabi-v7a
