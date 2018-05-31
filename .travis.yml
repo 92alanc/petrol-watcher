@@ -1,17 +1,23 @@
 language: android
+jdk: oraclejdk8
+
 android:
+  env:
+    global:
+      - ANDROID_API_LEVEL=27
+      - BUILD_TOOLS_VERSION=27.0.3
+
   components:
     - tools
     - platform-tools
     - tools
 
-    - build-tools-27.0.3
-    - android-27
+    - build-tools-$BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-19
-    - sys-img-armeabi-v7a-addon-google_apis-google-27
-    - sys-img-armeabi-v7a-addon-google_apis-google-27
+    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
 
   licenses:
     - android-sdk-preview-license-.+
@@ -19,8 +25,8 @@ android:
     - google-gdk-license-.+
 
   before_install:
-    - echo yes | sdkmanager "platforms;android-27"
-    - echo yes | sdkmanager "build-tools;27.0.3"
+    - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL"
+    - echo yes | sdkmanager "build-tools;$BUILD_TOOLS_VERSION"
     - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.1.0"
     - mkdir "$ANDROID_HOME/licenses" || true
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -31,16 +37,18 @@ android:
   install:
     - echo y | android update sdk -u -a -t tools
     - echo y | android update sdk -u -a -t platform-tools
-    - echo y | android update sdk -u -a -t build-tools-27.0.3
-    - echo y | android update sdk -u -a -t android-27
+    - echo y | android update sdk -u -a -t build-tools-$BUILD_TOOLS_VERSION
+    - echo y | android update sdk -u -a -t android-$ANDROID_API_LEVEL
     - echo y | android update sdk -u -a -t extra-google-m2repository
     - echo y | android update sdk -u -a -t extra-android-m2repository
 
   before_script:
-    - echo no | android create avd --force -n test android-27 --abi armeabi-v7a
+    - echo no | android create avd --force -n test android-$ANDROID_API_LEVEL --abi armeabi-v7a
     - emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
+    - mkdir -p "$ANDROID_HOME/licenses"
+    - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
   script:
     - ./gradlew clean assembleDebug connectedDebugAndroidTest -PdisablePreDex --stacktrace
