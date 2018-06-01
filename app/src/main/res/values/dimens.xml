@@ -1,32 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Width -->
-    <dimen name="width_max_navigation_header_text">160dp</dimen>
-    <dimen name="width_max_petrol_station_address">130dp</dimen>
-    <dimen name="width_max_average_consumption_label">150dp</dimen>
-
-    <!-- Height -->
-    <dimen name="height_navigation_header">160dp</dimen>
-
     <!-- Margin -->
     <dimen name="margin_default">8dp</dimen>
-    <dimen name="margin_dialogue">32dp</dimen>
-    <dimen name="margin_fab">16dp</dimen>
-    <dimen name="margin_header_bottom">32dp</dimen>
-    <dimen name="margin_gap_spinners">16dp</dimen>
 
     <!-- Padding -->
+    <dimen name="padding_button">4dp</dimen>
     <dimen name="padding_default">16dp</dimen>
-    <dimen name="padding_spinner">8dp</dimen>
-
-    <!-- Radius -->
-    <dimen name="radius_corner_default">4dp</dimen>
-
-    <!-- View size -->
-    <dimen name="size_circle_image_view">120dp</dimen>
-    <dimen name="size_circle_image_view_small">80dp</dimen>
-
-    <!-- Text size -->
-    <dimen name="text_size_header">24sp</dimen>
-    <dimen name="text_size_title">20sp</dimen>
 </resources>
