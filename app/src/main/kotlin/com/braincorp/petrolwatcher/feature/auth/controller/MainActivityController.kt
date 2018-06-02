@@ -18,18 +18,22 @@ class MainActivityController :
 
     override fun onConnectionFailed(result: ConnectionResult) {
         Log.w(TAG, "Connection failed! Result -> $result")
+        // TODO
     }
 
     override fun onSuccess(result: LoginResult?) {
         Log.d(TAG, "Facebook login successful")
+        // TODO: start map activity
     }
 
     override fun onCancel() {
         Log.w(TAG, "Facebook login cancelled")
+        // TODO
     }
 
     override fun onError(error: FacebookException?) {
         Log.e(TAG, error?.message, error)
+        // TODO
     }
 
     fun handleGoogleSignInResult(data: Intent?) {
@@ -37,6 +41,7 @@ class MainActivityController :
         Log.d(TAG, "result -> ${result.isSuccess}")
         if (result.isSuccess) {
             Log.d(TAG, "Google sign in successful")
+            // TODO: start map activity
         }
     }
 
