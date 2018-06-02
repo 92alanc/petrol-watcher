@@ -37,6 +37,10 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        dev {
+            minifyEnabled false
+        }
     }
 
     lintOptions {
@@ -51,6 +55,24 @@ android {
 
         debug {
             manifest.srcFile 'src/androidTest/AndroidManifest.xml'
+        }
+    }
+}
+
+def build_param = "${build}"
+
+if (build_param != "dev") {
+    //exclude production build
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'dev') {
+            variant.setIgnore(true)
+        }
+    }
+} else {
+    //exclude all except production build
+    android.variantFilter { variant ->
+        if (variant.buildType.name != 'dev') {
+            variant.setIgnore(true)
         }
     }
 }

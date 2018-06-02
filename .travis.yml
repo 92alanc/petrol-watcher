@@ -43,4 +43,4 @@ install:
 #  - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew clean assembleDebug --stacktrace
+  - ./gradlew clean build -Pbuild=dev --stacktrace

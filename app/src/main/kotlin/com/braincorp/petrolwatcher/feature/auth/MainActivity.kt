@@ -8,9 +8,9 @@ import android.view.View
 import android.widget.Toast
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
+import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -29,14 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, GoogleApiClient.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-
-        googleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-                .build()
+        googleApiClient = getGoogleApiClient(onConnectionFailedListener = this)
         setupButtons()
     }
 
