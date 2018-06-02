@@ -25,14 +25,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private val callbackManager = CallbackManager.Factory.create()
+    private val controller = MainActivityController()
 
-    private lateinit var controller: MainActivityController
     private lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        controller = MainActivityController()
         googleApiClient = getGoogleApiClient(controller)
         setupButtons()
     }
