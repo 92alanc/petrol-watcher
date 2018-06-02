@@ -1,12 +1,15 @@
 package com.braincorp.petrolwatcher.feature.auth.utils
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
-import com.braincorp.petrolwatcher.feature.auth.viewmodel.Account
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 fun AppCompatActivity.getGoogleApiClient(
         onConnectionFailedListener: GoogleApiClient.OnConnectionFailedListener): GoogleApiClient {
@@ -20,17 +23,17 @@ fun AppCompatActivity.getGoogleApiClient(
             .build()
 }
 
-fun Context.getActiveAccount(): Account? {
-    return getActiveGoogleAccount()
+fun getActiveAccount(): FirebaseUser? {
+    return FirebaseAuth.getInstance().currentUser
 }
 
-private fun Context.getActiveGoogleAccount(): Account? {
-    val googleAccount = GoogleSignIn.getLastSignedInAccount(this)
-    return if (googleAccount == null) {
-        null
-    } else {
-        Account(googleAccount.displayName!!,
-                googleAccount.email!!,
-                googleAccount.photoUrl?.toString())
-    }
+fun AppCompatActivity.signInWithFacebook(callbackManager: CallbackManager,
+                                         callback: FacebookCallback<LoginResult>) {
+    LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+    LoginManager.getInstance().registerCallback(callbackManager, callback)
+}
+
+fun AppCompatActivity.signInWithGoogle(googleApiClient: GoogleApiClient, requestCode: Int) {
+    val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+    startActivityForResult(intent, requestCode)
 }

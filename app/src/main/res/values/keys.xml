@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="facebook_app_id" translatable="false">243295819587556</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb243295819587556</string>
     <string name="google_maps_key" translatable="false">AIzaSyCo7P-7fdXBw43ewvTM4uLRKajq4YNpqOY</string>
 </resources>

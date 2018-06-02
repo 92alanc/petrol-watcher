@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.auth
+package com.braincorp.petrolwatcher.feature.auth.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

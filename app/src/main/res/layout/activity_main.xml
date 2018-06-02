@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_default"
-    tools:context=".feature.auth.MainActivity">
+    tools:context=".feature.auth.view.MainActivity">
 
     <ImageView
         android:id="@+id/img_app_logo"

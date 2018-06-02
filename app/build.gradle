@@ -106,6 +106,9 @@ dependencies {
     // Circle image view
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    // Facebook login
+    implementation 'com.facebook.android:facebook-login:4.28.0'
+
     // Firebase
     implementation "com.google.firebase:firebase-auth:$firebase_version"
     implementation "com.google.firebase:firebase-database:$firebase_version"
