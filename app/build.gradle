@@ -89,6 +89,9 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_version"
     implementation "com.google.firebase:firebase-storage:$firebase_version"
 
+    // Google sign in
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
     // Google Maps
     implementation "com.google.android.gms:play-services-maps:$google_maps_version"
     implementation 'com.google.maps.android:android-maps-utils:0.5'
