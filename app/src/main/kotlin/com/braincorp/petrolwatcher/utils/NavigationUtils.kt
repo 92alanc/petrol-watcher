@@ -2,8 +2,8 @@ package com.braincorp.petrolwatcher.utils
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
-import com.braincorp.petrolwatcher.feature.auth.view.EmailSignInActivity
-import com.braincorp.petrolwatcher.feature.auth.view.MainActivity
+import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
+import com.braincorp.petrolwatcher.feature.auth.MainActivity
 
 fun AppCompatActivity.startMainActivity(finishCurrent: Boolean = false) {
     startActivity(MainActivity::class.java, finishCurrent)

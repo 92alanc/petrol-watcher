@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.feature.auth
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.view.EmailSignInActivity
 
 fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply(func)
 

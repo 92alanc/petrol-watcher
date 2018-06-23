@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".feature.auth.view.MainActivity"
+        <activity android:name=".feature.auth.MainActivity"
             android:taskAffinity="@string/affinity_auth"
             android:finishOnTaskLaunch="true">
             <intent-filter>
@@ -20,12 +20,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.auth.view.EmailSignInActivity"
+        <activity android:name=".feature.auth.EmailSignInActivity"
             android:taskAffinity="@string/affinity_auth"
             android:finishOnTaskLaunch="true"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.auth.view.MainActivity"/>
+                android:value=".feature.auth.MainActivity"/>
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
