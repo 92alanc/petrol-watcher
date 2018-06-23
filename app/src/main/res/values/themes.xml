@@ -1,5 +1,9 @@
 <resources>
 
+    <!-- Base -->
+    <style name="Theme"/>
+    <style name="ThemeOverlay"/>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>

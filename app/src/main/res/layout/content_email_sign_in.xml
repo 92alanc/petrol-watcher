@@ -59,7 +59,7 @@
 
     <Button
         android:id="@+id/bt_sign_in"
-        style="@style/Button"
+        style="@style/AppStyle.Button.Default"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/teal_dark"
@@ -71,7 +71,7 @@
 
     <Button
         android:id="@+id/bt_sign_up"
-        style="@style/Button"
+        style="@style/AppStyle.Button.Default"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/amber"
