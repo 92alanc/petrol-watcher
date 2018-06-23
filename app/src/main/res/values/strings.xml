@@ -1,6 +1,8 @@
 <resources>
+    <!-- General -->
     <string name="app_name">Petrol Watcher</string>
 
+    <!-- Auth -->
     <string name="sign_in_google">Sign in with Google</string>
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_email">Sign in with email</string>
