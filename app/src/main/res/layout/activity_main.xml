@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/bt_sign_in_google"
         style="@style/AppStyle.Button.Default"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/width_button_sign_in_method"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_default"
         android:padding="@dimen/padding_button"
@@ -41,7 +41,7 @@
     <Button
         android:id="@+id/bt_sign_in_facebook"
         style="@style/AppStyle.Button.Default"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/width_button_sign_in_method"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_default"
         android:padding="@dimen/padding_button"
@@ -58,7 +58,7 @@
     <Button
         android:id="@+id/bt_sign_in_email"
         style="@style/AppStyle.Button.Default"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/width_button_sign_in_method"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_button"
         android:background="@color/teal"

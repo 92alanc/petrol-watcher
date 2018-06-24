@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Button -->
+    <dimen name="width_button_sign_in_method">250dp</dimen>
+
     <!-- Margin -->
     <dimen name="margin_default">8dp</dimen>
 

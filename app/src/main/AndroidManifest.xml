@@ -11,9 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Authentication -->
+
         <activity android:name=".feature.auth.MainActivity"
             android:taskAffinity="@string/affinity_auth"
-            android:finishOnTaskLaunch="true">
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -28,6 +31,11 @@
                 android:value=".feature.auth.MainActivity"/>
         </activity>
 
+        <activity android:name=".feature.auth.ProfileActivity"
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme"/>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
@@ -35,6 +43,7 @@
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -45,7 +54,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
 
     </application>
 
