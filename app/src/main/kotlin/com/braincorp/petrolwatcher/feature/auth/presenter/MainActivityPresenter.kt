@@ -1,7 +1,8 @@
-package com.braincorp.petrolwatcher.feature.auth.contract
+package com.braincorp.petrolwatcher.feature.auth.presenter
 
 import android.content.Intent
 import android.util.Log
+import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
@@ -9,11 +10,20 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 
-class MainActivityController :
+class MainActivityPresenter(private val view: MainContract.View) : MainContract.Presenter,
         GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
 
     private companion object {
         const val TAG = "PETROL_WATCHER"
+    }
+
+    override fun handleGoogleSignInResult(data: Intent?) {
+        val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+        Log.d(TAG, "result -> ${result.isSuccess}")
+        if (result.isSuccess) {
+            Log.d(TAG, "Google sign in successful")
+            // TODO: start map activity
+        }
     }
 
     override fun onConnectionFailed(result: ConnectionResult) {
@@ -34,15 +44,6 @@ class MainActivityController :
     override fun onError(error: FacebookException?) {
         Log.e(TAG, error?.message, error)
         // TODO
-    }
-
-    fun handleGoogleSignInResult(data: Intent?) {
-        val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-        Log.d(TAG, "result -> ${result.isSuccess}")
-        if (result.isSuccess) {
-            Log.d(TAG, "Google sign in successful")
-            // TODO: start map activity
-        }
     }
 
 }

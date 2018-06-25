@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.contract.MainActivityController
+import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
+import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
 import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient
 import com.braincorp.petrolwatcher.feature.auth.utils.signInWithFacebook
@@ -16,7 +17,7 @@ import com.facebook.CallbackManager
 import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.View {
 
     private companion object {
         const val RC_GOOGLE_SIGN_IN = 3892
@@ -24,15 +25,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         const val TAG = "PETROL_WATCHER"
     }
 
+    override val presenter: MainActivityPresenter = MainActivityPresenter(view = this)
+
     private val callbackManager = CallbackManager.Factory.create()
-    private val controller = MainActivityController()
 
     private lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        googleApiClient = getGoogleApiClient(controller)
+        googleApiClient = getGoogleApiClient(presenter)
         setupButtons()
     }
 
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_GOOGLE_SIGN_IN)
-            controller.handleGoogleSignInResult(data)
+            presenter.handleGoogleSignInResult(data)
 
         if (callbackManager.onActivityResult(requestCode, resultCode, data))
             return
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.bt_sign_in_google -> signInWithGoogle(googleApiClient, RC_GOOGLE_SIGN_IN)
-            R.id.bt_sign_in_facebook -> signInWithFacebook(callbackManager, controller)
+            R.id.bt_sign_in_facebook -> signInWithFacebook(callbackManager, presenter)
             R.id.bt_sign_in_email -> startEmailSignInActivity()
         }
     }
