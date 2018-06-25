@@ -10,10 +10,10 @@ import org.junit.runner.RunWith
 class EmailSignInActivityTest : BaseActivityTest<EmailSignInActivity>(EmailSignInActivity::class.java) {
 
     @Test
-    fun whenClickingOnSignUp_shouldStartProfileActivity() {
+    fun whenClickingOnSignUp_shouldStartNewAccountActivity() {
         emailSignIn {
         } clickSignUp {
-            redirectToProfileActivity()
+            redirectToNewAccountActivity()
         }
     }
 
