@@ -9,4 +9,8 @@
     <string name="sign_in">Entrar</string>
     <string name="sign_up">Criar conta</string>
     <string name="hint_confirm_password">Confirme a senha</string>
+    <string name="error_empty_confirmation">A confirmação não pode estar vazia</string>
+    <string name="error_empty_password">A senha não pode estar vazia</string>
+    <string name="error_empty_email">O e-mail não pode estar vazio</string>
+    <string name="error_password_and_confirmation_dont_match">A senha e a confirmação estão diferentes</string>
 </resources>

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.controller.EmailSignInActivityController
+import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInActivityController
 import com.braincorp.petrolwatcher.utils.startEmailAndPasswordActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
 import kotlinx.android.synthetic.main.content_email_sign_in.*

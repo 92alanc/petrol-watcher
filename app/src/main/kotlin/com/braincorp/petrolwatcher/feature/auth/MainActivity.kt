@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.controller.MainActivityController
+import com.braincorp.petrolwatcher.feature.auth.contract.MainActivityController
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
 import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient
 import com.braincorp.petrolwatcher.feature.auth.utils.signInWithFacebook

@@ -11,4 +11,8 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="hint_confirm_password">Confirm password</string>
+    <string name="error_empty_confirmation">Confirmation must not be empty</string>
+    <string name="error_empty_password">Password must not be empty</string>
+    <string name="error_empty_email">e-mail must not be empty</string>
+    <string name="error_password_and_confirmation_dont_match">Password and confirmation don\'t match</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.auth.controller
+package com.braincorp.petrolwatcher.feature.auth.contract
 
 import android.util.Log
 import com.google.android.gms.tasks.OnFailureListener
