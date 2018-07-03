@@ -22,7 +22,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
             val confirmation = edt_password_confirmation.text.toString()
-            presenter.validateCredentials(email, password, confirmation)
+            presenter.createAccount(email, password, confirmation)
         }
     }
 

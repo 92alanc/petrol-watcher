@@ -8,7 +8,7 @@ import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpC
 class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSignUpContract.View) :
         EmailAndPasswordSignUpContract.Presenter {
 
-    override fun validateCredentials(email: String, password: String, confirmation: String) {
+    override fun createAccount(email: String, password: String, confirmation: String) {
         val confirmationMatches = Validation(successCondition = password == confirmation,
                 onFailureAction = view::showPasswordNotMatchingError)
 

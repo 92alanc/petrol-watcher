@@ -12,6 +12,6 @@ interface EmailAndPasswordSignUpContract {
     }
 
     interface Presenter : BaseContract.Presenter {
-        fun validateCredentials(email: String, password: String, confirmation: String)
+        fun createAccount(email: String, password: String, confirmation: String)
     }
 }
