@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
 
-interface EmailAndPasswordContract {
+interface EmailAndPasswordSignUpContract {
     interface View : BaseContract.View<Presenter> {
         fun showEmptyConfirmationError()
         fun showEmptyEmailError()

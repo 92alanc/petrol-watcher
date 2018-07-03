@@ -3,10 +3,10 @@ package com.braincorp.petrolwatcher.feature.auth.presenter
 import android.text.TextUtils.isEmpty
 import com.alancamargo.validationchain.ValidationChain
 import com.alancamargo.validationchain.model.Validation
-import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordContract
+import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
 
-class EmailAndPasswordPresenter(private val view: EmailAndPasswordContract.View) :
-        EmailAndPasswordContract.Presenter {
+class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSignUpContract.View) :
+        EmailAndPasswordSignUpContract.Presenter {
 
     override fun validateCredentials(email: String, password: String, confirmation: String) {
         val confirmationMatches = Validation(successCondition = password == confirmation,

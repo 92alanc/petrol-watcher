@@ -13,7 +13,7 @@ class EmailSignInActivityTest : BaseActivityTest<EmailSignInActivity>(EmailSignI
     fun whenClickingOnSignUp_shouldStartEmailAndPasswordActivity() {
         emailSignIn {
         } clickSignUp {
-            redirectToEmailAndPasswordActivity()
+            redirectToEmailAndPasswordSignUpActivity()
         }
     }
 

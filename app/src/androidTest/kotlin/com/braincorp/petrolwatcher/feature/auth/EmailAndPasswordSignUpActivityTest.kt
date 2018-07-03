@@ -2,17 +2,17 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.BaseActivityTest
-import com.braincorp.petrolwatcher.feature.auth.robots.emailAndPassword
+import com.braincorp.petrolwatcher.feature.auth.robots.emailAndPasswordSignUp
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class EmailAndPasswordActivityTest : BaseActivityTest<EmailAndPasswordActivity>(
-        EmailAndPasswordActivity::class.java) {
+class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSignUpActivity>(
+        EmailAndPasswordSignUpActivity::class.java) {
 
     @Test
     fun withValidCredentials_shouldRedirectToProfileActivity() {
-        emailAndPassword {
+        emailAndPasswordSignUp {
             typeEmail("test123@test.com")
             typePassword("abcd1234")
             typeConfirmation("abcd1234")
@@ -23,7 +23,7 @@ class EmailAndPasswordActivityTest : BaseActivityTest<EmailAndPasswordActivity>(
 
     @Test
     fun withEmptyEmail_shouldShowError() {
-        emailAndPassword {
+        emailAndPasswordSignUp {
             typePassword("abcd1234")
             typeConfirmation("abcd1234")
         } clickNext {
@@ -33,7 +33,7 @@ class EmailAndPasswordActivityTest : BaseActivityTest<EmailAndPasswordActivity>(
 
     @Test
     fun withEmptyPassword_shouldShowError() {
-        emailAndPassword {
+        emailAndPasswordSignUp {
             typeEmail("test123@test.com")
             typeConfirmation("abcd1234")
         } clickNext {
@@ -43,7 +43,7 @@ class EmailAndPasswordActivityTest : BaseActivityTest<EmailAndPasswordActivity>(
 
     @Test
     fun withEmptyConfirmation_shouldShowError() {
-        emailAndPassword {
+        emailAndPasswordSignUp {
             typeEmail("test123@test.com")
             typePassword("abcd1234")
         } clickNext {
@@ -53,7 +53,7 @@ class EmailAndPasswordActivityTest : BaseActivityTest<EmailAndPasswordActivity>(
 
     @Test
     fun withPasswordAndConfirmationMismatch_shouldShowError() {
-        emailAndPassword {
+        emailAndPasswordSignUp {
             typeEmail("test123@test.com")
             typePassword("abcd1234")
             typeConfirmation("abcd123")

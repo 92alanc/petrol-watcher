@@ -31,7 +31,7 @@
                 android:value=".feature.auth.MainActivity"/>
         </activity>
 
-        <activity android:name=".feature.auth.EmailAndPasswordActivity"
+        <activity android:name=".feature.auth.EmailAndPasswordSignUpActivity"
             android:taskAffinity="@string/affinity_auth"
             android:finishOnTaskLaunch="true"
             android:theme="@style/AppTheme.NoActionBar">

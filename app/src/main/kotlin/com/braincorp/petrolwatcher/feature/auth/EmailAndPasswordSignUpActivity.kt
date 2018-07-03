@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordContract
-import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordPresenter
+import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
+import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
 import kotlinx.android.synthetic.main.activity_email_and_password.*
 import kotlinx.android.synthetic.main.content_email_and_password.*
 
-class EmailAndPasswordActivity : AppCompatActivity(), EmailAndPasswordContract.View {
+class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSignUpContract.View {
 
-    override val presenter: EmailAndPasswordContract.Presenter = EmailAndPasswordPresenter(this)
+    override val presenter: EmailAndPasswordSignUpContract.Presenter = EmailAndPasswordSignUpPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

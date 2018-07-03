@@ -6,7 +6,7 @@ import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPresenter
-import com.braincorp.petrolwatcher.utils.startEmailAndPasswordActivity
+import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
 import kotlinx.android.synthetic.main.content_email_sign_in.*
 
@@ -26,7 +26,7 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
         when (v.id) {
             R.id.bt_sign_in -> presenter.signIn(edt_email.text.toString(),
                     edt_password.text.toString())
-            R.id.bt_sign_up -> startEmailAndPasswordActivity()
+            R.id.bt_sign_up -> startEmailAndPasswordSignUpActivity()
         }
     }
 

@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.feature.auth.robots
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordActivity
+import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
 
 fun emailSignIn(func: EmailSignInActivityRobot.() -> Unit) = EmailSignInActivityRobot().apply(func)
 
@@ -25,9 +25,9 @@ class EmailSignInActivityRobot {
 
 class EmailSignInResult {
 
-    fun redirectToEmailAndPasswordActivity() {
+    fun redirectToEmailAndPasswordSignUpActivity() {
         sentIntent {
-            className(EmailAndPasswordActivity::class.java.name)
+            className(EmailAndPasswordSignUpActivity::class.java.name)
         }
     }
 

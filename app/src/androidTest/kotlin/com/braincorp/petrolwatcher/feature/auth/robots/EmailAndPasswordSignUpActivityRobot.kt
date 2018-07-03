@@ -8,10 +8,10 @@ import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
 import com.braincorp.petrolwatcher.R
 
-fun emailAndPassword(func: EmailAndPasswordActivityRobot.() -> Unit) =
-        EmailAndPasswordActivityRobot().apply(func)
+fun emailAndPasswordSignUp(func: EmailAndPasswordSignUpActivityRobot.() -> Unit) =
+        EmailAndPasswordSignUpActivityRobot().apply(func)
 
-class EmailAndPasswordActivityRobot {
+class EmailAndPasswordSignUpActivityRobot {
 
     fun typeEmail(email: String) {
         typeText(email) {
@@ -31,7 +31,7 @@ class EmailAndPasswordActivityRobot {
         }
     }
 
-    infix fun clickNext(func: EmailAndPasswordResult.() -> Unit) {
+    infix fun clickNext(func: EmailAndPasswordSignUpResult.() -> Unit) {
         click {
             id(R.id.fab_next)
         }
@@ -39,12 +39,12 @@ class EmailAndPasswordActivityRobot {
         applyResult(func)
     }
 
-    private fun applyResult(func: EmailAndPasswordResult.() -> Unit) =
-            EmailAndPasswordResult().apply(func)
+    private fun applyResult(func: EmailAndPasswordSignUpResult.() -> Unit) =
+            EmailAndPasswordSignUpResult().apply(func)
 
 }
 
-class EmailAndPasswordResult {
+class EmailAndPasswordSignUpResult {
 
     fun redirectToProfileActivity() {
         // TODO: validate
