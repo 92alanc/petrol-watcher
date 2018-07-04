@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 import com.braincorp.petrolwatcher.feature.auth.MainActivity
+import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
+import com.braincorp.petrolwatcher.feature.auth.error.AuthenticationErrorActivity
 
 /**
  * Starts the main activity
@@ -34,6 +36,20 @@ fun AppCompatActivity.startEmailSignInActivity(finishCurrent: Boolean = false) {
  */
 fun AppCompatActivity.startEmailAndPasswordSignUpActivity(finishCurrent: Boolean = false) {
     startActivity(EmailAndPasswordSignUpActivity::class.java, finishCurrent)
+}
+
+/**
+ * Starts the authentication error activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startAuthenticationErrorActivity(errorType: AuthErrorType,
+                                                       finishCurrent: Boolean = false) {
+    val intent = AuthenticationErrorActivity.getIntent(this, errorType)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

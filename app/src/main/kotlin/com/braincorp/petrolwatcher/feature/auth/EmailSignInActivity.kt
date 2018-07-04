@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
+import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPresenter
+import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
 import kotlinx.android.synthetic.main.content_email_sign_in.*
@@ -32,6 +34,21 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
                     edt_password.text.toString())
             R.id.bt_sign_up -> startEmailAndPasswordSignUpActivity()
         }
+    }
+
+    /**
+     * Shows an e-mail and password authentication
+     * error screen
+     */
+    override fun showErrorScreen() {
+        startAuthenticationErrorActivity(AuthErrorType.EMAIL_PASSWORD)
+    }
+
+    /**
+     * Shows the map activity
+     */
+    override fun showMap() {
+        // TODO: implement map activity
     }
 
     private fun setupButtons() {

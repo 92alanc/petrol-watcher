@@ -1,6 +1,5 @@
 package com.braincorp.petrolwatcher.feature.auth.presenter
 
-import android.util.Log
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -16,10 +15,6 @@ import java.lang.Exception
  */
 class EmailSignInActivityPresenter(private val view: EmailSignInContract.View) :
         EmailSignInContract.Presenter, OnSuccessListener<AuthResult>, OnFailureListener {
-
-    private companion object {
-        const val TAG = "PETROL_WATCHER"
-    }
 
     /**
      * Signs in an existing e-mail and password
@@ -41,8 +36,7 @@ class EmailSignInActivityPresenter(private val view: EmailSignInContract.View) :
      * @param result the authentication result
      */
     override fun onSuccess(result: AuthResult?) {
-        Log.d(TAG, "Login successful")
-        // TODO: start map activity
+        view.showMap()
     }
 
     /**
@@ -52,8 +46,7 @@ class EmailSignInActivityPresenter(private val view: EmailSignInContract.View) :
      * @param e the exception thrown
      */
     override fun onFailure(e: Exception) {
-        Log.e(TAG, "Authentication failed", e)
-        // TODO
+        view.showErrorScreen()
     }
 
 }

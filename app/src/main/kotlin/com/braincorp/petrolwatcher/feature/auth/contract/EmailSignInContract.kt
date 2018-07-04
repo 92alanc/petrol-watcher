@@ -8,7 +8,16 @@ interface EmailSignInContract {
      * sign in method
      */
     interface View : BaseContract.View<Presenter> {
-        // TODO: implement
+        /**
+         * Shows an e-mail and password authentication
+         * error screen
+         */
+        fun showErrorScreen()
+
+        /**
+         * Shows the map activity
+         */
+        fun showMap()
     }
 
     /**

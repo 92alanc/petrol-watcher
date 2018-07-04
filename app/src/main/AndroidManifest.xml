@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.braincorp.petrolwatcher"
-    android:installLocation="preferExternal">
+          package="com.braincorp.petrolwatcher"
+          android:installLocation="preferExternal">
 
     <application
         android:name=".App"
@@ -14,9 +14,9 @@
         <!-- Authentication -->
 
         <activity android:name=".feature.auth.MainActivity"
-            android:taskAffinity="@string/affinity_auth"
-            android:finishOnTaskLaunch="true"
-            android:theme="@style/AppTheme">
+                  android:taskAffinity="@string/affinity_auth"
+                  android:finishOnTaskLaunch="true"
+                  android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,28 +24,33 @@
         </activity>
 
         <activity android:name=".feature.auth.EmailSignInActivity"
-            android:taskAffinity="@string/affinity_auth"
-            android:finishOnTaskLaunch="true"
-            android:theme="@style/AppTheme.NoActionBar">
+                  android:taskAffinity="@string/affinity_auth"
+                  android:finishOnTaskLaunch="true"
+                  android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.auth.MainActivity"/>
+                       android:value=".feature.auth.MainActivity"/>
         </activity>
 
         <activity android:name=".feature.auth.EmailAndPasswordSignUpActivity"
-            android:taskAffinity="@string/affinity_auth"
-            android:finishOnTaskLaunch="true"
-            android:theme="@style/AppTheme.NoActionBar">
+                  android:taskAffinity="@string/affinity_auth"
+                  android:finishOnTaskLaunch="true"
+                  android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.auth.EmailSignInActivity"/>
+                       android:value=".feature.auth.EmailSignInActivity"/>
         </activity>
 
+        <activity android:name=".feature.auth.error.AuthenticationErrorActivity"
+                  android:taskAffinity="@string/affinity_auth"
+                  android:finishOnTaskLaunch="true"
+                  android:theme="@style/AppTheme"/>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+                   android:value="@string/facebook_app_id"/>
 
         <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+                  android:configChanges=
+                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                  android:label="@string/app_name" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"
