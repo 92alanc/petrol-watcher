@@ -3,6 +3,9 @@ package com.braincorp.petrolwatcher
 import android.app.Application
 import com.google.firebase.FirebaseApp
 
+/**
+ * The general application class
+ */
 @Suppress("unused")
 class App : Application() {
 

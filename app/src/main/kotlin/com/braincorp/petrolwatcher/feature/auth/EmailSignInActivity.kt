@@ -10,6 +10,10 @@ import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
 import kotlinx.android.synthetic.main.content_email_sign_in.*
 
+/**
+ * The activity where e-mail and password based accounts
+ * are signed in
+ */
 class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSignInContract.View {
 
     override val presenter: EmailSignInActivityPresenter = EmailSignInActivityPresenter(view = this)

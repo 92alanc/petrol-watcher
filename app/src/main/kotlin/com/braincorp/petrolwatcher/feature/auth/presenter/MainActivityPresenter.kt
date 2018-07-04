@@ -10,6 +10,12 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 
+/**
+ * The implementation of the presentation layer
+ * of the app's main activity
+ *
+ * @param view the view layer
+ */
 class MainActivityPresenter(private val view: MainContract.View) : MainContract.Presenter,
         GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
 
@@ -17,6 +23,13 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
         const val TAG = "PETROL_WATCHER"
     }
 
+    /**
+     * Handles a Google sign in result, which result
+     * can be understood as either a success or a failure
+     *
+     * @param data the intent received, containing
+     *             the sign in result
+     */
     override fun handleGoogleSignInResult(data: Intent?) {
         val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
         Log.d(TAG, "result -> ${result.isSuccess}")
@@ -26,21 +39,37 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
         }
     }
 
+    /**
+     * Function called when a connection with
+     * the Google authentication server fails
+     */
     override fun onConnectionFailed(result: ConnectionResult) {
         Log.w(TAG, "Connection failed! Result -> $result")
         // TODO
     }
 
+    /**
+     * Function called when an authentication with
+     * the Google authentication server is successful
+     */
     override fun onSuccess(result: LoginResult?) {
         Log.d(TAG, "Facebook login successful")
         // TODO: start map activity
     }
 
+    /**
+     * Function called when a Google authentication
+     * process is cancelled
+     */
     override fun onCancel() {
         Log.w(TAG, "Facebook login cancelled")
         // TODO
     }
 
+    /**
+     * Function called when an error occurs during
+     * a Google authentication attempt
+     */
     override fun onError(error: FacebookException?) {
         Log.e(TAG, error?.message, error)
         // TODO

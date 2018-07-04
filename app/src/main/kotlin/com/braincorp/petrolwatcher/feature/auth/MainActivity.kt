@@ -17,6 +17,11 @@ import com.facebook.CallbackManager
 import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * The app's main activity.
+ * Here is where the user can sign in either via
+ * Google, Facebook or e-mail and password
+ */
 class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.View {
 
     private companion object {
@@ -49,6 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        // When a Google sign in response is received
         if (requestCode == RC_GOOGLE_SIGN_IN)
             presenter.handleGoogleSignInResult(data)
 
