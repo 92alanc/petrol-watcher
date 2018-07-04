@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
+import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
 import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient
 import com.braincorp.petrolwatcher.feature.auth.utils.signInWithFacebook
 import com.braincorp.petrolwatcher.feature.auth.utils.signInWithGoogle
+import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
 import com.facebook.CallbackManager
 import com.google.android.gms.common.api.GoogleApiClient
@@ -68,6 +70,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
             R.id.bt_sign_in_facebook -> signInWithFacebook(callbackManager, presenter)
             R.id.bt_sign_in_email -> startEmailSignInActivity()
         }
+    }
+
+    /**
+     * Shows an authentication error screen
+     *
+     * @param errorType the authentication error type
+     */
+    override fun showErrorScreen(errorType: AuthErrorType) {
+        startAuthenticationErrorActivity(errorType)
     }
 
     private fun setupButtons() {

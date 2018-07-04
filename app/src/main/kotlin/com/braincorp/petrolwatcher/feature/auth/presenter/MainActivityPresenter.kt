@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.auth.presenter
 import android.content.Intent
 import android.util.Log
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
+import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
@@ -44,8 +45,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      * the Google authentication server fails
      */
     override fun onConnectionFailed(result: ConnectionResult) {
-        Log.w(TAG, "Connection failed! Result -> $result")
-        // TODO
+        view.showErrorScreen(AuthErrorType.CONNECTION)
     }
 
     /**
@@ -71,8 +71,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      * a Facebook authentication attempt
      */
     override fun onError(error: FacebookException?) {
-        Log.e(TAG, error?.message, error)
-        // TODO
+        view.showErrorScreen(AuthErrorType.FACEBOOK)
     }
 
 }

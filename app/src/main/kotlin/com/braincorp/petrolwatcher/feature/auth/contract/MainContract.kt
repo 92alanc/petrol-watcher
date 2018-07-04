@@ -2,13 +2,19 @@ package com.braincorp.petrolwatcher.feature.auth.contract
 
 import android.content.Intent
 import com.braincorp.petrolwatcher.base.BaseContract
+import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
 
 interface MainContract {
     /**
      * The view layer of the app's main activity
      */
     interface View : BaseContract.View<Presenter> {
-        // TODO: implement
+        /**
+         * Shows an authentication error screen
+         *
+         * @param errorType the authentication error type
+         */
+        fun showErrorScreen(errorType: AuthErrorType)
     }
 
     /**
