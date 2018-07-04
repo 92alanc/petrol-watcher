@@ -50,7 +50,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
 
     /**
      * Function called when an authentication with
-     * the Google authentication server is successful
+     * the Facebook authentication server is successful
      */
     override fun onSuccess(result: LoginResult?) {
         Log.d(TAG, "Facebook login successful")
@@ -58,7 +58,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
     }
 
     /**
-     * Function called when a Google authentication
+     * Function called when a Facebook authentication
      * process is cancelled
      */
     override fun onCancel() {
@@ -68,7 +68,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
 
     /**
      * Function called when an error occurs during
-     * a Google authentication attempt
+     * a Facebook authentication attempt
      */
     override fun onError(error: FacebookException?) {
         Log.e(TAG, error?.message, error)
