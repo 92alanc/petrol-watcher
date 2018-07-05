@@ -39,11 +39,7 @@ class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSignUpCo
                 .add(emailNotEmpty)
                 .add(passwordNotEmpty)
                 .add(confirmationNotEmpty)
-                .addSuccessListener(object: ValidationChain.OnSuccessListener {
-                    override fun onSuccess() {
-                        view.showProfile()
-                    }
-                }).run()
+                .run(view::showProfile)
     }
 
 }
