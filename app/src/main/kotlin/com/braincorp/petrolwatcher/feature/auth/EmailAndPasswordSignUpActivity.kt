@@ -6,7 +6,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
 import com.braincorp.petrolwatcher.utils.startProfileActivity
-import kotlinx.android.synthetic.main.activity_email_and_password.*
+import kotlinx.android.synthetic.main.activity_email_and_password_sign_up.*
 import kotlinx.android.synthetic.main.content_email_and_password.*
 
 /**
@@ -19,7 +19,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_and_password)
+        setContentView(R.layout.activity_email_and_password_sign_up)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fab_next.setOnClickListener {
