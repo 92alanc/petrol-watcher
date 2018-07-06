@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.auth.error
+package com.braincorp.petrolwatcher.feature.auth.model
 
 /**
  * An authentication error type

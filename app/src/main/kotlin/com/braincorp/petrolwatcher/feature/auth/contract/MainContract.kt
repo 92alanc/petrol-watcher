@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth.contract
 
 import android.content.Intent
 import com.braincorp.petrolwatcher.base.BaseContract
-import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
+import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 
 interface MainContract {
     /**

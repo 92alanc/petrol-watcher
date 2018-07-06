@@ -6,8 +6,8 @@ import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 import com.braincorp.petrolwatcher.feature.auth.MainActivity
 import com.braincorp.petrolwatcher.feature.auth.ProfileActivity
-import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
-import com.braincorp.petrolwatcher.feature.auth.error.AuthenticationErrorActivity
+import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
 
 /**
  * Starts the main activity

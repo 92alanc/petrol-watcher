@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
 import org.junit.Assert.assertTrue
 
 fun AuthenticationErrorActivityTest.authenticationError(

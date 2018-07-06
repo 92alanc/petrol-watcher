@@ -39,7 +39,7 @@
                        android:value=".feature.auth.EmailSignInActivity"/>
         </activity>
 
-        <activity android:name=".feature.auth.error.AuthenticationErrorActivity"
+        <activity android:name=".feature.auth.AuthenticationErrorActivity"
                   android:taskAffinity="@string/affinity_auth"
                   android:finishOnTaskLaunch="true"
                   android:theme="@style/AppTheme"/>

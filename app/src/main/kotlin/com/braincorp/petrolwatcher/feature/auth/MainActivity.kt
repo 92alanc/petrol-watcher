@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
-import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
+import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
 import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient

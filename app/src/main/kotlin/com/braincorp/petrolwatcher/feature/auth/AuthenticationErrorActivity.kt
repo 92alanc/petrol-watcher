@@ -1,10 +1,11 @@
-package com.braincorp.petrolwatcher.feature.auth.error
+package com.braincorp.petrolwatcher.feature.auth
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import kotlinx.android.synthetic.main.activity_authentication_error.*
 
 /**
