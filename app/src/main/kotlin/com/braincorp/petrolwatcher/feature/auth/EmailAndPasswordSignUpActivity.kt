@@ -2,10 +2,10 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
+import com.braincorp.petrolwatcher.utils.startProfileActivity
 import kotlinx.android.synthetic.main.activity_email_and_password.*
 import kotlinx.android.synthetic.main.content_email_and_password.*
 
@@ -64,8 +64,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * Shows the profile
      */
     override fun showProfile() {
-        Toast.makeText(this, "Oh yeah!", Toast.LENGTH_SHORT).show()
-        // TODO: redirect to profile activity
+        startProfileActivity(finishCurrent = true)
     }
 
 }

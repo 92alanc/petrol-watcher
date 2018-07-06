@@ -13,4 +13,9 @@
     <string name="error_empty_password">A senha não pode estar vazia</string>
     <string name="error_empty_email">O e-mail não pode estar vazio</string>
     <string name="error_password_and_confirmation_dont_match">A senha e a confirmação estão diferentes</string>
+    <string name="error_connection">Infelizmente tivemos um problema de conexão</string>
+    <string name="error_email_password">Infelizmente não conseguimos conectar sua conta</string>
+    <string name="error_facebook">Infelizmente não conseguimos conectar sua conta do Facebook</string>
+    <string name="error_google">Infelizmente não conseguimos conectar sua conta do Google</string>
+    <string name="try_again">Tentar novamente</string>
 </resources>

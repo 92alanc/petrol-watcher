@@ -6,7 +6,9 @@ import android.support.test.espresso.matcher.ViewMatchers.hasErrorText
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
+import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.ProfileActivity
 
 fun emailAndPasswordSignUp(func: EmailAndPasswordSignUpActivityRobot.() -> Unit) =
         EmailAndPasswordSignUpActivityRobot().apply(func)
@@ -47,7 +49,9 @@ class EmailAndPasswordSignUpActivityRobot {
 class EmailAndPasswordSignUpResult {
 
     fun redirectToProfileActivity() {
-        // TODO: validate
+        sentIntent {
+            className(ProfileActivity::class.java.name)
+        }
     }
 
     fun showEmptyEmailError() {

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 import com.braincorp.petrolwatcher.feature.auth.MainActivity
+import com.braincorp.petrolwatcher.feature.auth.ProfileActivity
 import com.braincorp.petrolwatcher.feature.auth.error.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.error.AuthenticationErrorActivity
 
@@ -50,6 +51,16 @@ fun AppCompatActivity.startAuthenticationErrorActivity(errorType: AuthErrorType,
     startActivity(intent)
     if (finishCurrent)
         finish()
+}
+
+/**
+ * Starts the profile activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startProfileActivity(finishCurrent: Boolean = false) {
+    startActivity(ProfileActivity::class.java, finishCurrent)
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

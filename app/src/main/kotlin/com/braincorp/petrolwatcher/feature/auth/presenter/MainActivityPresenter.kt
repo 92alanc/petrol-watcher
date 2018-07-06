@@ -37,6 +37,8 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
         if (result.isSuccess) {
             Log.d(TAG, "Google sign in successful")
             // TODO: start map activity
+        } else {
+            view.showErrorScreen(AuthErrorType.GOOGLE)
         }
     }
 

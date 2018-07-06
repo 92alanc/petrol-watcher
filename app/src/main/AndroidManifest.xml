@@ -44,6 +44,11 @@
                   android:finishOnTaskLaunch="true"
                   android:theme="@style/AppTheme"/>
 
+        <activity android:name=".feature.auth.ProfileActivity"
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme"/>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
 

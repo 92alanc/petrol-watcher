@@ -13,4 +13,9 @@
     <string name="error_empty_password">Password must not be empty</string>
     <string name="error_empty_email">e-mail must not be empty</string>
     <string name="error_password_and_confirmation_dont_match">Password and confirmation don\'t match</string>
+    <string name="error_connection">Unfortunately we had a connection problem</string>
+    <string name="error_email_password">Unfortunately we couldn\'t connect your account</string>
+    <string name="error_facebook">Unfortunately we couldn\'t connect your Facebook account</string>
+    <string name="error_google">Unfortunately we couldn\'t connect your Google account</string>
+    <string name="try_again">Try again</string>
 </resources>
