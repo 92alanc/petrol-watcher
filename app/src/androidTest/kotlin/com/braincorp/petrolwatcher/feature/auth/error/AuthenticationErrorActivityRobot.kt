@@ -1,7 +1,10 @@
 package com.braincorp.petrolwatcher.feature.auth.error
 
+import android.support.annotation.DrawableRes
+import android.support.annotation.StringRes
 import android.support.test.rule.ActivityTestRule
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
+import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
 import com.braincorp.petrolwatcher.R
 import org.junit.Assert.assertTrue
 
@@ -11,6 +14,24 @@ fun AuthenticationErrorActivityTest.authenticationError(
 }
 
 class AuthenticationErrorActivityRobot(private val rule: ActivityTestRule<AuthenticationErrorActivity>) {
+
+    fun imageIs(@DrawableRes resId: Int) {
+        displayed {
+            allOf {
+                id(R.id.img_error)
+                image(resId)
+            }
+        }
+    }
+
+    fun messageIs(@StringRes resId: Int) {
+        displayed {
+            allOf {
+                id(R.id.txt_error_description)
+                text(resId)
+            }
+        }
+    }
 
     infix fun clickTryAgain(func: AuthenticationErrorResult.() -> Unit) {
         click {

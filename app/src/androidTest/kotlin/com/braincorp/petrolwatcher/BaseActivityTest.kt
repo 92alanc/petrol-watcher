@@ -37,7 +37,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         return Intent()
     }
 
-    private fun launch() {
+    fun launch() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
         doWait(300)
