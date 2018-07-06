@@ -67,11 +67,10 @@
 
     <Button
         android:id="@+id/bt_sign_in"
-        style="@style/AppStyle.Button.Default"
+        style="@style/AppStyle.Button.Teal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_default"
-        android:background="@color/teal_dark"
         android:text="@string/sign_in"
         app:layout_constraintTop_toBottomOf="@id/til_password"
         app:layout_constraintBottom_toTopOf="@+id/bt_sign_up"
@@ -80,10 +79,9 @@
 
     <Button
         android:id="@+id/bt_sign_up"
-        style="@style/AppStyle.Button.Default"
+        style="@style/AppStyle.Button.Amber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/amber"
         android:text="@string/sign_up"
         app:layout_constraintTop_toBottomOf="@id/bt_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"

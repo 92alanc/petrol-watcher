@@ -64,11 +64,10 @@
 
     <Button
         android:id="@+id/bt_sign_in_email"
-        style="@style/AppStyle.Button.Default"
+        style="@style/AppStyle.Button.Teal"
         android:layout_width="@dimen/width_button_sign_in_method"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_button"
-        android:background="@color/teal"
         android:drawableStart="@drawable/ic_email"
         android:text="@string/sign_in_email"
         app:layout_constraintTop_toBottomOf="@id/bt_sign_in_facebook"

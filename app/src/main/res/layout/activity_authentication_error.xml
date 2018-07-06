@@ -36,10 +36,9 @@
 
     <Button
         android:id="@+id/bt_try_again"
-        style="@style/AppStyle.Button.Default"
+        style="@style/AppStyle.Button.Amber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
         android:text="@string/try_again"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"

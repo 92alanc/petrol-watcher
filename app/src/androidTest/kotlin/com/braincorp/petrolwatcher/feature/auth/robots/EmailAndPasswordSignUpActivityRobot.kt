@@ -35,7 +35,7 @@ class EmailAndPasswordSignUpActivityRobot {
 
     infix fun clickNext(func: EmailAndPasswordSignUpResult.() -> Unit) {
         click {
-            id(R.id.fab_next)
+            id(R.id.fab)
         }
 
         applyResult(func)

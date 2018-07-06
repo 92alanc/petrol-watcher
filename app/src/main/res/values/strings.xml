@@ -20,4 +20,6 @@
     <string name="error_facebook">Unfortunately we couldn\'t connect your Facebook account</string>
     <string name="error_google">Unfortunately we couldn\'t connect your Google account</string>
     <string name="try_again">Try again</string>
+    <string name="name">Name</string>
+    <string name="my_vehicles">My vehicles</string>
 </resources>

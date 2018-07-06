@@ -7,7 +7,7 @@ import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpC
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
 import com.braincorp.petrolwatcher.utils.startProfileActivity
 import kotlinx.android.synthetic.main.activity_email_and_password_sign_up.*
-import kotlinx.android.synthetic.main.content_email_and_password.*
+import kotlinx.android.synthetic.main.content_email_and_password_sign_up.*
 
 /**
  * The activity where e-mail and password based
@@ -22,7 +22,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
         setContentView(R.layout.activity_email_and_password_sign_up)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        fab_next.setOnClickListener {
+        fab.setOnClickListener {
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
             val confirmation = edt_password_confirmation.text.toString()
