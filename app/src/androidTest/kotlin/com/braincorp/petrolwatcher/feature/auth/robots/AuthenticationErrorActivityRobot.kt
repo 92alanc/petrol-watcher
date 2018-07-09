@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.auth.error
+package com.braincorp.petrolwatcher.feature.auth.robots
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
@@ -7,6 +7,7 @@ import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
+import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivityTest
 import org.junit.Assert.assertTrue
 
 fun AuthenticationErrorActivityTest.authenticationError(

@@ -20,4 +20,6 @@
     <string name="try_again">Try again</string>
     <string name="name">Name</string>
     <string name="my_vehicles">My vehicles</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="select_from_gallery">Select a photo from gallery</string>
 </resources>
