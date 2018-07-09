@@ -7,6 +7,9 @@
     <dimen name="elevation_cardview_default">10dp</dimen>
     <dimen name="radius_cardview_default">8dp</dimen>
 
+    <!-- CircleImageView -->
+    <dimen name="size_circleimageview">120dp</dimen>
+
     <!-- FloatingActionButton -->
     <dimen name="margin_fab">16dp</dimen>
 

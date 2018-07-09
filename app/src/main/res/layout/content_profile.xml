@@ -23,14 +23,25 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/size_circleimageview"
+                android:layout_height="@dimen/size_circleimageview"
                 android:layout_marginBottom="@dimen/margin_default"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/til_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@tools:sample/avatars"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/img_profile"
+                app:layout_constraintBottom_toBottomOf="@id/img_profile"
+                app:layout_constraintStart_toStartOf="@id/img_profile"
+                app:layout_constraintEnd_toEndOf="@id/img_profile"/>
 
             <ImageButton
                 android:id="@+id/bt_camera"
