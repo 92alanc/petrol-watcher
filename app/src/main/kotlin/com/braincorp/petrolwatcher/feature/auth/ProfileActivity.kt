@@ -10,6 +10,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
 import com.braincorp.petrolwatcher.utils.fillImageView
+import com.braincorp.petrolwatcher.utils.rotateBitmap
 import com.braincorp.petrolwatcher.utils.toUri
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
@@ -37,7 +38,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CAMERA) {
-                val bitmap = data?.extras?.get("data") as Bitmap
+                var bitmap = data?.extras?.get("data") as Bitmap
+                bitmap = rotateBitmap(bitmap, 270f)
                 fillImageView(bitmap.toUri(this), img_profile,
                         R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {

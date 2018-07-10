@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.support.annotation.DrawableRes
@@ -18,10 +19,10 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener
 import java.io.ByteArrayOutputStream
 
-fun Context.fillImageView(imageUri: Uri?,
-                          imageView: ImageView,
-                          @DrawableRes placeholderRes: Int = 0,
-                          progressBar: ProgressBar) {
+fun fillImageView(imageUri: Uri?,
+                  imageView: ImageView,
+                  @DrawableRes placeholderRes: Int = 0,
+                  progressBar: ProgressBar) {
     val imageLoader = ImageLoader.getInstance()
     val options = DisplayImageOptions.Builder()
             .showImageOnLoading(placeholderRes)
@@ -29,6 +30,7 @@ fun Context.fillImageView(imageUri: Uri?,
             .showImageOnFail(placeholderRes)
             .cacheInMemory(true)
             .cacheOnDisk(true)
+            .considerExifParams(true)
             .build()
 
     val imageLoadingListener = object: ImageLoadingListener {
@@ -77,4 +79,18 @@ fun Bitmap.toUri(context: Context): Uri {
     val path = MediaStore.Images.Media.insertImage(context.contentResolver, this,
             name, null)
     return Uri.parse(path)
+}
+
+/**
+ * Rotates a bitmap
+ *
+ * @param bitmap the bitmap
+ * @param angle the angle, in degrees
+ *
+ * @return the rotated bitmap
+ */
+fun rotateBitmap(bitmap: Bitmap, angle: Float): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }
