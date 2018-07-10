@@ -90,6 +90,9 @@ dependencies {
     // Kappuccino
     androidTestImplementation 'br.com.concretesolutions:kappuccino:1.1.2'
 
+    // Mockito
+    androidTestImplementation 'org.mockito:mockito-android:2.15.0'
+
     // ------------- STANDARD LIBRARIES -------------
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
