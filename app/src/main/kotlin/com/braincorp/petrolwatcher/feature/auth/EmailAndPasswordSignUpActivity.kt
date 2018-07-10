@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
@@ -58,6 +59,17 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      */
     override fun showPasswordNotMatchingError() {
         edt_password_confirmation.error = getString(R.string.error_password_and_confirmation_dont_match)
+    }
+
+    /**
+     * Shows a backend error dialogue
+     */
+    override fun showBackendError() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setIcon(R.drawable.ic_error)
+                .setMessage(R.string.error_creating_account)
+                .show()
     }
 
     /**

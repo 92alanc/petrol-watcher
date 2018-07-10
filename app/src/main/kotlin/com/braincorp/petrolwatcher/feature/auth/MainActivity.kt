@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.feature.auth
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
@@ -27,9 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.View {
 
     private companion object {
-        const val RC_GOOGLE_SIGN_IN = 3892
-
-        const val TAG = "PETROL_WATCHER"
+        const val REQUEST_CODE_GOOGLE_SIGN_IN = 3892
     }
 
     override val presenter: MainActivityPresenter = MainActivityPresenter(view = this)
@@ -47,17 +44,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
 
     override fun onStart() {
         super.onStart()
-        if (getActiveAccount() != null) {
-            Log.d(TAG, "Already signed in")
-            // TODO: start map activity
-        }
+        if (getActiveAccount() != null)
+            showMap()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // When a Google sign in response is received
-        if (requestCode == RC_GOOGLE_SIGN_IN)
+        if (requestCode == REQUEST_CODE_GOOGLE_SIGN_IN)
             presenter.handleGoogleSignInResult(data)
 
         if (callbackManager.onActivityResult(requestCode, resultCode, data))
@@ -66,7 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.bt_sign_in_google -> signInWithGoogle(googleApiClient, RC_GOOGLE_SIGN_IN)
+            R.id.bt_sign_in_google -> signInWithGoogle(googleApiClient, REQUEST_CODE_GOOGLE_SIGN_IN)
             R.id.bt_sign_in_facebook -> signInWithFacebook(callbackManager, presenter)
             R.id.bt_sign_in_email -> startEmailSignInActivity()
         }
@@ -79,6 +74,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
      */
     override fun showErrorScreen(errorType: AuthErrorType) {
         startAuthenticationErrorActivity(errorType)
+    }
+
+    /**
+     * Shows the map activity
+     */
+    override fun showMap() {
+        // TODO: show map activity
     }
 
     private fun setupButtons() {

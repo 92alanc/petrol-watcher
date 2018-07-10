@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.presenter
 
 import android.text.TextUtils.isEmpty
-import android.util.Log
 import com.alancamargo.validationchain.ValidationChain
 import com.alancamargo.validationchain.model.Validation
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
@@ -48,7 +47,7 @@ class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSignUpCo
         val auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener { view.showProfile() }
-                .addOnFailureListener { Log.e("ALAN", "Failure", it) } // TODO: handle sign up failure
+                .addOnFailureListener { view.showBackendError() }
     }
 
 }

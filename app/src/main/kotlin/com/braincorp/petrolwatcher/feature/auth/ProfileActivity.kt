@@ -5,6 +5,8 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.support.annotation.StringRes
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.braincorp.petrolwatcher.R
@@ -27,7 +29,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         const val REQUEST_CODE_GALLERY = 13797
     }
 
-    override val presenter: ProfileContract.Presenter = ProfilePresenter()
+    override val presenter: ProfileContract.Presenter = ProfilePresenter(view = this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,39 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         val cameraResult = grantResults[0]
         if (requestCode == REQUEST_CODE_CAMERA && cameraResult == PERMISSION_GRANTED)
             presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
+    }
+
+    /**
+     * Shows an error dialogue
+     *
+     * @param messageId the error message ID
+     */
+    override fun showErrorDialogue(@StringRes messageId: Int) {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setIcon(R.drawable.ic_error)
+                .setMessage(messageId)
+                .show()
+    }
+
+    /**
+     * Shows an error dialogue
+     *
+     * @param message the message
+     */
+    override fun showErrorDialogue(message: String) {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setIcon(R.drawable.ic_error)
+                .setMessage(message)
+                .show()
+    }
+
+    /**
+     * Shows the map activity
+     */
+    override fun showMap() {
+        // TODO: show map activity
     }
 
     override fun onClick(v: View) {

@@ -33,13 +33,10 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      */
     override fun handleGoogleSignInResult(data: Intent?) {
         val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-        Log.d(TAG, "result -> ${result.isSuccess}")
-        if (result.isSuccess) {
-            Log.d(TAG, "Google sign in successful")
-            // TODO: start map activity
-        } else {
+        if (result.isSuccess)
+            view.showMap()
+        else
             view.showErrorScreen(AuthErrorType.GOOGLE)
-        }
     }
 
     /**
@@ -55,8 +52,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      * the Facebook authentication server is successful
      */
     override fun onSuccess(result: LoginResult?) {
-        Log.d(TAG, "Facebook login successful")
-        // TODO: start map activity
+        view.showMap()
     }
 
     /**
@@ -64,8 +60,7 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      * process is cancelled
      */
     override fun onCancel() {
-        Log.w(TAG, "Facebook login cancelled")
-        // TODO
+        Log.i(TAG, "Facebook login cancelled")
     }
 
     /**

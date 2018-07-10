@@ -12,6 +12,7 @@ import android.os.Build.VERSION_CODES.M
 import android.provider.MediaStore
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.support.v7.app.AppCompatActivity
+import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.utils.setProfilePictureAndDisplayName
 import com.braincorp.petrolwatcher.feature.auth.utils.uploadBitmap
@@ -25,13 +26,14 @@ import java.lang.Exception
  * The implementation of the presentation layer
  * of the profile activity
  */
-class ProfilePresenter : ProfileContract.Presenter, OnSuccessListener<Void>, OnFailureListener {
+class ProfilePresenter(private val view: ProfileContract.View) : ProfileContract.Presenter,
+        OnSuccessListener<Void>, OnFailureListener {
 
     /**
      * Opens the camera
      *
      * @param activity the activity where the
-     * camera will be opened from
+     *                 camera will be opened from
      * @param requestCode the request code
      */
     override fun openCamera(activity: AppCompatActivity, requestCode: Int) {
@@ -51,7 +53,7 @@ class ProfilePresenter : ProfileContract.Presenter, OnSuccessListener<Void>, OnF
      * Opens the gallery
      *
      * @param activity the activity where the
-     * gallery will be opened from
+     *                 gallery will be opened from
      * @param requestCode the request code
      */
     override fun openGallery(activity: AppCompatActivity, requestCode: Int) {
@@ -71,16 +73,31 @@ class ProfilePresenter : ProfileContract.Presenter, OnSuccessListener<Void>, OnF
             setProfilePictureAndDisplayName(picture?.toUri(context), displayName,
                     onSuccessListener = this, onFailureListener = this)
         }, onFailureAction = {
-            // TODO: handle failure
+            view.showErrorDialogue(R.string.error_profile_picture_display_name)
         })
     }
 
+    /**
+     * Action taken when both profile picture and display
+     * name are successfully set
+     *
+     * @param task the task
+     */
     override fun onSuccess(task: Void?) {
-        // TODO: open map
+        view.showMap()
     }
 
+    /**
+     * Action taken when either profile picture and display
+     * name can't be set
+     *
+     * @param e the exception
+     */
     override fun onFailure(e: Exception) {
-        // TODO: handle failure
+        if (e.message != null)
+            view.showErrorDialogue(e.message!!)
+        else
+            view.showErrorDialogue(R.string.error_profile_picture_display_name)
     }
 
     private fun openCameraAfterPermissionGranted(activity: AppCompatActivity, requestCode: Int) {

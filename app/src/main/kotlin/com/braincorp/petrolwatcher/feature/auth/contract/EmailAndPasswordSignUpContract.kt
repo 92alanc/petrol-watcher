@@ -34,6 +34,11 @@ interface EmailAndPasswordSignUpContract {
          * Shows the profile
          */
         fun showProfile()
+
+        /**
+         * Shows a backend error dialogue
+         */
+        fun showBackendError()
     }
 
     /**

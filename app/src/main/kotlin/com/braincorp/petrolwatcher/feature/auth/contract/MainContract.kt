@@ -15,6 +15,11 @@ interface MainContract {
          * @param errorType the authentication error type
          */
         fun showErrorScreen(errorType: AuthErrorType)
+
+        /**
+         * Shows the map activity
+         */
+        fun showMap()
     }
 
     /**
