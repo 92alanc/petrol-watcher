@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.auth
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -40,7 +41,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
             if (requestCode == REQUEST_CODE_CAMERA) {
                 var bitmap = data?.extras?.get("data") as Bitmap
                 bitmap = rotateBitmap(bitmap, 270f)
-                fillImageView(bitmap.toUri(this), img_profile,
+                val uri = bitmap.toUri(this)
+                fillImageView(uri, img_profile,
                         R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {
                 val uri = data?.data
@@ -60,8 +62,13 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
     override fun onClick(v: View) {
         when (v.id) {
             R.id.bt_camera -> presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
+
             R.id.bt_gallery -> presenter.openGallery(activity = this, requestCode = REQUEST_CODE_GALLERY)
-            R.id.fab -> TODO()
+
+            R.id.fab -> {
+                val profilePicture = (img_profile.drawable as BitmapDrawable).bitmap
+                presenter.saveProfile(profilePicture, edt_name.text.toString(), context = this)
+            }
         }
     }
 

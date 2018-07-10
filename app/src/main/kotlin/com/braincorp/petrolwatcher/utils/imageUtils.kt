@@ -94,3 +94,10 @@ fun rotateBitmap(bitmap: Bitmap, angle: Float): Bitmap {
     matrix.postRotate(angle)
     return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }
+
+fun Bitmap.toByteArray(): ByteArray {
+    val stream = ByteArrayOutputStream()
+    val quality = 50
+    compress(Bitmap.CompressFormat.JPEG, quality, stream)
+    return stream.toByteArray()
+}
