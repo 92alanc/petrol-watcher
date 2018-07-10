@@ -1,10 +1,10 @@
 package com.braincorp.petrolwatcher.feature.auth.presenter
 
+import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 
 /**
@@ -13,7 +13,8 @@ import java.lang.Exception
  *
  * @param view the view layer
  */
-class EmailSignInActivityPresenter(private val view: EmailSignInContract.View) :
+open class EmailSignInActivityPresenter(private val view: EmailSignInContract.View,
+                                        var authenticator: Authenticator) :
         EmailSignInContract.Presenter, OnSuccessListener<AuthResult>, OnFailureListener {
 
     /**
@@ -24,9 +25,7 @@ class EmailSignInActivityPresenter(private val view: EmailSignInContract.View) :
      * @param password the password
      */
     override fun signIn(email: String, password: String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(this)
-                .addOnFailureListener(this)
+        authenticator.signIn(email, password, this, this)
     }
 
     /**

@@ -8,8 +8,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 /**
  * The general application class
  */
-@Suppress("unused")
 class App : Application() {
+
+    var dependencyInjection = DependencyInjection()
 
     override fun onCreate() {
         super.onCreate()

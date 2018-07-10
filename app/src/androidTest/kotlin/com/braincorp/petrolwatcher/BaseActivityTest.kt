@@ -7,9 +7,11 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
+import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.mockito.Mockito.mock
 
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
@@ -26,6 +28,9 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
     open fun setup() {
         if (autoLaunch) launch()
         else Intents.init()
+
+        val app = InstrumentationRegistry.getTargetContext().applicationContext as App
+        app.dependencyInjection = TestDependencyInjection()
     }
 
     @After
@@ -35,6 +40,10 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
 
     open fun intent(): Intent {
         return Intent()
+    }
+
+    fun getAuthenticator(): Authenticator {
+        return mock(Authenticator::class.java)
     }
 
     fun launch() {

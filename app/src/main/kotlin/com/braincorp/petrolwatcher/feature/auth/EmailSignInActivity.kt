@@ -7,8 +7,10 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPresenter
+import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
+import com.braincorp.petrolwatcher.utils.startMapActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
 import kotlinx.android.synthetic.main.content_email_sign_in.*
 
@@ -18,7 +20,7 @@ import kotlinx.android.synthetic.main.content_email_sign_in.*
  */
 class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSignInContract.View {
 
-    override val presenter: EmailSignInActivityPresenter = EmailSignInActivityPresenter(view = this)
+    override lateinit var presenter: EmailSignInContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,8 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupButtons()
+        presenter = EmailSignInActivityPresenter(view = this,
+                authenticator = dependencyInjection().getAuthenticator())
     }
 
     override fun onClick(v: View) {
@@ -48,7 +52,7 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
      * Shows the map activity
      */
     override fun showMap() {
-        // TODO: implement map activity
+        startMapActivity(finishCurrent = true)
     }
 
     private fun setupButtons() {
