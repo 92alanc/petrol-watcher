@@ -6,7 +6,6 @@ import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPre
 import com.braincorp.petrolwatcher.feature.auth.robots.emailSignIn
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.google.firebase.auth.AuthResult
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -22,14 +21,10 @@ class EmailSignInActivityTest : BaseActivityTest<EmailSignInActivity>(EmailSignI
     @Mock
     private val result = mock(AuthResult::class.java)
 
-    @Before
-    override fun setup() {
-        super.setup()
-        setupMocks()
-    }
-
     @Test
     fun withValidCredentials_shouldRedirectToMapActivity() {
+        setupMocks()
+
         emailSignIn {
             typeEmail("test123@test.com")
             typePassword("abcd1234")

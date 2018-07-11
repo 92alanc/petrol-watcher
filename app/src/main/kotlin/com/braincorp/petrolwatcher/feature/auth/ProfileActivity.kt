@@ -56,8 +56,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        val cameraResult = grantResults[0]
-        if (requestCode == REQUEST_CODE_CAMERA && cameraResult == PERMISSION_GRANTED)
+        val allPermissionsGranted = grantResults.all { it == PERMISSION_GRANTED }
+        if (requestCode == REQUEST_CODE_CAMERA && allPermissionsGranted)
             presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
     }
 
