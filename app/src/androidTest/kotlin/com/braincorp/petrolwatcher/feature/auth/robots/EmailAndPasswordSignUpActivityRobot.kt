@@ -56,16 +56,8 @@ class EmailAndPasswordSignUpResult {
 
     fun showErrorDialogue() {
         displayed {
-            allOf {
-                text(R.string.error)
-                text(R.string.error_creating_account)
-                image(R.drawable.ic_error)
-            }
+            text(R.string.error_creating_account)
         }
-    }
-
-    fun showEmptyEmailError() {
-        showError(R.string.error_empty_email)
     }
 
     fun showEmptyPasswordError() {

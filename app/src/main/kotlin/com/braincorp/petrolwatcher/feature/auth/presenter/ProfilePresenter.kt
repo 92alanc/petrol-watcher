@@ -17,7 +17,7 @@ import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.utils.setProfilePictureAndDisplayName
 import com.braincorp.petrolwatcher.feature.auth.utils.uploadBitmap
 import com.braincorp.petrolwatcher.utils.hasCameraPermission
-import com.braincorp.petrolwatcher.utils.toUri
+import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import java.lang.Exception

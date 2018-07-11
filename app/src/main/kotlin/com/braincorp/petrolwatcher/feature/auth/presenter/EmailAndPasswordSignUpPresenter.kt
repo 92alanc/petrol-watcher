@@ -36,9 +36,6 @@ open class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSig
         val confirmationMatches = Validation(successCondition = password == confirmation,
                 onFailureAction = view::showPasswordNotMatchingError)
 
-        val emailNotEmpty = Validation(successCondition = !isEmpty(email),
-                onFailureAction = view::showEmptyEmailError)
-
         val passwordNotEmpty = Validation(successCondition = !isEmpty(password),
                 onFailureAction = view::showEmptyPasswordError)
 
@@ -49,7 +46,6 @@ open class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSig
                 onFailureAction = view::showEmailFormatError)
 
         ValidationChain().add(confirmationMatches)
-                .add(emailNotEmpty)
                 .add(passwordNotEmpty)
                 .add(confirmationNotEmpty)
                 .add(emailFormat)

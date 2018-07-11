@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.utils
 
 import android.graphics.Bitmap
-import com.braincorp.petrolwatcher.utils.toByteArray
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask

@@ -16,6 +16,8 @@ import org.mockito.Mockito.mock
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
 
+    lateinit var app: App
+
     @Rule
     @JvmField
     val rule = if (autoLaunch) {
@@ -29,7 +31,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         if (autoLaunch) launch()
         else Intents.init()
 
-        val app = InstrumentationRegistry.getTargetContext().applicationContext as App
+        app = InstrumentationRegistry.getTargetContext().applicationContext as App
         app.dependencyInjection = TestDependencyInjection()
     }
 

@@ -1,12 +1,13 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.support.test.runner.AndroidJUnit4
+import android.support.v7.app.AlertDialog
 import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
 import com.braincorp.petrolwatcher.feature.auth.robots.emailAndPasswordSignUp
 import com.braincorp.petrolwatcher.utils.startProfileActivity
 import com.google.firebase.auth.AuthResult
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -18,19 +19,15 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
         EmailAndPasswordSignUpActivity::class.java) {
 
     @Mock
-    private val presenter = mock(EmailAndPasswordSignUpPresenter::class.java)
+    private val mockPresenter = mock(EmailAndPasswordSignUpPresenter::class.java)
 
     @Mock
     private val result = mock(AuthResult::class.java)
 
-    @Before
-    override fun setup() {
-        super.setup()
-        setupMocks()
-    }
-
     @Test
     fun withValidCredentials_shouldRedirectToProfileActivity() {
+        setupMocks()
+
         emailAndPasswordSignUp {
             typeEmail("test123@test.com")
             typePassword("abcd1234")
@@ -46,7 +43,7 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
             typePassword("abcd1234")
             typeConfirmation("abcd1234")
         } clickNext {
-            showEmptyEmailError()
+            showEmailFormatError()
         }
     }
 
@@ -94,6 +91,8 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
 
     @Test
     fun withAuthenticationError_shouldShowErrorDialogue() {
+        setupMocks()
+
         emailAndPasswordSignUp {
             typeEmail("error@test.com")
             typePassword("abcd1234")
@@ -104,38 +103,34 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
     }
 
     private fun setupMocks() {
-        `when`(presenter.createAccount("test123@test.com", "abcd1234",
+        val exception = Exception()
+
+        `when`(mockPresenter.createAccount("test123@test.com", "abcd1234",
                 "abcd1234")).then {
-            presenter.onSuccess(result)
+            mockPresenter.onSuccess(result)
         }
 
-        `when`(presenter.createAccount("error@test.com", "abcd1234",
+        `when`(mockPresenter.createAccount("error@test.com", "abcd1234",
                 "abcd1234")).then {
-            presenter.onFailure(Exception())
+            mockPresenter.onFailure(exception)
         }
 
-        `when`(presenter.createAccount("", "abcd1234", "abcd1234"))
-                .thenCallRealMethod()
-
-        `when`(presenter.createAccount("test123@test.com", "",
-                "abcd1234")).thenCallRealMethod()
-
-        `when`(presenter.createAccount("test123@test.com", "abcd1234",
-                "")).thenCallRealMethod()
-
-        `when`(presenter.createAccount("test123@test.com", "abcd1234",
-                "abcd123")).thenCallRealMethod()
-
-        `when`(presenter.createAccount("test.com", "abcd1234",
-                "abcd1234")).thenCallRealMethod()
-
-        `when`(presenter.onSuccess(result)).then {
+        `when`(mockPresenter.onSuccess(result)).then {
+            // TODO: use thenCallRealMethod()
             rule.activity.startProfileActivity()
         }
 
-        `when`(presenter.onFailure(Exception())).thenCallRealMethod()
+        `when`(mockPresenter.onFailure(exception)).then {
+            // TODO: use thenCallRealMethod()
+            AlertDialog.Builder(rule.activity)
+                    .setTitle(R.string.error)
+                    .setIcon(R.drawable.ic_error)
+                    .setMessage(R.string.error_creating_account)
+                    .setNeutralButton(R.string.ok, null)
+                    .show()
+        }
 
-        rule.activity.presenter = presenter
+        rule.activity.presenter = mockPresenter
     }
 
 }

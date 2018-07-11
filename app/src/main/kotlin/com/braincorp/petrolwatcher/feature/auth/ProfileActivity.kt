@@ -12,9 +12,9 @@ import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
-import com.braincorp.petrolwatcher.utils.fillImageView
-import com.braincorp.petrolwatcher.utils.rotateBitmap
-import com.braincorp.petrolwatcher.utils.toUri
+import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
+import com.braincorp.petrolwatcher.feature.auth.utils.rotateBitmap
+import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 

@@ -15,11 +15,6 @@ interface EmailAndPasswordSignUpContract {
         fun showEmptyConfirmationError()
 
         /**
-         * Shows an error when the e-mail field is empty
-         */
-        fun showEmptyEmailError()
-
-        /**
          * Shows an error when the password field is empty
          */
         fun showEmptyPasswordError()

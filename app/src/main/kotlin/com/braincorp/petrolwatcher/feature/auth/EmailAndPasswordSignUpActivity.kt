@@ -7,6 +7,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
+import com.braincorp.petrolwatcher.utils.showFieldError
 import com.braincorp.petrolwatcher.utils.startProfileActivity
 import kotlinx.android.synthetic.main.activity_email_and_password_sign_up.*
 import kotlinx.android.synthetic.main.content_email_and_password_sign_up.*
@@ -34,21 +35,14 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * field is empty
      */
     override fun showEmptyConfirmationError() {
-        edt_password_confirmation.error = getString(R.string.error_empty_confirmation)
-    }
-
-    /**
-     * Shows an error when the e-mail field is empty
-     */
-    override fun showEmptyEmailError() {
-        edt_email.error = getString(R.string.error_empty_email)
+        showFieldError(edt_password_confirmation, getString(R.string.error_empty_confirmation))
     }
 
     /**
      * Shows an error when the password field is empty
      */
     override fun showEmptyPasswordError() {
-        edt_password.error = getString(R.string.error_empty_password)
+        showFieldError(edt_password, getString(R.string.error_empty_password))
     }
 
     /**
@@ -56,14 +50,14 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * don't match
      */
     override fun showPasswordNotMatchingError() {
-        edt_password_confirmation.error = getString(R.string.error_password_and_confirmation_dont_match)
+        showFieldError(edt_password_confirmation, getString(R.string.error_password_and_confirmation_dont_match))
     }
 
     /**
      * Shows an e-mail format error
      */
     override fun showEmailFormatError() {
-        edt_email.error = getString(R.string.error_email_format)
+        showFieldError(edt_email, getString(R.string.error_email_format))
     }
 
     /**
