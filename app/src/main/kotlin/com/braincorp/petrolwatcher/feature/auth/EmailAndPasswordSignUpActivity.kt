@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
+import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startProfileActivity
 import kotlinx.android.synthetic.main.activity_email_and_password_sign_up.*
 import kotlinx.android.synthetic.main.content_email_and_password_sign_up.*
@@ -16,19 +17,16 @@ import kotlinx.android.synthetic.main.content_email_and_password_sign_up.*
  */
 class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSignUpContract.View {
 
-    override val presenter: EmailAndPasswordSignUpContract.Presenter = EmailAndPasswordSignUpPresenter(this)
+    override lateinit var presenter: EmailAndPasswordSignUpContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_and_password_sign_up)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        fab.setOnClickListener {
-            val email = edt_email.text.toString()
-            val password = edt_password.text.toString()
-            val confirmation = edt_password_confirmation.text.toString()
-            presenter.createAccount(email, password, confirmation)
-        }
+        presenter = EmailAndPasswordSignUpPresenter(view = this,
+                authenticator = dependencyInjection().getAuthenticator())
+        setupNextButton()
     }
 
     /**
@@ -62,6 +60,13 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
     }
 
     /**
+     * Shows an e-mail format error
+     */
+    override fun showEmailFormatError() {
+        edt_email.error = getString(R.string.error_email_format)
+    }
+
+    /**
      * Shows a backend error dialogue
      */
     override fun showBackendError() {
@@ -69,6 +74,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
                 .setTitle(R.string.error)
                 .setIcon(R.drawable.ic_error)
                 .setMessage(R.string.error_creating_account)
+                .setNeutralButton(R.string.ok, null)
                 .show()
     }
 
@@ -77,6 +83,15 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      */
     override fun showProfile() {
         startProfileActivity(finishCurrent = true)
+    }
+
+    private fun setupNextButton() {
+        fab.setOnClickListener {
+            val email = edt_email.text.toString()
+            val password = edt_password.text.toString()
+            val confirmation = edt_password_confirmation.text.toString()
+            presenter.createAccount(email, password, confirmation)
+        }
     }
 
 }

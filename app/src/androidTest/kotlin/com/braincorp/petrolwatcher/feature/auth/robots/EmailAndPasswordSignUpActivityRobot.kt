@@ -54,6 +54,16 @@ class EmailAndPasswordSignUpResult {
         }
     }
 
+    fun showErrorDialogue() {
+        displayed {
+            allOf {
+                text(R.string.error)
+                text(R.string.error_creating_account)
+                image(R.drawable.ic_error)
+            }
+        }
+    }
+
     fun showEmptyEmailError() {
         showError(R.string.error_empty_email)
     }
@@ -68,6 +78,10 @@ class EmailAndPasswordSignUpResult {
 
     fun showPasswordAndConfirmationMismatchError() {
         showError(R.string.error_password_and_confirmation_dont_match)
+    }
+
+    fun showEmailFormatError() {
+        showError(R.string.error_email_format)
     }
 
     private fun showError(@StringRes errorTextRes: Int) {

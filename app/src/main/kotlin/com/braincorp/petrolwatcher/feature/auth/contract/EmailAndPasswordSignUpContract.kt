@@ -39,6 +39,11 @@ interface EmailAndPasswordSignUpContract {
          * Shows a backend error dialogue
          */
         fun showBackendError()
+
+        /**
+         * Shows an e-mail format error
+         */
+        fun showEmailFormatError()
     }
 
     /**
