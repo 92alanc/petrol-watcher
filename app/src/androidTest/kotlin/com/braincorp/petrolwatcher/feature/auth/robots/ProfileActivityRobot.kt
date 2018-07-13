@@ -2,10 +2,10 @@ package com.braincorp.petrolwatcher.feature.auth.robots
 
 import android.content.Intent.ACTION_PICK
 import android.provider.MediaStore
-import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.CameraActivity
 
 fun profile(func: ProfileActivityRobot.() -> Unit) = ProfileActivityRobot().apply(func)
 
@@ -37,7 +37,7 @@ class ProfileResult {
 
     fun cameraIsOpen() {
         sentIntent {
-            action(ACTION_IMAGE_CAPTURE)
+            className(CameraActivity::class.java.name)
         }
     }
 

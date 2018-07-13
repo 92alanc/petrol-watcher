@@ -11,12 +11,11 @@ import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-import org.mockito.Mockito.mock
 
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
 
-    lateinit var app: App
+    private lateinit var app: App
 
     @Rule
     @JvmField
@@ -45,7 +44,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
     }
 
     fun getAuthenticator(): Authenticator {
-        return mock(Authenticator::class.java)
+        return app.dependencyInjection.getAuthenticator()
     }
 
     fun launch() {

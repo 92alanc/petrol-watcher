@@ -91,6 +91,9 @@ dependencies {
     androidTestImplementation 'br.com.concretesolutions:kappuccino:1.1.2'
 
     // Mockito
+    androidTestImplementation ('com.nhaarman:mockito-kotlin-kt1.1:1.5.0', {
+        exclude group: 'org.mockito', module: 'mockito-core'
+    })
     androidTestImplementation 'org.mockito:mockito-android:2.15.0'
 
     // ------------- STANDARD LIBRARIES -------------
@@ -102,10 +105,15 @@ dependencies {
     implementation "com.android.support:cardview-v7:$support_library_version"
     implementation "com.android.support:customtabs:$support_library_version"
     implementation "com.android.support:design:$support_library_version"
+    implementation "com.android.support:animated-vector-drawable:$support_library_version"
+    implementation "com.android.support:exifinterface:$support_library_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     // Architecture components
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    // Camera kit
+    implementation 'com.wonderkiln:camerakit:0.13.1'
 
     // Circle image view
     implementation 'de.hdodenhof:circleimageview:2.2.0'
