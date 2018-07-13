@@ -1,15 +1,18 @@
 package com.braincorp.petrolwatcher.feature.auth.presenter
 
-import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResultCallback
 
 /**
  * The implementation of the presentation layer
@@ -17,27 +20,16 @@ import com.google.android.gms.common.api.GoogleApiClient
  *
  * @param view the view layer
  */
-class MainActivityPresenter(private val view: MainContract.View) : MainContract.Presenter,
-        GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
+class MainActivityPresenter(private val view: MainContract.View,
+                            private val authenticator: Authenticator) : MainContract.Presenter,
+        GoogleApiClient.OnConnectionFailedListener, ResultCallback<GoogleSignInResult>,
+        FacebookCallback<LoginResult> {
 
     private companion object {
         const val TAG = "PETROL_WATCHER"
     }
 
-    /**
-     * Handles a Google sign in result, which result
-     * can be understood as either a success or a failure
-     *
-     * @param data the intent received, containing
-     *             the sign in result
-     */
-    override fun handleGoogleSignInResult(data: Intent?) {
-        val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-        if (result.isSuccess)
-            view.showMap()
-        else
-            view.showErrorScreen(AuthErrorType.GOOGLE)
-    }
+    val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     /**
      * Function called when a connection with
@@ -69,6 +61,33 @@ class MainActivityPresenter(private val view: MainContract.View) : MainContract.
      */
     override fun onError(error: FacebookException?) {
         view.showErrorScreen(AuthErrorType.FACEBOOK)
+    }
+
+    /**
+     * Signs in with a Google account
+     *
+     * @param activity the activity
+     * @param requestCode the request code
+     */
+    override fun signInWithGoogle(activity: AppCompatActivity, requestCode: Int) {
+        authenticator.signInWithGoogle(activity, requestCode, this,
+                this)
+    }
+
+    override fun onResult(result: GoogleSignInResult) {
+        if (result.isSuccess)
+            view.showMap()
+        else
+            view.showErrorScreen(AuthErrorType.GOOGLE)
+    }
+
+    /**
+     * Signs in with a Facebook account
+     *
+     * @param activity the activity
+     */
+    override fun signInWithFacebook(activity: AppCompatActivity) {
+        authenticator.signInWithFacebook(activity, this, callbackManager)
     }
 
 }

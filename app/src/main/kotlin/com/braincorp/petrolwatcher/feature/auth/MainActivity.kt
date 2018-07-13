@@ -9,13 +9,10 @@ import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
-import com.braincorp.petrolwatcher.feature.auth.utils.getGoogleApiClient
-import com.braincorp.petrolwatcher.feature.auth.utils.signInWithFacebook
-import com.braincorp.petrolwatcher.feature.auth.utils.signInWithGoogle
+import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
-import com.facebook.CallbackManager
-import com.google.android.gms.common.api.GoogleApiClient
+import com.braincorp.petrolwatcher.utils.startMapActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -29,16 +26,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
         const val REQUEST_CODE_GOOGLE_SIGN_IN = 3892
     }
 
-    override val presenter: MainActivityPresenter = MainActivityPresenter(view = this)
-
-    private val callbackManager = CallbackManager.Factory.create()
-
-    private lateinit var googleApiClient: GoogleApiClient
+    override lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        googleApiClient = getGoogleApiClient(presenter)
+        presenter = MainActivityPresenter(view = this,
+                authenticator = dependencyInjection().getAuthenticator())
         setupButtons()
     }
 
@@ -51,18 +45,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // When a Google sign in response is received
-        if (requestCode == REQUEST_CODE_GOOGLE_SIGN_IN)
-            presenter.handleGoogleSignInResult(data)
-
-        if (callbackManager.onActivityResult(requestCode, resultCode, data))
+        if (presenter.callbackManager.onActivityResult(requestCode, resultCode, data))
             return
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.bt_sign_in_google -> signInWithGoogle(googleApiClient, REQUEST_CODE_GOOGLE_SIGN_IN)
-            R.id.bt_sign_in_facebook -> signInWithFacebook(callbackManager, presenter)
+            R.id.bt_sign_in_google -> presenter.signInWithGoogle(this, REQUEST_CODE_GOOGLE_SIGN_IN)
+            R.id.bt_sign_in_facebook -> presenter.signInWithFacebook(this)
             R.id.bt_sign_in_email -> startEmailSignInActivity()
         }
     }
@@ -80,7 +70,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
      * Shows the map activity
      */
     override fun showMap() {
-        // TODO: show map activity
+        startMapActivity(finishCurrent = true)
     }
 
     private fun setupButtons() {

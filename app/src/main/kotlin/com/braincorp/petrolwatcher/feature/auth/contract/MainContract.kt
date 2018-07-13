@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.contract
 
-import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.base.BaseContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 
@@ -27,12 +27,18 @@ interface MainContract {
      */
     interface Presenter : BaseContract.Presenter {
         /**
-         * Handles a Google sign in result, which result
-         * can be understood as either a success or a failure
+         * Signs in with a Google account
          *
-         * @param data the intent received, containing
-         *             the sign in result
+         * @param activity the activity
+         * @param requestCode the request code
          */
-        fun handleGoogleSignInResult(data: Intent?)
+        fun signInWithGoogle(activity: AppCompatActivity, requestCode: Int)
+
+        /**
+         * Signs in with a Facebook account
+         *
+         * @param activity the activity
+         */
+        fun signInWithFacebook(activity: AppCompatActivity)
     }
 }

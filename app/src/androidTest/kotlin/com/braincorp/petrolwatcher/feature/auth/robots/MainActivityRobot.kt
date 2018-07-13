@@ -9,7 +9,15 @@ fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply
 
 class MainActivityRobot {
 
-    infix fun clickOnSignInWithEmail(func: MainActivityResult.() -> Unit) {
+    infix fun clickSignInWithGoogle(func: MainActivityResult.() -> Unit) {
+        click {
+            id(R.id.bt_sign_in_google)
+        }
+
+        applyResult(func)
+    }
+
+    infix fun clickSignInWithEmail(func: MainActivityResult.() -> Unit) {
         click {
             id(R.id.bt_sign_in_email)
         }
@@ -29,6 +37,10 @@ class MainActivityResult {
         sentIntent {
             className(EmailSignInActivity::class.java.name)
         }
+    }
+
+    fun redirectToMapActivity() {
+        // TODO: implement
     }
 
 }

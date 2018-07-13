@@ -12,8 +12,16 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
     @Test
     fun whenClickingOnSignInWithEmail_shouldStartEmailSignInActivity() {
         mainActivity {
-        } clickOnSignInWithEmail {
+        } clickSignInWithEmail {
             redirectToEmailSignInActivity()
+        }
+    }
+
+    @Test
+    fun whenClickingOnSignInWithGoogle_shouldRedirectToMapActivity() {
+        mainActivity {
+        } clickSignInWithGoogle {
+            redirectToMapActivity()
         }
     }
 
