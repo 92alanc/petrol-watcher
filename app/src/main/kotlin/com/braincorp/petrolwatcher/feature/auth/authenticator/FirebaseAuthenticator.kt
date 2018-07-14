@@ -76,9 +76,6 @@ class FirebaseAuthenticator : Authenticator {
 
         val pendingResult = Auth.GoogleSignInApi.silentSignIn(client)
         pendingResult.setResultCallback(resultCallback)
-
-        /*val intent = Auth.GoogleSignInApi.getSignInIntent(client)
-        activity.startActivityForResult(intent, requestCode)*/
     }
 
     /**
