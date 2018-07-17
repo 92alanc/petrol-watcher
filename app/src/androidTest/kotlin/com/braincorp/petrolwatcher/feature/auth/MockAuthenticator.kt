@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
+import com.braincorp.petrolwatcher.TestActivity
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -66,7 +67,7 @@ object MockAuthenticator : Authenticator {
      */
     override fun signInWithGoogle(activity: AppCompatActivity,
                                   onConnectionFailedListener: GoogleApiClient.OnConnectionFailedListener) : Intent {
-        return Intent()
+        return Intent(activity, TestActivity::class.java)
     }
 
     /**
