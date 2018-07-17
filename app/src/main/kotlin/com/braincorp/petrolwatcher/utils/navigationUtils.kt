@@ -2,6 +2,8 @@ package com.braincorp.petrolwatcher.utils
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
 import com.braincorp.petrolwatcher.feature.auth.CameraActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
@@ -72,6 +74,7 @@ fun AppCompatActivity.startProfileActivity(finishCurrent: Boolean = false) {
  */
 fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
     // TODO: implement
+    Toast.makeText(this, "Map activity", LENGTH_SHORT).show()
 }
 
 /**

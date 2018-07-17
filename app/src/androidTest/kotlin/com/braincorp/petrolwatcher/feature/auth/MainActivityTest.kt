@@ -19,9 +19,21 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
 
     @Test
     fun whenClickingOnSignInWithGoogle_shouldRedirectToMapActivity() {
+        (getAuthenticator() as MockAuthenticator).authSuccess = true
+
         mainActivity {
         } clickSignInWithGoogle {
             redirectToMapActivity()
+        }
+    }
+
+    @Test
+    fun withGoogleSignInError_shouldShowErrorScreen() {
+        (getAuthenticator() as MockAuthenticator).authSuccess = false
+
+        mainActivity {
+        } clickSignInWithGoogle {
+            showErrorScreen()
         }
     }
 

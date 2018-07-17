@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == REQUEST_CODE_GOOGLE_SIGN_IN)
+            presenter.handleGoogleSignInIntent(data)
+
         if (presenter.callbackManager.onActivityResult(requestCode, resultCode, data))
             return
     }

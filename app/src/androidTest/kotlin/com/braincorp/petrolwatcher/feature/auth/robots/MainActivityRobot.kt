@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.auth.robots
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 
 fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply(func)
@@ -41,6 +42,12 @@ class MainActivityResult {
 
     fun redirectToMapActivity() {
         // TODO: implement
+    }
+
+    fun showErrorScreen() {
+        sentIntent {
+            className(AuthenticationErrorActivity::class.java.name)
+        }
     }
 
 }

@@ -5,6 +5,6 @@ import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 
 class TestDependencyInjection : DependencyInjection() {
 
-    override fun getAuthenticator(): Authenticator = MockAuthenticator()
+    override fun getAuthenticator(): Authenticator = MockAuthenticator
 
 }
