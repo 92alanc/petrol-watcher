@@ -10,6 +10,14 @@ fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply
 
 class MainActivityRobot {
 
+    infix fun clickSignInWithFacebook(func: MainActivityResult.() -> Unit) {
+        click {
+            id(R.id.bt_sign_in_facebook)
+        }
+
+        applyResult(func)
+    }
+
     infix fun clickSignInWithGoogle(func: MainActivityResult.() -> Unit) {
         click {
             id(R.id.bt_sign_in_google)

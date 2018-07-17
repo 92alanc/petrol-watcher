@@ -6,6 +6,7 @@ import com.braincorp.petrolwatcher.TestActivity
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.OnFailureListener
@@ -17,7 +18,10 @@ import org.mockito.Mockito.mock
 object MockAuthenticator : Authenticator {
 
     @Mock
-    private val result = mock(AuthResult::class.java)
+    private val googleAuthResult = mock(AuthResult::class.java)
+
+    @Mock
+    private val facebookLoginResult = mock(LoginResult::class.java)
 
     @Mock
     override val facebookCallbackManager: CallbackManager = mock(CallbackManager::class.java)
@@ -36,7 +40,7 @@ object MockAuthenticator : Authenticator {
                         onSuccessListener: OnSuccessListener<AuthResult>,
                         onFailureListener: OnFailureListener) {
         if (email == "test123@test.com" && password == "abcd1234")
-            onSuccessListener.onSuccess(result)
+            onSuccessListener.onSuccess(googleAuthResult)
         else
             onFailureListener.onFailure(Exception())
     }
@@ -53,7 +57,7 @@ object MockAuthenticator : Authenticator {
                         onSuccessListener: OnSuccessListener<AuthResult>,
                         onFailureListener: OnFailureListener) {
         if (email == "test123@test.com" && password == "abcd1234")
-            onSuccessListener.onSuccess(result)
+            onSuccessListener.onSuccess(googleAuthResult)
         else
             onFailureListener.onFailure(Exception())
     }
@@ -79,7 +83,10 @@ object MockAuthenticator : Authenticator {
      */
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
-        // TODO: implement
+        if (authSuccess)
+            callback.onSuccess(facebookLoginResult)
+        else
+            callback.onError(FacebookException())
     }
 
     /**

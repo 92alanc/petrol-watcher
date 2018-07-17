@@ -19,8 +19,7 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
 
     @Test
     fun whenClickingOnSignInWithGoogle_shouldRedirectToMapActivity() {
-        (getAuthenticator() as MockAuthenticator).authSuccess = true
-
+        setAuthSuccess(true)
         mainActivity {
         } clickSignInWithGoogle {
             redirectToMapActivity()
@@ -29,12 +28,33 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
 
     @Test
     fun withGoogleSignInError_shouldShowErrorScreen() {
-        (getAuthenticator() as MockAuthenticator).authSuccess = false
-
+        setAuthSuccess(false)
         mainActivity {
         } clickSignInWithGoogle {
             showErrorScreen()
         }
+    }
+
+    @Test
+    fun whenClickingOnSignInWithFacebook_shouldRedirectToMapActivity() {
+        setAuthSuccess(true)
+        mainActivity {
+        } clickSignInWithFacebook {
+            redirectToMapActivity()
+        }
+    }
+
+    @Test
+    fun withFacebookError_shouldShowErrorScreen() {
+        setAuthSuccess(false)
+        mainActivity {
+        } clickSignInWithFacebook {
+            showErrorScreen()
+        }
+    }
+
+    private fun setAuthSuccess(success: Boolean) {
+        (getAuthenticator() as MockAuthenticator).authSuccess = success
     }
 
 }
