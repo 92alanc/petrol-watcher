@@ -53,8 +53,20 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
         }
     }
 
+    @Test
+    fun withUserAlreadyLoggedIn_shouldRedirectToMapActivity() {
+        setUserLoggedIn(true)
+        mainActivity {
+            redirectToMapActivity()
+        }
+    }
+
     private fun setAuthSuccess(success: Boolean) {
         (getAuthenticator() as MockAuthenticator).authSuccess = success
+    }
+
+    private fun setUserLoggedIn(userLoggedIn: Boolean) {
+        (getAuthenticator() as MockAuthenticator).userLoggedIn = userLoggedIn
     }
 
 }

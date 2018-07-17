@@ -94,4 +94,12 @@ class MainActivityPresenter(private val view: MainContract.View,
             view.showErrorScreen(AuthErrorType.GOOGLE)
     }
 
+    /**
+     * Determines whether the system has a
+     * user already logged in
+     */
+    override fun isLoggedIn(): Boolean {
+        return authenticator.getCurrentUser() != null
+    }
+
 }

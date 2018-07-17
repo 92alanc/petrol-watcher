@@ -12,7 +12,6 @@ import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
 
     override fun onStart() {
         super.onStart()
-        if (FirebaseAuth.getInstance().currentUser != null) // TODO: use authenticator method
+        if (presenter.isLoggedIn())
             showMap()
     }
 

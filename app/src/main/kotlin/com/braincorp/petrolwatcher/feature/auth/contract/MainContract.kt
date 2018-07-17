@@ -48,5 +48,11 @@ interface MainContract {
          * @param intent the intent
          */
         fun handleGoogleSignInIntent(intent: Intent?)
+
+        /**
+         * Determines whether the system has a
+         * user already logged in
+         */
+        fun isLoggedIn(): Boolean
     }
 }

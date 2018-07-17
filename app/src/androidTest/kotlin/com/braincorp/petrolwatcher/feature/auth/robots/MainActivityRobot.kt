@@ -10,6 +10,10 @@ fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply
 
 class MainActivityRobot {
 
+    fun redirectToMapActivity() {
+        MainActivityResult().redirectToMapActivity()
+    }
+
     infix fun clickSignInWithFacebook(func: MainActivityResult.() -> Unit) {
         click {
             id(R.id.bt_sign_in_facebook)

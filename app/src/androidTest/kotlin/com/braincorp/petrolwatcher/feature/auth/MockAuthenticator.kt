@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 
@@ -26,7 +27,12 @@ object MockAuthenticator : Authenticator {
     @Mock
     override val facebookCallbackManager: CallbackManager = mock(CallbackManager::class.java)
 
+    @Mock
+    private val firebaseUser = mock(FirebaseUser::class.java)
+
     var authSuccess = true
+
+    var userLoggedIn = false
 
     /**
      * Signs in with e-mail and password
@@ -98,5 +104,15 @@ object MockAuthenticator : Authenticator {
      * @return true if positive, otherwise false
      */
     override fun isGoogleSignInSuccessful(intent: Intent?): Boolean = authSuccess
+
+    /**
+     * Gets the currently logged in user, if any
+     *
+     * @return the currently logged in user
+     */
+    override fun getCurrentUser(): FirebaseUser? {
+        return if (userLoggedIn) firebaseUser
+        else null
+    }
 
 }

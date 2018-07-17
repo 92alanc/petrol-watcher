@@ -9,6 +9,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
 
 interface Authenticator {
 
@@ -69,5 +70,12 @@ interface Authenticator {
      */
     fun signInWithFacebook(activity: AppCompatActivity,
                            callback: FacebookCallback<LoginResult>)
+
+    /**
+     * Gets the currently logged in user, if any
+     *
+     * @return the currently logged in user
+     */
+    fun getCurrentUser(): FirebaseUser?
 
 }

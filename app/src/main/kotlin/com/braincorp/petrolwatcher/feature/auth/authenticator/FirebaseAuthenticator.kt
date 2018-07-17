@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 /**
  * A Firebase authentication wrapper
@@ -100,5 +101,12 @@ class FirebaseAuthenticator : Authenticator {
     override fun isGoogleSignInSuccessful(intent: Intent?): Boolean {
         return Auth.GoogleSignInApi.getSignInResultFromIntent(intent).isSuccess
     }
+
+    /**
+     * Gets the currently logged in user, if any
+     *
+     * @return the currently logged in user
+     */
+    override fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
 }
