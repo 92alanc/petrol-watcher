@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
 import android.provider.MediaStore
+import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
@@ -17,7 +18,6 @@ import com.braincorp.petrolwatcher.feature.auth.utils.setProfilePictureAndDispla
 import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import com.braincorp.petrolwatcher.feature.auth.utils.uploadBitmap
 import com.braincorp.petrolwatcher.utils.hasCameraPermission
-import com.braincorp.petrolwatcher.utils.startCameraActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import java.lang.Exception
@@ -101,7 +101,8 @@ class ProfilePresenter(private val view: ProfileContract.View) : ProfileContract
     }
 
     private fun openCameraAfterPermissionGranted(activity: AppCompatActivity, requestCode: Int) {
-        activity.startCameraActivity(requestCode)
+        val intent = Intent(ACTION_IMAGE_CAPTURE)
+        activity.startActivityForResult(intent, requestCode)
     }
 
 }

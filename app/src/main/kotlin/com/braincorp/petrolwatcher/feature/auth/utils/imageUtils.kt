@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.support.annotation.DrawableRes
@@ -98,4 +99,18 @@ fun Bitmap.toByteArray(): ByteArray {
     val quality = 50
     compress(Bitmap.CompressFormat.JPEG, quality, stream)
     return stream.toByteArray()
+}
+
+/**
+ * Rotates a bitmap
+ *
+ * @param bitmap the bitmap to rotate
+ * @param angle the angle, in degrees
+ *
+ * @return the rotated bitmap
+ */
+fun rotateBitmap(bitmap: Bitmap, angle: Float): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }

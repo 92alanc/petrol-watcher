@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
-import com.braincorp.petrolwatcher.feature.auth.CameraActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 import com.braincorp.petrolwatcher.feature.auth.MainActivity
@@ -75,20 +74,6 @@ fun AppCompatActivity.startProfileActivity(finishCurrent: Boolean = false) {
 fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
     // TODO: implement
     Toast.makeText(this, "Map activity", LENGTH_SHORT).show()
-}
-
-/**
- * Starts the camera activity
- *
- * @param requestCode the request code
- * @param finishCurrent if true, the current
- *                      activity will be finished
- */
-fun AppCompatActivity.startCameraActivity(requestCode: Int, finishCurrent: Boolean = false) {
-    val intent = Intent(this, CameraActivity::class.java)
-    startActivityForResult(intent, requestCode)
-    if (finishCurrent)
-        finish()
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
