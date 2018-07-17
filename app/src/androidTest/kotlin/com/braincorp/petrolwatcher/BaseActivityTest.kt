@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
+import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,6 +46,10 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
 
     fun getAuthenticator(): Authenticator {
         return app.dependencyInjection.getAuthenticator()
+    }
+
+    fun getImageHandler(): ImageHandler {
+        return app.dependencyInjection.getImageHandler()
     }
 
     fun launch() {

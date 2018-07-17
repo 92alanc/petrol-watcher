@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.GoogleApiClient
  * of the app's main activity
  *
  * @param view the view layer
+ * @param authenticator the authenticator
  */
 class MainActivityPresenter(private val view: MainContract.View,
                             private val authenticator: Authenticator) : MainContract.Presenter,

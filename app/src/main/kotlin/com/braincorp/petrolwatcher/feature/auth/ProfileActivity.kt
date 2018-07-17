@@ -15,6 +15,7 @@ import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.feature.auth.utils.rotateBitmap
 import com.braincorp.petrolwatcher.feature.auth.utils.toUri
+import com.braincorp.petrolwatcher.utils.dependencyInjection
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 
@@ -29,11 +30,13 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         const val REQUEST_CODE_GALLERY = 13797
     }
 
-    override val presenter: ProfileContract.Presenter = ProfilePresenter(view = this)
+    override lateinit var presenter: ProfileContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        presenter = ProfilePresenter(view = this,
+                imageHandler = dependencyInjection().getImageHandler())
         setupButtons()
     }
 
