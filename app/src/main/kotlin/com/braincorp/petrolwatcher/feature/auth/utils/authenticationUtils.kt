@@ -8,15 +8,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 
 /**
- * Gets the account that's currently signed in
- *
- * @return the active account (if existent) or null
- */
-fun getActiveAccount(): FirebaseUser? {
-    return FirebaseAuth.getInstance().currentUser
-}
-
-/**
  * Sets the profile picture and the display name to the
  * currently logged in user
  *

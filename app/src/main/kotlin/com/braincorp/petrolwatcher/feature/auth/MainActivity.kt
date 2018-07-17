@@ -8,11 +8,11 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
-import com.braincorp.petrolwatcher.feature.auth.utils.getActiveAccount
 import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
 
     override fun onStart() {
         super.onStart()
-        if (getActiveAccount() != null)
+        if (FirebaseAuth.getInstance().currentUser != null) // TODO: use authenticator method
             showMap()
     }
 

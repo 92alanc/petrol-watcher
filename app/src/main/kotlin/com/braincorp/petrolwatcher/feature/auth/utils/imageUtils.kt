@@ -2,7 +2,6 @@ package com.braincorp.petrolwatcher.feature.auth.utils
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.support.annotation.DrawableRes
@@ -19,6 +18,14 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener
 import java.io.ByteArrayOutputStream
 
+/**
+ * Fills an ImageView showing the progress
+ *
+ * @param imageUri the image URI
+ * @param imageView the ImageView
+ * @param placeholderRes the image placeholder
+ * @param progressBar the progress bar
+ */
 fun fillImageView(imageUri: Uri?,
                   imageView: ImageView,
                   @DrawableRes placeholderRes: Int = 0,
@@ -82,19 +89,10 @@ fun Bitmap.toUri(context: Context): Uri {
 }
 
 /**
- * Rotates a bitmap
+ * Converts a bitmap to a byte array
  *
- * @param bitmap the bitmap
- * @param angle the angle, in degrees
- *
- * @return the rotated bitmap
+ * @return the bitmap as a byte array
  */
-fun rotateBitmap(bitmap: Bitmap, angle: Float): Bitmap {
-    val matrix = Matrix()
-    matrix.postRotate(angle)
-    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-}
-
 fun Bitmap.toByteArray(): ByteArray {
     val stream = ByteArrayOutputStream()
     val quality = 50
