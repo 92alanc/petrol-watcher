@@ -1,7 +1,9 @@
 package com.braincorp.petrolwatcher.feature.auth.contract
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.base.BaseContract
@@ -61,5 +63,24 @@ interface ProfileContract {
          * @param context the Android context
          */
         fun saveProfile(picture: Bitmap?, displayName: String, context: Context)
+
+        /**
+         * Gets an image URI from a camera intent
+         *
+         * @param intent the intent
+         * @param context the Android context
+         *
+         * @return the image URI
+         */
+        fun getImageUriFromCameraIntent(intent: Intent?, context: Context): Uri?
+
+        /**
+         * Gets an image URI from a gallery intent
+         *
+         * @param intent the intent
+         *
+         * @return the image URI
+         */
+        fun getImageUriFromGalleryIntent(intent: Intent?): Uri?
     }
 }

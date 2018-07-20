@@ -30,8 +30,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         if (autoLaunch) launch()
         else Intents.init()
 
-        app = InstrumentationRegistry.getTargetContext().applicationContext as App
-        app.dependencyInjection = TestDependencyInjection()
+        app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
     }
 
     @After
@@ -44,7 +43,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
     }
 
     fun getAuthenticator(): Authenticator {
-        return app.dependencyInjection.getAuthenticator()
+        return app.dependencyInjection().getAuthenticator()
     }
 
     fun launch() {

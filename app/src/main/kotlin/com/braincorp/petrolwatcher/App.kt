@@ -8,15 +8,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 /**
  * The general application class
  */
-class App : Application() {
-
-    var dependencyInjection = DependencyInjection()
+open class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
         setupFirebase()
         setupImageLoader()
     }
+
+    open fun dependencyInjection(): DependencyInjection = DependencyInjection()
 
     private fun setupFirebase() {
         FirebaseApp.initializeApp(this)

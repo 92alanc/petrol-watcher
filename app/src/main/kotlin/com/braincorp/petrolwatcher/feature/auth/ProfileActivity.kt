@@ -2,7 +2,6 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -13,8 +12,6 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
-import com.braincorp.petrolwatcher.feature.auth.utils.rotateBitmap
-import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import com.braincorp.petrolwatcher.utils.dependencyInjection
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
@@ -44,13 +41,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CAMERA) {
-                var bitmap = data?.extras?.get("data") as Bitmap
-                bitmap = rotateBitmap(bitmap, 270f)
-                val uri = bitmap.toUri(this)
+                val uri = presenter.getImageUriFromCameraIntent(data, this)
                 fillImageView(uri, img_profile,
                         R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {
-                val uri = data?.data
+                val uri = presenter.getImageUriFromGalleryIntent(data)
                 fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
             }
         }

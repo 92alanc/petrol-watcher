@@ -5,5 +5,5 @@ import com.braincorp.petrolwatcher.App
 import com.braincorp.petrolwatcher.DependencyInjection
 
 fun AppCompatActivity.dependencyInjection(): DependencyInjection {
-    return (applicationContext as App).dependencyInjection
+    return (applicationContext as App).dependencyInjection()
 }

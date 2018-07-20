@@ -1,7 +1,9 @@
 package com.braincorp.petrolwatcher.feature.auth.presenter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
@@ -63,6 +65,29 @@ class ProfilePresenter(private val view: ProfileContract.View,
         }, onFailureAction = {
             view.showErrorDialogue(R.string.error_profile_picture_display_name)
         })
+    }
+
+    /**
+     * Gets an image URI from a camera intent
+     *
+     * @param intent the intent
+     * @param context the Android context
+     *
+     * @return the image URI
+     */
+    override fun getImageUriFromCameraIntent(intent: Intent?, context: Context): Uri? {
+        return imageHandler.getImageUriFromCameraIntent(intent, context)
+    }
+
+    /**
+     * Gets an image URI from a gallery intent
+     *
+     * @param intent the intent
+     *
+     * @return the image URI
+     */
+    override fun getImageUriFromGalleryIntent(intent: Intent?): Uri? {
+        return imageHandler.getImageUriFromGalleryIntent(intent)
     }
 
     /**
