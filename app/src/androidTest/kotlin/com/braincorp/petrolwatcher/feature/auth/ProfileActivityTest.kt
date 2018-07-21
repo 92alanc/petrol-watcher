@@ -72,6 +72,21 @@ class ProfileActivityTest : BaseActivityTest<ProfileActivity>(ProfileActivity::c
         }
     }
 
+    @Test
+    fun withNoProfilePicture_shouldShowDefaultPicture() {
+        profile {
+            showDefaultPicture()
+        }
+    }
+
+    @Test
+    fun whenClickingOnMyVehicles_shouldRedirectToVehicleListActivity() {
+        profile {
+        } clickMyVehicles {
+            redirectToVehicleListActivity()
+        }
+    }
+
     private fun setUploadSuccess(uploadSuccess: Boolean) {
         (getImageHandler() as MockImageHandler).uploadSuccess = uploadSuccess
     }

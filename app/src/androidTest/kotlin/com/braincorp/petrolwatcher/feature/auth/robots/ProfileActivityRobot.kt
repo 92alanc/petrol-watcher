@@ -16,6 +16,12 @@ class ProfileActivityRobot {
         }
     }
 
+    fun showDefaultPicture() {
+        displayed {
+            image(R.drawable.ic_profile)
+        }
+    }
+
     infix fun clickCamera(func: ProfileResult.() -> Unit) {
         click {
             id(R.id.bt_camera)
@@ -35,6 +41,14 @@ class ProfileActivityRobot {
     infix fun clickSave(func: ProfileResult.() -> Unit) {
         click {
             id(R.id.fab)
+        }
+
+        applyResult(func)
+    }
+
+    infix fun clickMyVehicles(func: ProfileResult.() -> Unit) {
+        click {
+            id(R.id.bt_vehicles)
         }
 
         applyResult(func)
@@ -74,6 +88,10 @@ class ProfileResult {
         displayed {
             text(R.string.error_profile_picture_display_name)
         }
+    }
+
+    fun redirectToVehicleListActivity() {
+        // TODO: implement
     }
 
 }

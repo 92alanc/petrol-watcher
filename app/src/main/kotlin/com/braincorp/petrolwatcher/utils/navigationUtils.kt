@@ -76,6 +76,17 @@ fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
     Toast.makeText(this, "Map activity", LENGTH_SHORT).show()
 }
 
+/**
+ * Starts the vehicle list activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean) {
+    // TODO: implement
+    Toast.makeText(this, "Vehicle list activity", LENGTH_SHORT).show()
+}
+
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
     val intent = Intent(this, destinationClass)
     startActivity(intent)

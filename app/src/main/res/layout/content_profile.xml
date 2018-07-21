@@ -26,6 +26,7 @@
                 android:layout_width="@dimen/size_circleimageview"
                 android:layout_height="@dimen/size_circleimageview"
                 android:layout_marginBottom="@dimen/margin_default"
+                android:src="@drawable/ic_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/til_name"
                 app:layout_constraintStart_toStartOf="parent"

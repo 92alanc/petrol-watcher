@@ -12,6 +12,7 @@ import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.dependencyInjection
+import com.braincorp.petrolwatcher.utils.startVehicleListActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
 
@@ -83,6 +84,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
         when (v.id) {
             R.id.bt_camera -> presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
             R.id.bt_gallery -> presenter.openGallery(activity = this, requestCode = REQUEST_CODE_GALLERY)
+            R.id.bt_vehicles -> startVehicleListActivity(finishCurrent = true)
             R.id.fab -> presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
         }
     }
@@ -90,6 +92,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
     private fun setupButtons() {
         bt_camera.setOnClickListener(this)
         bt_gallery.setOnClickListener(this)
+        bt_vehicles.setOnClickListener(this)
         fab.setOnClickListener(this)
     }
 
