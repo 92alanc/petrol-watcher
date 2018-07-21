@@ -79,7 +79,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
         AlertDialog.Builder(this)
                 .setTitle(R.string.warning)
                 .setMessage(R.string.warning_password_length)
-                .setIcon(R.drawable.ic_error) // TODO: replace with warning icon
+                .setIcon(R.drawable.ic_warning)
                 .setNeutralButton(R.string.ok, null)
                 .show()
     }
