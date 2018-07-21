@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher
 
+import com.braincorp.petrolwatcher.database.DatabaseManager
+import com.braincorp.petrolwatcher.database.MockDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
@@ -23,5 +25,12 @@ class TestDependencyInjection : DependencyInjection() {
      * @return the image handler
      */
     override fun getImageHandler(): ImageHandler = MockImageHandler
+
+    /**
+     * Gets the database manager
+     *
+     * @return the database manager
+     */
+    override fun getDatabaseManager(): DatabaseManager = MockDatabaseManager
 
 }
