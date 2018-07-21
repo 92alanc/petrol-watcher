@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_default"
+    tools:context=".feature.auth.MainActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <ImageView
+        android:id="@+id/img_app_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintDimensionRatio="16:5"/>
+
+    <Button
+        android:id="@+id/bt_sign_in_google"
+        style="@style/AppStyle.Button.Default"
+        android:layout_width="@dimen/width_button_sign_in_method"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:padding="@dimen/padding_button"
+        android:background="@color/red"
+        android:drawableStart="@drawable/ic_google"
+        android:text="@string/sign_in_google"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@+id/bt_sign_in_facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="1"/>
+
+    <Button
+        android:id="@+id/bt_sign_in_facebook"
+        style="@style/AppStyle.Button.Default"
+        android:layout_width="@dimen/width_button_sign_in_method"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:padding="@dimen/padding_button"
+        android:paddingStart="8dp"
+        android:paddingEnd="@dimen/padding_button"
+        android:background="@color/blue_facebook"
+        android:drawableStart="@drawable/ic_facebook"
+        android:text="@string/sign_in_facebook"
+        app:layout_constraintTop_toBottomOf="@id/bt_sign_in_google"
+        app:layout_constraintBottom_toTopOf="@+id/bt_sign_in_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/bt_sign_in_email"
+        style="@style/AppStyle.Button.Teal"
+        android:layout_width="@dimen/width_button_sign_in_method"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_button"
+        android:drawableStart="@drawable/ic_email"
+        android:text="@string/sign_in_email"
+        app:layout_constraintTop_toBottomOf="@id/bt_sign_in_facebook"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

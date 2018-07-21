@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="affinity_auth" translatable="false">com.braincorp.petrolwatcher.auth</string>
+</resources>

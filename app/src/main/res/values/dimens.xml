@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Button -->
+    <dimen name="width_button_sign_in_method">250dp</dimen>
+
+    <!-- CardView -->
+    <dimen name="elevation_cardview_default">10dp</dimen>
+    <dimen name="radius_cardview_default">8dp</dimen>
+
+    <!-- CircleImageView -->
+    <dimen name="size_circleimageview">120dp</dimen>
+
+    <!-- FloatingActionButton -->
+    <dimen name="margin_fab">16dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="margin_default">8dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_button">4dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+</resources>

@@ -2,8 +2,8 @@
 .gradle/
 build/
 captures/
-app/release.properties
 app/release
+app/google-services.json
 local.properties
 *.iml
 *.jks

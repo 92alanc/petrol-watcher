@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in_google">Entrar com Google</string>
+    <string name="sign_in_facebook">Entrar com Facebook</string>
+    <string name="sign_in_email">Entrar com e-mail</string>
+    <string name="app_name">Petrol Watcher</string>
+    <string name="hint_email">e-mail</string>
+    <string name="hint_password">Senha</string>
+    <string name="sign_in">Entrar</string>
+    <string name="sign_up">Criar conta</string>
+    <string name="hint_confirm_password">Confirme a senha</string>
+    <string name="error_empty_confirmation">A confirmação não pode estar vazia</string>
+    <string name="error_empty_email">O e-mail não pode estar vazio</string>
+    <string name="error_password_and_confirmation_dont_match">A senha e a confirmação estão diferentes</string>
+    <string name="error_connection">Infelizmente tivemos um problema de conexão</string>
+    <string name="error_facebook">Infelizmente não conseguimos conectar sua conta do Facebook</string>
+    <string name="error_google">Infelizmente não conseguimos conectar sua conta do Google</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="name">Nome</string>
+    <string name="my_vehicles">Meus veículos</string>
+    <string name="take_photo">Tirar uma foto</string>
+    <string name="select_from_gallery">Selecionar uma foto da galeria</string>
+    <string name="error">Erro</string>
+    <string name="error_profile_picture_display_name">Erro ao definir a foto de perfil e nome</string>
+    <string name="error_creating_account">Erro ao criar a conta. Talvez essa conta já exista ou você pode estar desconectado.</string>
+    <string name="error_email_format">Formato inválido de e-mail</string>
+    <string name="error_incorrect_email_password">E-mail ou senha incorreto</string>
+    <string name="warning_password_length">O tamanho da senha deve ser pelo menos 6 caracteres</string>
+    <string name="warning">Aviso</string>
+</resources>
