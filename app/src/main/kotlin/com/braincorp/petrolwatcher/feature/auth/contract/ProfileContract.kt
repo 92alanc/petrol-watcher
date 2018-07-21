@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth.contract
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
@@ -19,13 +19,6 @@ interface ProfileContract {
          * @param messageId the error message ID
          */
         fun showErrorDialogue(@StringRes messageId: Int)
-
-        /**
-         * Shows an error dialogue
-         *
-         * @param message the message
-         */
-        fun showErrorDialogue(message: String)
 
         /**
          * Shows the map activity
@@ -58,11 +51,11 @@ interface ProfileContract {
         /**
          * Saves the profile
          *
-         * @param picture the profile picture
+         * @param drawable the drawable taken from an image view
          * @param displayName the display name
          * @param context the Android context
          */
-        fun saveProfile(picture: Bitmap?, displayName: String, context: Context)
+        fun saveProfile(drawable: Drawable?, displayName: String, context: Context)
 
         /**
          * Gets an image URI from a camera intent

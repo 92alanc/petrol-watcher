@@ -2,7 +2,6 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
@@ -69,19 +68,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
                 .setTitle(R.string.error)
                 .setIcon(R.drawable.ic_error)
                 .setMessage(messageId)
-                .show()
-    }
-
-    /**
-     * Shows an error dialogue
-     *
-     * @param message the message
-     */
-    override fun showErrorDialogue(message: String) {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.error)
-                .setIcon(R.drawable.ic_error)
-                .setMessage(message)
+                .setNeutralButton(R.string.ok, null)
                 .show()
     }
 
@@ -95,13 +82,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
     override fun onClick(v: View) {
         when (v.id) {
             R.id.bt_camera -> presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
-
             R.id.bt_gallery -> presenter.openGallery(activity = this, requestCode = REQUEST_CODE_GALLERY)
-
-            R.id.fab -> {
-                val profilePicture = (img_profile.drawable as BitmapDrawable).bitmap
-                presenter.saveProfile(profilePicture, edt_name.text.toString(), context = this)
-            }
+            R.id.fab -> presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
         }
     }
 

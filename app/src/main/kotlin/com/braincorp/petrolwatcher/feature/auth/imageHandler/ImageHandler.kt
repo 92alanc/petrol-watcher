@@ -2,8 +2,12 @@ package com.braincorp.petrolwatcher.feature.auth.imageHandler
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.UploadTask
 
 interface ImageHandler {
 
@@ -46,5 +50,31 @@ interface ImageHandler {
      * @return the image URI
      */
     fun getImageUriFromGalleryIntent(intent: Intent?): Uri?
+
+    /**
+     * Uploads an image to cloud storage
+     *
+     * @param image the image
+     * @param onSuccessListener the success listener
+     * @param onFailureListener the failure listener
+     */
+    fun uploadImage(image: Bitmap?,
+                    onSuccessListener: OnSuccessListener<UploadTask.TaskSnapshot>,
+                    onFailureListener: OnFailureListener)
+
+    /**
+     * Sets a profile picture and a display name to
+     * the current account
+     *
+     * @param picture the profile picture
+     * @param displayName the display name
+     * @param context the Android context
+     * @param onSuccessListener the success listener
+     * @param onFailureListener the failure listener
+     */
+    fun setProfilePictureAndDisplayName(picture: Bitmap?, displayName: String,
+                                        context: Context,
+                                        onSuccessListener: OnSuccessListener<Void>,
+                                        onFailureListener: OnFailureListener)
 
 }

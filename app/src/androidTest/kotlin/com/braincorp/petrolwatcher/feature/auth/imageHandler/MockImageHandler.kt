@@ -2,17 +2,26 @@ package com.braincorp.petrolwatcher.feature.auth.imageHandler
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.support.test.InstrumentationRegistry
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.TestActivity
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.UploadTask
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 
 object MockImageHandler : ImageHandler {
 
+    var uploadSuccess = true
+
     @Mock
     private val uri = mock(Uri::class.java)
+
+    @Mock
+    private val snapshot = mock(UploadTask.TaskSnapshot::class.java)
 
     /**
      * Opens the camera
@@ -56,5 +65,41 @@ object MockImageHandler : ImageHandler {
      * @return the image URI
      */
     override fun getImageUriFromGalleryIntent(intent: Intent?): Uri? = uri
+
+    /**
+     * Uploads an image to cloud storage
+     *
+     * @param image the image
+     * @param onSuccessListener the success listener
+     * @param onFailureListener the failure listener
+     */
+    override fun uploadImage(image: Bitmap?,
+                             onSuccessListener: OnSuccessListener<UploadTask.TaskSnapshot>,
+                             onFailureListener: OnFailureListener) {
+        if (uploadSuccess)
+            onSuccessListener.onSuccess(snapshot)
+        else
+            onFailureListener.onFailure(Exception())
+    }
+
+    /**
+     * Sets a profile picture and a display name to
+     * the current account
+     *
+     * @param picture the profile picture
+     * @param displayName the display name
+     * @param context the Android context
+     * @param onSuccessListener the success listener
+     * @param onFailureListener the failure listener
+     */
+    override fun setProfilePictureAndDisplayName(picture: Bitmap?, displayName: String,
+                                                 context: Context,
+                                                 onSuccessListener: OnSuccessListener<Void>,
+                                                 onFailureListener: OnFailureListener) {
+        if (displayName == "Alan Camargo")
+            onSuccessListener.onSuccess(null)
+        else
+            onFailureListener.onFailure(Exception())
+    }
 
 }

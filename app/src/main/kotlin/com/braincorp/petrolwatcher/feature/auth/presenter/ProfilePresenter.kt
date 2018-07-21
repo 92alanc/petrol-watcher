@@ -2,15 +2,13 @@ package com.braincorp.petrolwatcher.feature.auth.presenter
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
-import com.braincorp.petrolwatcher.feature.auth.utils.setProfilePictureAndDisplayName
-import com.braincorp.petrolwatcher.feature.auth.utils.toUri
-import com.braincorp.petrolwatcher.feature.auth.utils.uploadBitmap
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import java.lang.Exception
@@ -54,15 +52,19 @@ class ProfilePresenter(private val view: ProfileContract.View,
     /**
      * Saves the profile
      *
-     * @param picture the profile picture
+     * @param drawable the drawable taken from an image view
      * @param displayName the display name
      * @param context the Android context
      */
-    override fun saveProfile(picture: Bitmap?, displayName: String, context: Context) {
-        uploadBitmap(picture, onSuccessAction = {
-            setProfilePictureAndDisplayName(picture?.toUri(context), displayName,
+    override fun saveProfile(drawable: Drawable?, displayName: String, context: Context) {
+        val profilePicture = if (drawable != null)
+            (drawable as BitmapDrawable).bitmap
+        else
+            null
+        imageHandler.uploadImage(profilePicture, OnSuccessListener {
+            imageHandler.setProfilePictureAndDisplayName(profilePicture, displayName, context,
                     onSuccessListener = this, onFailureListener = this)
-        }, onFailureAction = {
+        }, OnFailureListener {
             view.showErrorDialogue(R.string.error_profile_picture_display_name)
         })
     }
@@ -107,10 +109,7 @@ class ProfilePresenter(private val view: ProfileContract.View,
      * @param e the exception
      */
     override fun onFailure(e: Exception) {
-        if (e.message != null)
-            view.showErrorDialogue(e.message!!)
-        else
-            view.showErrorDialogue(R.string.error_profile_picture_display_name)
+        view.showErrorDialogue(R.string.error_profile_picture_display_name)
     }
 
 }

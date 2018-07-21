@@ -1,12 +1,20 @@
 package com.braincorp.petrolwatcher.feature.auth.robots
 
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
+import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
+import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.stubIntent
 import com.braincorp.petrolwatcher.R
 
 fun profile(func: ProfileActivityRobot.() -> Unit) = ProfileActivityRobot().apply(func)
 
 class ProfileActivityRobot {
+
+    fun typeName(name: String) {
+        typeText(name) {
+            id(R.id.edt_name)
+        }
+    }
 
     infix fun clickCamera(func: ProfileResult.() -> Unit) {
         click {
@@ -19,6 +27,14 @@ class ProfileActivityRobot {
     infix fun clickGallery(func: ProfileResult.() -> Unit) {
         click {
             id(R.id.bt_gallery)
+        }
+
+        applyResult(func)
+    }
+
+    infix fun clickSave(func: ProfileResult.() -> Unit) {
+        click {
+            id(R.id.fab)
         }
 
         applyResult(func)
@@ -47,6 +63,16 @@ class ProfileResult {
                 ok()
                 customCode(13797)
             }
+        }
+    }
+
+    fun redirectToMapActivity() {
+        // TODO: implement
+    }
+
+    fun showErrorDialogue() {
+        displayed {
+            text(R.string.error_profile_picture_display_name)
         }
     }
 

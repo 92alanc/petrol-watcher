@@ -6,6 +6,7 @@ import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.support.test.rule.GrantPermissionRule
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
 import com.braincorp.petrolwatcher.feature.auth.robots.profile
 import org.junit.Rule
 import org.junit.Test
@@ -40,6 +41,39 @@ class ProfileActivityTest : BaseActivityTest<ProfileActivity>(ProfileActivity::c
         } clickGallery {
             galleryIsOpen()
         }
+    }
+
+    @Test
+    fun whenSettingProfilePictureAndDisplayName_shouldRedirectToMapActivity() {
+        setUploadSuccess(true)
+        profile {
+            typeName("Alan Camargo")
+        } clickSave {
+            redirectToMapActivity()
+        }
+    }
+
+    @Test
+    fun withUploadFailure_shouldShowErrorDialogue() {
+        setUploadSuccess(false)
+        profile {
+        } clickSave {
+            showErrorDialogue()
+        }
+    }
+
+    @Test
+    fun whenSettingProfilePictureAndDisplayName_withError_shouldShowErrorDialogue() {
+        setUploadSuccess(true)
+        profile {
+            typeName("Error")
+        } clickSave {
+            showErrorDialogue()
+        }
+    }
+
+    private fun setUploadSuccess(uploadSuccess: Boolean) {
+        (getImageHandler() as MockImageHandler).uploadSuccess = uploadSuccess
     }
 
 }
