@@ -3,9 +3,6 @@
     <!-- Button -->
     <dimen name="width_button_sign_in_method">250dp</dimen>
 
-    <!-- CameraView -->
-    <dimen name="size_camera_view">250dp</dimen>
-
     <!-- CardView -->
     <dimen name="elevation_cardview_default">10dp</dimen>
     <dimen name="radius_cardview_default">8dp</dimen>
