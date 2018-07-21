@@ -76,8 +76,13 @@ tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
+task deleteOldReports(type: Delete) {
+    delete "$project.buildDir/reports/"
+}
+
+// Run this task for test coverage reports
 task jacocoTestReport(type: JacocoReport,
-        dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+        dependsOn: ['deleteOldReports', 'testDebugUnitTest', 'createDebugCoverageReport']) {
     reports {
         xml.enabled = true
         html.enabled = true
