@@ -3,7 +3,7 @@
     package="com.braincorp.petrolwatcher">
 
     <application tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestActivity"/>
+        <activity android:name=".base.TestActivity"/>
     </application>
 
 </manifest>

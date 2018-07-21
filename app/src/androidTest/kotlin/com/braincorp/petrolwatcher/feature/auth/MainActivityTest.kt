@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.robots.mainActivity
 import org.junit.Test

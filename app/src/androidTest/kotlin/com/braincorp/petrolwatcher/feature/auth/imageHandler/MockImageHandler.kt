@@ -6,7 +6,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.support.test.InstrumentationRegistry
 import android.support.v7.app.AppCompatActivity
-import com.braincorp.petrolwatcher.TestActivity
+import com.braincorp.petrolwatcher.base.TestActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.UploadTask

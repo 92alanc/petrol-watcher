@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher
+package com.braincorp.petrolwatcher.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

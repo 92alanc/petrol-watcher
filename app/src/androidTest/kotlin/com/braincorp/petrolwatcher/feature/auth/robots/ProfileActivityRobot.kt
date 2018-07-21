@@ -3,8 +3,10 @@ package com.braincorp.petrolwatcher.feature.auth.robots
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
+import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.stubIntent
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 
 fun profile(func: ProfileActivityRobot.() -> Unit) = ProfileActivityRobot().apply(func)
 
@@ -91,7 +93,9 @@ class ProfileResult {
     }
 
     fun redirectToVehicleListActivity() {
-        // TODO: implement
+        sentIntent {
+            className(VehicleListActivity::class.java.name)
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
 import com.braincorp.petrolwatcher.feature.auth.MainActivity
 import com.braincorp.petrolwatcher.feature.auth.ProfileActivity
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 
 /**
  * Starts the main activity
@@ -83,8 +84,7 @@ fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
  *                      activity will be finished
  */
 fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean) {
-    // TODO: implement
-    Toast.makeText(this, "Vehicle list activity", LENGTH_SHORT).show()
+    startActivity(VehicleListActivity::class.java, finishCurrent)
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

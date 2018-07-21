@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher
+package com.braincorp.petrolwatcher.base
 
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
@@ -7,6 +7,8 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
+import com.braincorp.petrolwatcher.App
+import com.braincorp.petrolwatcher.TestApp
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
 import org.junit.After
