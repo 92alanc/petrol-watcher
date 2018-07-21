@@ -18,7 +18,7 @@ import org.mockito.Mockito.mock
 object MockAuthenticator : Authenticator {
 
     @Mock
-    private val googleAuthResult = mock(AuthResult::class.java)
+    private val authResult = mock(AuthResult::class.java)
 
     @Mock
     private val facebookLoginResult = mock(LoginResult::class.java)
@@ -45,7 +45,7 @@ object MockAuthenticator : Authenticator {
                         onSuccessListener: OnSuccessListener<AuthResult>,
                         onFailureListener: OnFailureListener) {
         if (email == "test123@test.com" && password == "abcd1234")
-            onSuccessListener.onSuccess(googleAuthResult)
+            onSuccessListener.onSuccess(authResult)
         else
             onFailureListener.onFailure(Exception())
     }
@@ -62,7 +62,7 @@ object MockAuthenticator : Authenticator {
                         onSuccessListener: OnSuccessListener<AuthResult>,
                         onFailureListener: OnFailureListener) {
         if (email == "test123@test.com" && password == "abcd1234")
-            onSuccessListener.onSuccess(googleAuthResult)
+            onSuccessListener.onSuccess(authResult)
         else
             onFailureListener.onFailure(Exception())
     }

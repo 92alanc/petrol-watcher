@@ -1,14 +1,13 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
-import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPresenter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
-import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
@@ -42,10 +41,15 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
 
     /**
      * Shows an e-mail and password authentication
-     * error screen
+     * error dialogue
      */
-    override fun showErrorScreen() {
-        startAuthenticationErrorActivity(AuthErrorType.EMAIL_PASSWORD)
+    override fun showErrorDialogue() {
+        AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_error)
+                .setTitle(R.string.error)
+                .setMessage(R.string.error_incorrect_email_password)
+                .setNeutralButton(R.string.ok, null)
+                .show()
     }
 
     /**

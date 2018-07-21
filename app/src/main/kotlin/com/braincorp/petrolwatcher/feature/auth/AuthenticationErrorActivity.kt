@@ -32,7 +32,6 @@ class AuthenticationErrorActivity : AppCompatActivity() {
         super.onStart()
         when (getErrorType()) {
             AuthErrorType.CONNECTION -> showConnectionError()
-            AuthErrorType.EMAIL_PASSWORD -> showEmailAndPasswordError()
             AuthErrorType.FACEBOOK -> showFacebookError()
             AuthErrorType.GOOGLE -> showGoogleError()
         }
@@ -45,11 +44,6 @@ class AuthenticationErrorActivity : AppCompatActivity() {
     private fun showConnectionError() {
         img_error.setImageResource(R.drawable.ic_disconnected)
         txt_error_description.setText(R.string.error_connection)
-    }
-
-    private fun showEmailAndPasswordError() {
-        img_error.setImageResource(R.drawable.ic_error)
-        txt_error_description.setText(R.string.error_email_password)
     }
 
     private fun showFacebookError() {

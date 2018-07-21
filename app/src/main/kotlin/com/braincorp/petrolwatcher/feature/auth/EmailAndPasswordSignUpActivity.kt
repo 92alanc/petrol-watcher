@@ -39,13 +39,6 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
     }
 
     /**
-     * Shows an error when the password field is empty
-     */
-    override fun showEmptyPasswordError() {
-        showFieldError(edt_password, getString(R.string.error_empty_password))
-    }
-
-    /**
      * Shows an error when the password and confirmation
      * don't match
      */
@@ -77,6 +70,18 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      */
     override fun showProfile() {
         startProfileActivity(finishCurrent = true)
+    }
+
+    /**
+     * Shows a password length warning
+     */
+    override fun showPasswordLengthWarning() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.warning)
+                .setMessage(R.string.warning_password_length)
+                .setIcon(R.drawable.ic_error) // TODO: replace with warning icon
+                .setNeutralButton(R.string.ok, null)
+                .show()
     }
 
     private fun setupNextButton() {

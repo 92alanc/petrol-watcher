@@ -44,24 +44,6 @@ class AuthenticationErrorActivityTest : BaseActivityTest<AuthenticationErrorActi
     }
 
     @Test
-    fun withEmailAndPasswordError_shouldDisplayCorrectImage() {
-        errorTypeIs(AuthErrorType.EMAIL_PASSWORD)
-
-        authenticationError {
-            imageIs(R.drawable.ic_error)
-        }
-    }
-
-    @Test
-    fun withEmailAndPasswordError_shouldDisplayCorrectMessage() {
-        errorTypeIs(AuthErrorType.EMAIL_PASSWORD)
-
-        authenticationError {
-            messageIs(R.string.error_email_password)
-        }
-    }
-
-    @Test
     fun withFacebookError_shouldDisplayCorrectImage() {
         errorTypeIs(AuthErrorType.FACEBOOK)
 

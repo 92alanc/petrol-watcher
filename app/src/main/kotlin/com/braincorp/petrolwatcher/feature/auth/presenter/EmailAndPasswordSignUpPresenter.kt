@@ -22,6 +22,7 @@ open class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSig
 
     private companion object {
         const val EMAIL_REGEX = "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\$"
+        const val MIN_PASSWORD_LENGTH = 6
     }
 
     /**
@@ -36,19 +37,19 @@ open class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSig
         val confirmationMatches = Validation(successCondition = password == confirmation,
                 onFailureAction = view::showPasswordNotMatchingError)
 
-        val passwordNotEmpty = Validation(successCondition = !isEmpty(password),
-                onFailureAction = view::showEmptyPasswordError)
-
         val confirmationNotEmpty = Validation(successCondition = !isEmpty(confirmation),
                 onFailureAction = view::showEmptyConfirmationError)
 
         val emailFormat = Validation(successCondition = email.matches(EMAIL_REGEX.toRegex()),
                 onFailureAction = view::showEmailFormatError)
 
+        val passwordLength = Validation(successCondition = password.length >= MIN_PASSWORD_LENGTH,
+                onFailureAction = view::showPasswordLengthWarning)
+
         ValidationChain().add(confirmationMatches)
-                .add(passwordNotEmpty)
                 .add(confirmationNotEmpty)
                 .add(emailFormat)
+                .add(passwordLength)
                 .run {
                     authenticator.signUp(email, password, this, this)
                 }

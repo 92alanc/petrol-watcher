@@ -60,10 +60,6 @@ class EmailAndPasswordSignUpResult {
         }
     }
 
-    fun showEmptyPasswordError() {
-        showError(R.string.error_empty_password)
-    }
-
     fun showEmptyConfirmationError() {
         showError(R.string.error_empty_confirmation)
     }
@@ -74,6 +70,12 @@ class EmailAndPasswordSignUpResult {
 
     fun showEmailFormatError() {
         showError(R.string.error_email_format)
+    }
+
+    fun showPasswordLengthWarningDialogue() {
+        displayed {
+            text(R.string.warning_password_length)
+        }
     }
 
     private fun showError(@StringRes errorTextRes: Int) {

@@ -10,9 +10,9 @@ interface EmailSignInContract {
     interface View : BaseContract.View<Presenter> {
         /**
          * Shows an e-mail and password authentication
-         * error screen
+         * error dialogue
          */
-        fun showErrorScreen()
+        fun showErrorDialogue()
 
         /**
          * Shows the map activity

@@ -32,16 +32,6 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
     }
 
     @Test
-    fun withEmptyPassword_shouldShowError() {
-        emailAndPasswordSignUp {
-            typeEmail("test123@test.com")
-            typeConfirmation("abcd1234")
-        } clickNext {
-            showEmptyPasswordError()
-        }
-    }
-
-    @Test
     fun withEmptyConfirmation_shouldShowError() {
         emailAndPasswordSignUp {
             typeEmail("test123@test.com")
@@ -81,6 +71,17 @@ class EmailAndPasswordSignUpActivityTest : BaseActivityTest<EmailAndPasswordSign
             typeConfirmation("abcd1234")
         } clickNext {
             showErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withInvalidPasswordLength_shouldShowErrorDialogue() {
+        emailAndPasswordSignUp {
+            typeEmail("test123@test.com")
+            typePassword("short")
+            typeConfirmation("short")
+        } clickNext {
+            showPasswordLengthWarningDialogue()
         }
     }
 

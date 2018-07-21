@@ -45,7 +45,7 @@ open class EmailSignInActivityPresenter(private val view: EmailSignInContract.Vi
      * @param e the exception thrown
      */
     override fun onFailure(e: Exception) {
-        view.showErrorScreen()
+        view.showErrorDialogue()
     }
 
 }

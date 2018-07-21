@@ -10,11 +10,9 @@
     <string name="sign_up">Sign up</string>
     <string name="hint_confirm_password">Confirm password</string>
     <string name="error_empty_confirmation">Confirmation must not be empty</string>
-    <string name="error_empty_password">Password must not be empty</string>
     <string name="error_empty_email">e-mail must not be empty</string>
     <string name="error_password_and_confirmation_dont_match">Password and confirmation don\'t match</string>
     <string name="error_connection">Unfortunately we had a connection problem</string>
-    <string name="error_email_password">Unfortunately we couldn\'t connect your account</string>
     <string name="error_facebook">Unfortunately we couldn\'t connect your Facebook account</string>
     <string name="error_google">Unfortunately we couldn\'t connect your Google account</string>
     <string name="try_again">Try again</string>
@@ -26,4 +24,7 @@
     <string name="error_profile_picture_display_name">Error setting profile picture and display name</string>
     <string name="error_creating_account">Error creating account. Maybe this account already exists or you might be disconnected.</string>
     <string name="error_email_format">Invalid e-mail format</string>
+    <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
+    <string name="warning_password_length">Password length must be at least 6 characters</string>
+    <string name="warning">Warning</string>
 </resources>

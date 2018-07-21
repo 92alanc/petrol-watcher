@@ -27,4 +27,34 @@ class EmailSignInActivityTest : BaseActivityTest<EmailSignInActivity>(EmailSignI
         }
     }
 
+    @Test
+    fun withInvalidCredentials_shouldShowErrorDialogue() {
+        emailSignIn {
+            typeEmail("invalid@test.com")
+            typePassword("invalid")
+        } clickSignIn {
+            showErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withInvalidEmail_shouldShowErrorDialogue() {
+        emailSignIn {
+            typeEmail("invalid@test.com")
+            typePassword("abcd1234")
+        } clickSignIn {
+            showErrorDialogue()
+        }
+    }
+
+    @Test
+    fun withInvalidPassword_shouldShowErrorDialogue() {
+        emailSignIn {
+            typeEmail("test123@test.com")
+            typePassword("invalid")
+        } clickSignIn {
+            showErrorDialogue()
+        }
+    }
+
 }

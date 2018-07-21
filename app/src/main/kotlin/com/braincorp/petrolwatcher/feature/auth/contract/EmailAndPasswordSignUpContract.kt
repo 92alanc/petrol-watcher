@@ -15,11 +15,6 @@ interface EmailAndPasswordSignUpContract {
         fun showEmptyConfirmationError()
 
         /**
-         * Shows an error when the password field is empty
-         */
-        fun showEmptyPasswordError()
-
-        /**
          * Shows an error when the password and confirmation
          * don't match
          */
@@ -39,6 +34,11 @@ interface EmailAndPasswordSignUpContract {
          * Shows an e-mail format error
          */
         fun showEmailFormatError()
+
+        /**
+         * Shows a password length warning
+         */
+        fun showPasswordLengthWarning()
     }
 
     /**
