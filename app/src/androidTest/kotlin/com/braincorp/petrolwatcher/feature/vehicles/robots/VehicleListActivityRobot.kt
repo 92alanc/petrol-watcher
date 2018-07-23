@@ -1,10 +1,17 @@
 package com.braincorp.petrolwatcher.feature.vehicles.robots
 
+import br.com.concretesolutions.kappuccino.custom.recyclerView.RecyclerViewInteractions.recyclerView
+import com.braincorp.petrolwatcher.R
+
 fun vehicleList(func: VehicleListActivityRobot.() -> Unit) = VehicleListActivityRobot().apply(func)
 
 class VehicleListActivityRobot {
 
-    // TODO: implement
+    fun numberOfItemsIs(numberOfItems: Int) {
+        recyclerView(R.id.recycler_view) {
+            sizeIs(numberOfItems)
+        }
+    }
 
     private fun applyResult(func: VehicleListResult.() -> Unit) {
         VehicleListResult().apply(func)

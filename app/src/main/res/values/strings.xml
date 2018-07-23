@@ -30,4 +30,7 @@
     <string name="error_email_format">Invalid e-mail format</string>
     <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
     <string name="warning_password_length">Password length must be at least 6 characters</string>
+
+    <!-- Vehicles -->
+    <string name="description_swipe_to_delete">swipe to delete</string>
 </resources>

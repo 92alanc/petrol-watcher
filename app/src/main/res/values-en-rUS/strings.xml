@@ -27,4 +27,5 @@
     <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
     <string name="warning_password_length">Password length must be at least 6 characters</string>
     <string name="warning">Warning</string>
+    <string name="description_swipe_to_delete">swipe to delete</string>
 </resources>

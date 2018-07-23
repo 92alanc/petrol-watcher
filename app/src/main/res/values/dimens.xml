@@ -15,6 +15,7 @@
 
     <!-- Margin -->
     <dimen name="margin_default">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_button">4dp</dimen>
