@@ -4,12 +4,9 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
-import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
-import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
-import com.braincorp.petrolwatcher.feature.auth.MainActivity
-import com.braincorp.petrolwatcher.feature.auth.ProfileActivity
+import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 
 /**
@@ -83,8 +80,18 @@ fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
  * @param finishCurrent if true, the current
  *                      activity will be finished
  */
-fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean) {
+fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean = false) {
     startActivity(VehicleListActivity::class.java, finishCurrent)
+}
+
+/**
+ * Starts the vehicle details activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startVehicleDetailsActivity(finishCurrent: Boolean = false) {
+    startActivity(VehicleDetailsActivity::class.java, finishCurrent) // TODO: use correct intent
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

@@ -9,6 +9,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleListActivity
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleListActivityPresenter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
+import com.braincorp.petrolwatcher.utils.startVehicleDetailsActivity
 import kotlinx.android.synthetic.main.activity_vehicle_list.*
 
 /**
@@ -25,6 +26,7 @@ class VehicleListActivity : AppCompatActivity(), VehicleListActivityContract.Vie
         presenter = VehicleListActivityPresenter(view = this,
                 databaseManager = dependencyInjection().getDatabaseManager())
         presenter.fetchVehicles()
+        setupAddButton()
     }
 
     /**
@@ -37,6 +39,12 @@ class VehicleListActivity : AppCompatActivity(), VehicleListActivityContract.Vie
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+    }
+
+    private fun setupAddButton() {
+        fab.setOnClickListener {
+            startVehicleDetailsActivity()
+        }
     }
 
 }

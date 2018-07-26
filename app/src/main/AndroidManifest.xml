@@ -56,9 +56,16 @@
             android:theme="@style/AppTheme"/>
 
         <!-- Vehicles -->
+
         <activity android:name=".feature.vehicles.VehicleListActivity"
             android:taskAffinity="@string/affinity_vehicles"
             android:theme="@style/AppTheme"/>
+
+        <activity android:name=".feature.vehicles.VehicleDetailsActivity"
+                  android:taskAffinity="@string/affinity_vehicles"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- Facebook -->
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
