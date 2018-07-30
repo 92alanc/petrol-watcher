@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.vehicles.presenter
 
 import com.braincorp.petrolwatcher.database.DatabaseManager
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleListActivityContract
+import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnItemRemovedListener
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
@@ -11,7 +12,8 @@ import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
  */
 class VehicleListActivityPresenter(private val view: VehicleListActivityContract.View,
                                    private val databaseManager: DatabaseManager)
-    : VehicleListActivityContract.Presenter, OnVehiclesFoundListener {
+    : VehicleListActivityContract.Presenter, OnVehiclesFoundListener,
+      OnItemRemovedListener<Vehicle> {
 
     /**
      * Fetches all vehicles belonging to the
@@ -29,6 +31,15 @@ class VehicleListActivityPresenter(private val view: VehicleListActivityContract
      */
     override fun onVehiclesFound(vehicles: ArrayList<Vehicle>) {
         view.updateList(vehicles)
+    }
+
+    /**
+     * Function called when an item is removed
+     *
+     * @param item the item removed
+     */
+    override fun onItemRemoved(item: Vehicle) {
+        // TODO: implement
     }
 
 }

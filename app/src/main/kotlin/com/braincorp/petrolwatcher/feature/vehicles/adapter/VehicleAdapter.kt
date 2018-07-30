@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnItemRemovedListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
 class VehicleAdapter(private val data: ArrayList<Vehicle>)
@@ -28,6 +29,17 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>)
     }
 
     override fun getItemCount(): Int = data.size
+
+    /**
+     * Removes an item at a given position
+     *
+     * @param position the position
+     */
+    fun removeAt(position: Int, onItemRemovedListener: OnItemRemovedListener<Vehicle>) {
+        onItemRemovedListener.onItemRemoved(data[position])
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     class VehicleHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

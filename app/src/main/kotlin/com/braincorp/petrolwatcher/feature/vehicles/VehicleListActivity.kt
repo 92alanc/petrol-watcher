@@ -3,7 +3,10 @@ package com.braincorp.petrolwatcher.feature.vehicles
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.vehicles.adapter.SwipeToDeleteCallback
 import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleListActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -39,6 +42,17 @@ class VehicleListActivity : AppCompatActivity(), VehicleListActivityContract.Vie
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val vehicleAdapter = recycler_view.adapter as VehicleAdapter
+                vehicleAdapter.removeAt(viewHolder.adapterPosition,
+                                        presenter as VehicleListActivityPresenter)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recycler_view)
     }
 
     private fun setupAddButton() {

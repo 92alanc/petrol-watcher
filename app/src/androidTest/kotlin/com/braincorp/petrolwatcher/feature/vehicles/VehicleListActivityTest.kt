@@ -25,4 +25,13 @@ class VehicleListActivityTest : BaseActivityTest<VehicleListActivity>(
         }
     }
 
+    @Test
+    fun whenSwipingAnItem_shouldRemoveFromRecyclerView() {
+        vehicleList {
+            numberOfItemsIs(3)
+        } swipeItem {
+            numberOfItemsIs(2)
+        }
+    }
+
 }
