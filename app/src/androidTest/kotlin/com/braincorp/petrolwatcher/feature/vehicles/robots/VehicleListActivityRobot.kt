@@ -28,7 +28,6 @@ class VehicleListActivityRobot {
     }
 
     infix fun swipeItem(func: VehicleListResult.() -> Unit) {
-        // TODO: add this function to Kappuccino
         onView(withId(R.id.recycler_view)).perform(
                 actionOnItemAtPosition<VehicleAdapter.VehicleHolder>(0, swipeLeft()))
 

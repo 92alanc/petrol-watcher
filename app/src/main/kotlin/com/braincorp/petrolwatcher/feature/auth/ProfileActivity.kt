@@ -12,6 +12,7 @@ import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.dependencyInjection
+import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.braincorp.petrolwatcher.utils.startVehicleListActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
@@ -77,7 +78,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
      * Shows the map activity
      */
     override fun showMap() {
-        // TODO: show map activity
+        startMapActivity()
     }
 
     override fun onClick(v: View) {
