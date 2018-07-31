@@ -33,4 +33,12 @@
 
     <!-- Vehicles -->
     <string name="description_swipe_to_delete">swipe to delete</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="trim_level">Trim level (e.g.: 2.0 GTI)</string>
+    <string name="year">Year</string>
+    <string name="fuel_capacity">Fuel capacity (litres)</string>
+    <string name="avg_consumption_city">Average consumption - city (km/l)</string>
+    <string name="avg_consumption_motorway">Average consumption - motorway (km/l)</string>
+    <string name="automatic_input">Automatic input</string>
+    <string name="manual_input">Manual input</string>
 </resources>

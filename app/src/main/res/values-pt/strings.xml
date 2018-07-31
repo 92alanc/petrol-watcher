@@ -28,4 +28,12 @@
     <string name="warning_password_length">O tamanho da senha deve ser pelo menos 6 caracteres</string>
     <string name="warning">Aviso</string>
     <string name="description_swipe_to_delete">arraste para excluir</string>
+    <string name="manufacturer">Fabricante</string>
+    <string name="trim_level">Acabamento (ex.: 1.0 GTI)</string>
+    <string name="year">Ano</string>
+    <string name="fuel_capacity">Capacidade de combustível (litros)</string>
+    <string name="avg_consumption_city">Consumo médio - cidade (km/l)</string>
+    <string name="avg_consumption_motorway">Consumo médio - rodovia (km/l)</string>
+    <string name="manual_input">Preenchimento manual</string>
+    <string name="automatic_input">Preenchimento automático</string>
 </resources>
