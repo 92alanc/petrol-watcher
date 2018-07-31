@@ -28,7 +28,8 @@ class VehicleDetailsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        // TODO: uncheck previously selected item
+        item?.isChecked = true
+
         when (item?.itemId) {
             R.id.item_auto_input -> setupAutoInput()
             R.id.item_manual_input -> setupManualInput()

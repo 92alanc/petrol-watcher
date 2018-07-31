@@ -234,7 +234,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="til_manufacturer,til_name,til_trim_level,til_year,til_capacity,til_avg_consumption_city,til_avg_consumption_motorway"/>
+            app:constraint_referenced_ids="til_year,til_manufacturer,til_name,til_trim_level,til_capacity,til_avg_consumption_city,til_avg_consumption_motorway"/>
 
         <!-- Auto input -->
         <android.support.constraint.Group
