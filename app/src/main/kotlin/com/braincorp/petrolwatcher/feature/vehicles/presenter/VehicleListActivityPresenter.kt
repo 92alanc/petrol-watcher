@@ -39,7 +39,7 @@ class VehicleListActivityPresenter(private val view: VehicleListActivityContract
      * @param item the item removed
      */
     override fun onItemRemoved(item: Vehicle) {
-        // TODO: implement
+        databaseManager.deleteVehicle(item)
     }
 
 }

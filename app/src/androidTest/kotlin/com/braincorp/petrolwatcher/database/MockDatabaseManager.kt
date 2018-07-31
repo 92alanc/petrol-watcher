@@ -26,4 +26,11 @@ object MockDatabaseManager : DatabaseManager {
         onVehiclesFoundListener.onVehiclesFound(vehicles)
     }
 
+    /**
+     * Deletes a vehicle
+     *
+     * @param vehicle the vehicle to delete
+     */
+    override fun deleteVehicle(vehicle: Vehicle) { }
+
 }
