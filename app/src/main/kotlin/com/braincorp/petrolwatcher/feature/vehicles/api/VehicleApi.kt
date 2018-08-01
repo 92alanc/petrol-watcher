@@ -67,13 +67,12 @@ interface VehicleApi {
             val gson = getGson()
             val client = getClient()
 
-            val retrofit = Retrofit.Builder()
+            return Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(client)
                     .build()
-
-            return retrofit.create(VehicleApi::class.java)
+                    .create(VehicleApi::class.java)
         }
 
         private fun getGson(): Gson {

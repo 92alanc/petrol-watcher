@@ -11,12 +11,15 @@ import com.braincorp.petrolwatcher.App
 import com.braincorp.petrolwatcher.TestApp
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
+
+    val mockVehicleApi = MockWebServer()
 
     private lateinit var app: App
 
@@ -30,10 +33,11 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
 
     @Before
     open fun setup() {
+        app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
+        mockVehicleApi.url(getVehiclesApiBaseUrl())
+
         if (autoLaunch) launch()
         else Intents.init()
-
-        app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
     }
 
     @After
@@ -53,14 +57,14 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         return app.dependencyInjection().getImageHandler()
     }
 
-    fun getVehiclesApiBaseUrl(): String {
-        return app.dependencyInjection().getVehiclesApiBaseUrl()
-    }
-
     fun launch() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
         doWait(300)
+    }
+
+    private fun getVehiclesApiBaseUrl(): String {
+        return app.dependencyInjection().getVehiclesApiBaseUrl()
     }
 
 }

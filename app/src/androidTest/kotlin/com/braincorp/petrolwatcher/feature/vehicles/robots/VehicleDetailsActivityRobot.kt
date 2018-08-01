@@ -35,6 +35,14 @@ class VehicleDetailsActivityRobot {
         applyResult(func)
     }
 
+    infix fun clickYearsSpinner(func: VehicleDetailsResult.() -> Unit) {
+        click {
+            id(R.id.spn_year)
+        }
+
+        applyResult(func)
+    }
+
     private fun openMenu() {
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext())
     }

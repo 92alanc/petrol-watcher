@@ -1,13 +1,13 @@
 package com.braincorp.petrolwatcher.feature.vehicles.api
 
-const val RESPONSE_YEARS = "?({ " +
+const val RESPONSE_YEARS = "{ " +
                                 "\"Years\": {" +
                                     "\"min_year\":\"1941\", " +
                                     "\"max_year\":\"2018\"" +
                                 "} " +
-                           "});"
+                           "}"
 
-const val RESPONSE_MANUFACTURERS = "?({" +
+const val RESPONSE_MANUFACTURERS = "{" +
                                         "\"Makes\":[" +
                                             "{" +
                                                 "\"make_id\":\"acura\"," +
@@ -34,9 +34,9 @@ const val RESPONSE_MANUFACTURERS = "?({" +
                                                 "\"make_country\":\"UK\"" +
                                             "}" +
                                         "]" +
-                                   "});"
+                                   "}"
 
-const val RESPONSE_MODELS = "?({" +
+const val RESPONSE_MODELS = "{" +
                                 "\"Models\":[" +
                                     "{" +
                                         "\"model_name\":\"A1\"," +
@@ -55,9 +55,9 @@ const val RESPONSE_MODELS = "?({" +
                                         "\"model_make_id\":\"audi\"" +
                                     "}" +
                                 "]" +
-                            "});"
+                            "}"
 
-const val RESPONSE_TRIMS = "?({" +
+const val RESPONSE_TRIMS = "{" +
                                 "\"Trims\":[" +
                                     "{" +
                                         "\"model_id\": \"50786\"," +
@@ -224,4 +224,4 @@ const val RESPONSE_TRIMS = "?({" +
                                         "\"make_country\": \"Germany\"" +
                                     "}" +
                                 "]" +
-                           "});"
+                           "}"

@@ -12,6 +12,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActiv
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleDetailsActivityPresenter
 import com.braincorp.petrolwatcher.utils.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
+import com.braincorp.petrolwatcher.utils.toRange
 import kotlinx.android.synthetic.main.activity_vehicle_details.*
 import kotlinx.android.synthetic.main.content_vehicle_details.*
 
@@ -21,7 +22,13 @@ import kotlinx.android.synthetic.main.content_vehicle_details.*
  */
 class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContract.View {
 
+    companion object {
+        private const val KEY_YEAR_RANGE = "year_range"
+    }
+
     override lateinit var presenter: VehicleDetailsActivityContract.Presenter
+
+    private var yearRange: IntRange? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +36,10 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
         setupToolbar()
         val baseUrl = dependencyInjection().getVehiclesApiBaseUrl()
         presenter = VehicleDetailsActivityPresenter(VehicleApi.getApi(baseUrl), view = this)
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
+        else
+            presenter.getYearRange()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,12 +57,24 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putIntArray(KEY_YEAR_RANGE, yearRange?.toList()?.toIntArray())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
+    }
+
     /**
      * Sets the year range
      *
      * @param range the range
      */
     override fun setYearRange(range: IntRange) {
+        this.yearRange = range
         spn_year.adapter = null
         val adapter = GenericSpinnerAdapter(this, range.toList())
         spn_year.adapter = adapter
@@ -98,11 +121,17 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
     private fun setupAutoInput() {
         group_manual_input.visibility = GONE
         group_auto_input.visibility = VISIBLE
+        if (yearRange != null)
+            presenter.getYearRange()
     }
 
     private fun setupManualInput() {
         group_auto_input.visibility = GONE
         group_manual_input.visibility = VISIBLE
+    }
+
+    private fun restoreInstanceState(savedInstanceState: Bundle) {
+        yearRange = savedInstanceState.getIntArray(KEY_YEAR_RANGE).toRange()
     }
 
 }
