@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toTopOf="@+id/label_spn_manufacturer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_vehicle_info"/>
+            tools:listitem="@layout/generic_spinner_item"/>
 
         <!-- Manufacturer -->
         <TextView
@@ -56,7 +56,7 @@
             app:layout_constraintBottom_toTopOf="@+id/label_spn_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_vehicle_info"/>
+            tools:listitem="@layout/generic_spinner_item"/>
 
         <!-- Name -->
         <TextView
@@ -79,7 +79,7 @@
             app:layout_constraintBottom_toTopOf="@+id/label_spn_trim_level"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_vehicle_info"/>
+            tools:listitem="@layout/generic_spinner_item"/>
 
         <!-- Trim level -->
         <TextView
@@ -103,7 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0"
-            tools:listitem="@layout/item_vehicle_info"/>
+            tools:listitem="@layout/generic_spinner_item"/>
 
         <!-- Year -->
         <android.support.design.widget.TextInputLayout
