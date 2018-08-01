@@ -19,21 +19,21 @@ interface VehicleDetailsActivityContract {
          *
          * @param manufacturers the list
          */
-        fun setManufacturerList(manufacturers: List<String>)
+        fun setManufacturerList(manufacturers: ArrayList<String>)
 
         /**
          * Sets the models list
          *
          * @param models the list
          */
-        fun setModelsList(models: List<String>)
+        fun setModelsList(models: ArrayList<String>)
 
         /**
          * Sets the trim level list
          *
          * @param trimLevels the list
          */
-        fun setTrimLevelList(trimLevels: List<String>)
+        fun setTrimLevelList(trimLevels: ArrayList<String>)
     }
 
     /**
