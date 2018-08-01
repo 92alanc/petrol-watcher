@@ -133,6 +133,9 @@ dependencies {
     // Mockito
     androidTestImplementation 'org.mockito:mockito-android:2.15.0'
 
+    // Mock web server
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.8.0'
+
     // ------------- STANDARD LIBRARIES -------------
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')

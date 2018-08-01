@@ -33,4 +33,11 @@ class TestDependencyInjection : DependencyInjection() {
      */
     override fun getDatabaseManager(): DatabaseManager = MockDatabaseManager
 
+    /**
+     * Gets the vehicles API base URL
+     *
+     * @return the base URL
+     */
+    override fun getVehiclesApiBaseUrl(): String = "/api/"
+
 }

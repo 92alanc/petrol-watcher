@@ -63,14 +63,12 @@ interface VehicleApi {
                    @Query("model") modelName: String): Call<ModelDetails>
 
     companion object {
-        private const val BASE_URL = "https://www.carqueryapi.com/api/0.3/"
-
-        fun getApi(): VehicleApi {
+        fun getApi(baseUrl: String): VehicleApi {
             val gson = getGson()
             val client = getClient()
 
             val retrofit = Retrofit.Builder()
-                    .baseUrl(VehicleApi.BASE_URL)
+                    .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(client)
                     .build()

@@ -33,4 +33,11 @@ open class DependencyInjection {
      */
     open fun getDatabaseManager(): DatabaseManager = AppDatabaseManager()
 
+    /**
+     * Gets the vehicles API base URL
+     *
+     * @return the base URL
+     */
+    open fun getVehiclesApiBaseUrl(): String = "https://www.carqueryapi.com/api/0.3/"
+
 }

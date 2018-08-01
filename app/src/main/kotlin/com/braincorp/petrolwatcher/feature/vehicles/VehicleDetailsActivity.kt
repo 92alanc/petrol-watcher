@@ -11,6 +11,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.VehicleApi
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleDetailsActivityPresenter
 import com.braincorp.petrolwatcher.utils.GenericSpinnerAdapter
+import com.braincorp.petrolwatcher.utils.dependencyInjection
 import kotlinx.android.synthetic.main.activity_vehicle_details.*
 import kotlinx.android.synthetic.main.content_vehicle_details.*
 
@@ -26,7 +27,8 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_details)
         setupToolbar()
-        presenter = VehicleDetailsActivityPresenter(VehicleApi.getApi(), view = this)
+        val baseUrl = dependencyInjection().getVehiclesApiBaseUrl()
+        presenter = VehicleDetailsActivityPresenter(VehicleApi.getApi(baseUrl), view = this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

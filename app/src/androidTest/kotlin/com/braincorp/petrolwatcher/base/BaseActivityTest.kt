@@ -53,6 +53,10 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         return app.dependencyInjection().getImageHandler()
     }
 
+    fun getVehiclesApiBaseUrl(): String {
+        return app.dependencyInjection().getVehiclesApiBaseUrl()
+    }
+
     fun launch() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
