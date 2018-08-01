@@ -109,6 +109,7 @@ class VehicleDetailsActivityPresenter(private val api: VehicleApi,
                     responseBody.list.forEach {
                         trimLevels.add(it.trim!!)
                     }
+                    view.setTrimLevelList(trimLevels)
                 }
             }
         })
