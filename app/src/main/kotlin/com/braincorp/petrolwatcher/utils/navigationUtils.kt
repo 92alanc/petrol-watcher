@@ -8,6 +8,7 @@ import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
+import com.braincorp.petrolwatcher.ui.MultiStateUi
 
 /**
  * Starts the main activity
@@ -89,9 +90,14 @@ fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean = false) {
  *
  * @param finishCurrent if true, the current
  *                      activity will be finished
+ * @param uiState the UI state
  */
-fun AppCompatActivity.startVehicleDetailsActivity(finishCurrent: Boolean = false) {
-    startActivity(VehicleDetailsActivity::class.java, finishCurrent) // TODO: use correct intent
+fun AppCompatActivity.startVehicleDetailsActivity(finishCurrent: Boolean = false,
+                                                  uiState: MultiStateUi.State) {
+    val intent = VehicleDetailsActivity.getIntent(this, uiState)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

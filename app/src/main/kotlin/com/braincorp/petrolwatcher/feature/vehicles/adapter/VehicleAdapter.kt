@@ -24,7 +24,7 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: VehicleHolder, position: Int) {
         val vehicle = data[position]
-        holder.txtName.text = "${vehicle.manufacturer} ${vehicle.name} ${vehicle.trims}"
+        holder.txtModel.text = "${vehicle.manufacturer} ${vehicle.model} ${vehicle.trimLevel}"
         holder.txtYear.text = vehicle.year.toString()
     }
 
@@ -43,7 +43,7 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>)
 
     class VehicleHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val txtName: TextView = itemView.findViewById(R.id.txt_name)
+        val txtModel: TextView = itemView.findViewById(R.id.txt_model)
         val txtYear: TextView = itemView.findViewById(R.id.txt_year)
 
     }

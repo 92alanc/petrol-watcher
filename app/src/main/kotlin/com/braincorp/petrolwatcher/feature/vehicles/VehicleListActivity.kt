@@ -11,6 +11,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleListActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleListActivityPresenter
+import com.braincorp.petrolwatcher.ui.MultiStateUi
 import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startVehicleDetailsActivity
 import kotlinx.android.synthetic.main.activity_vehicle_list.*
@@ -57,7 +58,7 @@ class VehicleListActivity : AppCompatActivity(), VehicleListActivityContract.Vie
 
     private fun setupAddButton() {
         fab.setOnClickListener {
-            startVehicleDetailsActivity()
+            startVehicleDetailsActivity(uiState = MultiStateUi.State.CREATION)
         }
     }
 

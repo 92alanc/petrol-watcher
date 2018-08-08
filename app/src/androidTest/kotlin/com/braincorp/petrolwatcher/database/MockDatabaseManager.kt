@@ -17,10 +17,10 @@ object MockDatabaseManager : DatabaseManager {
      *                                query is complete
      */
     override fun fetchVehicles(onVehiclesFoundListener: OnVehiclesFoundListener) {
-        val vehicleA = Vehicle(manufacturer = "Volkswagen", name = "Golf",
-                year = 2013, trims = "1.6")
-        val vehicleB = Vehicle(manufacturer = "Audi", name = "Q7", year = 2015, trims = "2.0")
-        val vehicleC = Vehicle(manufacturer = "BMW", name = "Z3", year = 2011, trims = "1.8")
+        val vehicleA = Vehicle(manufacturer = "Volkswagen", model = "Golf",
+                year = 2013, trimLevel = "1.6")
+        val vehicleB = Vehicle(manufacturer = "Audi", model = "Q7", year = 2015, trimLevel = "2.0")
+        val vehicleC = Vehicle(manufacturer = "BMW", model = "Z3", year = 2011, trimLevel = "1.8")
 
         val vehicles = arrayListOf(vehicleA, vehicleB, vehicleC)
         onVehiclesFoundListener.onVehiclesFound(vehicles)

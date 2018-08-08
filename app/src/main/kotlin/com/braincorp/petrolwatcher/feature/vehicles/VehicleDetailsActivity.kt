@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher.feature.vehicles
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v7.app.AppCompatActivity
@@ -13,7 +15,9 @@ import android.widget.Spinner
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.api.VehicleApi
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActivityContract
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleDetailsActivityPresenter
+import com.braincorp.petrolwatcher.ui.MultiStateUi
 import com.braincorp.petrolwatcher.utils.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.toRange
@@ -25,7 +29,7 @@ import kotlinx.android.synthetic.main.content_vehicle_details.*
  * shown and edited
  */
 class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContract.View,
-                               AdapterView.OnItemSelectedListener {
+                               AdapterView.OnItemSelectedListener, MultiStateUi {
 
     companion object {
         private const val KEY_INPUT_TYPE = "input_type"
@@ -37,9 +41,20 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
         private const val KEY_SELECTED_MANUFACTURER = "selected_manufacturer"
         private const val KEY_SELECTED_MODEL = "model"
         private const val KEY_SELECTED_TRIM_LEVEL = "trim_level"
+        private const val KEY_UI_STATE = "ui_state"
+        private const val KEY_VEHICLE = "vehicle"
+
+        fun getIntent(context: Context, uiState: MultiStateUi.State,
+                      vehicle: Vehicle? = null): Intent {
+            return Intent(context, VehicleDetailsActivity::class.java)
+                    .putExtra(KEY_UI_STATE, uiState)
+                    .putExtra(KEY_VEHICLE, vehicle)
+        }
     }
 
     override lateinit var presenter: VehicleDetailsActivityContract.Presenter
+
+    override var uiState = MultiStateUi.State.INITIAL
 
     private var yearRange = IntRange.EMPTY
     private var selectedYear = 0
@@ -56,6 +71,8 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
     private var trimLevelSelectedCount = 0
 
     private var inputType = InputType.AUTO
+
+    private var vehicle: Vehicle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +107,10 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
 
         with (outState) {
             putSerializable(KEY_INPUT_TYPE, inputType)
+            putSerializable(KEY_UI_STATE, uiState)
+
+            if (vehicle != null)
+                putParcelable(KEY_VEHICLE, vehicle)
 
             yearRange.let {
                 if (!it.isEmpty())
@@ -155,7 +176,7 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
                 }
             }
 
-            R.id.spn_name -> {
+            R.id.spn_model -> {
                 if (++modelSelectedCount > 1) {
                     selectedModel = models[position]
                     presenter.getDetails(selectedYear, selectedManufacturer, selectedModel)
@@ -198,7 +219,7 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
      */
     override fun setModelsList(models: ArrayList<String>) {
         this.models = models
-        populateSpinner(spn_name, models)
+        populateSpinner(spn_model, models)
     }
 
     /**
@@ -211,6 +232,40 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
         populateSpinner(spn_trim_level, trimLevels)
     }
 
+    /**
+     * Prepares the creation state
+     */
+    override fun prepareCreationState() {
+        uiState = MultiStateUi.State.CREATION
+        setupAutoInput()
+        fab.setImageResource(R.drawable.ic_save)
+    }
+
+    /**
+     * Prepares the edit state
+     */
+    override fun prepareEditState() {
+        uiState = MultiStateUi.State.EDIT
+        setupAutoInput()
+        fab.setImageResource(R.drawable.ic_save)
+    }
+
+    /**
+     * Prepares the initial state
+     */
+    override fun prepareInitialState() {
+        prepareReadOnlyState()
+    }
+
+    /**
+     * Prepares the read-only state
+     */
+    override fun prepareReadOnlyState() {
+        uiState = MultiStateUi.State.READ_ONLY
+        setupReadOnlyFields()
+        fab.setImageResource(R.drawable.ic_edit)
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -219,8 +274,10 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
     private fun setupAutoInput() {
         inputType = InputType.AUTO
 
+        group_read_only.visibility = GONE
         group_manual_input.visibility = GONE
         group_auto_input.visibility = VISIBLE
+
         if (yearRange == IntRange.EMPTY)
             presenter.getYearRange()
     }
@@ -228,13 +285,30 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
     private fun setupManualInput() {
         inputType = InputType.MANUAL
 
+        group_read_only.visibility = GONE
         group_auto_input.visibility = GONE
         group_manual_input.visibility = VISIBLE
 
         setEditTextValue(edt_year, selectedYear)
         setEditTextValue(edt_manufacturer, selectedManufacturer)
-        setEditTextValue(edt_name, selectedModel)
+        setEditTextValue(edt_model, selectedModel)
         setEditTextValue(edt_trim_level, selectedTrimLevel)
+    }
+
+    private fun setupReadOnlyFields() {
+        group_auto_input.visibility = GONE
+        group_manual_input.visibility = GONE
+        group_read_only.visibility = VISIBLE
+
+        txt_year.text = String.format(getString(R.string.year_format), vehicle?.year)
+        txt_manufacturer.text = getString(R.string.manufacturer_format, vehicle?.manufacturer)
+        txt_model.text = getString(R.string.model_format, vehicle?.model)
+        txt_trim_level.text = getString(R.string.trim_level_format, vehicle?.trimLevel)
+        txt_capacity.text = String.format(getString(R.string.capacity_format), vehicle?.fuelCapacity)
+        txt_avg_consumption_city.text = String.format(getString(R.string.avg_consumption_city_format),
+                vehicle?.avgConsumptionCity)
+        txt_avg_consumption_motorway.text = String.format(getString(R.string.avg_consumption_motorway_format),
+                vehicle?.avgConsumptionMotorway)
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
@@ -281,9 +355,9 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
             if (containsKey(KEY_SELECTED_MODEL)) {
                 selectedModel = getString(KEY_SELECTED_MODEL)!!
                 if (inputType == InputType.AUTO)
-                    spn_name.setSelection(models.indexOf(selectedModel))
+                    spn_model.setSelection(models.indexOf(selectedModel))
                 else
-                    edt_name.setText(selectedModel)
+                    edt_model.setText(selectedModel)
             }
 
             if (containsKey(KEY_SELECTED_TRIM_LEVEL)) {
@@ -294,11 +368,22 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
                     edt_trim_level.setText(selectedTrimLevel)
             }
 
-            if (inputType == InputType.AUTO)
-                setupAutoInput()
-            else
-                setupManualInput()
+            if (containsKey(KEY_UI_STATE))
+                uiState = getSerializable(KEY_UI_STATE) as MultiStateUi.State
+
+            if (containsKey(KEY_VEHICLE))
+                vehicle = getParcelable(KEY_VEHICLE)
+
+            setupInputType()
+            prepareUi(uiState)
         }
+    }
+
+    private fun setupInputType() {
+        if (inputType == InputType.AUTO)
+            setupAutoInput()
+        else
+            setupManualInput()
     }
 
     private fun <T> populateSpinner(spinner: Spinner, values: T) {

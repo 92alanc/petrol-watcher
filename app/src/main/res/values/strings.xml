@@ -37,8 +37,16 @@
     <string name="trim_level">Trim level (e.g.: 2.0 GTI)</string>
     <string name="year">Year</string>
     <string name="fuel_capacity">Fuel capacity (litres)</string>
-    <string name="avg_consumption_city">Average consumption - city (km/l)</string>
-    <string name="avg_consumption_motorway">Average consumption - motorway (km/l)</string>
+    <string name="avg_consumption_city">Average consumption - city (km/ℓ)</string>
+    <string name="avg_consumption_motorway">Average consumption - motorway (km/ℓ)</string>
     <string name="automatic_input">Automatic input</string>
     <string name="manual_input">Manual input</string>
+    <string name="model">Model</string>
+    <string name="year_format">Year: $d</string>
+    <string name="manufacturer_format">Manufacturer: %s</string>
+    <string name="model_format">Model: %s</string>
+    <string name="trim_level_format">Trim level: %s</string>
+    <string name="capacity_format">Fuel capacity: %dℓ</string>
+    <string name="avg_consumption_city_format">Average consumption - city: %fkm/ℓ</string>
+    <string name="avg_consumption_motorway_format">Average consumption - motorway: %fkm/ℓ</string>
 </resources>

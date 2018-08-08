@@ -5,6 +5,7 @@ import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.vehicles.api.RESPONSE_YEARS
 import com.braincorp.petrolwatcher.feature.vehicles.robots.vehicleDetails
 import okhttp3.mockwebserver.MockResponse
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,6 +15,7 @@ class VehicleDetailsActivityTest : BaseActivityTest<VehicleDetailsActivity>(
         VehicleDetailsActivity::class.java) {
 
     @Test
+    @Ignore
     fun whenClickingOnAutoInputMenuItem_shouldDisplayAutoInputViews() {
         vehicleDetails {
         } clickAutoInputMenuItem {
@@ -22,6 +24,7 @@ class VehicleDetailsActivityTest : BaseActivityTest<VehicleDetailsActivity>(
     }
 
     @Test
+    @Ignore
     fun whenClickingOnAutoInputMenuItem_shouldHideManualInputViews() {
         vehicleDetails {
         } clickAutoInputMenuItem {
@@ -30,6 +33,7 @@ class VehicleDetailsActivityTest : BaseActivityTest<VehicleDetailsActivity>(
     }
 
     @Test
+    @Ignore
     fun whenClickingOnManualInputMenuItem_shouldDisplayManualInputViews() {
         vehicleDetails {
         } clickManualInputMenuItem {
@@ -38,6 +42,7 @@ class VehicleDetailsActivityTest : BaseActivityTest<VehicleDetailsActivity>(
     }
 
     @Test
+    @Ignore
     fun whenClickingOnManualInputMenuItem_shouldHideAutoInputViews() {
         vehicleDetails {
         } clickManualInputMenuItem {
@@ -46,6 +51,7 @@ class VehicleDetailsActivityTest : BaseActivityTest<VehicleDetailsActivity>(
     }
 
     @Test
+    @Ignore
     fun withYearRange_shouldFillSpinner() {
         mockVehicleApi.enqueue(MockResponse().setResponseCode(200).setBody(RESPONSE_YEARS))
 
