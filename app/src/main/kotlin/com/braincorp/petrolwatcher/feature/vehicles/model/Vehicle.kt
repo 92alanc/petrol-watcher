@@ -48,11 +48,11 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
     }
 
     constructor(parcel: Parcel): this() {
-        id = parcel.readString()
-        manufacturer = parcel.readString()
-        name = parcel.readString()
+        id = parcel.readString()!!
+        manufacturer = parcel.readString()!!
+        name = parcel.readString()!!
         year = parcel.readInt()
-        trims = parcel.readString()
+        trims = parcel.readString()!!
         fuelCapacity = parcel.readInt()
         avgConsumptionMotorway = parcel.readFloat()
         avgConsumptionCity = parcel.readFloat()

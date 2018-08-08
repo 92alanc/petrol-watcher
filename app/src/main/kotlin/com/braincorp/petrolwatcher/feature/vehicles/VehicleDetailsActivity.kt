@@ -243,22 +243,22 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
                 inputType = getSerializable(KEY_INPUT_TYPE) as InputType
 
             if (containsKey(KEY_YEAR_RANGE)) {
-                yearRange = getIntArray(KEY_YEAR_RANGE).toRange()
+                yearRange = getIntArray(KEY_YEAR_RANGE)!!.toRange()
                 setYearRange(yearRange)
             }
 
             if (containsKey(KEY_MANUFACTURERS)) {
-                manufacturers = getStringArrayList(KEY_MANUFACTURERS)
+                manufacturers = getStringArrayList(KEY_MANUFACTURERS)!!
                 setManufacturerList(manufacturers)
             }
 
             if (containsKey(KEY_MODELS)) {
-                models = getStringArrayList(KEY_MODELS)
+                models = getStringArrayList(KEY_MODELS)!!
                 setModelsList(models)
             }
 
             if (containsKey(KEY_TRIM_LEVELS)) {
-                trimLevels = getStringArrayList(KEY_TRIM_LEVELS)
+                trimLevels = getStringArrayList(KEY_TRIM_LEVELS)!!
                 setTrimLevelList(trimLevels)
             }
 
@@ -271,7 +271,7 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
             }
 
             if (containsKey(KEY_SELECTED_MANUFACTURER)) {
-                selectedManufacturer = getString(KEY_SELECTED_MANUFACTURER)
+                selectedManufacturer = getString(KEY_SELECTED_MANUFACTURER)!!
                 if (inputType == InputType.AUTO)
                     spn_manufacturer.setSelection(manufacturers.indexOf(selectedManufacturer))
                 else
@@ -279,7 +279,7 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
             }
 
             if (containsKey(KEY_SELECTED_MODEL)) {
-                selectedModel = getString(KEY_SELECTED_MODEL)
+                selectedModel = getString(KEY_SELECTED_MODEL)!!
                 if (inputType == InputType.AUTO)
                     spn_name.setSelection(models.indexOf(selectedModel))
                 else
@@ -287,7 +287,7 @@ class VehicleDetailsActivity : AppCompatActivity(), VehicleDetailsActivityContra
             }
 
             if (containsKey(KEY_SELECTED_TRIM_LEVEL)) {
-                selectedTrimLevel = getString(KEY_SELECTED_TRIM_LEVEL)
+                selectedTrimLevel = getString(KEY_SELECTED_TRIM_LEVEL)!!
                 if (inputType == InputType.AUTO)
                     spn_trim_level.setSelection(trimLevels.indexOf(selectedTrimLevel))
                 else
