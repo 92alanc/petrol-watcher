@@ -1,0 +1,20 @@
+{
+  "Models": [
+    {
+      "model_name": "A1",
+      "model_make_id": "audi"
+    },
+    {
+      "model_name": "A3",
+      "model_make_id": "audi"
+    },
+    {
+      "model_name": "A4",
+      "model_make_id": "audi"
+    },
+    {
+      "model_name": "A5",
+      "model_make_id": "audi"
+    }
+  ]
+}

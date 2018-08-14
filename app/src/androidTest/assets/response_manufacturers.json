@@ -1,0 +1,28 @@
+{
+  "Makes": [
+    {
+      "make_id": "acura",
+      "make_display": "Acura",
+      "make_is_common": "1",
+      "make_country": "USA"
+    },
+    {
+      "make_id": "alfa-romeo",
+      "make_display": "Alfa Romeo",
+      "make_is_common": "1",
+      "make_country": "Italy"
+    },
+    {
+      "make_id": "aston-martin",
+      "make_display": "Aston Martin",
+      "make_is_common": "1",
+      "make_country": "UK"
+    },
+    {
+      "make_id": "audi",
+      "make_display": "Audi",
+      "make_is_common": "1",
+      "make_country": "Germany"
+    }
+  ]
+}

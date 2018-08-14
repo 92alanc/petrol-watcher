@@ -15,6 +15,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import java.io.InputStream
 
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
@@ -34,6 +35,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
     @Before
     open fun setup() {
         app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
+        mockVehicleApi.start()
         mockVehicleApi.url(getVehiclesApiBaseUrl())
 
         if (autoLaunch) launch()
@@ -61,6 +63,18 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
         doWait(300)
+    }
+
+    fun getJsonFromAsset(path: String): String? {
+        val json: String?
+        try {
+            val  inputStream: InputStream = rule.activity.assets.open(path)
+            json = inputStream.bufferedReader().use{ it.readText() }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
     }
 
     private fun getVehiclesApiBaseUrl(): String {

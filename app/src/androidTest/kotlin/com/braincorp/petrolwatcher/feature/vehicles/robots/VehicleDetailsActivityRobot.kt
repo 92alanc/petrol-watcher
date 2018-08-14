@@ -9,6 +9,8 @@ import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
+import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
+import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.notDisplayed
 import com.braincorp.petrolwatcher.R
 
 fun vehicleDetails(func: VehicleDetailsActivityRobot.() -> Unit): VehicleDetailsActivityRobot {
@@ -16,6 +18,46 @@ fun vehicleDetails(func: VehicleDetailsActivityRobot.() -> Unit): VehicleDetails
 }
 
 class VehicleDetailsActivityRobot {
+
+    fun showReadOnlyFields() {
+        displayed {
+            allOf {
+                id(R.id.txt_manufacturer)
+                id(R.id.txt_model)
+                id(R.id.txt_year)
+                id(R.id.txt_capacity)
+                id(R.id.txt_avg_consumption_city)
+                id(R.id.txt_avg_consumption_motorway)
+            }
+        }
+    }
+
+    fun hideEditableFields() {
+        notDisplayed {
+            allOf {
+                // region Auto input
+                id(R.id.label_spn_manufacturer)
+                id(R.id.spn_manufacturer)
+                id(R.id.label_spn_model)
+                id(R.id.spn_model)
+                id(R.id.label_spn_year)
+                id(R.id.spn_year)
+                id(R.id.label_spn_trim_level)
+                id(R.id.spn_trim_level)
+                // endregion
+
+                // region Manual input
+                id(R.id.edt_manufacturer)
+                id(R.id.edt_model)
+                id(R.id.edt_year)
+                id(R.id.edt_trim_level)
+                id(R.id.edt_capacity)
+                id(R.id.edt_avg_consumption_city)
+                id(R.id.edt_avg_consumption_motorway)
+                // endregion
+            }
+        }
+    }
 
     infix fun clickAutoInputMenuItem(func: VehicleDetailsResult.() -> Unit) {
         openMenu()
