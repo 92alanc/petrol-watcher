@@ -2,9 +2,9 @@ package com.braincorp.petrolwatcher.feature.vehicles.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
 
-interface VehicleDetailsActivityContract {
+interface CreateVehicleActivityContract {
     /**
-     * The view layer of the vehicle details activity
+     * The view layer of the create vehicle activity
      */
     interface View : BaseContract.View<Presenter> {
         /**
@@ -37,7 +37,7 @@ interface VehicleDetailsActivityContract {
     }
 
     /**
-     * The presentation layer of the vehicle details
+     * The presentation layer of the create vehicle
      * activity
      */
     interface Presenter : BaseContract.Presenter {

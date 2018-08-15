@@ -8,7 +8,7 @@ import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import br.com.concretesolutions.kappuccino.custom.recyclerView.RecyclerViewInteractions.recyclerView
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
+import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleAdapter
 
 fun vehicleList(func: VehicleListActivityRobot.() -> Unit) = VehicleListActivityRobot().apply(func)
@@ -44,7 +44,7 @@ class VehicleListResult {
 
     fun redirectToVehicleDetailsActivity() {
         sentIntent {
-            className(VehicleDetailsActivity::class.java.name)
+            className(CreateVehicleActivity::class.java.name)
         }
     }
 

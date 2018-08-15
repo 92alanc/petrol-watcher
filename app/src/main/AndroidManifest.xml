@@ -3,11 +3,12 @@
           package="com.braincorp.petrolwatcher"
           android:installLocation="preferExternal">
 
-    <!-- System permissions -->
+    <!-- region System permissions -->
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- endregion -->
 
     <application
         android:name=".App"
@@ -17,8 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Authentication -->
-
+        <!-- region Authentication -->
         <activity android:name=".feature.auth.MainActivity"
                   android:taskAffinity="@string/affinity_auth"
                   android:finishOnTaskLaunch="true"
@@ -54,22 +54,22 @@
             android:taskAffinity="@string/affinity_auth"
             android:finishOnTaskLaunch="true"
             android:theme="@style/AppTheme"/>
+        <!-- endregion -->
 
-        <!-- Vehicles -->
-
+        <!-- region Vehicles -->
         <activity android:name=".feature.vehicles.VehicleListActivity"
             android:taskAffinity="@string/affinity_vehicles"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name=".feature.vehicles.VehicleDetailsActivity"
+        <activity android:name=".feature.vehicles.CreateVehicleActivity"
                   android:taskAffinity="@string/affinity_vehicles"
                   android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".feature.vehicles.VehicleListActivity"/>
         </activity>
+        <!-- endregion -->
 
-        <!-- Facebook -->
-
+        <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
 
@@ -88,6 +88,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <!-- endregion -->
 
     </application>
 

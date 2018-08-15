@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".feature.vehicles.VehicleDetailsActivity">
+    tools:context=".feature.vehicles.CreateVehicleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_vehicle_details"/>
+    <include layout="@layout/content_create_vehicle"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

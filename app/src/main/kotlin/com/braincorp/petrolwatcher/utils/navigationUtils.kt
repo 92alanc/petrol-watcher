@@ -6,9 +6,8 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
-import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
+import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
-import com.braincorp.petrolwatcher.ui.MultiStateUi
 
 /**
  * Starts the main activity
@@ -86,18 +85,13 @@ fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean = false) {
 }
 
 /**
- * Starts the vehicle details activity
+ * Starts the create vehicle activity
  *
  * @param finishCurrent if true, the current
  *                      activity will be finished
- * @param uiState the UI state
  */
-fun AppCompatActivity.startVehicleDetailsActivity(finishCurrent: Boolean = false,
-                                                  uiState: MultiStateUi.State) {
-    val intent = VehicleDetailsActivity.getIntent(this, uiState)
-    startActivity(intent)
-    if (finishCurrent)
-        finish()
+fun AppCompatActivity.startCreateVehicleActivity(finishCurrent: Boolean = false) {
+    startActivity(CreateVehicleActivity::class.java, finishCurrent)
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

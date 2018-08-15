@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_vehicle_details">
+    tools:showIn="@layout/activity_create_vehicle">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_default">
 
+        <!-- region Auto input -->
         <!-- Year -->
         <TextView
             android:id="@+id/label_spn_year"
@@ -105,6 +106,14 @@
             app:layout_constraintVertical_bias="0"
             tools:listitem="@layout/generic_spinner_item"/>
 
+        <android.support.constraint.Group
+            android:id="@+id/group_auto_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="spn_year,spn_manufacturer,spn_model,spn_trim_level,label_spn_year,label_spn_manufacturer,label_spn_model,label_spn_trim_level" />
+        <!-- endregion -->
+
+        <!-- region Manual input -->
         <!-- Year -->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til_year"
@@ -228,111 +237,13 @@
                 android:inputType="numberDecimal"/>
         </android.support.design.widget.TextInputLayout>
 
-        <!-- Year -->
-        <TextView
-            android:id="@+id/txt_year"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/txt_manufacturer"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Year: 2012"/>
-
-        <!-- Manufacturer -->
-        <TextView
-            android:id="@+id/txt_manufacturer"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_year"
-            app:layout_constraintBottom_toTopOf="@+id/txt_model"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Manufacturer: Audi"/>
-
-        <!-- Model -->
-        <TextView
-            android:id="@+id/txt_model"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_manufacturer"
-            app:layout_constraintBottom_toTopOf="@+id/txt_trim_level"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Model: TT"/>
-
-        <!-- Trim Level -->
-        <TextView
-            android:id="@+id/txt_trim_level"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_model"
-            app:layout_constraintBottom_toTopOf="@+id/txt_capacity"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Trim level: 2.0"/>
-
-        <!-- Capacity -->
-        <TextView
-            android:id="@+id/txt_capacity"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_trim_level"
-            app:layout_constraintBottom_toTopOf="@+id/txt_avg_consumption_city"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Fuel capacity: 20ℓ"/>
-
-        <!-- Average consumption (city) -->
-        <TextView
-            android:id="@+id/txt_avg_consumption_city"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_capacity"
-            app:layout_constraintBottom_toTopOf="@+id/txt_avg_consumption_motorway"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Average consumption (city): 8km/ℓ"/>
-
-        <!-- Average consumption (motorway) -->
-        <TextView
-            android:id="@+id/txt_avg_consumption_motorway"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            app:layout_constraintTop_toBottomOf="@id/txt_avg_consumption_city"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Average consumption (motorway): 10km/ℓ"/>
-
-        <!-- Manual input -->
         <android.support.constraint.Group
             android:id="@+id/group_manual_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:constraint_referenced_ids="til_year,til_manufacturer,til_model,til_trim_level,til_capacity,til_avg_consumption_city,til_avg_consumption_motorway" />
-
-        <!-- Auto input -->
-        <android.support.constraint.Group
-            android:id="@+id/group_auto_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="spn_year,spn_manufacturer,spn_model,spn_trim_level,label_spn_year,label_spn_manufacturer,label_spn_model,label_spn_trim_level" />
-
-        <!-- Read-only state -->
-        <android.support.constraint.Group
-            android:id="@+id/group_read_only"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txt_year,txt_manufacturer,txt_model,txt_trim_level,txt_capacity,txt_avg_consumption_city,txt_avg_consumption_motorway"
-            tools:visibility="gone"/>
+        <!-- endregion -->
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

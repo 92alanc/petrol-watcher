@@ -10,15 +10,17 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnItemRemovedListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.braincorp.petrolwatcher.ui.OnItemClickListener
 
-class VehicleAdapter(private val data: ArrayList<Vehicle>)
+class VehicleAdapter(private val data: ArrayList<Vehicle>,
+                     private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<VehicleAdapter.VehicleHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehicleHolder {
         val context = parent.context
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val itemView = inflater.inflate(R.layout.item_vehicle, parent, false)
-        return VehicleHolder(itemView)
+        return VehicleHolder(onItemClickListener, itemView)
     }
 
     @SuppressLint("SetTextI18n")
@@ -41,10 +43,15 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>)
         notifyItemRemoved(position)
     }
 
-    class VehicleHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class VehicleHolder(private val onItemClickListener: OnItemClickListener,
+            itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val txtModel: TextView = itemView.findViewById(R.id.txt_model)
         val txtYear: TextView = itemView.findViewById(R.id.txt_year)
+
+        override fun onClick(view: View) {
+            onItemClickListener.onItemClick(adapterPosition)
+        }
 
     }
 

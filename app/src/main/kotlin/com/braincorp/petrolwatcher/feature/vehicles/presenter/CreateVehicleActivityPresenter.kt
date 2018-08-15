@@ -5,18 +5,18 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.model.Makes
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Models
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
-import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActivityContract
+import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivityContract
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 /**
  * The implementation of the presentation layer of the
- * vehicle details activity
+ * create vehicle activity
  */
-class VehicleDetailsActivityPresenter(private val api: VehicleApi,
-                                      private val view: VehicleDetailsActivityContract.View)
-    : VehicleDetailsActivityContract.Presenter {
+class CreateVehicleActivityPresenter(private val api: VehicleApi,
+                                     private val view: CreateVehicleActivityContract.View)
+    : CreateVehicleActivityContract.Presenter {
 
     /**
      * Gets the year range available
