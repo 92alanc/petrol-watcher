@@ -77,40 +77,40 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/label_spn_model"
-            app:layout_constraintBottom_toTopOf="@+id/label_spn_trim_level"
+            app:layout_constraintBottom_toTopOf="@+id/label_spn_details"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/generic_spinner_item"/>
 
-        <!-- Trim level -->
+        <!-- Details -->
         <TextView
-            android:id="@+id/label_spn_trim_level"
+            android:id="@+id/label_spn_details"
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:textColor="@color/orange"
-            android:text="@string/trim_level"
+            android:text="@string/details"
             app:layout_constraintTop_toBottomOf="@id/spn_model"
-            app:layout_constraintBottom_toTopOf="@+id/spn_trim_level"
+            app:layout_constraintBottom_toTopOf="@+id/spn_details"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <Spinner
-            android:id="@+id/spn_trim_level"
+            android:id="@+id/spn_details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/label_spn_trim_level"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_details"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0"
-            tools:listitem="@layout/generic_spinner_item"/>
+            tools:listitem="@layout/item_vehicle_details"/>
 
         <android.support.constraint.Group
             android:id="@+id/group_auto_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="spn_year,spn_manufacturer,spn_model,spn_trim_level,label_spn_year,label_spn_manufacturer,label_spn_model,label_spn_trim_level" />
+            app:constraint_referenced_ids="spn_year,spn_manufacturer,spn_model,spn_details,label_spn_year,label_spn_manufacturer,label_spn_model,label_spn_details" />
         <!-- endregion -->
 
         <!-- region Manual input -->

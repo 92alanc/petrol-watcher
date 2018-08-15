@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.vehicles.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
 interface CreateVehicleActivityContract {
     /**
@@ -29,11 +30,11 @@ interface CreateVehicleActivityContract {
         fun setModelsList(models: ArrayList<String>)
 
         /**
-         * Sets the trim level list
+         * Sets the vehicle details list
          *
-         * @param trimLevels the list
+         * @param detailsList the list
          */
-        fun setTrimLevelList(trimLevels: ArrayList<String>)
+        fun setDetailsList(detailsList: ArrayList<Vehicle.Details>)
     }
 
     /**

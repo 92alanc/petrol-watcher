@@ -26,7 +26,7 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>,
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: VehicleHolder, position: Int) {
         val vehicle = data[position]
-        holder.txtModel.text = "${vehicle.manufacturer} ${vehicle.model} ${vehicle.trimLevel}"
+        holder.txtModel.text = "${vehicle.manufacturer} ${vehicle.model} ${vehicle.details.trimLevel}"
         holder.txtYear.text = vehicle.year.toString()
     }
 

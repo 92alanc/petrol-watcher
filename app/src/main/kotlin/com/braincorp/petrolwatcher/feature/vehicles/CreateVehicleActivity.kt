@@ -11,10 +11,12 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.Spinner
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleDetailsAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.api.VehicleApi
 import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivityContract
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.CreateVehicleActivityPresenter
-import com.braincorp.petrolwatcher.utils.GenericSpinnerAdapter
+import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.toRange
 import kotlinx.android.synthetic.main.activity_create_vehicle.*
@@ -24,18 +26,18 @@ import kotlinx.android.synthetic.main.content_create_vehicle.*
  * The activity where vehicles are created
  */
 class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract.View,
-                               AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener {
 
     companion object {
         private const val KEY_INPUT_TYPE = "input_type"
         private const val KEY_YEAR_RANGE = "year_range"
         private const val KEY_MANUFACTURERS = "manufacturers"
         private const val KEY_MODELS = "models"
-        private const val KEY_TRIM_LEVELS = "trim_levels"
+        private const val KEY_DETAILS = "details"
         private const val KEY_SELECTED_YEAR = "selected_year"
         private const val KEY_SELECTED_MANUFACTURER = "selected_manufacturer"
         private const val KEY_SELECTED_MODEL = "model"
-        private const val KEY_SELECTED_TRIM_LEVEL = "trim_level"
+        private const val KEY_SELECTED_DETAILS = "details"
     }
 
     override lateinit var presenter: CreateVehicleActivityContract.Presenter
@@ -46,13 +48,13 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     private var selectedManufacturer = ""
     private var models = ArrayList<String>()
     private var selectedModel = ""
-    private var trimLevels = ArrayList<String>()
-    private var selectedTrimLevel = ""
+    private var detailsList = ArrayList<Vehicle.Details>()
+    private var selectedDetails = Vehicle.Details()
 
     private var yearSelectedCount = 0
     private var manufacturerSelectedCount = 0
     private var modelSelectedCount = 0
-    private var trimLevelSelectedCount = 0
+    private var detailsSelectedCount = 0
 
     private var inputType = InputType.AUTO
 
@@ -105,9 +107,9 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                     putStringArrayList(KEY_MODELS, it)
             }
 
-            trimLevels.let {
+            detailsList.let {
                 if (it.isNotEmpty())
-                    putStringArrayList(KEY_TRIM_LEVELS, it)
+                    putParcelableArrayList(KEY_DETAILS, it)
             }
 
             selectedYear.let {
@@ -125,10 +127,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                     putString(KEY_SELECTED_MODEL, it)
             }
 
-            selectedTrimLevel.let {
-                if (it != "")
-                    putString(KEY_SELECTED_TRIM_LEVEL, it)
-            }
+            putParcelable(KEY_SELECTED_DETAILS, selectedDetails)
         }
     }
 
@@ -161,9 +160,9 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                 }
             }
 
-            R.id.spn_trim_level -> {
-                if (++trimLevelSelectedCount > 1)
-                    selectedTrimLevel = trimLevels[position]
+            R.id.spn_details -> {
+                if (++detailsSelectedCount > 1)
+                    selectedDetails = detailsList[position]
             }
         }
     }
@@ -201,13 +200,18 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     }
 
     /**
-     * Sets the trim level list
+     * Sets the vehicle details list
      *
-     * @param trimLevels the list
+     * @param detailsList the list
      */
-    override fun setTrimLevelList(trimLevels: ArrayList<String>) {
-        this.trimLevels = trimLevels
-        populateSpinner(spn_trim_level, trimLevels)
+    override fun setDetailsList(detailsList: ArrayList<Vehicle.Details>) {
+        this.detailsList = detailsList
+        with (spn_details) {
+            adapter = null
+            adapter = VehicleDetailsAdapter(this@CreateVehicleActivity, detailsList)
+            onItemSelectedListener = this@CreateVehicleActivity
+            // FIXME: not showing on screen
+        }
     }
 
     private fun setupToolbar() {
@@ -234,7 +238,10 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         setEditTextValue(edt_year, selectedYear)
         setEditTextValue(edt_manufacturer, selectedManufacturer)
         setEditTextValue(edt_model, selectedModel)
-        setEditTextValue(edt_trim_level, selectedTrimLevel)
+        setEditTextValue(edt_trim_level, selectedDetails.trimLevel)
+        setEditTextValue(edt_capacity, selectedDetails.fuelCapacity)
+        setEditTextValue(edt_avg_consumption_city, selectedDetails.avgConsumptionCity)
+        setEditTextValue(edt_avg_consumption_motorway, selectedDetails.avgConsumptionMotorway)
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
@@ -257,9 +264,9 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                 setModelsList(models)
             }
 
-            if (containsKey(KEY_TRIM_LEVELS)) {
-                trimLevels = getStringArrayList(KEY_TRIM_LEVELS)!!
-                setTrimLevelList(trimLevels)
+            if (containsKey(KEY_DETAILS)) {
+                detailsList = getParcelableArrayList(KEY_DETAILS)!!
+                setDetailsList(detailsList)
             }
 
             if (containsKey(KEY_SELECTED_YEAR)) {
@@ -286,12 +293,16 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                     edt_model.setText(selectedModel)
             }
 
-            if (containsKey(KEY_SELECTED_TRIM_LEVEL)) {
-                selectedTrimLevel = getString(KEY_SELECTED_TRIM_LEVEL)!!
+            if (containsKey(KEY_SELECTED_DETAILS)) {
+                selectedDetails = getParcelable(KEY_SELECTED_DETAILS)!!
                 if (inputType == InputType.AUTO)
-                    spn_trim_level.setSelection(trimLevels.indexOf(selectedTrimLevel))
-                else
-                    edt_trim_level.setText(selectedTrimLevel)
+                    spn_details.setSelection(detailsList.indexOf(selectedDetails))
+                else {
+                    setEditTextValue(edt_trim_level, selectedDetails.trimLevel)
+                    setEditTextValue(edt_capacity, selectedDetails.fuelCapacity)
+                    setEditTextValue(edt_avg_consumption_city, selectedDetails.avgConsumptionCity)
+                    setEditTextValue(edt_avg_consumption_motorway, selectedDetails.avgConsumptionMotorway)
+                }
             }
 
             setupInputType()
@@ -318,7 +329,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
 
     private fun <T> setEditTextValue(editText: TextInputEditText, value: T) {
         value.let {
-            if (it is Int && it != 0)
+            if ((it is Int || it is Float) && it != 0)
                 editText.setText(it.toString())
             else if (it is String && it != "")
                 editText.setText(it)

@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.utils
+package com.braincorp.petrolwatcher.ui
 
 import android.content.Context
 import android.view.LayoutInflater

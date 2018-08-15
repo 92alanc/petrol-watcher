@@ -6,6 +6,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Models
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
 import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivityContract
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -105,11 +106,12 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
             override fun onResponse(call: Call<ModelDetails>?, response: Response<ModelDetails>?) {
                 val responseBody = response?.body()
                 if (responseBody != null) {
-                    val trimLevels = arrayListOf<String>()
+                    val detailsList = arrayListOf<Vehicle.Details>()
                     responseBody.list.forEach {
-                        trimLevels.add(it.trim!!)
+                        detailsList.add(Vehicle.Details(it.trim, it.fuelCapacityLitres,
+                                it.litresPer100KmCity, it.litresPer100KmMotorway))
                     }
-                    view.setTrimLevelList(trimLevels)
+                    view.setDetailsList(detailsList)
                 }
             }
         })

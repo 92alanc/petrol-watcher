@@ -4,6 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.database.DataSnapshot
 import java.util.UUID
+import kotlin.collections.HashMap
+import kotlin.collections.set
 
 /**
  * A vehicle
@@ -12,21 +14,13 @@ import java.util.UUID
  * @param manufacturer the manufacturer
  * @param model the model
  * @param year the year
- * @param trimLevel the trim level, e.g.: 2.0 GTI
- * @param fuelCapacity the fuel capacity, in litres
- * @param avgConsumptionMotorway the average fuel consumption
- *                               in motorways, in km/l
- * @param avgConsumptionCity the average fuel consumption in
- *                           city areas, in km/l
+ * @param details the extra details
  */
 data class Vehicle(var id: String = UUID.randomUUID().toString(),
                    var manufacturer: String = "",
                    var model: String = "",
                    var year: Int = 0,
-                   var trimLevel: String = "",
-                   var fuelCapacity: Int = 0,
-                   var avgConsumptionMotorway: Float = 0f,
-                   var avgConsumptionCity: Float = 0f) : Parcelable {
+                   var details: Details = Details()) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
         private const val KEY_ID = "id"
@@ -53,10 +47,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
             manufacturer = readString()!!
             model = readString()!!
             year = readInt()
-            trimLevel = readString()!!
-            fuelCapacity = readInt()
-            avgConsumptionMotorway = readFloat()
-            avgConsumptionCity = readFloat()
+            details = readParcelable(javaClass.classLoader)
         }
     }
 
@@ -66,10 +57,10 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
             manufacturer = child(KEY_MANUFACTURER).value.toString()
             model = child(KEY_MODEL).value.toString()
             year = child(KEY_YEAR).value.toString().toInt()
-            trimLevel = child(KEY_TRIM_LEVEL).value.toString()
-            fuelCapacity = child(KEY_FUEL_CAPACITY).value.toString().toInt()
-            avgConsumptionMotorway = child(KEY_CONSUMPTION_MOTORWAY).value.toString().toFloat()
-            avgConsumptionCity = child(KEY_CONSUMPTION_CITY).value.toString().toFloat()
+            details.trimLevel = child(KEY_TRIM_LEVEL).value.toString()
+            details.fuelCapacity = child(KEY_FUEL_CAPACITY).value.toString().toInt()
+            details.avgConsumptionMotorway = child(KEY_CONSUMPTION_MOTORWAY).value.toString().toFloat()
+            details.avgConsumptionCity = child(KEY_CONSUMPTION_CITY).value.toString().toFloat()
         }
     }
 
@@ -79,10 +70,7 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
             writeString(manufacturer)
             writeString(model)
             writeInt(year)
-            writeString(trimLevel)
-            writeInt(fuelCapacity)
-            writeFloat(avgConsumptionMotorway)
-            writeFloat(avgConsumptionCity)
+            writeParcelable(details, flags)
         }
     }
 
@@ -100,12 +88,47 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         map[KEY_MANUFACTURER] = manufacturer
         map[KEY_MODEL] = model
         map[KEY_YEAR] = year
-        map[KEY_TRIM_LEVEL] = trimLevel
-        map[KEY_FUEL_CAPACITY] = fuelCapacity
-        map[KEY_CONSUMPTION_MOTORWAY] = avgConsumptionMotorway
-        map[KEY_CONSUMPTION_CITY] = avgConsumptionCity
+        map[KEY_TRIM_LEVEL] = details.trimLevel!!
+        map[KEY_FUEL_CAPACITY] = details.fuelCapacity
+        map[KEY_CONSUMPTION_MOTORWAY] = details.avgConsumptionMotorway
+        map[KEY_CONSUMPTION_CITY] = details.avgConsumptionCity
 
         return map
+    }
+
+    data class Details(var trimLevel: String? = null,
+                       var fuelCapacity: Int = 0,
+                       var avgConsumptionCity: Float = 0f,
+                       var avgConsumptionMotorway: Float = 0f) : Parcelable {
+
+        companion object CREATOR : Parcelable.Creator<Details> {
+            override fun createFromParcel(parcel: Parcel): Details {
+                return Details(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Details?> = arrayOfNulls(size)
+        }
+
+        constructor(parcel: Parcel): this() {
+            with (parcel) {
+                writeString(trimLevel)
+                writeInt(fuelCapacity)
+                writeFloat(avgConsumptionCity)
+                writeFloat(avgConsumptionMotorway)
+            }
+        }
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            with (parcel) {
+                writeString(trimLevel)
+                writeInt(fuelCapacity)
+                writeFloat(avgConsumptionCity)
+                writeFloat(avgConsumptionMotorway)
+            }
+        }
+
+        override fun describeContents(): Int = 0
+
     }
 
 }
