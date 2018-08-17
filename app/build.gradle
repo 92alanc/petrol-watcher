@@ -119,29 +119,30 @@ if (build_param != "dev") {
 }
 
 dependencies {
-    // ------------- INSTRUMENTED TEST LIBRARIES -------------
-
-    // Android support
+    // region INSTRUMENTED TEST LIBRARIES
+    // region Android support
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espresso_version"
     androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    // endregion
 
     // Kappuccino
-    androidTestImplementation 'br.com.concretesolutions:kappuccino:1.1.2'
+    androidTestImplementation 'br.com.concretesolutions:kappuccino:1.2.0'
 
     // Mockito
     androidTestImplementation 'org.mockito:mockito-android:2.15.0'
 
     // Mock web server
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.8.0'
+    // endregion
 
-    // ------------- STANDARD LIBRARIES -------------
-
+    // region STANDARD LIBRARIES
+    // libs folder
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    // Android support
+    // region Android support
     implementation "com.android.support:appcompat-v7:$support_library_version"
     implementation "com.android.support:cardview-v7:$support_library_version"
     implementation "com.android.support:customtabs:$support_library_version"
@@ -151,6 +152,7 @@ dependencies {
     implementation "com.android.support:support-media-compat:$support_library_version"
     implementation "com.android.support:support-v4:$support_library_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    // endregion
 
     // Circle image view
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -158,37 +160,41 @@ dependencies {
     // Facebook login
     implementation 'com.facebook.android:facebook-login:4.28.0'
 
-    // Firebase
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    // region Firebase
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
+    // endregion
 
     // Google sign in
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
-    // Google Maps
+    // region Google Maps
     implementation "com.google.android.gms:play-services-maps:$google_maps_version"
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation "com.google.android.gms:play-services-places:$google_maps_version"
     implementation "com.google.android.gms:play-services-location:$google_maps_version"
+    // endregion
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // Retrofit
+    // region Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // endregion
 
     // Universal image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    // endregion
 
-    // ------------- UNIT TEST LIBRARIES ------------- //
-
+    // region UNIT TEST LIBRARIES
     // JUnit
     testImplementation 'junit:junit:4.12'
 
     // Mockito
     testImplementation 'org.mockito:mockito-core:2.19.0'
+    // endregion
 }
 
 apply plugin: 'com.google.gms.google-services'
