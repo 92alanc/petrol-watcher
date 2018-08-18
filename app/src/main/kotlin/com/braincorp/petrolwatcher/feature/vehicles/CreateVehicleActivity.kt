@@ -210,7 +210,6 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
             adapter = null
             adapter = VehicleDetailsAdapter(this@CreateVehicleActivity, detailsList)
             onItemSelectedListener = this@CreateVehicleActivity
-            // FIXME: not showing on screen
         }
     }
 
@@ -265,7 +264,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
             }
 
             if (containsKey(KEY_DETAILS)) {
-                detailsList = getParcelableArrayList(KEY_DETAILS)!!
+                detailsList = getParcelableArrayList(KEY_DETAILS)!! // FIXME: returning null
                 setDetailsList(detailsList)
             }
 
@@ -329,7 +328,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
 
     private fun <T> setEditTextValue(editText: TextInputEditText, value: T) {
         value.let {
-            if ((it is Int || it is Float) && it != 0)
+            if ((it is Int && it > 0) || (it is Float && it > 0f))
                 editText.setText(it.toString())
             else if (it is String && it != "")
                 editText.setText(it)

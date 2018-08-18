@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.ui
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,9 @@ class GenericSpinnerAdapter<T>(context: Context, private val data: List<T>)
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(context)
         val row = inflater.inflate(R.layout.generic_spinner_item, parent, false)
+
+        if (position % 2 == 1)
+            row.setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
 
         val value = data[position]
         val textView = row.findViewById<TextView>(R.id.txt_spinner_item)
