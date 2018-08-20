@@ -8,9 +8,10 @@ import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
 import com.braincorp.petrolwatcher.App
-import com.braincorp.petrolwatcher.TestApp
-import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
-import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
+import com.braincorp.petrolwatcher.DependencyInjection
+import com.braincorp.petrolwatcher.database.MockDatabaseManager
+import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
+import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -34,9 +35,10 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
 
     @Before
     open fun setup() {
-        app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
-        mockVehicleApi.start()
-        mockVehicleApi.url(getVehiclesApiBaseUrl())
+        DependencyInjection.init(DependencyInjection.Config(MockAuthenticator,
+                MockImageHandler,
+                MockDatabaseManager,
+                mockVehicleApi.url("/vehicles/").toString()))
 
         if (autoLaunch) launch()
         else Intents.init()
@@ -51,34 +53,24 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         return Intent()
     }
 
-    fun getAuthenticator(): Authenticator {
-        return app.dependencyInjection().getAuthenticator()
-    }
-
-    fun getImageHandler(): ImageHandler {
-        return app.dependencyInjection().getImageHandler()
-    }
-
     fun launch() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
         doWait(300)
     }
 
-    fun getJsonFromAsset(path: String): String? {
-        val json: String?
+    fun getJsonFromAsset(fileName: String): String {
+        val json: String
+
         try {
-            val  inputStream: InputStream = rule.activity.assets.open(path)
-            json = inputStream.bufferedReader().use{ it.readText() }
+            val  inputStream: InputStream = rule.activity.assets.open(fileName)
+            json = inputStream.bufferedReader().use { it.readText() }
         } catch (ex: Exception) {
             ex.printStackTrace()
-            return null
+            return ""
         }
-        return json
-    }
 
-    private fun getVehiclesApiBaseUrl(): String {
-        return app.dependencyInjection().getVehiclesApiBaseUrl()
+        return json.replace("\n", "").replace(" ", "")
     }
 
 }

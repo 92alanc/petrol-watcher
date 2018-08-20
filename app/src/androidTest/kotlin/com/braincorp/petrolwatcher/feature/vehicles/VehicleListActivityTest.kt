@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.feature.vehicles
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.vehicles.robots.vehicleList
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,11 +18,10 @@ class VehicleListActivityTest : BaseActivityTest<VehicleListActivity>(
     }
 
     @Test
-    @Ignore
-    fun whenClickingOnAddButton_shouldRedirectToVehicleDetailsActivity() {
+    fun whenClickingOnAddButton_shouldRedirectToCreateVehicleActivity() {
         vehicleList {
         } clickAddButton {
-            redirectToVehicleDetailsActivity()
+            redirectToCreateVehicleActivity()
         }
     }
 

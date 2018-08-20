@@ -1,43 +1,42 @@
 package com.braincorp.petrolwatcher
 
-import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.database.DatabaseManager
-import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
-import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
 
 /**
  * The dependencies used in the app
  */
-open class DependencyInjection {
+object DependencyInjection {
 
     /**
-     * Gets the authenticator
+     * Initialises the dependency injection
      *
-     * @return the authenticator
+     * @param config the configuration
      */
-    open fun getAuthenticator(): Authenticator = AppAuthenticator()
+    fun init(config: Config) {
+        authenticator = config.authenticator
+        imageHandler = config.imageHandler
+        databaseManager = config.databaseManager
+        vehicleApiBaseUrl = config.vehicleApiBaseUrl
+    }
+
+    lateinit var authenticator: Authenticator
+    lateinit var imageHandler: ImageHandler
+    lateinit var databaseManager: DatabaseManager
+    lateinit var vehicleApiBaseUrl: String
 
     /**
-     * Gets the image handler
+     * Configuration for the dependency injection
      *
-     * @return the image handler
+     * @param authenticator the authenticator
+     * @param imageHandler the image handler
+     * @param databaseManager the database manager
+     * @param vehicleApiBaseUrl the vehicle API base URL
      */
-    open fun getImageHandler(): ImageHandler = AppImageHandler()
-
-    /**
-     * Gets the database manager
-     *
-     * @return the database manager
-     */
-    open fun getDatabaseManager(): DatabaseManager = AppDatabaseManager()
-
-    /**
-     * Gets the vehicles API base URL
-     *
-     * @return the base URL
-     */
-    open fun getVehiclesApiBaseUrl(): String = "https://www.carqueryapi.com/api/0.3/"
+    data class Config(val authenticator: Authenticator,
+                      val imageHandler: ImageHandler,
+                      val databaseManager: DatabaseManager,
+                      val vehicleApiBaseUrl: String)
 
 }

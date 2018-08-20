@@ -81,8 +81,8 @@ interface VehicleApi {
         }
 
         /**
-         * Since the API responses come with a "?(" before the JSON,
-         * this interceptor is needed
+         * Since the API responses come with a "?(" before
+         * and a ");" after the JSON, this interceptor is needed
          */
         private fun getClient(): OkHttpClient {
             return OkHttpClient.Builder()

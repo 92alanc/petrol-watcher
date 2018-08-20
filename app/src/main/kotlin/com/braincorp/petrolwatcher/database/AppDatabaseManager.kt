@@ -13,9 +13,6 @@ import com.google.firebase.database.ValueEventListener
  */
 class AppDatabaseManager : DatabaseManager, ValueEventListener {
 
-    private val vehiclesReference = FirebaseDatabase.getInstance().getReference("vehicles").child(
-            FirebaseAuth.getInstance().currentUser!!.uid)
-
     private lateinit var onVehiclesFoundListener: OnVehiclesFoundListener
 
     /**
@@ -28,7 +25,8 @@ class AppDatabaseManager : DatabaseManager, ValueEventListener {
      */
     override fun fetchVehicles(onVehiclesFoundListener: OnVehiclesFoundListener) {
         this.onVehiclesFoundListener = onVehiclesFoundListener
-        vehiclesReference.addValueEventListener(this)
+        FirebaseDatabase.getInstance().getReference("vehicles").child(
+                FirebaseAuth.getInstance().currentUser!!.uid).addValueEventListener(this)
     }
 
     /**
@@ -37,7 +35,8 @@ class AppDatabaseManager : DatabaseManager, ValueEventListener {
      * @param vehicle the vehicle to delete
      */
     override fun deleteVehicle(vehicle: Vehicle) {
-        val childToDelete = vehiclesReference.child(vehicle.id)
+        val childToDelete = FirebaseDatabase.getInstance().getReference("vehicles").child(
+                FirebaseAuth.getInstance().currentUser!!.uid).child(vehicle.id)
         childToDelete.removeValue()
     }
 

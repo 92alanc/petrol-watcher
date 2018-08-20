@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.EmailSignInActivityPresenter
-import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startEmailAndPasswordSignUpActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import kotlinx.android.synthetic.main.activity_email_sign_in.*
@@ -28,7 +28,7 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupButtons()
         presenter = EmailSignInActivityPresenter(view = this,
-                authenticator = dependencyInjection().getAuthenticator())
+                authenticator = DependencyInjection.authenticator)
     }
 
     override fun onClick(v: View) {

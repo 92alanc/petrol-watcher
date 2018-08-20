@@ -12,7 +12,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.braincorp.petrolwatcher.CustomTestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -120,6 +120,9 @@ if (build_param != "dev") {
 
 dependencies {
     // region INSTRUMENTED TEST LIBRARIES
+    // libs folder
+    androidTestImplementation fileTree(include: ['*.aar'], dir: 'libs')
+
     // region Android support
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
@@ -129,7 +132,7 @@ dependencies {
     // endregion
 
     // Kappuccino
-    androidTestImplementation 'br.com.concretesolutions:kappuccino:1.2.0'
+    //androidTestImplementation 'br.com.concretesolutions:kappuccino:1.2.0' // TODO: use official version once updated
 
     // Mockito
     androidTestImplementation 'org.mockito:mockito-android:2.15.0'

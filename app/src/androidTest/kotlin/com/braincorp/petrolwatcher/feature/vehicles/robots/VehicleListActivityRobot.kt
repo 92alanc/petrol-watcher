@@ -42,7 +42,7 @@ class VehicleListActivityRobot {
 
 class VehicleListResult {
 
-    fun redirectToVehicleDetailsActivity() {
+    fun redirectToCreateVehicleActivity() {
         sentIntent {
             className(CreateVehicleActivity::class.java.name)
         }

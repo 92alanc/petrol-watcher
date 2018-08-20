@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.presenter.MainActivityPresenter
-import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startAuthenticationErrorActivity
 import com.braincorp.petrolwatcher.utils.startEmailSignInActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = MainActivityPresenter(view = this,
-                authenticator = dependencyInjection().getAuthenticator())
+                authenticator = DependencyInjection.authenticator)
         setupButtons()
     }
 

@@ -10,6 +10,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.Spinner
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleDetailsAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.api.VehicleApi
@@ -17,7 +18,6 @@ import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivi
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.CreateVehicleActivityPresenter
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
-import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.toRange
 import kotlinx.android.synthetic.main.activity_create_vehicle.*
 import kotlinx.android.synthetic.main.content_create_vehicle.*
@@ -62,7 +62,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_vehicle)
         setupToolbar()
-        val baseUrl = dependencyInjection().getVehiclesApiBaseUrl()
+        val baseUrl = DependencyInjection.vehicleApiBaseUrl
         presenter = CreateVehicleActivityPresenter(VehicleApi.getApi(baseUrl), view = this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
@@ -71,7 +71,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_vehicle_details, menu)
+        menuInflater.inflate(R.menu.menu_create_vehicle, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

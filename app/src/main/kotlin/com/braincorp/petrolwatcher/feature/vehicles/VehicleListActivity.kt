@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.adapter.SwipeToDeleteCallback
 import com.braincorp.petrolwatcher.feature.vehicles.adapter.VehicleAdapter
@@ -12,7 +13,6 @@ import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleListActivity
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleListActivityPresenter
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
-import com.braincorp.petrolwatcher.utils.dependencyInjection
 import com.braincorp.petrolwatcher.utils.startCreateVehicleActivity
 import kotlinx.android.synthetic.main.activity_vehicle_list.*
 
@@ -29,7 +29,7 @@ class VehicleListActivity : AppCompatActivity(), VehicleListActivityContract.Vie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_list)
         presenter = VehicleListActivityPresenter(view = this,
-                databaseManager = dependencyInjection().getDatabaseManager())
+                databaseManager = DependencyInjection.databaseManager)
         presenter.fetchVehicles()
         setupAddButton()
     }
