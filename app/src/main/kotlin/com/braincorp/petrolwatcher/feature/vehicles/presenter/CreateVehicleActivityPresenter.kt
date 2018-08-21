@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.feature.vehicles.presenter
 
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.vehicles.api.VehicleApi
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Makes
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.ModelDetails
@@ -8,6 +9,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
 import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.utils.l100KmToKmL
+import com.google.android.gms.tasks.OnCompleteListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -109,14 +111,29 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
                 if (responseBody != null) {
                     val detailsList = arrayListOf<Vehicle.Details>()
                     responseBody.list.forEach {
+                        val trimLevel = it.trim ?: ""
                         val avgConsumptionCity = l100KmToKmL(it.litresPer100KmCity)
                         val avgConsumptionMotorway = l100KmToKmL(it.litresPer100KmMotorway)
-                        detailsList.add(Vehicle.Details(it.trim, it.fuelCapacityLitres,
+                        detailsList.add(Vehicle.Details(trimLevel, it.fuelCapacityLitres,
                                 avgConsumptionCity, avgConsumptionMotorway))
                     }
                     view.setDetailsList(detailsList)
                 }
             }
+        })
+    }
+
+    /**
+     * Saves a vehicle
+     *
+     * @param vehicle the vehicle to save
+     */
+    override fun saveVehicle(vehicle: Vehicle) {
+        DependencyInjection.databaseManager.saveVehicle(vehicle, OnCompleteListener {
+            if (vehicle.isValid())
+                view.showVehicleList()
+            else
+                view.showInvalidVehicleDialogue()
         })
     }
 

@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.vehicles.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.braincorp.petrolwatcher.database.Mappable
 import com.google.firebase.database.DataSnapshot
 import java.util.*
 import kotlin.collections.HashMap
@@ -16,11 +17,10 @@ import kotlin.collections.set
  * @param year the year
  * @param details the extra details
  */
-data class Vehicle(var id: String = UUID.randomUUID().toString(),
-                   var manufacturer: String = "",
+data class Vehicle(var manufacturer: String = "",
                    var model: String = "",
                    var year: Int = 0,
-                   var details: Details = Details()) : Parcelable {
+                   var details: Details = Details()) : Parcelable, Mappable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
         private const val KEY_ID = "id"
@@ -64,6 +64,8 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         }
     }
 
+    override var id: String = UUID.randomUUID().toString()
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         with (parcel) {
             writeString(id)
@@ -77,18 +79,18 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
     override fun describeContents(): Int = 0
 
     /**
-     * Gets the vehicle data as a map
+     * Converts the object to a map
      *
-     * @return the vehicle data as a map
+     * @return the map
      */
-    fun toMap(): Map<String, Any> {
+    override fun toMap(): Map<String, Any> {
         val map = HashMap<String, Any>()
 
         map[KEY_ID] = id
         map[KEY_MANUFACTURER] = manufacturer
         map[KEY_MODEL] = model
         map[KEY_YEAR] = year
-        map[KEY_TRIM_LEVEL] = details.trimLevel!!
+        map[KEY_TRIM_LEVEL] = details.trimLevel
         map[KEY_FUEL_CAPACITY] = details.fuelCapacity
         map[KEY_CONSUMPTION_MOTORWAY] = details.avgConsumptionMotorway
         map[KEY_CONSUMPTION_CITY] = details.avgConsumptionCity
@@ -96,7 +98,22 @@ data class Vehicle(var id: String = UUID.randomUUID().toString(),
         return map
     }
 
-    data class Details(var trimLevel: String? = null,
+    /**
+     * Determines whether the vehicle data is valid
+     *
+     * @return true if positive, otherwise false
+     */
+    fun isValid(): Boolean {
+        return manufacturer.isNotBlank() &&
+                model.isNotBlank() &&
+                year > 0 &&
+                details.trimLevel.isNotBlank() &&
+                details.fuelCapacity > 0 &&
+                details.avgConsumptionCity > 0f &&
+                details.avgConsumptionMotorway > 0f
+    }
+
+    data class Details(var trimLevel: String = "",
                        var fuelCapacity: Int = 0,
                        var avgConsumptionCity: Float = 0f,
                        var avgConsumptionMotorway: Float = 0f) : Parcelable {

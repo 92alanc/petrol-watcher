@@ -35,6 +35,16 @@ interface CreateVehicleActivityContract {
          * @param detailsList the list
          */
         fun setDetailsList(detailsList: ArrayList<Vehicle.Details>)
+
+        /**
+         * Shows the vehicle list
+         */
+        fun showVehicleList()
+
+        /**
+         * Shows an invalid vehicle dialogue
+         */
+        fun showInvalidVehicleDialogue()
     }
 
     /**
@@ -73,5 +83,12 @@ interface CreateVehicleActivityContract {
          * @param model the model
          */
         fun getDetails(year: Int, manufacturer: String, model: String)
+
+        /**
+         * Saves a vehicle
+         *
+         * @param vehicle the vehicle to save
+         */
+        fun saveVehicle(vehicle: Vehicle)
     }
 }

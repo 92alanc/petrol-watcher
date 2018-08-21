@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.feature.vehicles
 
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.vehicles.robots.createVehicle
@@ -52,8 +53,7 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockManufacturersResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
+            selectYear(position = 1)
             manufacturerPositionIs(3)
         } selectManufacturer {
             selectedManufacturerIs("Audi")
@@ -67,10 +67,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockModelsResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
-            manufacturerPositionIs(3)
-            selectManufacturer()
+            selectYear(position = 1)
+            selectManufacturer(position = 3)
             modelPositionIs(2)
         } selectModel {
             selectedModelIs("A4")
@@ -85,12 +83,9 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockDetailsResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
-            manufacturerPositionIs(3)
-            selectManufacturer()
-            modelPositionIs(2)
-            selectModel()
+            selectYear(position = 1)
+            selectManufacturer(position = 3)
+            selectModel(position = 2)
             detailsPositionIs(3)
         } selectDetails {
             selectedDetailsIs("2.0 TDI Coupe Quattro")
@@ -102,11 +97,12 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockYearsResponse()
 
         createVehicle {
-            yearPositionIs(2)
-            selectYear()
+            selectYear(position = 2)
         } rotateDevice {
             selectedYearIs(2012)
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -117,6 +113,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         } rotateDevice {
             yearIs(2018)
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -124,8 +122,7 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockYearsResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
+            selectYear(position = 1)
         } clickManualInputMenuItem {
             yearIs(2011)
         }
@@ -137,13 +134,13 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockManufacturersResponse()
 
         createVehicle {
-            yearPositionIs(2)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
+            selectYear(position = 2)
+            selectManufacturer(position = 1)
         } rotateDevice {
             selectedManufacturerIs("Alfa Romeo")
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -154,6 +151,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         } rotateDevice {
             manufacturerIs("Land Rover")
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -162,10 +161,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockManufacturersResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
+            selectYear(position = 1)
+            selectManufacturer(position = 1)
         } clickManualInputMenuItem {
             manufacturerIs("Alfa Romeo")
         }
@@ -178,15 +175,14 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockModelsResponse()
 
         createVehicle {
-            yearPositionIs(2)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
-            modelPositionIs(3)
-            selectModel()
+            selectYear(position = 2)
+            selectManufacturer(position = 1)
+            selectModel(position = 3)
         } rotateDevice {
             selectedModelIs("A5")
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -197,6 +193,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         } rotateDevice {
             modelIs("Golf")
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -206,12 +204,9 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockModelsResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
-            modelPositionIs(3)
-            selectModel()
+            selectYear(position = 1)
+            selectManufacturer(position = 1)
+            selectModel(position = 3)
         } clickManualInputMenuItem {
             modelIs("A5")
         }
@@ -225,17 +220,15 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockDetailsResponse()
 
         createVehicle {
-            yearPositionIs(2)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
-            modelPositionIs(3)
-            selectModel()
-            detailsPositionIs(2)
-            selectDetails()
+            selectYear(position = 2)
+            selectManufacturer(position = 1)
+            selectModel(position = 3)
+            selectDetails(position = 2)
         } rotateDevice {
             selectedDetailsIs("2.0 TDI Convertible Quattro")
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -252,6 +245,8 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
             avgConsumptionCityIs(8.4f)
             avgConsumptionMotorwayIs(10.2f)
         }
+
+        setDeviceRotationToPortrait()
     }
 
     @Test
@@ -262,19 +257,40 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         mockDetailsResponse()
 
         createVehicle {
-            yearPositionIs(1)
-            selectYear()
-            manufacturerPositionIs(1)
-            selectManufacturer()
-            modelPositionIs(1)
-            selectModel()
-            detailsPositionIs(2)
-            selectDetails()
+            selectYear(position = 1)
+            selectManufacturer(position = 1)
+            selectModel(position = 1)
+            selectDetails(position = 2)
         } clickManualInputMenuItem {
             trimLevelIs("2.0 TDI Convertible Quattro")
             fuelCapacityIs(60)
             avgConsumptionCityIs(8.4f)
             avgConsumptionMotorwayIs(10.2f)
+        }
+    }
+
+    @Test
+    fun whenClickingOnSave_withValidData_shouldRedirectToVehicleListActivity() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+        mockModelsResponse()
+        mockDetailsResponse()
+
+        createVehicle {
+            selectYear(position = 1)
+            selectManufacturer(position = 1)
+            selectModel(position = 1)
+            selectDetails(position = 2)
+        } clickSave {
+            redirectToVehicleListActivity()
+        }
+    }
+
+    @Test
+    fun whenClickingOnSave_withInvalidData_shouldShowDialogue() {
+        createVehicle {
+        } clickSave {
+            showDialogue()
         }
     }
 
@@ -296,6 +312,10 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
     private fun mockDetailsResponse() {
         val detailsBody = getJsonFromAsset("response_details.txt")
         mockVehicleApi.enqueue(MockResponse().setResponseCode(200).setBody(detailsBody))
+    }
+
+    private fun setDeviceRotationToPortrait() {
+        rule.activity.requestedOrientation = SCREEN_ORIENTATION_PORTRAIT
     }
 
 }

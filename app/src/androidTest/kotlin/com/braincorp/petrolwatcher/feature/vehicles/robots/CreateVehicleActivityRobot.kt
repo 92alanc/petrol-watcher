@@ -11,10 +11,12 @@ import android.support.test.rule.ActivityTestRule
 import br.com.concretesolutions.kappuccino.actions.ClickActions.click
 import br.com.concretesolutions.kappuccino.actions.TextActions.typeText
 import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displayed
+import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import br.com.concretesolutions.kappuccino.custom.menu.menu
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivityTest
+import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import org.hamcrest.CoreMatchers.*
 
@@ -58,43 +60,43 @@ class CreateVehicleActivityRobot(private val rule: ActivityTestRule<CreateVehicl
         detailsPosition = position
     }
 
-    fun selectYear() {
+    fun selectYear(position: Int) {
         click {
             id(R.id.spn_year)
         }
 
         onData(allOf(`is`(instanceOf(Int::class.java))))
-                .atPosition(yearPosition)
+                .atPosition(position)
                 .perform(ViewActions.click())
     }
 
-    fun selectManufacturer() {
+    fun selectManufacturer(position: Int) {
         click {
             id(R.id.spn_manufacturer)
         }
 
         onData(allOf(`is`(instanceOf(String::class.java))))
-                .atPosition(manufacturerPosition)
+                .atPosition(position)
                 .perform(ViewActions.click())
     }
 
-    fun selectModel() {
+    fun selectModel(position: Int) {
         click {
             id(R.id.spn_model)
         }
 
         onData(allOf(`is`(instanceOf(String::class.java))))
-                .atPosition(modelPosition)
+                .atPosition(position)
                 .perform(ViewActions.click())
     }
 
-    fun selectDetails() {
+    fun selectDetails(position: Int) {
         click {
             id(R.id.spn_details)
         }
 
         onData(allOf(`is`(instanceOf(Vehicle.Details::class.java))))
-                .atPosition(detailsPosition)
+                .atPosition(position)
                 .perform(ViewActions.click())
     }
 
@@ -141,22 +143,22 @@ class CreateVehicleActivityRobot(private val rule: ActivityTestRule<CreateVehicl
     }
 
     infix fun selectYear(func: CreateVehicleResult.() -> Unit) {
-        selectYear()
+        selectYear(yearPosition)
         applyResult(func)
     }
 
     infix fun selectManufacturer(func: CreateVehicleResult.() -> Unit) {
-        selectManufacturer()
+        selectManufacturer(manufacturerPosition)
         applyResult(func)
     }
 
     infix fun selectModel(func: CreateVehicleResult.() -> Unit) {
-        selectModel()
+        selectModel(modelPosition)
         applyResult(func)
     }
 
     infix fun selectDetails(func: CreateVehicleResult.() -> Unit) {
-        selectDetails()
+        selectDetails(detailsPosition)
         applyResult(func)
     }
 
@@ -177,6 +179,14 @@ class CreateVehicleActivityRobot(private val rule: ActivityTestRule<CreateVehicl
 
     infix fun rotateDevice(func: CreateVehicleResult.() -> Unit) {
         rule.activity.requestedOrientation = SCREEN_ORIENTATION_LANDSCAPE
+        applyResult(func)
+    }
+
+    infix fun clickSave(func: CreateVehicleResult.() -> Unit) {
+        click {
+            id(R.id.fab)
+        }
+
         applyResult(func)
     }
 
@@ -289,6 +299,18 @@ class CreateVehicleResult {
                 id(R.id.edt_avg_consumption_motorway)
                 text(avgConsumptionMotorway.toString())
             }
+        }
+    }
+
+    fun redirectToVehicleListActivity() {
+        sentIntent {
+            className(VehicleListActivity::class.java.name)
+        }
+    }
+
+    fun showDialogue() {
+        displayed {
+            text(R.string.invalid_vehicle_data)
         }
     }
 

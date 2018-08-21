@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.vehicles
 
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +19,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivi
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.CreateVehicleActivityPresenter
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
+import com.braincorp.petrolwatcher.utils.startVehicleListActivity
 import com.braincorp.petrolwatcher.utils.toRange
 import kotlinx.android.synthetic.main.activity_create_vehicle.*
 import kotlinx.android.synthetic.main.content_create_vehicle.*
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.content_create_vehicle.*
  * The activity where vehicles are created
  */
 class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract.View,
-        AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     companion object {
         private const val KEY_INPUT_TYPE = "input_type"
@@ -42,6 +44,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
 
     override lateinit var presenter: CreateVehicleActivityContract.Presenter
 
+    // region private fields
     private var yearRange = IntRange.EMPTY
     private var selectedYear = 0
     private var manufacturers = ArrayList<String>()
@@ -57,11 +60,14 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     private var detailsSelectedCount = 0
 
     private var inputType = InputType.AUTO
+    // endregion
 
+    // region activity functions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_vehicle)
         setupToolbar()
+        fab.setOnClickListener(this)
         val baseUrl = DependencyInjection.vehicleApiBaseUrl
         presenter = CreateVehicleActivityPresenter(VehicleApi.getApi(baseUrl), view = this)
         if (savedInstanceState != null)
@@ -136,7 +142,21 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
     }
+    // endregion
 
+    // region view functions
+    override fun onClick(v: View) {
+        if (v.id == R.id.fab) {
+            val vehicle = Vehicle(manufacturer = selectedManufacturer,
+                    model = selectedModel,
+                    year = selectedYear,
+                    details = selectedDetails)
+            presenter.saveVehicle(vehicle)
+        }
+    }
+    // endregion
+
+    // region spinner functions
     override fun onItemSelected(spinner: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (spinner?.id) {
             R.id.spn_year -> {
@@ -168,7 +188,9 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     }
 
     override fun onNothingSelected(adapterView: AdapterView<*>?) { }
+    // endregion
 
+    // region contract functions
     /**
      * Sets the year range
      *
@@ -213,6 +235,27 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         }
     }
 
+    /**
+     * Shows the vehicle list
+     */
+    override fun showVehicleList() {
+        startVehicleListActivity(finishCurrent = true)
+    }
+
+    /**
+     * Shows an invalid vehicle dialogue
+     */
+    override fun showInvalidVehicleDialogue() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(R.string.invalid_vehicle_data)
+                .setIcon(R.drawable.ic_error)
+                .setNeutralButton(R.string.ok, null)
+                .show()
+    }
+    // endregion
+
+    // region private functions
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -337,6 +380,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
                 editText.setText(it)
         }
     }
+    // endregion
 
     private enum class InputType {
         AUTO,
