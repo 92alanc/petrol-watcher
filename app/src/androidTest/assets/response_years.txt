@@ -1,6 +1,6 @@
 ?({
     "Years": {
-        "min_year": "1941",
+        "min_year": "2010",
         "max_year": "2018"
     }
 });

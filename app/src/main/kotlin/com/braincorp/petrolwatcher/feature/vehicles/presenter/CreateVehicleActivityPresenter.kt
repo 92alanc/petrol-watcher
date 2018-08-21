@@ -7,6 +7,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.api.model.Models
 import com.braincorp.petrolwatcher.feature.vehicles.api.model.Years
 import com.braincorp.petrolwatcher.feature.vehicles.contract.CreateVehicleActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.braincorp.petrolwatcher.utils.l100KmToKmL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +34,7 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
                 val responseBody = response?.body()
                 if (responseBody != null) {
                     val range = responseBody.range
-                    view.setYearRange(range.min..range.max)
+                    view.setYearRange(range.toIntRange())
                 }
             }
         })
@@ -108,8 +109,10 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
                 if (responseBody != null) {
                     val detailsList = arrayListOf<Vehicle.Details>()
                     responseBody.list.forEach {
+                        val avgConsumptionCity = l100KmToKmL(it.litresPer100KmCity)
+                        val avgConsumptionMotorway = l100KmToKmL(it.litresPer100KmMotorway)
                         detailsList.add(Vehicle.Details(it.trim, it.fuelCapacityLitres,
-                                it.litresPer100KmCity, it.litresPer100KmMotorway))
+                                avgConsumptionCity, avgConsumptionMotorway))
                     }
                     view.setDetailsList(detailsList)
                 }

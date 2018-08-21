@@ -36,8 +36,8 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         private const val KEY_DETAILS = "details"
         private const val KEY_SELECTED_YEAR = "selected_year"
         private const val KEY_SELECTED_MANUFACTURER = "selected_manufacturer"
-        private const val KEY_SELECTED_MODEL = "model"
-        private const val KEY_SELECTED_DETAILS = "details"
+        private const val KEY_SELECTED_MODEL = "selected_model"
+        private const val KEY_SELECTED_DETAILS = "selected_details"
     }
 
     override lateinit var presenter: CreateVehicleActivityContract.Presenter
@@ -264,8 +264,11 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
             }
 
             if (containsKey(KEY_DETAILS)) {
-                detailsList = getParcelableArrayList(KEY_DETAILS)!! // FIXME: returning null
-                setDetailsList(detailsList)
+                val list = getParcelableArrayList<Vehicle.Details>(KEY_DETAILS)
+                if (list != null) {
+                    detailsList = list
+                    setDetailsList(detailsList)
+                }
             }
 
             if (containsKey(KEY_SELECTED_YEAR)) {

@@ -42,7 +42,7 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
         createVehicle {
             yearPositionIs(1)
         } selectYear {
-            selectedYearIs(1942)
+            selectedYearIs(2011)
         }
     }
 
@@ -94,6 +94,187 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
             detailsPositionIs(3)
         } selectDetails {
             selectedDetailsIs("2.0 TDI Coupe Quattro")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inAutoInput_shouldKeepYear() {
+        mockYearsResponse()
+
+        createVehicle {
+            yearPositionIs(2)
+            selectYear()
+        } rotateDevice {
+            selectedYearIs(2012)
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inManualInput_shouldKeepYear() {
+        createVehicle {
+            clickManualInputMenuItem()
+            typeYear(2018)
+        } rotateDevice {
+            yearIs(2018)
+        }
+    }
+
+    @Test
+    fun whenChangingToManualInput_shouldKeepYear() {
+        mockYearsResponse()
+
+        createVehicle {
+            yearPositionIs(1)
+            selectYear()
+        } clickManualInputMenuItem {
+            yearIs(2011)
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inAutoInput_shouldKeepManufacturer() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+
+        createVehicle {
+            yearPositionIs(2)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+        } rotateDevice {
+            selectedManufacturerIs("Alfa Romeo")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inManualInput_shouldKeepManufacturer() {
+        createVehicle {
+            clickManualInputMenuItem()
+            typeManufacturer("Land Rover")
+        } rotateDevice {
+            manufacturerIs("Land Rover")
+        }
+    }
+
+    @Test
+    fun whenChangingToManualInput_shouldKeepManufacturer() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+
+        createVehicle {
+            yearPositionIs(1)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+        } clickManualInputMenuItem {
+            manufacturerIs("Alfa Romeo")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inAutoInput_shouldKeepModel() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+        mockModelsResponse()
+
+        createVehicle {
+            yearPositionIs(2)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+            modelPositionIs(3)
+            selectModel()
+        } rotateDevice {
+            selectedModelIs("A5")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inManualInput_shouldKeepModel() {
+        createVehicle {
+            clickManualInputMenuItem()
+            typeModel("Golf")
+        } rotateDevice {
+            modelIs("Golf")
+        }
+    }
+
+    @Test
+    fun whenChangingToManualInput_shouldKeepModel() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+        mockModelsResponse()
+
+        createVehicle {
+            yearPositionIs(1)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+            modelPositionIs(3)
+            selectModel()
+        } clickManualInputMenuItem {
+            modelIs("A5")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inAutoInput_shouldKeepDetails() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+        mockModelsResponse()
+        mockDetailsResponse()
+
+        createVehicle {
+            yearPositionIs(2)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+            modelPositionIs(3)
+            selectModel()
+            detailsPositionIs(2)
+            selectDetails()
+        } rotateDevice {
+            selectedDetailsIs("2.0 TDI Convertible Quattro")
+        }
+    }
+
+    @Test
+    fun whenRotatingDevice_inManualInput_shouldKeepDetails() {
+        createVehicle {
+            clickManualInputMenuItem()
+            typeTrimLevel("1.8")
+            typeFuelCapacity(60)
+            typeAvgConsumptionCity(8.4f)
+            typeAvgConsumptionMotorway(10.2f)
+        } rotateDevice {
+            trimLevelIs("1.8")
+            fuelCapacityIs(60)
+            avgConsumptionCityIs(8.4f)
+            avgConsumptionMotorwayIs(10.2f)
+        }
+    }
+
+    @Test
+    fun whenChangingToManualInput_shouldKeepDetails() {
+        mockYearsResponse()
+        mockManufacturersResponse()
+        mockModelsResponse()
+        mockDetailsResponse()
+
+        createVehicle {
+            yearPositionIs(1)
+            selectYear()
+            manufacturerPositionIs(1)
+            selectManufacturer()
+            modelPositionIs(1)
+            selectModel()
+            detailsPositionIs(2)
+            selectDetails()
+        } clickManualInputMenuItem {
+            trimLevelIs("2.0 TDI Convertible Quattro")
+            fuelCapacityIs(60)
+            avgConsumptionCityIs(8.4f)
+            avgConsumptionMotorwayIs(10.2f)
         }
     }
 

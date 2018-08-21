@@ -46,13 +46,13 @@ class VehicleDetailsAdapter(context: Context, private val data: ArrayList<Vehicl
             context.getString(R.string.avg_consumption_city_format, "?")
         else
             context.getString(R.string.avg_consumption_city_format,
-                    String.format("%.2f", value.avgConsumptionCity))
+                    String.format("%.1f", value.avgConsumptionCity))
 
         avgConsumptionMotorway.text = if (value.avgConsumptionMotorway <= 0f)
             context.getString(R.string.avg_consumption_motorway_format, "?")
         else
             context.getString(R.string.avg_consumption_motorway_format,
-                    String.format("%.2f", value.avgConsumptionMotorway))
+                    String.format("%.1f", value.avgConsumptionMotorway))
 
         return row
     }

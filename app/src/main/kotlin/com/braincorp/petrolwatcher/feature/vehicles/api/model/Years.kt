@@ -31,6 +31,8 @@ data class Years(@SerializedName("Years") val range: Range) {
 
         override fun describeContents(): Int = 0
 
+        fun toIntRange(): IntRange = min..max
+
     }
 
 }
