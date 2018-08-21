@@ -4,7 +4,6 @@ import android.support.test.runner.AndroidJUnit4
 import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.vehicles.robots.createVehicle
 import okhttp3.mockwebserver.MockResponse
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -79,7 +78,6 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
     }
 
     @Test
-    @Ignore
     fun shouldDisplaySelectedDetails() {
         mockYearsResponse()
         mockManufacturersResponse()
@@ -95,7 +93,7 @@ class CreateVehicleActivityTest : BaseActivityTest<CreateVehicleActivity>(
             selectModel()
             detailsPositionIs(3)
         } selectDetails {
-            selectedDetailsIs("2.0 TDI Coupe Quattro") // FIXME: text being concatenated
+            selectedDetailsIs("2.0 TDI Coupe Quattro")
         }
     }
 

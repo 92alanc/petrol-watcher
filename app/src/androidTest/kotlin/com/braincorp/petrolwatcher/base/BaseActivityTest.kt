@@ -70,7 +70,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
             return ""
         }
 
-        return json.replace("\n", "").replace(" ", "")
+        return json.replace("\n", "")
     }
 
 }

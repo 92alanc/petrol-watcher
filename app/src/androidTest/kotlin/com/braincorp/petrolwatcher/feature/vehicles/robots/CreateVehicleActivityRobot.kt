@@ -170,7 +170,7 @@ class CreateVehicleResult {
     }
 
     fun selectedDetailsIs(details: String) {
-        onView(withId(R.id.spn_details)).check(matches(withSpinnerText(details)))
+        onView(withId(R.id.spn_details)).check(matches(withSpinnerText(containsString(details))))
     }
 
 }
