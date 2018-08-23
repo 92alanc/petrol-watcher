@@ -4,6 +4,7 @@
     <style name="Theme"/>
     <style name="ThemeOverlay"/>
 
+    <!-- region Activity -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/teal_dark</item>
@@ -17,12 +18,15 @@
         <item name="windowNoTitle">true</item>
         <item name="cardViewStyle">@style/CardView</item>
     </style>
+    <!-- endregion -->
 
+    <!-- region Toolbar -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <!-- endregion -->
 
 </resources>
