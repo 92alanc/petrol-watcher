@@ -51,8 +51,15 @@ data class Vehicle(var manufacturer: String = "",
             manufacturer = readString()
             model = readString()
             year = readInt()
-            details = readParcelable(javaClass.classLoader)
-            calculatedValues = readParcelable(javaClass.classLoader)
+            val trimLevel = readString()
+            val fuelCapacity = readInt()
+            val avgConsumptionCity = readFloat()
+            val avgConsumptionMotorway = readFloat()
+            val calculatedAvgConsumptionCity = readFloat()
+            val calculatedAvgConsumptionMotorway = readFloat()
+            details = Details(trimLevel, fuelCapacity, avgConsumptionCity, avgConsumptionMotorway)
+            calculatedValues = CalculatedValues(calculatedAvgConsumptionCity,
+                    calculatedAvgConsumptionMotorway)
         }
     }
 
@@ -81,8 +88,12 @@ data class Vehicle(var manufacturer: String = "",
             writeString(manufacturer)
             writeString(model)
             writeInt(year)
-            writeParcelable(details, flags)
-            writeParcelable(calculatedValues, flags)
+            writeString(details.trimLevel)
+            writeInt(details.fuelCapacity)
+            writeFloat(details.avgConsumptionCity)
+            writeFloat(details.avgConsumptionMotorway)
+            writeFloat(calculatedValues.avgConsumptionCity)
+            writeFloat(calculatedValues.avgConsumptionMotorway)
         }
     }
 

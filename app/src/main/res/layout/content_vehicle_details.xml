@@ -15,6 +15,7 @@
 
         <!-- region factory data -->
         <TextView
+            android:id="@+id/label_factory_data"
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

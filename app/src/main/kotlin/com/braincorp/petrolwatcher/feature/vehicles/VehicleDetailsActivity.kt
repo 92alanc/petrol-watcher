@@ -44,6 +44,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         setupToolbar()
         fab.setOnClickListener(this)
         bt_calculate.setOnClickListener(this)
+        vehicle = intent.getParcelableExtra(KEY_VEHICLE) ?: Vehicle()
         presenter = VehicleDetailsActivityPresenter(view = this)
         fillReadOnlyFields()
         fillCalculatedValues()
@@ -168,12 +169,14 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun showEditableFields() {
+        label_factory_data.visibility = GONE
         group_read_only_fields.visibility = GONE
         group_editable_fields.visibility = VISIBLE
     }
 
     private fun showReadOnlyFields() {
         group_editable_fields.visibility = GONE
+        label_factory_data.visibility = VISIBLE
         group_read_only_fields.visibility = VISIBLE
     }
 
