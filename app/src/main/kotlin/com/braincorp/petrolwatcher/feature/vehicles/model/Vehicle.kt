@@ -11,16 +11,18 @@ import kotlin.collections.set
 /**
  * A vehicle
  *
- * @param id the identifier
  * @param manufacturer the manufacturer
  * @param model the model
  * @param year the year
  * @param details the extra details
+ * @param calculatedValues = the calculated values
  */
 data class Vehicle(var manufacturer: String = "",
                    var model: String = "",
                    var year: Int = 0,
-                   var details: Details = Details()) : Parcelable, Mappable {
+                   var details: Details = Details(),
+                   var calculatedValues: CalculatedValues = CalculatedValues())
+    : Parcelable, Mappable {
 
     companion object CREATOR : Parcelable.Creator<Vehicle> {
         private const val KEY_ID = "id"
@@ -29,8 +31,10 @@ data class Vehicle(var manufacturer: String = "",
         private const val KEY_YEAR = "year"
         private const val KEY_TRIM_LEVEL = "trim_level"
         private const val KEY_FUEL_CAPACITY = "fuel_capacity"
-        private const val KEY_CONSUMPTION_MOTORWAY = "consumption_motorway"
         private const val KEY_CONSUMPTION_CITY = "consumption_city"
+        private const val KEY_CONSUMPTION_MOTORWAY = "consumption_motorway"
+        private const val KEY_CALCULATED_CONSUMPTION_CITY = "calc_consumption_city"
+        private const val KEY_CALCULATED_CONSUMPTION_MOTORWAY = "calc_consumption_motorway"
 
         override fun createFromParcel(source: Parcel): Vehicle {
             return Vehicle(source)
@@ -43,11 +47,12 @@ data class Vehicle(var manufacturer: String = "",
 
     constructor(parcel: Parcel): this() {
         with (parcel) {
-            id = readString()!!
-            manufacturer = readString()!!
-            model = readString()!!
+            id = readString()
+            manufacturer = readString()
+            model = readString()
             year = readInt()
             details = readParcelable(javaClass.classLoader)
+            calculatedValues = readParcelable(javaClass.classLoader)
         }
     }
 
@@ -61,6 +66,10 @@ data class Vehicle(var manufacturer: String = "",
             details.fuelCapacity = child(KEY_FUEL_CAPACITY).value.toString().toInt()
             details.avgConsumptionMotorway = child(KEY_CONSUMPTION_MOTORWAY).value.toString().toFloat()
             details.avgConsumptionCity = child(KEY_CONSUMPTION_CITY).value.toString().toFloat()
+            calculatedValues.avgConsumptionCity = child(KEY_CALCULATED_CONSUMPTION_CITY)
+                    .value.toString().toFloat()
+            calculatedValues.avgConsumptionMotorway = child(KEY_CALCULATED_CONSUMPTION_MOTORWAY)
+                    .value.toString().toFloat()
         }
     }
 
@@ -73,6 +82,7 @@ data class Vehicle(var manufacturer: String = "",
             writeString(model)
             writeInt(year)
             writeParcelable(details, flags)
+            writeParcelable(calculatedValues, flags)
         }
     }
 
@@ -92,8 +102,10 @@ data class Vehicle(var manufacturer: String = "",
         map[KEY_YEAR] = year
         map[KEY_TRIM_LEVEL] = details.trimLevel
         map[KEY_FUEL_CAPACITY] = details.fuelCapacity
-        map[KEY_CONSUMPTION_MOTORWAY] = details.avgConsumptionMotorway
         map[KEY_CONSUMPTION_CITY] = details.avgConsumptionCity
+        map[KEY_CONSUMPTION_MOTORWAY] = details.avgConsumptionMotorway
+        map[KEY_CALCULATED_CONSUMPTION_CITY] = calculatedValues.avgConsumptionCity
+        map[KEY_CALCULATED_CONSUMPTION_MOTORWAY] = calculatedValues.avgConsumptionMotorway
 
         return map
     }
@@ -105,12 +117,12 @@ data class Vehicle(var manufacturer: String = "",
      */
     fun isValid(): Boolean {
         return manufacturer.isNotBlank() &&
-                model.isNotBlank() &&
-                year > 0 &&
-                details.trimLevel.isNotBlank() &&
-                details.fuelCapacity > 0 &&
-                details.avgConsumptionCity > 0f &&
-                details.avgConsumptionMotorway > 0f
+               model.isNotBlank() &&
+               year > 0 &&
+               details.trimLevel.isNotBlank() &&
+               details.fuelCapacity > 0 &&
+               details.avgConsumptionCity > 0f &&
+               details.avgConsumptionMotorway > 0f
     }
 
     data class Details(var trimLevel: String = "",
@@ -128,10 +140,10 @@ data class Vehicle(var manufacturer: String = "",
 
         constructor(parcel: Parcel): this() {
             with (parcel) {
-                writeString(trimLevel)
-                writeInt(fuelCapacity)
-                writeFloat(avgConsumptionCity)
-                writeFloat(avgConsumptionMotorway)
+                trimLevel = readString()
+                fuelCapacity = readInt()
+                avgConsumptionCity = readFloat()
+                avgConsumptionMotorway = readFloat()
             }
         }
 
@@ -145,6 +157,35 @@ data class Vehicle(var manufacturer: String = "",
         }
 
         override fun describeContents(): Int = 0
+
+    }
+
+    data class CalculatedValues(var avgConsumptionCity: Float = 0f,
+                                var avgConsumptionMotorway: Float = 0f) : Parcelable {
+
+        companion object CREATOR : Parcelable.Creator<CalculatedValues> {
+            override fun createFromParcel(parcel: Parcel): CalculatedValues {
+                return CalculatedValues(parcel)
+            }
+
+            override fun newArray(size: Int): Array<CalculatedValues?> = arrayOfNulls(size)
+        }
+
+        constructor(parcel: Parcel): this() {
+            with (parcel) {
+                avgConsumptionCity = readFloat()
+                avgConsumptionMotorway = readFloat()
+            }
+        }
+
+        override fun describeContents(): Int = 0
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            with (parcel) {
+                writeFloat(avgConsumptionCity)
+                writeFloat(avgConsumptionMotorway)
+            }
+        }
 
     }
 

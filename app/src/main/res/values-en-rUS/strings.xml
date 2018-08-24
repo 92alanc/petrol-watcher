@@ -46,4 +46,5 @@
     <string name="factory_data">Factory data</string>
     <string name="calculated_data">Calculated data</string>
     <string name="calculate">Calculate</string>
+    <string name="year_format">Year: %1$d</string>
 </resources>

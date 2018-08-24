@@ -46,4 +46,5 @@
     <string name="factory_data">Dados de fábrica</string>
     <string name="calculated_data">Dados calculados</string>
     <string name="calculate">Calcular</string>
+    <string name="year_format">Ano: %1$d</string>
 </resources>

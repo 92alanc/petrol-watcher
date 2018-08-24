@@ -115,7 +115,7 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
                         val avgConsumptionCity = l100KmToKmL(it.litresPer100KmCity)
                         val avgConsumptionMotorway = l100KmToKmL(it.litresPer100KmMotorway)
                         detailsList.add(Vehicle.Details(trimLevel, it.fuelCapacityLitres,
-                                avgConsumptionCity, avgConsumptionMotorway))
+                                                        avgConsumptionCity, avgConsumptionMotorway))
                     }
                     view.setDetailsList(detailsList)
                 }
@@ -129,12 +129,13 @@ class CreateVehicleActivityPresenter(private val api: VehicleApi,
      * @param vehicle the vehicle to save
      */
     override fun saveVehicle(vehicle: Vehicle) {
-        DependencyInjection.databaseManager.saveVehicle(vehicle, OnCompleteListener {
-            if (vehicle.isValid())
+        if (vehicle.isValid()) {
+            DependencyInjection.databaseManager.saveVehicle(vehicle, OnCompleteListener {
                 view.showVehicleList()
-            else
-                view.showInvalidVehicleDialogue()
-        })
+            })
+        } else {
+            view.showInvalidVehicleDialogue()
+        }
     }
 
 }

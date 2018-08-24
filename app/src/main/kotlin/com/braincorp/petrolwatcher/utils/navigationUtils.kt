@@ -7,7 +7,9 @@ import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
+import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
+import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 
 /**
  * Starts the main activity
@@ -92,6 +94,32 @@ fun AppCompatActivity.startVehicleListActivity(finishCurrent: Boolean = false) {
  */
 fun AppCompatActivity.startCreateVehicleActivity(finishCurrent: Boolean = false) {
     startActivity(CreateVehicleActivity::class.java, finishCurrent)
+}
+
+/**
+ * Starts the vehicle details activity
+ *
+ * @param vehicle the vehicle
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startVehicleDetailsActivity(vehicle: Vehicle,
+                                                  finishCurrent: Boolean = false) {
+    val intent = VehicleDetailsActivity.getIntent(this, vehicle)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
+}
+
+/**
+ * Starts the consumption activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startConsumptionActivity(finishCurrent: Boolean = false) {
+    // TODO: implement
+    Toast.makeText(this, "Consumption activity", LENGTH_SHORT).show()
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
