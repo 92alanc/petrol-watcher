@@ -138,7 +138,7 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:2.15.0'
 
     // Mock web server
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.11.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.8.0'
     // endregion
 
     // region STANDARD LIBRARIES

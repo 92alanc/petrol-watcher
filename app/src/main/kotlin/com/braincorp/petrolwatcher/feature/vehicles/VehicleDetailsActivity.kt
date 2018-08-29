@@ -121,6 +121,14 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
 
             if (containsKey(KEY_VEHICLE))
                 vehicle = getParcelable(KEY_VEHICLE)
+
+            if (editMode) {
+                showEditableFields()
+                fillEditableFields()
+            } else {
+                showReadOnlyFields()
+                fillReadOnlyFields()
+            }
         }
     }
 
@@ -131,6 +139,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         } else {
             editMode = true
             showEditableFields()
+            fillEditableFields()
         }
     }
 
@@ -190,6 +199,16 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                                                   vehicle.details.avgConsumptionCity.toString())
         txt_avg_consumption_motorway.text = getString(R.string.avg_consumption_motorway_format,
                                                   vehicle.details.avgConsumptionMotorway.toString())
+    }
+
+    private fun fillEditableFields() {
+        edt_year.setText(vehicle.year.toString())
+        edt_manufacturer.setText(vehicle.manufacturer)
+        edt_model.setText(vehicle.model)
+        edt_trim_level.setText(vehicle.details.trimLevel)
+        edt_capacity.setText(vehicle.details.fuelCapacity.toString())
+        edt_avg_consumption_city.setText(vehicle.details.avgConsumptionCity.toString())
+        edt_avg_consumption_motorway.setText(vehicle.details.avgConsumptionMotorway.toString())
     }
 
     private fun fillCalculatedValues() {
