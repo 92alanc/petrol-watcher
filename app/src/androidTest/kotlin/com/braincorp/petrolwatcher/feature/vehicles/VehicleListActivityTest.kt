@@ -34,4 +34,12 @@ class VehicleListActivityTest : BaseActivityTest<VehicleListActivity>(
         }
     }
 
+    @Test
+    fun whenClickingOnAnItem_shouldRedirectToVehicleDetailsActivity() {
+        vehicleList {
+        } clickItem {
+            redirectToVehicleDetailsActivity()
+        }
+    }
+
 }

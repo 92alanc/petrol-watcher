@@ -46,6 +46,10 @@ class VehicleAdapter(private val data: ArrayList<Vehicle>,
     class VehicleHolder(private val onItemClickListener: OnItemClickListener,
             itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         val txtModel: TextView = itemView.findViewById(R.id.txt_model)
         val txtYear: TextView = itemView.findViewById(R.id.txt_year)
 
