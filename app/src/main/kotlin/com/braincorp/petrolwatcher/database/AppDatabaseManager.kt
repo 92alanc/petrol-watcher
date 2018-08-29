@@ -78,16 +78,16 @@ class AppDatabaseManager : DatabaseManager, ValueEventListener {
     }
 
     private fun <T: Mappable> insert(item: T,
-                                                                          reference: DatabaseReference,
-                                                                          onCompleteListener: OnCompleteListener<Void>) {
+                                     reference: DatabaseReference,
+                                     onCompleteListener: OnCompleteListener<Void>) {
         reference.child(item.id)
                 .setValue(item.toMap())
                 .addOnCompleteListener(onCompleteListener)
     }
 
     private fun <T: Mappable> update(item: T,
-                                                                          reference: DatabaseReference,
-                                                                          onCompleteListener: OnCompleteListener<Void>) {
+                                     reference: DatabaseReference,
+                                     onCompleteListener: OnCompleteListener<Void>) {
         reference.child(item.id)
                 .updateChildren(item.toMap())
                 .addOnCompleteListener(onCompleteListener)
