@@ -1,7 +1,8 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.DependencyInjection
+import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.robots.mainActivity
 import org.junit.Test
@@ -63,11 +64,11 @@ class MainActivityTest : BaseActivityTest<MainActivity>(MainActivity::class.java
     }
 
     private fun setAuthSuccess(success: Boolean) {
-        (getAuthenticator() as MockAuthenticator).authSuccess = success
+        (DependencyInjection.authenticator as MockAuthenticator).authSuccess = success
     }
 
     private fun setUserLoggedIn(userLoggedIn: Boolean) {
-        (getAuthenticator() as MockAuthenticator).userLoggedIn = userLoggedIn
+        (DependencyInjection.authenticator as MockAuthenticator).userLoggedIn = userLoggedIn
     }
 
 }

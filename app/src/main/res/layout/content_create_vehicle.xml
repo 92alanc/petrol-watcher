@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_create_vehicle">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_default">
+
+        <!-- region Auto input -->
+        <!-- Year -->
+        <TextView
+            android:id="@+id/label_spn_year"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year"
+            android:textColor="@color/orange"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/spn_year"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_year"
+            app:layout_constraintBottom_toTopOf="@+id/label_spn_manufacturer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
+        <!-- Manufacturer -->
+        <TextView
+            android:id="@+id/label_spn_manufacturer"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/manufacturer"
+            app:layout_constraintTop_toBottomOf="@id/spn_year"
+            app:layout_constraintBottom_toTopOf="@+id/spn_manufacturer"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_manufacturer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_manufacturer"
+            app:layout_constraintBottom_toTopOf="@+id/label_spn_model"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
+        <!-- Model -->
+        <TextView
+            android:id="@+id/label_spn_model"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/model"
+            app:layout_constraintTop_toBottomOf="@id/spn_manufacturer"
+            app:layout_constraintBottom_toTopOf="@+id/spn_model"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_model"
+            app:layout_constraintBottom_toTopOf="@+id/label_spn_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
+        <!-- Details -->
+        <TextView
+            android:id="@+id/label_spn_details"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/details"
+            app:layout_constraintTop_toBottomOf="@id/spn_model"
+            app:layout_constraintBottom_toTopOf="@+id/spn_details"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_details"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:listitem="@layout/item_vehicle_details"/>
+
+        <android.support.constraint.Group
+            android:id="@+id/group_auto_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="spn_year,spn_manufacturer,spn_model,spn_details,label_spn_year,label_spn_manufacturer,label_spn_model,label_spn_details" />
+        <!-- endregion -->
+
+        <!-- region Manual input -->
+        <!-- Year -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/til_manufacturer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_trim_level">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/year"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Manufacturer -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_manufacturer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_year"
+            app:layout_constraintBottom_toTopOf="@+id/til_model"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_manufacturer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/manufacturer"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Model -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/til_manufacturer"
+            app:layout_constraintBottom_toTopOf="@+id/til_trim_level"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_manufacturer">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/model"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Trim level -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_trim_level"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_model"
+            app:layout_constraintBottom_toTopOf="@+id/til_capacity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_trim_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trim_level"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Capacity -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_capacity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_trim_level"
+            app:layout_constraintBottom_toTopOf="@+id/til_avg_consumption_city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fuel_capacity"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Average consumption (city) -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_avg_consumption_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/til_avg_consumption_motorway"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_capacity">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_avg_consumption_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/avg_consumption_city"
+                android:inputType="numberDecimal"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Average consumption (motorway) -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_avg_consumption_motorway"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_avg_consumption_city"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_avg_consumption_motorway"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/avg_consumption_motorway"
+                android:inputType="numberDecimal"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.constraint.Group
+            android:id="@+id/group_manual_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="til_year,til_manufacturer,til_model,til_trim_level,til_capacity,til_avg_consumption_city,til_avg_consumption_motorway" />
+        <!-- endregion -->
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

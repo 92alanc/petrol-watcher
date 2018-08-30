@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_small">
+
+    <TextView
+        android:id="@+id/txt_trim_level"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Trim level: 1.8"/>
+
+    <TextView
+        android:id="@+id/txt_fuel_capacity"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_default"
+        tools:text="Fuel capacity: 50ℓ"/>
+
+    <TextView
+        android:id="@+id/txt_avg_consumption_city"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_default"
+        tools:text="Average consumption - city: 8km/ℓ"/>
+
+    <TextView
+        android:id="@+id/txt_avg_consumption_motorway"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_default"
+        tools:text="Average consumption - motorway: 12km/ℓ"/>
+
+</LinearLayout>

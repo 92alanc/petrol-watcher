@@ -27,4 +27,24 @@
     <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
     <string name="warning_password_length">Password length must be at least 6 characters</string>
     <string name="warning">Warning</string>
+    <string name="description_swipe_to_delete">swipe to delete</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="trim_level">Trim level (e.g.: 1.0 GTI)</string>
+    <string name="year">Year</string>
+    <string name="fuel_capacity">Fuel capacity (ℓ)</string>
+    <string name="avg_consumption_city">Average consumption - city (km/ℓ)</string>
+    <string name="avg_consumption_motorway">Average consumption - highway (km/ℓ)</string>
+    <string name="automatic_input">Automatic input</string>
+    <string name="manual_input">Manual input</string>
+    <string name="model">Model</string>
+    <string name="trim_level_format">Trim level: %1$s</string>
+    <string name="capacity_format">Fuel capacity: %1$sℓ</string>
+    <string name="avg_consumption_city_format">Average consumption - city: %1$skm/ℓ</string>
+    <string name="avg_consumption_motorway_format">Average consumption - highway: %1$skm/ℓ</string>
+    <string name="details">Details</string>
+    <string name="invalid_vehicle_data">Invalid vehicle data</string>
+    <string name="factory_data">Factory data</string>
+    <string name="calculated_data">Calculated data</string>
+    <string name="calculate">Calculate</string>
+    <string name="year_format">Year: %1$d</string>
 </resources>

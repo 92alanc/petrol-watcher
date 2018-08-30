@@ -1,27 +1,42 @@
 package com.braincorp.petrolwatcher
 
+import com.braincorp.petrolwatcher.database.DatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
-import com.braincorp.petrolwatcher.feature.auth.authenticator.FirebaseAuthenticator
-import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
 
 /**
  * The dependencies used in the app
  */
-open class DependencyInjection {
+object DependencyInjection {
 
     /**
-     * Gets the authenticator
+     * Initialises the dependency injection
      *
-     * @return the authenticator
+     * @param config the configuration
      */
-    open fun getAuthenticator(): Authenticator = FirebaseAuthenticator()
+    fun init(config: Config) {
+        authenticator = config.authenticator
+        imageHandler = config.imageHandler
+        databaseManager = config.databaseManager
+        vehicleApiBaseUrl = config.vehicleApiBaseUrl
+    }
+
+    lateinit var authenticator: Authenticator
+    lateinit var imageHandler: ImageHandler
+    lateinit var databaseManager: DatabaseManager
+    lateinit var vehicleApiBaseUrl: String
 
     /**
-     * Gets the image handler
+     * Configuration for the dependency injection
      *
-     * @return the image handler
+     * @param authenticator the authenticator
+     * @param imageHandler the image handler
+     * @param databaseManager the database manager
+     * @param vehicleApiBaseUrl the vehicle API base URL
      */
-    open fun getImageHandler(): ImageHandler = AppImageHandler()
+    data class Config(val authenticator: Authenticator,
+                      val imageHandler: ImageHandler,
+                      val databaseManager: DatabaseManager,
+                      val vehicleApiBaseUrl: String)
 
 }

@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher
+package com.braincorp.petrolwatcher.base
 
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
@@ -7,14 +7,21 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
-import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
-import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
+import com.braincorp.petrolwatcher.App
+import com.braincorp.petrolwatcher.DependencyInjection
+import com.braincorp.petrolwatcher.database.MockDatabaseManager
+import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
+import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import java.io.InputStream
 
 open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
+
+    val mockVehicleApi = MockWebServer()
 
     private lateinit var app: App
 
@@ -28,10 +35,13 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
 
     @Before
     open fun setup() {
+        DependencyInjection.init(DependencyInjection.Config(MockAuthenticator,
+                MockImageHandler,
+                MockDatabaseManager,
+                mockVehicleApi.url("/vehicles/").toString()))
+
         if (autoLaunch) launch()
         else Intents.init()
-
-        app = InstrumentationRegistry.getTargetContext().applicationContext as TestApp
     }
 
     @After
@@ -43,18 +53,24 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         return Intent()
     }
 
-    fun getAuthenticator(): Authenticator {
-        return app.dependencyInjection().getAuthenticator()
-    }
-
-    fun getImageHandler(): ImageHandler {
-        return app.dependencyInjection().getImageHandler()
-    }
-
     fun launch() {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         rule.launchActivity(intent())
         doWait(300)
+    }
+
+    fun getJsonFromAsset(fileName: String): String {
+        val json: String
+
+        try {
+            val  inputStream: InputStream = rule.activity.assets.open(fileName)
+            json = inputStream.bufferedReader().use { it.readText() }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return ""
+        }
+
+        return json.replace("\n", "")
     }
 
 }

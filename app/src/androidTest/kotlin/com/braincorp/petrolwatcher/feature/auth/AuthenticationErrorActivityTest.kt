@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.content.Intent
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.auth.robots.authenticationError

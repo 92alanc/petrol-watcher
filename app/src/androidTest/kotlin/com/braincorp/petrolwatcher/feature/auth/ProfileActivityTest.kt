@@ -1,7 +1,8 @@
 package com.braincorp.petrolwatcher.feature.auth
 
 import android.support.test.runner.AndroidJUnit4
-import com.braincorp.petrolwatcher.BaseActivityTest
+import com.braincorp.petrolwatcher.DependencyInjection
+import com.braincorp.petrolwatcher.base.BaseActivityTest
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
 import com.braincorp.petrolwatcher.feature.auth.robots.profile
 import org.junit.Test
@@ -71,7 +72,7 @@ class ProfileActivityTest : BaseActivityTest<ProfileActivity>(ProfileActivity::c
     }
 
     private fun setUploadSuccess(uploadSuccess: Boolean) {
-        (getImageHandler() as MockImageHandler).uploadSuccess = uploadSuccess
+        (DependencyInjection.imageHandler as MockImageHandler).uploadSuccess = uploadSuccess
     }
 
 }

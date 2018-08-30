@@ -3,9 +3,11 @@
     <!-- Button -->
     <dimen name="width_button_sign_in_method">250dp</dimen>
 
-    <!-- CardView -->
+    <!-- region CardView -->
     <dimen name="elevation_cardview_default">10dp</dimen>
+    <dimen name="elevation_cardview_tiny">2dp</dimen>
     <dimen name="radius_cardview_default">8dp</dimen>
+    <!-- endregion -->
 
     <!-- CircleImageView -->
     <dimen name="size_circleimageview">120dp</dimen>
@@ -13,10 +15,14 @@
     <!-- FloatingActionButton -->
     <dimen name="margin_fab">16dp</dimen>
 
-    <!-- Margin -->
+    <!-- region Margin -->
     <dimen name="margin_default">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <!-- endregion -->
 
-    <!-- Padding -->
+    <!-- region Padding -->
     <dimen name="padding_button">4dp</dimen>
     <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <!-- endregion -->
 </resources>

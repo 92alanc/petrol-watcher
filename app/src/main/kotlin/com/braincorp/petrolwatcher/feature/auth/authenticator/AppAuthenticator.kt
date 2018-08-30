@@ -17,9 +17,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 /**
- * A Firebase authentication wrapper
+ * The authenticator used in the app
  */
-class FirebaseAuthenticator : Authenticator {
+class AppAuthenticator : Authenticator {
 
     override val facebookCallbackManager: CallbackManager = CallbackManager.Factory.create()
 
