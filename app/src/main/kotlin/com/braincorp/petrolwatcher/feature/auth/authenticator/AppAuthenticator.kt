@@ -87,8 +87,10 @@ class AppAuthenticator : Authenticator {
      */
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
-        LoginManager.getInstance().logInWithReadPermissions(activity, listOf("email"))
-        LoginManager.getInstance().registerCallback(facebookCallbackManager, callback)
+        with (LoginManager.getInstance()) {
+            logInWithReadPermissions(activity, listOf("email"))
+            registerCallback(facebookCallbackManager, callback)
+        }
     }
 
     /**
