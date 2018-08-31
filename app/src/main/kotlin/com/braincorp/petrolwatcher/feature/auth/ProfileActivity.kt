@@ -56,8 +56,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, ProfileContra
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val allPermissionsGranted = grantResults.all { it == PERMISSION_GRANTED }
+
         if (requestCode == REQUEST_CODE_CAMERA && allPermissionsGranted)
             presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
+
+        if (requestCode == REQUEST_CODE_GALLERY && allPermissionsGranted)
+            presenter.openGallery(activity = this, requestCode = REQUEST_CODE_GALLERY)
     }
 
     /**

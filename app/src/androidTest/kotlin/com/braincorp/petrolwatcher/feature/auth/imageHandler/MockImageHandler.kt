@@ -39,9 +39,14 @@ object MockImageHandler : ImageHandler {
     /**
      * Gets the gallery intent
      *
+     * @param activity the activity where the gallery will
+     *                 be opened from
+     * @param requestCode the request code for the external
+     *                    storage permission
+     *
      * @return the gallery intent
      */
-    override fun getGalleryIntent(): Intent {
+    override fun getGalleryIntent(activity: AppCompatActivity, requestCode: Int): Intent? {
         return Intent(InstrumentationRegistry.getTargetContext(), TestActivity::class.java)
     }
 

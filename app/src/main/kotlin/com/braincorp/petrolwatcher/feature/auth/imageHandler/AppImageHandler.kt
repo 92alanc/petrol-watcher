@@ -1,8 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.imageHandler
 
-import android.Manifest.permission.CAMERA
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.*
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
@@ -17,6 +15,7 @@ import com.braincorp.petrolwatcher.feature.auth.utils.rotateBitmap
 import com.braincorp.petrolwatcher.feature.auth.utils.toByteArray
 import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import com.braincorp.petrolwatcher.utils.hasCameraPermission
+import com.braincorp.petrolwatcher.utils.hasExternalStoragePermission
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -48,10 +47,25 @@ class AppImageHandler : ImageHandler {
     /**
      * Gets the gallery intent
      *
+     * @param activity the activity where the gallery will
+     *                 be opened from
+     * @param requestCode the request code for the external
+     *                    storage permission
+     *
      * @return the gallery intent
      */
-    override fun getGalleryIntent(): Intent {
-        return Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    override fun getGalleryIntent(activity: AppCompatActivity, requestCode: Int): Intent? {
+        return if (SDK_INT >= M) {
+            if (activity.hasExternalStoragePermission()) {
+                getIntentForGallery()
+            } else {
+                activity.requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE),
+                        requestCode)
+                null
+            }
+        } else {
+            getIntentForCamera()
+        }
     }
 
     /**
@@ -127,6 +141,10 @@ class AppImageHandler : ImageHandler {
 
     private fun getIntentForCamera(): Intent {
         return Intent(ACTION_IMAGE_CAPTURE)
+    }
+
+    private fun getIntentForGallery(): Intent {
+        return Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     }
 
 }

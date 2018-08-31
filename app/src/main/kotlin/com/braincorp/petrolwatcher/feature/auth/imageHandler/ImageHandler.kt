@@ -26,9 +26,14 @@ interface ImageHandler {
     /**
      * Gets the gallery intent
      *
+     * @param activity the activity where the gallery will
+     *                 be opened from
+     * @param requestCode the request code for the external
+     *                    storage permission
+     *
      * @return the gallery intent
      */
-    fun getGalleryIntent(): Intent
+    fun getGalleryIntent(activity: AppCompatActivity, requestCode: Int): Intent?
 
     /**
      * Gets an image URI from an intent received

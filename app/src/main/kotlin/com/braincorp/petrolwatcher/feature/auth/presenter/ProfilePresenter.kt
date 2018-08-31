@@ -41,12 +41,13 @@ class ProfilePresenter(private val view: ProfileContract.View,
      * Opens the gallery
      *
      * @param activity the activity where the
-     *                 gallery will be opened from
+     * gallery will be opened from
      * @param requestCode the request code
      */
     override fun openGallery(activity: AppCompatActivity, requestCode: Int) {
-        val intent = imageHandler.getGalleryIntent()
-        activity.startActivityForResult(intent, requestCode)
+        val intent = imageHandler.getGalleryIntent(activity, requestCode)
+        if (intent != null)
+            activity.startActivityForResult(intent, requestCode)
     }
 
     /**
