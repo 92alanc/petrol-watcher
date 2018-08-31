@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.auth.authenticator
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -108,5 +109,23 @@ class AppAuthenticator : Authenticator {
      * @return the currently logged in user
      */
     override fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+    /**
+     * Gets the user's display name
+     *
+     * @return the user's display name
+     */
+    override fun getUserDisplayName(): String? {
+        return FirebaseAuth.getInstance().currentUser?.displayName
+    }
+
+    /**
+     * Gets the user's profile picture URI
+     *
+     * @return the user's profile picture URI
+     */
+    override fun getUserProfilePictureUri(): Uri? {
+        return FirebaseAuth.getInstance().currentUser?.photoUrl
+    }
 
 }

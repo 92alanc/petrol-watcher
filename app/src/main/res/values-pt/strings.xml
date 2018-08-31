@@ -52,4 +52,6 @@
     <string name="sign_out">Sair</string>
     <string name="find_stations">Encontrar postos</string>
     <string name="stations_nearby">Postos ao redor</string>
+    <string name="description_navigation_open">Menu aberto</string>
+    <string name="description_navigation_closed">Menu fechado</string>
 </resources>

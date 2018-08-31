@@ -6,6 +6,11 @@
     <string name="warning">Warning</string>
     <!-- endregion -->
 
+    <!-- region Accessibility -->
+    <string name="description_navigation_open">Menu open</string>
+    <string name="description_navigation_closed">Menu closed</string>
+    <!-- endregion -->
+
     <!-- region Auth -->
     <string name="sign_in_google">Sign in with Google</string>
     <string name="sign_in_facebook">Sign in with Facebook</string>

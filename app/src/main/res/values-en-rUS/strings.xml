@@ -52,4 +52,6 @@
     <string name="sign_out">Sign out</string>
     <string name="find_stations">Find stations</string>
     <string name="stations_nearby">Stations nearby</string>
+    <string name="description_navigation_open">Menu open</string>
+    <string name="description_navigation_closed">Menu closed</string>
 </resources>

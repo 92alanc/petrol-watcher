@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.auth.authenticator
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.base.TestActivity
 import com.facebook.CallbackManager
@@ -113,5 +114,19 @@ object MockAuthenticator : Authenticator {
         return if (userLoggedIn) firebaseUser
         else null
     }
+
+    /**
+     * Gets the user's display name
+     *
+     * @return the user's display name
+     */
+    override fun getUserDisplayName(): String? = "Alan Camargo"
+
+    /**
+     * Gets the user's profile picture URI
+     *
+     * @return the user's profile picture URI
+     */
+    override fun getUserProfilePictureUri(): Uri? = mock(Uri::class.java)
 
 }
