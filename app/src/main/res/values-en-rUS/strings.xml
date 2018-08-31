@@ -47,4 +47,9 @@
     <string name="calculated_data">Calculated data</string>
     <string name="calculate">Calculate</string>
     <string name="year_format">Year: %1$d</string>
+    <string name="my_account">My account</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
+    <string name="find_stations">Find stations</string>
+    <string name="stations_nearby">Stations nearby</string>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.stations.MapActivity
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
@@ -72,8 +73,7 @@ fun AppCompatActivity.startProfileActivity(finishCurrent: Boolean = false) {
  *                      activity will be finished
  */
 fun AppCompatActivity.startMapActivity(finishCurrent: Boolean = false) {
-    // TODO: implement
-    Toast.makeText(this, "Map activity", LENGTH_SHORT).show()
+    startActivity(MapActivity::class.java, finishCurrent)
 }
 
 /**

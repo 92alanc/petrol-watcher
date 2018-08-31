@@ -6,6 +6,7 @@ import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displ
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.EmailAndPasswordSignUpActivity
+import com.braincorp.petrolwatcher.feature.stations.MapActivity
 
 fun emailSignIn(func: EmailSignInActivityRobot.() -> Unit) = EmailSignInActivityRobot().apply(func)
 
@@ -54,7 +55,9 @@ class EmailSignInResult {
     }
 
     fun redirectToMapActivity() {
-        // TODO: implement
+        sentIntent {
+            className(MapActivity::class.java.name)
+        }
     }
 
     fun showErrorDialogue() {

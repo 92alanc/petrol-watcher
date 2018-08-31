@@ -47,4 +47,9 @@
     <string name="calculated_data">Dados calculados</string>
     <string name="calculate">Calcular</string>
     <string name="year_format">Ano: %1$d</string>
+    <string name="my_account">Minha conta</string>
+    <string name="profile">Perfil</string>
+    <string name="sign_out">Sair</string>
+    <string name="find_stations">Encontrar postos</string>
+    <string name="stations_nearby">Postos ao redor</string>
 </resources>

@@ -31,6 +31,9 @@
     <string name="error_email_format">Invalid e-mail format</string>
     <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
     <string name="warning_password_length">Password length must be at least 6 characters</string>
+    <string name="my_account">My account</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
     <!-- endregion -->
 
     <!-- region Vehicles -->
@@ -54,5 +57,10 @@
     <string name="calculated_data">Calculated data</string>
     <string name="calculate">Calculate</string>
     <string name="year_format">Year: %1$d</string>
+    <!-- endregion -->
+
+    <!-- region Petrol stations -->
+    <string name="find_stations">Find stations</string>
+    <string name="stations_nearby">Stations nearby</string>
     <!-- endregion -->
 </resources>
