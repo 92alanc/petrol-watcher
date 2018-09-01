@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
@@ -30,8 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, MainContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainActivityPresenter(view = this,
-                authenticator = DependencyInjection.authenticator)
+        presenter = MainActivityPresenter(view = this)
         setupButtons()
     }
 

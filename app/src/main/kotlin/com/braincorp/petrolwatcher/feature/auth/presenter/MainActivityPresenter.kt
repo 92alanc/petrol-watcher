@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.auth.presenter
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.contract.MainContract
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
@@ -17,15 +18,15 @@ import com.google.android.gms.common.api.GoogleApiClient
  * of the app's main activity
  *
  * @param view the view layer
- * @param authenticator the authenticator
  */
-class MainActivityPresenter(private val view: MainContract.View,
-                            private val authenticator: Authenticator) : MainContract.Presenter,
+class MainActivityPresenter(private val view: MainContract.View) : MainContract.Presenter,
         GoogleApiClient.OnConnectionFailedListener, FacebookCallback<LoginResult> {
 
     private companion object {
         const val TAG = "PETROL_WATCHER"
     }
+
+    private val authenticator: Authenticator = DependencyInjection.authenticator
 
     val callbackManager = authenticator.facebookCallbackManager
 

@@ -22,16 +22,9 @@ object MockAuthenticator : Authenticator {
     private val authResult = mock(AuthResult::class.java)
 
     @Mock
-    private val facebookLoginResult = mock(LoginResult::class.java)
-
-    @Mock
     override val facebookCallbackManager: CallbackManager = mock(CallbackManager::class.java)
 
-    @Mock
-    private val firebaseUser = mock(FirebaseUser::class.java)
-
     var authSuccess = true
-
     var userLoggedIn = false
 
     /**
@@ -90,7 +83,7 @@ object MockAuthenticator : Authenticator {
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
         if (authSuccess)
-            callback.onSuccess(facebookLoginResult)
+            callback.onSuccess(mock(LoginResult::class.java))
         else
             callback.onError(FacebookException())
     }
@@ -111,7 +104,7 @@ object MockAuthenticator : Authenticator {
      * @return the currently logged in user
      */
     override fun getCurrentUser(): FirebaseUser? {
-        return if (userLoggedIn) firebaseUser
+        return if (userLoggedIn) mock(FirebaseUser::class.java)
         else null
     }
 

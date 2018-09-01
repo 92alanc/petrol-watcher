@@ -7,7 +7,6 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
-import com.braincorp.petrolwatcher.App
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.MockDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
@@ -23,8 +22,6 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
 
     val mockVehicleApi = MockWebServer()
-
-    private lateinit var app: App
 
     @Rule
     @JvmField

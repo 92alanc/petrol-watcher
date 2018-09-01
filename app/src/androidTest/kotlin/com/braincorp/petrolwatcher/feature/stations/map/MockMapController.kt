@@ -16,8 +16,6 @@ object MockMapController : MapController {
      */
     override fun startMap(fragmentManager: FragmentManager,
                           @IdRes mapId: Int,
-                          onMapReadyCallback: OnMapReadyCallback) {
-
-    }
+                          onMapReadyCallback: OnMapReadyCallback) { }
 
 }
