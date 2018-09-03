@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkAuthenticationState() {
-        if (AuthenticationManager.isSignedIn() && AuthenticationManager.isEmailVerified())
+        if (AuthenticationManager.isSignedIn())
             launchMapActivity(finishCurrent = false)
     }
 

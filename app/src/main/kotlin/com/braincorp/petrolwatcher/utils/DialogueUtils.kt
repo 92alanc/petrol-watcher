@@ -17,10 +17,10 @@ fun Context.showErrorDialogue(@StringRes message: Int) {
 fun Context.showImagePickerDialogue(cameraButtonAction: () -> Unit,
                                     galleryButtonAction: () -> Unit) {
     val dialogue = ImagePickerDialogue(context = this)
-    dialogue.setOnShowListener({
+    dialogue.setOnShowListener {
         dialogue.setCameraClickAction(cameraButtonAction)
         dialogue.setGalleryClickAction(galleryButtonAction)
-    })
+    }
     dialogue.show()
 }
 
@@ -56,8 +56,8 @@ fun Context.showQuestionDialogue(@StringRes title: Int,
             .setPositiveButton(R.string.yes) { _, _ ->
                 positiveFunc()
             }
-            .setNegativeButton(R.string.no, { _, _ ->
+            .setNegativeButton(R.string.no) { _, _ ->
                 negativeFunc()
-            })
+            }
             .show()
 }

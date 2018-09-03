@@ -43,15 +43,15 @@ interface VehicleApi {
          */
         private fun getClient(): OkHttpClient {
             return OkHttpClient.Builder()
-                    .addInterceptor({
-                                        val response = it.proceed(it.request())
-                                        var responseStr = response.body()?.string()
-                                        responseStr = responseStr?.substring(2, responseStr.length)
-                                                ?.substring(0, responseStr.length - 4)
-                                        val mediaType = response.body()?.contentType()
-                                        response.newBuilder()
-                                                .body(ResponseBody.create(mediaType, responseStr!!)).build()
-                                    }).build()
+                    .addInterceptor {
+                        val response = it.proceed(it.request())
+                        var responseStr = response.body()?.string()
+                        responseStr = responseStr?.substring(2, responseStr.length)
+                                ?.substring(0, responseStr.length - 4)
+                        val mediaType = response.body()?.contentType()
+                        response.newBuilder()
+                                .body(ResponseBody.create(mediaType, responseStr!!)).build()
+                    }.build()
         }
     }
 

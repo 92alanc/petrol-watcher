@@ -10,7 +10,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
-import com.braincorp.petrolwatcher.feature.vehicles.adapters.NewVehicleAdapter
+import com.braincorp.petrolwatcher.feature.vehicles.adapters.VehicleAdapter
 import com.braincorp.petrolwatcher.feature.vehicles.database.VehicleDatabase
 import com.braincorp.petrolwatcher.feature.vehicles.fragments.VehicleDetailsFragment
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -221,7 +221,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
     private fun populateRecyclerView() {
         recyclerViewVehicles.visibility = VISIBLE
         recyclerViewVehicles.layoutManager = LinearLayoutManager(this)
-        val adapter = NewVehicleAdapter(context = this,
+        val adapter = VehicleAdapter(context = this,
                 data = vehicles!!,
                 onItemClickListener = this)
         recyclerViewVehicles.adapter = adapter

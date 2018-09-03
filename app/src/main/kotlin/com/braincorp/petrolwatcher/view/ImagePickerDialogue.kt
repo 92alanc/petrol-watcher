@@ -20,17 +20,17 @@ class ImagePickerDialogue(context: Context) : Dialog(context) {
     }
 
     fun setCameraClickAction(cameraButtonAction: () -> Unit) {
-        buttonCamera.setOnClickListener({
+        buttonCamera.setOnClickListener {
             dismiss()
             cameraButtonAction()
-        })
+        }
     }
 
     fun setGalleryClickAction(galleryButtonAction: () -> Unit) {
-        buttonGallery.setOnClickListener({
+        buttonGallery.setOnClickListener {
             dismiss()
             galleryButtonAction()
-        })
+        }
     }
 
     private fun bindViews() {

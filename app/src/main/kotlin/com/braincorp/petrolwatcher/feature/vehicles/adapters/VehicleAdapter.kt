@@ -10,10 +10,10 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 
-class NewVehicleAdapter(private val context: Context,
-                        private val data: ArrayList<Vehicle>,
-                        private val onItemClickListener: OnItemClickListener)
-    : RecyclerView.Adapter<NewVehicleAdapter.VehicleHolder>() {
+class VehicleAdapter(private val context: Context,
+                     private val data: ArrayList<Vehicle>,
+                     private val onItemClickListener: OnItemClickListener)
+    : RecyclerView.Adapter<VehicleAdapter.VehicleHolder>() {
 
     override fun getItemCount(): Int = data.size
 

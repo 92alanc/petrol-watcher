@@ -25,17 +25,17 @@ object AuthenticationManager {
             FirebaseAuth.getInstance().currentUser
                     ?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(displayName)
                             .setPhotoUri(profilePicture)
-                            .build())?.addOnCompleteListener({
-                if (it.isSuccessful) onSuccessAction()
-                else onFailureAction()
-            })
+                            .build())?.addOnCompleteListener {
+                        if (it.isSuccessful) onSuccessAction()
+                        else onFailureAction()
+                    }
         } else {
             user.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(displayName)
                     .setPhotoUri(profilePicture)
-                    .build()).addOnCompleteListener({
+                    .build()).addOnCompleteListener {
                 if (it.isSuccessful) onSuccessAction()
                 else onFailureAction()
-            })
+            }
         }
     }
 
@@ -48,7 +48,7 @@ object AuthenticationManager {
                onSuccessAction: (AuthResult) -> Unit,
                onFailureAction: () -> Unit) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener({
+                .addOnSuccessListener {
                     Thread {
                         while (true) {
                             if (it.user != null) {
@@ -59,10 +59,10 @@ object AuthenticationManager {
                             }
                         }
                     }.start()
-                })
-                .addOnFailureListener({
+                }
+                .addOnFailureListener {
                     onFailureAction()
-                })
+                }
     }
 
     fun signOut(onSuccessAction: () -> Unit) {
@@ -90,8 +90,6 @@ object AuthenticationManager {
             }
         }.start()
     }
-
-    fun isEmailVerified(): Boolean = FirebaseAuth.getInstance().currentUser!!.isEmailVerified
 
     fun isSignedIn(): Boolean = FirebaseAuth.getInstance().currentUser != null
 

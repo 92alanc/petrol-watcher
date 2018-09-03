@@ -1,21 +1,29 @@
 {
   "project_info": {
-    "project_number": "193399674960",
-    "firebase_url": "https://petrol-watcher.firebaseio.com",
-    "project_id": "petrol-watcher",
-    "storage_bucket": "petrol-watcher.appspot.com"
+    "project_number": "844323176654",
+    "firebase_url": "https://petrol-watcher-1.firebaseio.com",
+    "project_id": "petrol-watcher-1",
+    "storage_bucket": "petrol-watcher-1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:193399674960:android:003a753dc7e0173f",
+        "mobilesdk_app_id": "1:844323176654:android:003a753dc7e0173f",
         "android_client_info": {
           "package_name": "com.braincorp.petrolwatcher"
         }
       },
       "oauth_client": [
         {
-          "client_id": "193399674960-3v9sjemgk8qsicc9kjclgt4ngu0riut6.apps.googleusercontent.com",
+          "client_id": "844323176654-4tgenli25djrhr7gi7msvdfubbi6ri65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.braincorp.petrolwatcher",
+            "certificate_hash": "f8ec679ff1a14a71581af70d659224223f5eefb9"
+          }
+        },
+        {
+          "client_id": "844323176654-fc3s0pnu81k1u34n6np5elv1j0ee5nmb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.braincorp.petrolwatcher",
@@ -23,13 +31,13 @@
           }
         },
         {
-          "client_id": "193399674960-3pakl80dpq5ga5rjejgv3tol504o04al.apps.googleusercontent.com",
+          "client_id": "844323176654-qsrnsv6rhv01rti9stto0aia8193bqio.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBuwjBZZnQOYARohYOvVPBJLXVjEgWOnSg"
+          "current_key": "AIzaSyA9BkHM_VrHo1XmLjCx9SOjxGjZAl1vfTg"
         }
       ],
       "services": {
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "193399674960-3pakl80dpq5ga5rjejgv3tol504o04al.apps.googleusercontent.com",
+              "client_id": "844323176654-qsrnsv6rhv01rti9stto0aia8193bqio.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

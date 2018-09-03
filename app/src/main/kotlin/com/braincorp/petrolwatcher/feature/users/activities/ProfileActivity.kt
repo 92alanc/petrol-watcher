@@ -18,16 +18,7 @@ import com.braincorp.petrolwatcher.feature.users.fragments.EmailAndPasswordFragm
 import com.braincorp.petrolwatcher.fragments.ImagePickerFragment
 import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.storage.StorageManager
-import com.braincorp.petrolwatcher.utils.REQUEST_CODE_CAMERA
-import com.braincorp.petrolwatcher.utils.REQUEST_CODE_GALLERY
-import com.braincorp.petrolwatcher.utils.launchLoginActivity
-import com.braincorp.petrolwatcher.utils.launchMapActivity
-import com.braincorp.petrolwatcher.utils.launchVehiclesActivity
-import com.braincorp.petrolwatcher.utils.openCamera
-import com.braincorp.petrolwatcher.utils.replaceFragmentPlaceholder
-import com.braincorp.petrolwatcher.utils.showErrorDialogue
-import com.braincorp.petrolwatcher.utils.showInformationDialogue
-import com.braincorp.petrolwatcher.utils.showQuestionDialogue
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
@@ -252,7 +243,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         if (password != passwordConfirmation) {
             showErrorDialogue(R.string.password_and_confirmation_dont_match)
         } else {
-            AuthenticationManager.createUser(email, password, {
+            AuthenticationManager.createUser(email, password) { it ->
                 if (it.isSuccessful) {
                     AuthenticationManager.signIn(email, password, onSuccessAction = {
                         user = it.user
@@ -271,7 +262,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
                 } else {
                     showErrorDialogue(R.string.error_creating_account)
                 }
-            })
+            }
         }
     }
 
@@ -288,8 +279,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         val displayName = (bottomFragment as DisplayNameFragment).getDisplayName()
 
         val bitmap = topFragment?.getImageBitmap()
-        StorageManager.upload(bitmap, onSuccessAction = {
-            AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.downloadUrl,
+        StorageManager.upload(bitmap, onSuccessAction = { it ->
+            AuthenticationManager.setDisplayNameAndProfilePicture(user, displayName, it.uploadSessionUri,
                     onSuccessAction =  {
                         if (uiMode == AdaptableUi.Mode.CREATE) {
                             launchMapActivity(finishCurrent = true)
