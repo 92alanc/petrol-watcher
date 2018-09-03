@@ -13,9 +13,9 @@ import com.braincorp.petrolwatcher.feature.petrolstations.adapters.PetrolStation
 import com.braincorp.petrolwatcher.feature.petrolstations.database.PetrolStationDatabase
 import com.braincorp.petrolwatcher.feature.petrolstations.fragments.FuelsFragment
 import com.braincorp.petrolwatcher.feature.petrolstations.fragments.PetrolStationDetailsFragment
+import com.braincorp.petrolwatcher.feature.petrolstations.model.PetrolStation
 import com.braincorp.petrolwatcher.listeners.OnItemClickListener
 import com.braincorp.petrolwatcher.model.AdaptableUi
-import com.braincorp.petrolwatcher.feature.petrolstations.model.PetrolStation
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
@@ -101,9 +101,9 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         prepareViewMode()
     }
 
-    override fun onDataChange(snapshot: DataSnapshot?) {
+    override fun onDataChange(snapshot: DataSnapshot) {
         val list = ArrayList<PetrolStation>()
-        snapshot?.children?.forEach {
+        snapshot.children.forEach {
             val petrolStation = PetrolStation(
                     it)
             list.add(petrolStation)
@@ -120,7 +120,7 @@ class PetrolStationsActivity : AppCompatActivity(), View.OnClickListener, OnItem
         }
     }
 
-    override fun onCancelled(error: DatabaseError?) {
+    override fun onCancelled(error: DatabaseError) {
         if (!isFinishing)
             showErrorDialogue(R.string.error_finding_petrol_stations)
     }

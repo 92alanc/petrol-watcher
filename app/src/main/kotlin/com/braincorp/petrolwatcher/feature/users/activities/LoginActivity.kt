@@ -14,7 +14,6 @@ import com.braincorp.petrolwatcher.model.AdaptableUi
 import com.braincorp.petrolwatcher.utils.launchMapActivity
 import com.braincorp.petrolwatcher.utils.launchProfileActivity
 import com.braincorp.petrolwatcher.utils.showErrorDialogue
-import com.braincorp.petrolwatcher.utils.showInformationDialogue
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -67,12 +66,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 runOnUiThread {
                     hideProgressBar()
                 }
-                if (it.user.isEmailVerified) {
-                    launchMapActivity(finishCurrent = false)
-                } else {
-                    showInformationDialogue(title = R.string.email_not_verified,
-                            message = R.string.verify_email)
-                }
+                launchMapActivity(finishCurrent = false)
             }, onFailureAction = {
                 runOnUiThread {
                     hideProgressBar()

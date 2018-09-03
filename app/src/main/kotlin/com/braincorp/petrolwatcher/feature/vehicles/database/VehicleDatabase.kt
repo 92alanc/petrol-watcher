@@ -12,15 +12,15 @@ object VehicleDatabase {
 
     init {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
-        reference = database.getReference("vehicles").child(uid)
+        reference = database.getReference("vehicles").child(uid!!)
     }
 
     fun insertOrUpdate(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError?) { }
+            override fun onCancelled(error: DatabaseError) { }
 
-            override fun onDataChange(snapshot: DataSnapshot?) {
-                if (snapshot?.child(vehicle.id)?.exists()!!)
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(vehicle.id).exists())
                     update(
                             vehicle,
                             onCompleteListener)

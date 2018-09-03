@@ -15,10 +15,10 @@ object PetrolStationDatabase {
     fun insertOrUpdate(petrolStation: PetrolStation,
                        onCompleteListener: OnCompleteListener<Void>) {
         reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError?) { }
+            override fun onCancelled(error: DatabaseError) { }
 
-            override fun onDataChange(snapshot: DataSnapshot?) {
-                if (snapshot?.child(petrolStation.id)?.exists()!!)
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(petrolStation.id).exists())
                     update(
                             petrolStation,
                             onCompleteListener)

@@ -116,9 +116,9 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         hideProgressBar()
     }
 
-    override fun onDataChange(snapshot: DataSnapshot?) {
+    override fun onDataChange(snapshot: DataSnapshot) {
         val list = ArrayList<Vehicle>()
-        snapshot?.children?.forEach {
+        snapshot.children.forEach {
             val vehicle = Vehicle(it)
             list.add(vehicle)
         }
@@ -133,7 +133,7 @@ class VehiclesActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    override fun onCancelled(error: DatabaseError?) {
+    override fun onCancelled(error: DatabaseError) {
         if (!isFinishing) {
             showErrorDialogue(R.string.error_finding_vehicles)
             hideProgressBar()
