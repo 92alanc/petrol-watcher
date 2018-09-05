@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher
 
 import android.app.Application
+import android.graphics.Typeface
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -11,6 +12,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        overrideFont()
         setupFirebase()
         setupDatabase()
         setupImageLoader()
@@ -27,6 +29,13 @@ class App : Application() {
     private fun setupImageLoader() {
         val config = ImageLoaderConfiguration.createDefault(this)
         ImageLoader.getInstance().init(config)
+    }
+
+    private fun overrideFont() {
+        val typeface = Typeface.createFromAsset(assets, "fonts/Nunito-Regular.ttf")
+        val field = Typeface::class.java.getDeclaredField("SERIF")
+        field.isAccessible = true
+        field.set(null, typeface)
     }
 
 }
