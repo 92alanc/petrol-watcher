@@ -75,7 +75,8 @@ class MapActivity : AppCompatActivity(),
      * Starts the main activity
      */
     override fun startMainActivity() {
-        startMainActivity(finishCurrent = true)
+        startMainActivity(finishCurrent = false)
+        finishAffinity()
     }
 
     private fun bindNavigationDrawer() {
