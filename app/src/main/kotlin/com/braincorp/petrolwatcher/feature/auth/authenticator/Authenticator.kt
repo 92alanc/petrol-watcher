@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.authenticator
 
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -80,17 +79,23 @@ interface Authenticator {
     fun getCurrentUser(): FirebaseUser?
 
     /**
-     * Gets the user's display name
+     * Gets the user's data
      *
-     * @return the user's display name
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
      */
-    fun getUserDisplayName(): String?
+    fun getUserData(onUserDataFoundListener: OnUserDataFoundListener)
 
     /**
-     * Gets the user's profile picture URI
-     *
-     * @return the user's profile picture URI
+     * Ends the current session
      */
-    fun getUserProfilePictureUri(): Uri?
+    fun signOut()
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    fun isUserSignedIn(): Boolean
 
 }

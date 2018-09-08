@@ -7,7 +7,7 @@
                 android:checkableBehavior="none"
                 android:orderInCategory="1">
                 <item
-                    android:id="@+id/itemStationsNearby"
+                    android:id="@+id/item_stations_nearby"
                     android:title="@string/stations_nearby"
                     android:icon="@drawable/ic_stations"
                     android:orderInCategory="2"/>
@@ -21,13 +21,13 @@
                 android:checkableBehavior="none"
                 android:orderInCategory="2">
                 <item
-                    android:id="@+id/itemProfile"
+                    android:id="@+id/item_profile"
                     android:title="@string/profile"
                     android:icon="@drawable/ic_profile"
                     android:orderInCategory="1"/>
 
                 <item
-                    android:id="@+id/itemSignOut"
+                    android:id="@+id/item_sign_out"
                     android:title="@string/sign_out"
                     android:icon="@drawable/ic_sign_out"
                     android:orderInCategory="2"/>

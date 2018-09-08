@@ -109,17 +109,29 @@ object MockAuthenticator : Authenticator {
     }
 
     /**
-     * Gets the user's display name
+     * Gets the user's data
      *
-     * @return the user's display name
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
      */
-    override fun getUserDisplayName(): String? = "Alan Camargo"
+    override fun getUserData(onUserDataFoundListener: OnUserDataFoundListener) {
+        val name = "Alan Camargo"
+        val profilePictureUri = Uri.EMPTY
+        onUserDataFoundListener.onUserDataFound(name, profilePictureUri)
+    }
 
     /**
-     * Gets the user's profile picture URI
-     *
-     * @return the user's profile picture URI
+     * Ends the current session
      */
-    override fun getUserProfilePictureUri(): Uri? = mock(Uri::class.java)
+    override fun signOut() { }
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    override fun isUserSignedIn(): Boolean {
+        return userLoggedIn
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.authenticator
 
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -67,7 +66,7 @@ class AppAuthenticator : Authenticator {
     override fun signInWithGoogle(activity: AppCompatActivity,
                                   onConnectionFailedListener: GoogleApiClient.OnConnectionFailedListener): Intent {
         val signInOptions = GoogleSignInOptions.Builder(DEFAULT_SIGN_IN)
-                .requestEmail()
+                .requestProfile()
                 .build()
 
         val client = GoogleApiClient.Builder(activity)
@@ -88,7 +87,7 @@ class AppAuthenticator : Authenticator {
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
         with (LoginManager.getInstance()) {
-            logInWithReadPermissions(activity, listOf("email"))
+            logInWithReadPermissions(activity, listOf("public_profile"))
             registerCallback(facebookCallbackManager, callback)
         }
     }
@@ -113,21 +112,35 @@ class AppAuthenticator : Authenticator {
     override fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     /**
-     * Gets the user's display name
+     * Gets the user's data
      *
-     * @return the user's display name
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
      */
-    override fun getUserDisplayName(): String? {
-        return FirebaseAuth.getInstance().currentUser?.displayName
+    override fun getUserData(onUserDataFoundListener: OnUserDataFoundListener) {
+        FirebaseAuth.getInstance().addAuthStateListener {
+            if (it.currentUser != null) {
+                val displayName = it.currentUser?.displayName
+                val profilePictureUri = it.currentUser?.photoUrl
+                onUserDataFoundListener.onUserDataFound(displayName, profilePictureUri)
+            }
+        }
     }
 
     /**
-     * Gets the user's profile picture URI
-     *
-     * @return the user's profile picture URI
+     * Ends the current session
      */
-    override fun getUserProfilePictureUri(): Uri? {
-        return FirebaseAuth.getInstance().currentUser?.photoUrl
+    override fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    override fun isUserSignedIn(): Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
     }
 
 }

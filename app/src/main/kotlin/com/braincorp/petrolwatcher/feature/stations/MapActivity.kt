@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.feature.stations
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
@@ -10,7 +11,12 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
+import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
+import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
+import com.braincorp.petrolwatcher.utils.startMainActivity
+import com.braincorp.petrolwatcher.utils.startProfileActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import de.hdodenhof.circleimageview.CircleImageView
@@ -21,8 +27,13 @@ import kotlinx.android.synthetic.main.app_bar_map.*
  * The activity where the map containing all petrol stations
  * nearby is shown
  */
-class MapActivity : AppCompatActivity(), View.OnClickListener,
-        NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+class MapActivity : AppCompatActivity(),
+        View.OnClickListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        OnMapReadyCallback,
+        MapActivityContract.View {
+
+    override lateinit var presenter: MapActivityContract.Presenter
 
     private val authenticator = DependencyInjection.authenticator
     private val mapController = DependencyInjection.mapController
@@ -31,9 +42,14 @@ class MapActivity : AppCompatActivity(), View.OnClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
         setSupportActionBar(toolbar)
-        bindNavigationDrawer()
+        presenter = MapActivityPresenter(view = this)
         fab.setOnClickListener(this)
         mapController.startMap(supportFragmentManager, R.id.map, this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bindNavigationDrawer()
     }
 
     override fun onClick(v: View) {
@@ -44,7 +60,8 @@ class MapActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
+            R.id.item_profile -> startProfileActivity()
+            R.id.item_sign_out -> presenter.signOut()
         }
 
         return true
@@ -52,6 +69,13 @@ class MapActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onMapReady(map: GoogleMap) {
 
+    }
+
+    /**
+     * Starts the main activity
+     */
+    override fun startMainActivity() {
+        startMainActivity(finishCurrent = true)
     }
 
     private fun bindNavigationDrawer() {
@@ -68,9 +92,13 @@ class MapActivity : AppCompatActivity(), View.OnClickListener,
         val txtName = headerView.findViewById<TextView>(R.id.txt_name)
 
         imgProfile.setOnClickListener(this)
-        fillImageView(authenticator.getUserProfilePictureUri(), imgProfile, progressBar = progressBar)
 
-        txtName.text = authenticator.getUserDisplayName()
+        authenticator.getUserData(object: OnUserDataFoundListener {
+            override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
+                txtName.text = displayName
+                fillImageView(profilePictureUri, imgProfile, progressBar = progressBar)
+            }
+        })
     }
 
 }
