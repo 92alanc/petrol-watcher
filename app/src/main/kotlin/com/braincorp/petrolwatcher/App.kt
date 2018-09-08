@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher
 
 import android.app.Application
+import android.graphics.Typeface
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
@@ -20,6 +21,7 @@ open class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        overrideFont()
         setupFirebase()
         setupImageLoader()
         DependencyInjection.init(DependencyInjection.Config(AppAuthenticator(),
@@ -36,6 +38,13 @@ open class App : Application() {
     private fun setupImageLoader() {
         val config = ImageLoaderConfiguration.createDefault(this)
         ImageLoader.getInstance().init(config)
+    }
+
+    private fun overrideFont() {
+        val typeface = Typeface.createFromAsset(assets, "fonts/Nunito-Regular.ttf")
+        val field = Typeface::class.java.getDeclaredField("SERIF")
+        field.isAccessible = true
+        field.set(null, typeface)
     }
 
 }
