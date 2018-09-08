@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.R
@@ -58,7 +59,7 @@ class ProfilePresenter(private val view: ProfileContract.View,
      * @param context the Android context
      */
     override fun saveProfile(drawable: Drawable?, displayName: String, context: Context) {
-        val profilePicture = if (drawable != null)
+        val profilePicture = if (drawable != null && drawable !is VectorDrawable)
             (drawable as BitmapDrawable).bitmap
         else
             null
