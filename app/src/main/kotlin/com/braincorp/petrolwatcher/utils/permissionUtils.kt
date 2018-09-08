@@ -31,3 +31,10 @@ fun AppCompatActivity.hasExternalStoragePermission(): Boolean {
     val write = checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
     return read && write
 }
+
+@TargetApi(M)
+fun AppCompatActivity.hasLocationPermission(): Boolean {
+    val coarse = checkSelfPermission(ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED
+    val fine = checkSelfPermission(ACCESS_FINE_LOCATION) == PERMISSION_GRANTED
+    return coarse && fine
+}

@@ -1,10 +1,16 @@
 package com.braincorp.petrolwatcher.feature.stations
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
@@ -15,8 +21,7 @@ import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundLis
 import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
-import com.braincorp.petrolwatcher.utils.startMainActivity
-import com.braincorp.petrolwatcher.utils.startProfileActivity
+import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import de.hdodenhof.circleimageview.CircleImageView
@@ -33,7 +38,16 @@ class MapActivity : AppCompatActivity(),
         OnMapReadyCallback,
         MapActivityContract.View {
 
+    private companion object {
+        const val KEY_IS_MAP_READY = "is_map_ready"
+        const val REQUEST_CODE_LOCATION = 1234
+        const val TAG = "PETROL_WATCHER"
+    }
+
     override lateinit var presenter: MapActivityContract.Presenter
+
+    private var isMapReady = false
+    private lateinit var map: GoogleMap
 
     private val authenticator = DependencyInjection.authenticator
     private val mapController = DependencyInjection.mapController
@@ -44,7 +58,10 @@ class MapActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         presenter = MapActivityPresenter(view = this)
         fab.setOnClickListener(this)
-        mapController.startMap(supportFragmentManager, R.id.map, this)
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
+        if (!isMapReady)
+            mapController.startMap(supportFragmentManager, R.id.map, this)
     }
 
     override fun onStart() {
@@ -52,14 +69,34 @@ class MapActivity : AppCompatActivity(),
         bindNavigationDrawer()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putBoolean(KEY_IS_MAP_READY, isMapReady)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val permissionsGranted = grantResults.all { it == PERMISSION_GRANTED }
+        if (requestCode == REQUEST_CODE_LOCATION && permissionsGranted)
+            enableLocation(map)
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
-
+            R.id.fab -> startCreatePetrolStationActivity()
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_stations_nearby -> startPetrolStationListActivity()
             R.id.item_profile -> startProfileActivity()
             R.id.item_sign_out -> presenter.signOut()
         }
@@ -68,7 +105,18 @@ class MapActivity : AppCompatActivity(),
     }
 
     override fun onMapReady(map: GoogleMap) {
+        this.map = map
 
+        if (SDK_INT >= M) {
+            if (hasLocationPermission()) {
+                enableLocation(map)
+            } else {
+                requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
+                        REQUEST_CODE_LOCATION)
+            }
+        } else {
+            enableLocation(map)
+        }
     }
 
     /**
@@ -100,6 +148,18 @@ class MapActivity : AppCompatActivity(),
                 fillImageView(profilePictureUri, imgProfile, progressBar = progressBar)
             }
         })
+    }
+
+    private fun enableLocation(map: GoogleMap) {
+        try {
+            map.isMyLocationEnabled = true
+        } catch (e: SecurityException) {
+            Log.d(TAG, "Error enabling location", e)
+        }
+    }
+
+    private fun restoreInstanceState(savedInstanceState: Bundle) {
+        isMapReady = savedInstanceState.getBoolean(KEY_IS_MAP_READY)
     }
 
 }

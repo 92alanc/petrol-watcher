@@ -122,6 +122,28 @@ fun AppCompatActivity.startConsumptionActivity(finishCurrent: Boolean = false) {
     Toast.makeText(this, "Consumption activity", LENGTH_SHORT).show()
 }
 
+/**
+ * Starts the create petrol station activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startCreatePetrolStationActivity(finishCurrent: Boolean = false) {
+    // TODO: implement
+    Toast.makeText(this, "Create petrol station activity", LENGTH_SHORT).show()
+}
+
+/**
+ * Starts the petrol station list activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startPetrolStationListActivity(finishCurrent: Boolean = false) {
+    // TODO: implement
+    Toast.makeText(this, "Petrol station list activity", LENGTH_SHORT).show()
+}
+
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
     val intent = Intent(this, destinationClass)
     startActivity(intent)
