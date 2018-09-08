@@ -1,6 +1,8 @@
 package com.braincorp.petrolwatcher.feature.stations.contract
 
+import android.content.Context
 import com.braincorp.petrolwatcher.base.BaseContract
+import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 
 interface CreatePetrolStationActivityContract {
@@ -27,5 +29,15 @@ interface CreatePetrolStationActivityContract {
          * Saves a petrol station
          */
         fun savePetrolStation(petrolStation: PetrolStation)
+
+        /**
+         * Gets the current location
+         *
+         * @param context the Android context
+         * @param onCurrentLocationFoundListener the callback to be triggered
+         *                                       when the current location is found
+         */
+        fun getCurrentLocation(context: Context,
+                               onCurrentLocationFoundListener: OnCurrentLocationFoundListener)
     }
 }

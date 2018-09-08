@@ -1,19 +1,28 @@
 package com.braincorp.petrolwatcher.feature.stations
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
+import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.CreatePetrolStationActivityPresenter
+import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.braincorp.petrolwatcher.utils.startPetrolStationListActivity
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_create_petrol_station.*
 import kotlinx.android.synthetic.main.content_create_petrol_station.*
 
@@ -23,10 +32,12 @@ import kotlinx.android.synthetic.main.content_create_petrol_station.*
 class CreatePetrolStationActivity : AppCompatActivity(),
         CreatePetrolStationActivityContract.View,
         View.OnClickListener,
-        PlaceSelectionListener {
+        PlaceSelectionListener,
+        OnCurrentLocationFoundListener {
 
     private companion object {
         const val KEY_PETROL_STATION = "petrol_station"
+        const val REQUEST_CODE_LOCATION = 1234
         const val TAG = "PETROL_WATCHER"
     }
 
@@ -42,6 +53,9 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         bindPlaceAutocompleteFragment()
         presenter = CreatePetrolStationActivityPresenter(view = this)
         fab.setOnClickListener(this)
+        setupLocationButton()
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -55,9 +69,19 @@ class CreatePetrolStationActivity : AppCompatActivity(),
             restoreInstanceState(savedInstanceState)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val permissionsGranted = grantResults.all { it == PERMISSION_GRANTED }
+        if (requestCode == REQUEST_CODE_LOCATION && permissionsGranted)
+            enableLocationButton()
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> save()
+            R.id.bt_location -> useCurrentLocation()
         }
     }
 
@@ -87,6 +111,20 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         }
     }
 
+    /**
+     * Function to be triggered when the current address
+     * is found
+     *
+     * @param address the address
+     * @param latLng the latitude and longitude
+     */
+    override fun onCurrentLocationFound(address: String, latLng: LatLng) {
+        placeAutocompleteAddress.setText(address)
+
+        petrolStation.address = address
+        petrolStation.latLng = latLng
+    }
+
     override fun onError(error: Status?) {
         Log.e(TAG, error?.statusMessage)
     }
@@ -110,10 +148,28 @@ class CreatePetrolStationActivity : AppCompatActivity(),
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
             petrolStation = getParcelable(KEY_PETROL_STATION)
-
-            edt_name.setText(petrolStation.name)
             placeAutocompleteAddress.setText(petrolStation.address)
         }
+    }
+
+    private fun setupLocationButton() {
+        if (SDK_INT >= M) {
+            if (hasLocationPermission())
+                enableLocationButton()
+            else
+                requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION), REQUEST_CODE_LOCATION)
+        } else {
+            enableLocationButton()
+        }
+    }
+
+    private fun enableLocationButton() {
+        bt_location.visibility = VISIBLE
+        bt_location.setOnClickListener(this)
+    }
+
+    private fun useCurrentLocation() {
+        presenter.getCurrentLocation(context = this, onCurrentLocationFoundListener =  this)
     }
 
 }
