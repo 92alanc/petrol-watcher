@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.tasks.OnCompleteListener
@@ -9,10 +10,11 @@ import com.google.firebase.database.*
 /**
  * The database manager used in the app
  */
-class AppDatabaseManager : DatabaseManager, ValueEventListener {
+class AppDatabaseManager : DatabaseManager {
 
     private companion object {
         const val REFERENCE_VEHICLES = "vehicles"
+        const val REFERENCE_PETROL_STATIONS = "petrol_stations"
     }
 
     private lateinit var onVehiclesFoundListener: OnVehiclesFoundListener
@@ -27,8 +29,21 @@ class AppDatabaseManager : DatabaseManager, ValueEventListener {
      */
     override fun fetchVehicles(onVehiclesFoundListener: OnVehiclesFoundListener) {
         this.onVehiclesFoundListener = onVehiclesFoundListener
-        FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES).child(
-                FirebaseAuth.getInstance().currentUser!!.uid).addValueEventListener(this)
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES).child(uid)
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) { }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val vehicles = ArrayList<Vehicle>()
+
+                        snapshot.children.toList().forEach {
+                            vehicles.add(Vehicle(it))
+                        }
+
+                        onVehiclesFoundListener.onVehiclesFound(vehicles)
+                    }
+                })
     }
 
     /**
@@ -65,16 +80,37 @@ class AppDatabaseManager : DatabaseManager, ValueEventListener {
         })
     }
 
-    override fun onCancelled(error: DatabaseError) { }
+    /**
+     * Saves a petrol station
+     *
+     * @param petrolStation the petrol station to save
+     * @param onCompleteListener the callback to be triggered when the
+     *                           operation is complete
+     */
+    override fun savePetrolStation(petrolStation: PetrolStation,
+                                   onCompleteListener: OnCompleteListener<Void>) {
+        val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) { }
 
-    override fun onDataChange(snapshot: DataSnapshot) {
-        val vehicles = ArrayList<Vehicle>()
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(petrolStation.id).exists())
+                    update(petrolStation, reference, onCompleteListener)
+                else
+                    insert(petrolStation, reference, onCompleteListener)
+            }
+        })
+    }
 
-        snapshot.children.toList().forEach {
-            vehicles.add(Vehicle(it))
-        }
-
-        onVehiclesFoundListener.onVehiclesFound(vehicles)
+    /**
+     * Deletes a petrol station
+     *
+     * @param petrolStation the petrol station to delete
+     */
+    override fun deletePetrolStation(petrolStation: PetrolStation) {
+        val childToDelete = FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES)
+                .child(petrolStation.id)
+        childToDelete.removeValue()
     }
 
     private fun <T: Mappable> insert(item: T,

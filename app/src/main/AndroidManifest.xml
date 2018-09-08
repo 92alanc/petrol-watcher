@@ -82,6 +82,13 @@
         <activity android:name=".feature.stations.MapActivity"
             android:taskAffinity="@string/affinity_petrol_stations"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".feature.stations.CreatePetrolStationActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.stations.MapActivity"/>
+        </activity>
         <!-- endregion -->
 
         <!-- region Facebook -->

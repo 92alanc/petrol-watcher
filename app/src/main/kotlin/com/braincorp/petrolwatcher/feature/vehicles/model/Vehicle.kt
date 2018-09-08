@@ -122,7 +122,7 @@ data class Vehicle(var manufacturer: String = "",
     }
 
     /**
-     * Determines whether the vehicle data is valid
+     * Determines whether the data is valid
      *
      * @return true if positive, otherwise false
      */

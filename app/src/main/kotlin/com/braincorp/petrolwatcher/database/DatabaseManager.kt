@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.tasks.OnCompleteListener
@@ -32,4 +33,20 @@ interface DatabaseManager {
      *                           operation is complete
      */
     fun saveVehicle(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>)
+
+    /**
+     * Saves a petrol station
+     *
+     * @param petrolStation the petrol station to save
+     * @param onCompleteListener the callback to be triggered when the
+     *                           operation is complete
+     */
+    fun savePetrolStation(petrolStation: PetrolStation, onCompleteListener: OnCompleteListener<Void>)
+
+    /**
+     * Deletes a petrol station
+     *
+     * @param petrolStation the petrol station to delete
+     */
+    fun deletePetrolStation(petrolStation: PetrolStation)
 }

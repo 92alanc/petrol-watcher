@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.stations.CreatePetrolStationActivity
 import com.braincorp.petrolwatcher.feature.stations.MapActivity
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
@@ -129,8 +130,7 @@ fun AppCompatActivity.startConsumptionActivity(finishCurrent: Boolean = false) {
  *                      activity will be finished
  */
 fun AppCompatActivity.startCreatePetrolStationActivity(finishCurrent: Boolean = false) {
-    // TODO: implement
-    Toast.makeText(this, "Create petrol station activity", LENGTH_SHORT).show()
+    startActivity(CreatePetrolStationActivity::class.java, finishCurrent)
 }
 
 /**

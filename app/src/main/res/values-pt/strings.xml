@@ -54,4 +54,7 @@
     <string name="stations_nearby">Postos ao redor</string>
     <string name="description_navigation_open">Menu aberto</string>
     <string name="description_navigation_closed">Menu fechado</string>
+    <string name="description_my_location">Minha localização</string>
+    <string name="address">Endereço</string>
+    <string name="invalid_petrol_station_data">Dados do posto inválidos</string>
 </resources>

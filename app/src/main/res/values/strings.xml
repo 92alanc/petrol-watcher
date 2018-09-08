@@ -9,6 +9,7 @@
     <!-- region Accessibility -->
     <string name="description_navigation_open">Menu open</string>
     <string name="description_navigation_closed">Menu closed</string>
+    <string name="description_my_location">My location</string>
     <!-- endregion -->
 
     <!-- region Auth -->
@@ -67,5 +68,7 @@
     <!-- region Petrol stations -->
     <string name="find_stations">Find stations</string>
     <string name="stations_nearby">Stations nearby</string>
+    <string name="address">Address</string>
+    <string name="invalid_petrol_station_data">Invalid petrol station data</string>
     <!-- endregion -->
 </resources>
