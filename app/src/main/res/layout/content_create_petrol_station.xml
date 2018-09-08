@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/til_address"
+            app:layout_constraintBottom_toTopOf="@+id/edt_address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <android.support.design.widget.TextInputEditText
@@ -28,22 +28,16 @@
                 android:inputType="textCapWords"/>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_address"
+        <fragment
+            android:id="@+id/edt_address"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:layout_marginEnd="@dimen/margin_default"
             app:layout_constraintTop_toBottomOf="@id/til_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bt_location">
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edt_address"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/address"
-                android:inputType="textPostalAddress"/>
-        </android.support.design.widget.TextInputLayout>
+            app:layout_constraintEnd_toStartOf="@id/bt_location"/>
 
         <ImageButton
             android:id="@+id/bt_location"
@@ -52,9 +46,9 @@
             android:background="@color/transparent"
             android:src="@drawable/ic_location"
             android:contentDescription="@string/description_my_location"
-            app:layout_constraintTop_toTopOf="@id/til_address"
-            app:layout_constraintBottom_toBottomOf="@id/til_address"
-            app:layout_constraintStart_toEndOf="@id/til_address"
+            app:layout_constraintTop_toTopOf="@id/edt_address"
+            app:layout_constraintBottom_toBottomOf="@id/edt_address"
+            app:layout_constraintStart_toEndOf="@id/edt_address"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>

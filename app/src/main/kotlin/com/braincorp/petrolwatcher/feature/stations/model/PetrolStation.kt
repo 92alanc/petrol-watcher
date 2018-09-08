@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.stations.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.braincorp.petrolwatcher.database.Mappable
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DataSnapshot
 import java.util.*
 import kotlin.collections.HashMap
@@ -12,14 +13,18 @@ import kotlin.collections.HashMap
  *
  * @param name the name
  * @param address the address
+ * @param latLng the latitude and longitude
  */
 data class PetrolStation(var name: String = "",
-                         var address: String = "") : Mappable, Parcelable {
+                         var address: String = "",
+                         var latLng: LatLng = LatLng(0.0, 0.0)) : Mappable, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
         private const val KEY_ID = "id"
         private const val KEY_NAME = "name"
         private const val KEY_ADDRESS = "address"
+        private const val KEY_LAT = "lat"
+        private const val KEY_LNG = "lng"
 
         override fun createFromParcel(parcel: Parcel): PetrolStation {
             return PetrolStation(parcel)
@@ -33,6 +38,7 @@ data class PetrolStation(var name: String = "",
             id = readString()
             name = readString()
             address = readString()
+            latLng = readParcelable(javaClass.classLoader)
         }
     }
 
@@ -41,6 +47,9 @@ data class PetrolStation(var name: String = "",
             id = child(KEY_ID).value.toString()
             name = child(KEY_NAME).value.toString()
             address = child(KEY_ADDRESS).value.toString()
+            val lat = child(KEY_LAT).value.toString().toDouble()
+            val lng = child(KEY_LNG).value.toString().toDouble()
+            latLng = LatLng(lat, lng)
         }
     }
 
@@ -56,6 +65,8 @@ data class PetrolStation(var name: String = "",
         map[KEY_ID] = id
         map[KEY_NAME] = name
         map[KEY_ADDRESS] = address
+        map[KEY_LAT] = latLng.latitude
+        map[KEY_LNG] = latLng.longitude
         return map
     }
 
@@ -73,6 +84,7 @@ data class PetrolStation(var name: String = "",
             writeString(id)
             writeString(name)
             writeString(address)
+            writeParcelable(latLng, flags)
         }
     }
 
