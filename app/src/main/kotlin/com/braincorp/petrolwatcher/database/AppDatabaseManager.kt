@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -17,8 +18,6 @@ class AppDatabaseManager : DatabaseManager {
         const val REFERENCE_PETROL_STATIONS = "petrol_stations"
     }
 
-    private lateinit var onVehiclesFoundListener: OnVehiclesFoundListener
-
     /**
      * Fetches all vehicles belonging to the currently
      * signed in user
@@ -28,7 +27,6 @@ class AppDatabaseManager : DatabaseManager {
      *                                query is complete
      */
     override fun fetchVehicles(onVehiclesFoundListener: OnVehiclesFoundListener) {
-        this.onVehiclesFoundListener = onVehiclesFoundListener
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES).child(uid)
                 .addValueEventListener(object: ValueEventListener {
@@ -111,6 +109,30 @@ class AppDatabaseManager : DatabaseManager {
         val childToDelete = FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES)
                 .child(petrolStation.id)
         childToDelete.removeValue()
+    }
+
+    /**
+     * Fetches all petrol stations within a radius of 5km
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     */
+    override fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener) {
+        // TODO: fetch within 5km
+        FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) { }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val petrolStations = ArrayList<PetrolStation>()
+
+                        snapshot.children.toList().forEach {
+                            petrolStations.add(PetrolStation(it))
+                        }
+
+                        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+                    }
+                })
     }
 
     private fun <T: Mappable> insert(item: T,

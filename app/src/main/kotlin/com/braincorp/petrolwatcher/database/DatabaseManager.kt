@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -49,4 +50,12 @@ interface DatabaseManager {
      * @param petrolStation the petrol station to delete
      */
     fun deletePetrolStation(petrolStation: PetrolStation)
+
+    /**
+     * Fetches all petrol stations within a radius of 5km
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     */
+    fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener)
 }

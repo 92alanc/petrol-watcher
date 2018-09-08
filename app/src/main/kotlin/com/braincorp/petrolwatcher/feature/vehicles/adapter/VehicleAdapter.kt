@@ -12,6 +12,9 @@ import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnItemRemovedListe
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
 
+/**
+ * The adapter for the vehicle RecyclerView
+ */
 class VehicleAdapter(private val data: ArrayList<Vehicle>,
                      private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<VehicleAdapter.VehicleHolder>() {

@@ -8,6 +8,8 @@ import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.stations.CreatePetrolStationActivity
 import com.braincorp.petrolwatcher.feature.stations.MapActivity
+import com.braincorp.petrolwatcher.feature.stations.PetrolStationListActivity
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
@@ -140,8 +142,20 @@ fun AppCompatActivity.startCreatePetrolStationActivity(finishCurrent: Boolean = 
  *                      activity will be finished
  */
 fun AppCompatActivity.startPetrolStationListActivity(finishCurrent: Boolean = false) {
+    startActivity(PetrolStationListActivity::class.java, finishCurrent)
+}
+
+/**
+ * Starts the petrol station details activity
+ *
+ * @param petrolStation the petrol station
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startPetrolStationDetailsActivity(petrolStation: PetrolStation,
+                                                        finishCurrent: Boolean = false) {
     // TODO: implement
-    Toast.makeText(this, "Petrol station list activity", LENGTH_SHORT).show()
+    Toast.makeText(this, "Petrol station details activity", LENGTH_SHORT).show()
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
