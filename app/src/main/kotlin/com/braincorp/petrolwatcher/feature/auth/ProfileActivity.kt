@@ -11,13 +11,14 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
+import android.view.View.*
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
-import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.utils.hasExternalStoragePermission
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.braincorp.petrolwatcher.utils.startVehicleListActivity
@@ -34,17 +35,18 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     private companion object {
         const val REQUEST_CODE_CAMERA = 3892
         const val REQUEST_CODE_GALLERY = 13797
+        const val TAG = "PETROL_WATCHER"
     }
 
     override lateinit var presenter: ProfileContract.Presenter
 
     private val authenticator = DependencyInjection.authenticator
+    private val imageHandler = DependencyInjection.imageHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        presenter = ProfilePresenter(view = this,
-                imageHandler = DependencyInjection.imageHandler)
+        presenter = ProfilePresenter(view = this, imageHandler = imageHandler)
         setupButtons()
     }
 
@@ -59,11 +61,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CAMERA) {
                 val uri = presenter.getImageUriFromCameraIntent(data, this)
-                fillImageView(uri, img_profile,
-                        R.drawable.ic_profile, progress_bar)
+                Log.d(TAG, "URI from camera: $uri")
+                imageHandler.fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {
                 val uri = presenter.getImageUriFromGalleryIntent(data)
-                fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
+                Log.d(TAG, "URI from gallery: $uri")
+                imageHandler.fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
             }
         }
     }
@@ -86,6 +89,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
      * @param messageId the error message ID
      */
     override fun showErrorDialogue(@StringRes messageId: Int) {
+        showCardViewAndVehiclesButton()
+
         AlertDialog.Builder(this)
                 .setTitle(R.string.error)
                 .setIcon(R.drawable.ic_error)
@@ -98,6 +103,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
      * Shows the map activity
      */
     override fun showMap() {
+        showCardViewAndVehiclesButton()
         startMapActivity()
     }
 
@@ -118,7 +124,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
      */
     override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
         edt_name.setText(displayName)
-        fillImageView(profilePictureUri, img_profile, progressBar = progress_bar)
+        imageHandler.fillImageView(profilePictureUri, img_profile, progressBar = progress_bar)
     }
 
     private fun setupButtons() {
@@ -133,14 +139,26 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun saveProfile() {
+        card_view.visibility = INVISIBLE // Workaround
+        bt_vehicles.visibility = GONE
+        progress_bar.visibility = VISIBLE
+
         if (SDK_INT >= M) {
-            if (hasExternalStoragePermission())
+            if (hasExternalStoragePermission()) {
                 presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
-            else
-                requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE), REQUEST_CODE_GALLERY)
+            } else {
+                requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE),
+                                   REQUEST_CODE_GALLERY)
+            }
         } else {
             presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
         }
+    }
+
+    private fun showCardViewAndVehiclesButton() {
+        progress_bar.visibility = GONE
+        card_view.visibility = VISIBLE
+        bt_vehicles.visibility = VISIBLE
     }
 
 }

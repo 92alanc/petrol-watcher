@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.support.annotation.DrawableRes
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
+import android.widget.ProgressBar
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.UploadTask
@@ -81,5 +84,20 @@ interface ImageHandler {
                                         context: Context,
                                         onSuccessListener: OnSuccessListener<Void>,
                                         onFailureListener: OnFailureListener)
+
+    /**
+     * Fills an ImageView
+     *
+     * @param imageUri the image URI
+     * @param imageView the ImageView
+     * @param placeholderRes the optional image to be placed in case
+     *                       the image URI is null
+     * @param progressBar the progress bar to show when the image
+     *                    is loading
+     */
+    fun fillImageView(imageUri: Uri?,
+                      imageView: ImageView,
+                      @DrawableRes placeholderRes: Int = 0,
+                      progressBar: ProgressBar)
 
 }
