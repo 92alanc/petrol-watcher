@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -73,5 +74,20 @@ object MockDatabaseManager : DatabaseManager {
      * @param petrolStation the petrol station to delete
      */
     override fun deletePetrolStation(petrolStation: PetrolStation) { }
+
+    /**
+     * Fetches all petrol stations within a radius of 5km
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     */
+    override fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener) {
+        val stationA = PetrolStation(name = "BP", rating = 4)
+        val stationB = PetrolStation(name = "Shell", rating = 3)
+        val stationC = PetrolStation(name = "BR", rating = 1)
+
+        val petrolStations = arrayListOf(stationA, stationB, stationC)
+        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+    }
 
 }
