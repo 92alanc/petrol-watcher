@@ -62,11 +62,17 @@ fun AppCompatActivity.startAuthenticationErrorActivity(errorType: AuthErrorType,
 /**
  * Starts the profile activity
  *
+ * @param editMode if true, the activity will start
+ *                 in edit mode
  * @param finishCurrent if true, the current
  *                      activity will be finished
  */
-fun AppCompatActivity.startProfileActivity(finishCurrent: Boolean = false) {
-    startActivity(ProfileActivity::class.java, finishCurrent)
+fun AppCompatActivity.startProfileActivity(editMode: Boolean = false,
+                                           finishCurrent: Boolean = false) {
+    val intent = ProfileActivity.intent(this, editMode)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
 }
 
 /**

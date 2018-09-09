@@ -96,7 +96,7 @@ class MapActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_stations_nearby -> startPetrolStationListActivity()
-            R.id.item_profile -> startProfileActivity()
+            R.id.item_profile -> startProfileActivity(editMode = true)
             R.id.item_sign_out -> presenter.signOut()
         }
 

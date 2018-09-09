@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.auth
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
@@ -32,10 +33,18 @@ import kotlinx.android.synthetic.main.content_profile.*
 class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         ProfileContract.View, OnUserDataFoundListener {
 
-    private companion object {
-        const val REQUEST_CODE_CAMERA = 3892
-        const val REQUEST_CODE_GALLERY = 13797
-        const val TAG = "PETROL_WATCHER"
+    companion object {
+        private const val KEY_EDIT_MODE = "edit_mode"
+        private const val KEY_NAME = "name"
+        private const val KEY_PROFILE_PICTURE = "profile_picture"
+        private const val REQUEST_CODE_CAMERA = 3892
+        private const val REQUEST_CODE_GALLERY = 13797
+        private const val TAG = "PETROL_WATCHER"
+
+        fun intent(context: Context, editMode: Boolean): Intent {
+            return Intent(context, ProfileActivity::class.java)
+                    .putExtra(KEY_EDIT_MODE, editMode)
+        }
     }
 
     override lateinit var presenter: ProfileContract.Presenter
@@ -43,16 +52,39 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     private val authenticator = DependencyInjection.authenticator
     private val imageHandler = DependencyInjection.imageHandler
 
+    private var editMode = false
+    private var name: String? = ""
+    private var profilePicture: Uri? = Uri.EMPTY
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         presenter = ProfilePresenter(view = this, imageHandler = imageHandler)
         setupButtons()
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
+        else
+            editMode = intent.getBooleanExtra(KEY_EDIT_MODE, false)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        with(outState) {
+            putBoolean(KEY_EDIT_MODE, editMode)
+            putString(KEY_NAME, name)
+            putParcelable(KEY_PROFILE_PICTURE, profilePicture)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null)
+            restoreInstanceState(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-        if (authenticator.isUserSignedIn())
+        if (editMode)
             updateWithUserData()
     }
 
@@ -60,13 +92,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CAMERA) {
-                val uri = presenter.getImageUriFromCameraIntent(data, this)
-                Log.d(TAG, "URI from camera: $uri")
-                imageHandler.fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
+                profilePicture = presenter.getImageUriFromCameraIntent(data, this)
+                Log.d(TAG, "URI from camera: $profilePicture")
+                imageHandler.fillImageView(profilePicture, img_profile,
+                                           R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {
-                val uri = presenter.getImageUriFromGalleryIntent(data)
-                Log.d(TAG, "URI from gallery: $uri")
-                imageHandler.fillImageView(uri, img_profile, R.drawable.ic_profile, progress_bar)
+                profilePicture = presenter.getImageUriFromGalleryIntent(data)
+                Log.d(TAG, "URI from gallery: $profilePicture")
+                imageHandler.fillImageView(profilePicture, img_profile,
+                                           R.drawable.ic_profile, progress_bar)
             }
         }
     }
@@ -123,6 +157,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
      * @param profilePictureUri the profile picture URI
      */
     override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
+        name = displayName
+        profilePicture = profilePictureUri
         edt_name.setText(displayName)
         imageHandler.fillImageView(profilePictureUri, img_profile, progressBar = progress_bar)
     }
@@ -159,6 +195,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         progress_bar.visibility = GONE
         card_view.visibility = VISIBLE
         bt_vehicles.visibility = VISIBLE
+    }
+
+    private fun restoreInstanceState(savedInstanceState: Bundle) {
+        with(savedInstanceState) {
+            editMode = getBoolean(KEY_EDIT_MODE)
+            name = getString(KEY_NAME)
+            profilePicture = getParcelable(KEY_PROFILE_PICTURE)
+        }
     }
 
 }
