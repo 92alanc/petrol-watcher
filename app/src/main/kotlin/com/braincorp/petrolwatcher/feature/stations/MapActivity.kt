@@ -18,7 +18,6 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
-import com.braincorp.petrolwatcher.feature.auth.utils.fillImageView
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
 import com.braincorp.petrolwatcher.utils.*
@@ -97,7 +96,7 @@ class MapActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_stations_nearby -> startPetrolStationListActivity()
-            R.id.item_profile -> startProfileActivity()
+            R.id.item_profile -> startProfileActivity(editMode = true)
             R.id.item_sign_out -> presenter.signOut()
         }
 
@@ -145,7 +144,8 @@ class MapActivity : AppCompatActivity(),
         authenticator.getUserData(object: OnUserDataFoundListener {
             override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
                 txtName.text = displayName
-                fillImageView(profilePictureUri, imgProfile, progressBar = progressBar)
+                DependencyInjection.imageHandler.fillImageView(profilePictureUri, imgProfile,
+                                                               progressBar = progressBar)
             }
         })
     }
