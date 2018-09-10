@@ -74,5 +74,6 @@
     <string name="rating">Rating</string>
     <string name="distance_km_format">Distance: %1$dkm</string>
     <string name="distance_m_format">Distance: %1$dm</string>
+    <string name="fuels">Fuels</string>
     <!-- endregion -->
 </resources>

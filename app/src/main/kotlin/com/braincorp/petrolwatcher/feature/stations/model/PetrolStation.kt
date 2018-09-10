@@ -40,7 +40,9 @@ data class PetrolStation(var name: String = "",
             id = readString()
             name = readString()
             address = readString()
-            latLng = readParcelable(javaClass.classLoader)
+            val lat = readDouble()
+            val lng = readDouble()
+            latLng = LatLng(lat, lng)
             rating = readInt()
         }
     }
@@ -89,7 +91,8 @@ data class PetrolStation(var name: String = "",
             writeString(id)
             writeString(name)
             writeString(address)
-            writeParcelable(latLng, flags)
+            writeDouble(latLng.latitude)
+            writeDouble(latLng.longitude)
             writeInt(rating)
         }
     }

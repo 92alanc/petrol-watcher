@@ -61,4 +61,5 @@
     <string name="rating">Avaliação</string>
     <string name="distance_km_format">Distância: %1$dkm</string>
     <string name="distance_m_format">Distância: %1$dm</string>
+    <string name="fuels">Combustíveis</string>
 </resources>

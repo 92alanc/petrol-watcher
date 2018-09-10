@@ -17,6 +17,9 @@ import com.braincorp.petrolwatcher.utils.startVehicleListActivity
 import kotlinx.android.synthetic.main.activity_vehicle_details.*
 import kotlinx.android.synthetic.main.content_vehicle_details.*
 
+/**
+ * The activity where vehicle details are shown and edited
+ */
 class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                                VehicleDetailsActivityContract.View {
 
@@ -138,6 +141,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
             presenter.saveVehicle(vehicle)
         } else {
             editMode = true
+            fab.setImageResource(R.drawable.ic_save)
             showEditableFields()
             fillEditableFields()
         }
