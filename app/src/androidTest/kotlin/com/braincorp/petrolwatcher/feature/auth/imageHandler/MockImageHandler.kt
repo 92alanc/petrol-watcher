@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.support.test.InstrumentationRegistry
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
+import android.widget.ProgressBar
 import com.braincorp.petrolwatcher.base.TestActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -105,6 +107,23 @@ object MockImageHandler : ImageHandler {
             onSuccessListener.onSuccess(null)
         else
             onFailureListener.onFailure(Exception())
+    }
+
+    /**
+     * Fills an ImageView
+     *
+     * @param imageUri the image URI
+     * @param imageView the ImageView
+     * @param placeholderRes the optional image to be placed in case
+     *                       the image URI is null
+     * @param progressBar the progress bar to show when the image
+     *                    is loading
+     */
+    override fun fillImageView(imageUri: Uri?,
+                               imageView: ImageView,
+                               placeholderRes: Int,
+                               progressBar: ProgressBar) {
+        imageView.setImageResource(placeholderRes)
     }
 
 }
