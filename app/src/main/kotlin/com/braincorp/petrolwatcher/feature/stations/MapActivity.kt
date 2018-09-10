@@ -25,6 +25,7 @@ import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresent
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_map.*
@@ -111,6 +112,8 @@ class MapActivity : AppCompatActivity(),
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
+
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
 
         if (SDK_INT >= M) {
             if (hasLocationPermission()) {
