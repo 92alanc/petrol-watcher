@@ -19,10 +19,13 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.Marker
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.app_bar_map.*
@@ -35,7 +38,9 @@ class MapActivity : AppCompatActivity(),
         View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener,
         OnMapReadyCallback,
-        MapActivityContract.View {
+        MapActivityContract.View,
+        OnPetrolStationsFoundListener,
+        GoogleMap.OnMarkerClickListener {
 
     private companion object {
         const val KEY_IS_MAP_READY = "is_map_ready"
@@ -46,6 +51,7 @@ class MapActivity : AppCompatActivity(),
     override lateinit var presenter: MapActivityContract.Presenter
 
     private var isMapReady = false
+    private var petrolStations = ArrayList<PetrolStation>()
     private lateinit var map: GoogleMap
 
     private val authenticator = DependencyInjection.authenticator
@@ -116,6 +122,32 @@ class MapActivity : AppCompatActivity(),
         } else {
             enableLocation(map)
         }
+
+        presenter.fetchPetrolStations(onPetrolStationsFoundListener = this)
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        if (marker == null) return false
+
+        val petrolStation = petrolStations.first {
+            it.latLng == marker.position
+        }
+
+        startPetrolStationDetailsActivity(petrolStation)
+        return true
+    }
+
+    /**
+     * Event triggered when a list of
+     * petrol stations is found
+     *
+     * @param petrolStations the petrol stations found
+     */
+    override fun onPetrolStationsFound(petrolStations: ArrayList<PetrolStation>) {
+        this.petrolStations = petrolStations
+        DependencyInjection.mapController.addPetrolStationsToMap(map,
+                petrolStations,
+                onMarkerClickListener = this)
     }
 
     /**
@@ -145,7 +177,7 @@ class MapActivity : AppCompatActivity(),
             override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
                 txtName.text = displayName
                 DependencyInjection.imageHandler.fillImageView(profilePictureUri, imgProfile,
-                                                               progressBar = progressBar)
+                        progressBar = progressBar)
             }
         })
     }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.location.Location
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.tasks.OnCompleteListener
 
@@ -32,5 +34,18 @@ interface MapController {
      *                           once the location is ready
      */
     fun getCurrentLocation(context: Context, onCompleteListener: OnCompleteListener<Location>)
+
+    /**
+     * Adds petrol stations to a map
+     *
+     * @param map the map
+     * @param petrolStations the petrol stations
+     * @param onMarkerClickListener the callback to be triggered
+     *                              when a petrol station marker
+     *                              is clicked
+     */
+    fun addPetrolStationsToMap(map: GoogleMap,
+                               petrolStations: ArrayList<PetrolStation>,
+                               onMarkerClickListener: GoogleMap.OnMarkerClickListener)
 
 }

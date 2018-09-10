@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.stations.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 
 interface MapActivityContract {
     /**
@@ -21,5 +22,14 @@ interface MapActivityContract {
          * Ends the current session
          */
         fun signOut()
+
+        /**
+         * Fetches all petrol stations
+         *
+         * @param onPetrolStationsFoundListener the callback to be triggered
+         *                                      when the petrol stations are
+         *                                      found
+         */
+        fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener)
     }
 }

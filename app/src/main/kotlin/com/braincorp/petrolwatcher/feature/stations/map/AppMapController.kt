@@ -5,9 +5,14 @@ import android.location.Location
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
 import android.util.Log
+import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
 
 /**
@@ -50,6 +55,28 @@ class AppMapController : MapController {
         } catch (e: SecurityException) {
             Log.e(TAG, e.message, e)
         }
+    }
+
+    /**
+     * Adds petrol stations to a map
+     *
+     * @param map the map
+     * @param petrolStations the petrol stations
+     * @param onMarkerClickListener the callback to be triggered
+     *                              when a petrol station marker
+     *                              is clicked
+     */
+    override fun addPetrolStationsToMap(map: GoogleMap,
+                                        petrolStations: ArrayList<PetrolStation>,
+                                        onMarkerClickListener: GoogleMap.OnMarkerClickListener) {
+        petrolStations.forEach {
+            val icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_station)
+            map.addMarker(MarkerOptions().title(it.name)
+                    .position(it.latLng)
+                    .icon(icon)
+                    .draggable(false))
+        }
+        map.setOnMarkerClickListener(onMarkerClickListener)
     }
 
 }
