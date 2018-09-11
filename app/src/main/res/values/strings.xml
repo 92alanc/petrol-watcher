@@ -11,6 +11,7 @@
     <string name="description_navigation_closed">Menu closed</string>
     <string name="description_my_location">My location</string>
     <string name="description_refresh">Refresh</string>
+    <string name="description_directions">Directions</string>
     <!-- endregion -->
 
     <!-- region Auth -->

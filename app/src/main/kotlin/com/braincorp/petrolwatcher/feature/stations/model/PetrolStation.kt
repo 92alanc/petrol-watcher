@@ -14,6 +14,7 @@ import kotlin.collections.HashMap
  * @param name the name
  * @param address the address
  * @param latLng the latitude and longitude
+ * @param rating the rating (from 0 to 5)
  */
 data class PetrolStation(var name: String = "",
                          var address: String = "",

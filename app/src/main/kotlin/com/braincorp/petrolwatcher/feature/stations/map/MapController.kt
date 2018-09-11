@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.stations.map
 
 import android.content.Context
+import android.content.Intent
 import android.location.Location
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
@@ -47,5 +48,22 @@ interface MapController {
     fun addPetrolStationsToMap(map: GoogleMap,
                                petrolStations: ArrayList<PetrolStation>,
                                onMarkerClickListener: GoogleMap.OnMarkerClickListener)
+
+    /**
+     * Gets an intent for directions to a given address
+     *
+     * @param destination the destination address
+     *
+     * @return the intent with the directions
+     */
+    fun getDirectionsIntent(destination: String): Intent
+
+    /**
+     * Zooms the map to the device's current location
+     *
+     * @param map the map
+     * @param context the Android context
+     */
+    fun zoomToDeviceLocation(map: GoogleMap, context: Context)
 
 }

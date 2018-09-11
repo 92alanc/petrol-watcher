@@ -29,8 +29,21 @@
         android:layout_marginTop="@dimen/margin_default"
         app:layout_constraintTop_toBottomOf="@id/txt_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bt_directions"
         tools:text="60 Normandy Rd., Worthing, West Sussex, United Kingdom BN14 7EA"/>
+
+    <ImageButton
+        android:id="@+id/bt_directions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_directions"
+        android:contentDescription="@string/description_directions"
+        app:layout_constraintTop_toTopOf="@id/txt_address"
+        app:layout_constraintBottom_toBottomOf="@id/txt_address"
+        app:layout_constraintStart_toEndOf="@id/txt_address"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <android.support.constraint.Group
         android:id="@+id/group_read_only_fields"

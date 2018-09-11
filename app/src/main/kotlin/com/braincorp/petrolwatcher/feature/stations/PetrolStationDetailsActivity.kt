@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationDetailsActivityContract
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -57,6 +58,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         fillReadOnlyFields()
         presenter = PetrolStationDetailsActivityPresenter(view = this)
         fab.setOnClickListener(this)
+        bt_directions.setOnClickListener(this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
     }
@@ -87,6 +89,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> handleFabClick()
+            R.id.bt_directions -> showDirections()
         }
     }
 
@@ -177,6 +180,11 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
 
     private fun updatePetrolStationData() {
         petrolStation.name = edt_name.text.toString()
+    }
+
+    private fun showDirections() {
+        val intent = DependencyInjection.mapController.getDirectionsIntent(petrolStation.address)
+        startActivity(intent)
     }
 
 }

@@ -188,6 +188,7 @@ class MapActivity : AppCompatActivity(),
     private fun enableLocation(map: GoogleMap) {
         try {
             map.isMyLocationEnabled = true
+            mapController.zoomToDeviceLocation(map, context = this)
         } catch (e: SecurityException) {
             Log.d(TAG, "Error enabling location", e)
         }
