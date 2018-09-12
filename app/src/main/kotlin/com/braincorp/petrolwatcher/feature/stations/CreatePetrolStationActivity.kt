@@ -2,21 +2,27 @@ package com.braincorp.petrolwatcher.feature.stations
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
 import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.CreatePetrolStationActivityPresenter
+import com.braincorp.petrolwatcher.ui.OnItemClickListener
 import com.braincorp.petrolwatcher.utils.hasLocationPermission
+import com.braincorp.petrolwatcher.utils.startFuelActivity
 import com.braincorp.petrolwatcher.utils.startPetrolStationListActivity
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
@@ -33,11 +39,13 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         CreatePetrolStationActivityContract.View,
         View.OnClickListener,
         PlaceSelectionListener,
-        OnCurrentLocationFoundListener {
+        OnCurrentLocationFoundListener,
+        OnItemClickListener {
 
     private companion object {
         const val KEY_PETROL_STATION = "petrol_station"
         const val REQUEST_CODE_LOCATION = 1234
+        const val REQUEST_CODE_FUEL = 5678
         const val TAG = "PETROL_WATCHER"
     }
 
@@ -53,6 +61,7 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         bindPlaceAutocompleteFragment()
         presenter = CreatePetrolStationActivityPresenter(view = this)
         fab.setOnClickListener(this)
+        bt_add_fuel.setOnClickListener(this)
         setupLocationButton()
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
@@ -78,11 +87,30 @@ class CreatePetrolStationActivity : AppCompatActivity(),
             enableLocationButton()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_FUEL && resultCode == RESULT_OK) {
+            val fuel = data!!.getParcelableExtra<Fuel>(FuelActivity.KEY_DATA)
+            petrolStation.fuels.add(fuel)
+            updateRecyclerView()
+        }
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> save()
             R.id.bt_location -> useCurrentLocation()
+            R.id.bt_add_fuel -> startFuelActivity(REQUEST_CODE_FUEL)
         }
+    }
+
+    /**
+     * Function triggered when a RecyclerView item is clicked
+     *
+     * @param position the position in the list
+     */
+    override fun onItemClick(position: Int) {
+        // TODO: implement
     }
 
     /**
@@ -170,6 +198,13 @@ class CreatePetrolStationActivity : AppCompatActivity(),
 
     private fun useCurrentLocation() {
         presenter.getCurrentLocation(context = this, onCurrentLocationFoundListener =  this)
+    }
+
+    private fun updateRecyclerView() {
+        val layoutManager = LinearLayoutManager(this)
+        val adapter = FuelAdapter(onItemClickListener = this, data = petrolStation.fuels)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
     }
 
 }

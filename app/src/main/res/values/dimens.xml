@@ -20,6 +20,7 @@
     <!-- region Margin -->
     <dimen name="margin_default">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_huge">32dp</dimen>
     <!-- endregion -->
 
     <!-- Navigation header -->

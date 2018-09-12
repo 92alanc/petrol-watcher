@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.braincorp.petrolwatcher.database.Mappable
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DataSnapshot
+import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -19,6 +20,7 @@ import kotlin.collections.HashMap
 data class PetrolStation(var name: String = "",
                          var address: String = "",
                          var latLng: LatLng = LatLng(0.0, 0.0),
+                         var fuels: MutableSet<Fuel> = mutableSetOf(),
                          var rating: Int = 0) : Mappable, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
@@ -27,6 +29,9 @@ data class PetrolStation(var name: String = "",
         private const val KEY_ADDRESS = "address"
         private const val KEY_LAT = "lat"
         private const val KEY_LNG = "lng"
+        private const val KEY_FUEL_TYPES = "fuel_types"
+        private const val KEY_FUEL_QUALITIES = "fuel_qualities"
+        private const val KEY_FUEL_PRICES = "fuel_prices"
         private const val KEY_RATING = "rating"
 
         override fun createFromParcel(parcel: Parcel): PetrolStation {
@@ -36,6 +41,7 @@ data class PetrolStation(var name: String = "",
         override fun newArray(size: Int): Array<PetrolStation?> = arrayOfNulls(size)
     }
 
+    @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel): this() {
         with (parcel) {
             id = readString()
@@ -44,10 +50,20 @@ data class PetrolStation(var name: String = "",
             val lat = readDouble()
             val lng = readDouble()
             latLng = LatLng(lat, lng)
+            val types = parcel.readArray(javaClass.classLoader)
+            val qualities = parcel.readArray(javaClass.classLoader)
+            val prices = parcel.readArray(javaClass.classLoader)
+            for (i in 0 until types.size) {
+                val type = Fuel.Type.valueOf(types[i].toString())
+                val quality = Fuel.Quality.valueOf(qualities[i].toString())
+                val price = BigDecimal(prices[i].toString().toDouble())
+                fuels.add(Fuel(type, quality, price))
+            }
             rating = readInt()
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     constructor(snapshot: DataSnapshot): this() {
         with (snapshot) {
             id = child(KEY_ID).value.toString()
@@ -56,6 +72,15 @@ data class PetrolStation(var name: String = "",
             val lat = child(KEY_LAT).value.toString().toDouble()
             val lng = child(KEY_LNG).value.toString().toDouble()
             latLng = LatLng(lat, lng)
+            val types = child(KEY_FUEL_TYPES).children.toList()
+            val qualities = child(KEY_FUEL_QUALITIES).children.toList()
+            val prices = child(KEY_FUEL_PRICES).children.toList()
+            for (i in 0 until types.count()) {
+                val type = Fuel.Type.valueOf(types[i].value.toString())
+                val quality = Fuel.Quality.valueOf(qualities[i].value.toString())
+                val price = BigDecimal(prices[i].value.toString())
+                fuels.add(Fuel(type, quality, price))
+            }
             rating = child(KEY_RATING).value.toString().toInt()
         }
     }
@@ -74,6 +99,9 @@ data class PetrolStation(var name: String = "",
         map[KEY_ADDRESS] = address
         map[KEY_LAT] = latLng.latitude
         map[KEY_LNG] = latLng.longitude
+        map[KEY_FUEL_TYPES] = fuels.map { it.type.name }
+        map[KEY_FUEL_QUALITIES] = fuels.map { it.quality.name }
+        map[KEY_FUEL_PRICES] = fuels.map { it.price.toDouble() }
         map[KEY_RATING] = rating
         return map
     }
@@ -94,6 +122,9 @@ data class PetrolStation(var name: String = "",
             writeString(address)
             writeDouble(latLng.latitude)
             writeDouble(latLng.longitude)
+            writeArray(fuels.map { it.type.name }.toTypedArray())
+            writeArray(fuels.map { it.quality.name }.toTypedArray())
+            writeArray(fuels.map { it.price.toDouble() }.toTypedArray())
             writeInt(rating)
         }
     }

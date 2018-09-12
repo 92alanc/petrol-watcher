@@ -5,15 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationDetailsActivityContract
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.PetrolStationDetailsActivityPresenter
+import com.braincorp.petrolwatcher.ui.OnItemClickListener
+import com.braincorp.petrolwatcher.utils.startFuelActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
@@ -29,11 +34,13 @@ import kotlinx.android.synthetic.main.content_petrol_station_details.*
 class PetrolStationDetailsActivity : AppCompatActivity(),
         PetrolStationDetailsActivityContract.View,
         View.OnClickListener,
-        PlaceSelectionListener {
+        PlaceSelectionListener,
+        OnItemClickListener {
 
     companion object {
         private const val KEY_EDIT_MODE = "edit_mode"
         private const val KEY_PETROL_STATION = "petrol_station"
+        private const val REQUEST_CODE_FUEL = 1234
         private const val TAG = "PETROL_WATCHER"
 
         fun intent(context: Context, petrolStation: PetrolStation): Intent {
@@ -56,9 +63,11 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         bindPlaceAutocompleteFragment()
         petrolStation = intent.getParcelableExtra(KEY_PETROL_STATION)
         fillReadOnlyFields()
+        updateRecyclerView()
         presenter = PetrolStationDetailsActivityPresenter(view = this)
         fab.setOnClickListener(this)
         bt_directions.setOnClickListener(this)
+        bt_add_fuel.setOnClickListener(this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
     }
@@ -77,6 +86,15 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
             restoreInstanceState(savedInstanceState)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_FUEL && resultCode == RESULT_OK) {
+            val fuel = data!!.getParcelableExtra<Fuel>(FuelActivity.KEY_DATA)
+            petrolStation.fuels.add(fuel)
+            updateRecyclerView()
+        }
+    }
+
     override fun onBackPressed() {
         if (editMode) {
             editMode = false
@@ -90,7 +108,17 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         when (v.id) {
             R.id.fab -> handleFabClick()
             R.id.bt_directions -> showDirections()
+            R.id.bt_add_fuel -> startFuelActivity(REQUEST_CODE_FUEL)
         }
+    }
+
+    /**
+     * Function triggered when a RecyclerView item is clicked
+     *
+     * @param position the position in the list
+     */
+    override fun onItemClick(position: Int) {
+        // TODO: implement
     }
 
     /**
@@ -185,6 +213,13 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
     private fun showDirections() {
         val intent = DependencyInjection.mapController.getDirectionsIntent(petrolStation.address)
         startActivity(intent)
+    }
+
+    private fun updateRecyclerView() {
+        val layoutManager = LinearLayoutManager(this)
+        val adapter = FuelAdapter(onItemClickListener = this, data = petrolStation.fuels)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
     }
 
 }

@@ -6,10 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
-import com.braincorp.petrolwatcher.feature.stations.CreatePetrolStationActivity
-import com.braincorp.petrolwatcher.feature.stations.MapActivity
-import com.braincorp.petrolwatcher.feature.stations.PetrolStationDetailsActivity
-import com.braincorp.petrolwatcher.feature.stations.PetrolStationListActivity
+import com.braincorp.petrolwatcher.feature.stations.*
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
@@ -165,6 +162,16 @@ fun AppCompatActivity.startPetrolStationDetailsActivity(petrolStation: PetrolSta
     startActivity(intent)
     if (finishCurrent)
         finish()
+}
+
+/**
+ * Starts the fuel activity
+ *
+ * @param requestCode the request code
+ */
+fun AppCompatActivity.startFuelActivity(requestCode: Int) {
+    val intent = Intent(this, FuelActivity::class.java)
+    startActivityForResult(intent, requestCode)
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {

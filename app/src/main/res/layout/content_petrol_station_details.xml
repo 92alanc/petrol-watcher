@@ -54,7 +54,7 @@
     <!-- endregion -->
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -68,7 +68,9 @@
         android:layout_height="wrap_content"
         android:text="@string/fuels"
         android:textColor="@color/orange"
-        app:layout_constraintTop_toBottomOf="@id/guideline"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -76,10 +78,30 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_default"
         app:layout_constraintTop_toBottomOf="@id/label_fuels"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:itemCount="4"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65"/>
+
+    <Button
+        android:id="@+id/bt_add_fuel"
+        style="@style/AppStyle.Button.Teal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_huge"
+        android:text="@string/add_fuel"
+        app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"/>
     <!-- endregion -->
 
     <!-- region editable fields -->
@@ -114,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="til_name,edt_address"
+        app:constraint_referenced_ids="til_name,edt_address,bt_add_fuel"
         tools:visibility="gone"/>
     <!-- endregion -->
 

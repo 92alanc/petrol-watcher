@@ -63,4 +63,12 @@
     <string name="distance_m_format">Distance: %1$dm</string>
     <string name="fuels">Fuels</string>
     <string name="description_directions">Directions</string>
+    <string name="add_fuel">Add fuel</string>
+    <string name="price">Price</string>
+    <string name="diesel">Diesel</string>
+    <string name="ethanol">Ethanol</string>
+    <string name="lpg">LPG</string>
+    <string name="petrol">Gas</string>
+    <string name="regular">Regular</string>
+    <string name="premium">Premium</string>
 </resources>
