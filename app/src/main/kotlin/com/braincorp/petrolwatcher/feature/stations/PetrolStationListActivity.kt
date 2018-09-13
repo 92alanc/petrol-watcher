@@ -119,6 +119,7 @@ class PetrolStationListActivity : AppCompatActivity(),
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
             petrolStations = getParcelableArrayList(KEY_PETROL_STATIONS)
+            updateList(petrolStations)
             currentLocation = getParcelable(KEY_CURRENT_LOCATION)
         }
     }
@@ -131,7 +132,7 @@ class PetrolStationListActivity : AppCompatActivity(),
     private fun fetchPetrolStations() {
         recycler_view.visibility = GONE
         progress_bar.visibility = VISIBLE
-        presenter.fetchPetrolStations()
+        presenter.fetchPetrolStations(hasLocationPermission(), currentLocation)
     }
 
 }

@@ -4,6 +4,7 @@ import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFo
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import org.mockito.Mock
@@ -76,7 +77,7 @@ object MockDatabaseManager : DatabaseManager {
     override fun deletePetrolStation(petrolStation: PetrolStation) { }
 
     /**
-     * Fetches all petrol stations within a radius of 5km
+     * Fetches all petrol stations
      *
      * @param onPetrolStationsFoundListener the listener to be triggered when the
      *                                      query is complete
@@ -90,4 +91,22 @@ object MockDatabaseManager : DatabaseManager {
         onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
     }
 
+    /**
+     * Fetches all petrol stations within a 5km radius
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     * @param hasLocationPermission whether the user has granted the location system
+     *                           permission
+     * @param currentLocation the current location
+     */
+    override fun fetchPetrolStationsWithin5kmRadius(onPetrolStationsFoundListener: OnPetrolStationsFoundListener,
+                                                    hasLocationPermission: Boolean,
+                                                    currentLocation: LatLng?) {
+        val stationA = PetrolStation(name = "Shell", rating = 3)
+        val stationB = PetrolStation(name = "BR", rating = 1)
+
+        val petrolStations = arrayListOf(stationA, stationB)
+        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+    }
 }

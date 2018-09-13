@@ -1,9 +1,11 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -112,13 +114,12 @@ class AppDatabaseManager : DatabaseManager {
     }
 
     /**
-     * Fetches all petrol stations within a radius of 5km
+     * Fetches all petrol stations
      *
      * @param onPetrolStationsFoundListener the listener to be triggered when the
      *                                      query is complete
      */
     override fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener) {
-        // TODO: fetch within 5km
         FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
                 .addValueEventListener(object: ValueEventListener {
                     override fun onCancelled(error: DatabaseError) { }
@@ -128,6 +129,44 @@ class AppDatabaseManager : DatabaseManager {
 
                         snapshot.children.toList().forEach {
                             petrolStations.add(PetrolStation(it))
+                        }
+
+                        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+                    }
+                })
+    }
+
+    /**
+     * Fetches all petrol stations within a 5km radius
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     * @param hasLocationPermission whether the user has granted the location system
+     *                              permission
+     * @param currentLocation the current location
+     */
+    override fun fetchPetrolStationsWithin5kmRadius(onPetrolStationsFoundListener: OnPetrolStationsFoundListener,
+                                                    hasLocationPermission: Boolean,
+                                                    currentLocation: LatLng?) {
+        FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) { }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val petrolStations = ArrayList<PetrolStation>()
+
+                        snapshot.children.toList().forEach {
+                            val petrolStation = PetrolStation(it)
+
+                            if (hasLocationPermission && currentLocation != null) {
+                                val mapController = DependencyInjection.mapController
+                                val distance = mapController.getDistanceInMetres(currentLocation,
+                                        petrolStation.latLng)
+                                if (distance <= 5000)
+                                    petrolStations.add(petrolStation)
+                            } else {
+                                petrolStations.add(petrolStation)
+                            }
                         }
 
                         onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)

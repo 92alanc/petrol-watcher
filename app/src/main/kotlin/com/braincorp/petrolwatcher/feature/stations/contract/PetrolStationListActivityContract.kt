@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.stations.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.google.android.gms.maps.model.LatLng
 
 interface PetrolStationListActivityContract {
     /**
@@ -19,8 +20,12 @@ interface PetrolStationListActivityContract {
      */
     interface Presenter : BaseContract.Presenter {
         /**
-         * Fetches all petrol stations within a radius of 5km
+         * Fetches all petrol stations within a 5km radius
+         *
+         * @param hasLocationPermission whether the user has granted the location system
+         *                              permission
+         * @param currentLocation the current location
          */
-        fun fetchPetrolStations()
+        fun fetchPetrolStations(hasLocationPermission: Boolean, currentLocation: LatLng?)
     }
 }

@@ -4,6 +4,7 @@ import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFo
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 
 /**
@@ -52,10 +53,23 @@ interface DatabaseManager {
     fun deletePetrolStation(petrolStation: PetrolStation)
 
     /**
-     * Fetches all petrol stations within a radius of 5km
+     * Fetches all petrol stations
      *
      * @param onPetrolStationsFoundListener the listener to be triggered when the
      *                                      query is complete
      */
     fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener)
+
+    /**
+     * Fetches all petrol stations within a 5km radius
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     * @param hasLocationPermission whether the user has granted the location system
+     *                              permission
+     * @param currentLocation the current location
+     */
+    fun fetchPetrolStationsWithin5kmRadius(onPetrolStationsFoundListener: OnPetrolStationsFoundListener,
+                                           hasLocationPermission: Boolean,
+                                           currentLocation: LatLng?)
 }

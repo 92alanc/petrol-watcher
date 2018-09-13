@@ -4,6 +4,7 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationListActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * The implementation of the presentation layer of
@@ -15,9 +16,16 @@ class PetrolStationListActivityPresenter(private val view: PetrolStationListActi
 
     /**
      * Fetches all petrol stations within a radius of 5km
+     *
+     * @param hasLocationPermission whether the user has granted the location system
+     *                              permission
+     * @param currentLocation the current location
      */
-    override fun fetchPetrolStations() {
-        DependencyInjection.databaseManager.fetchPetrolStations(onPetrolStationsFoundListener = this)
+    override fun fetchPetrolStations(hasLocationPermission: Boolean, currentLocation: LatLng?) {
+        DependencyInjection.databaseManager.fetchPetrolStationsWithin5kmRadius(
+                onPetrolStationsFoundListener = this,
+                hasLocationPermission = hasLocationPermission,
+                currentLocation = currentLocation)
     }
 
     /**
