@@ -17,6 +17,7 @@ import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationDetail
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.PetrolStationDetailsActivityPresenter
+import com.braincorp.petrolwatcher.feature.stations.utils.updateFuelSet
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
 import com.braincorp.petrolwatcher.utils.startFuelActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
@@ -217,7 +218,9 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
 
     private fun updateRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
-        val adapter = FuelAdapter(onItemClickListener = this, data = petrolStation.fuels)
+        val adapter = FuelAdapter(onItemClickListener = this,
+                data = petrolStation.fuels,
+                locale = petrolStation.locale)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
     }

@@ -47,7 +47,7 @@ class CreatePetrolStationActivityPresenter(private val view: CreatePetrolStation
             val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
             val address = addresses[0].getAddressLine(0)
 
-            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng)
+            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, addresses[0].locale)
         })
     }
 

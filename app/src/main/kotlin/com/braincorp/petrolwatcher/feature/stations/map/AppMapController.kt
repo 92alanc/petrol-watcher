@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
+import java.util.*
 
 /**
  * The map controller used in the app
@@ -115,8 +116,10 @@ class AppMapController : MapController {
             locationResult.addOnCompleteListener {
                 val zoomLevel = 15f
                 val location = LatLng(it.result.latitude, it.result.longitude)
-                // Address is not necessary here
-                onCurrentLocationFoundListener.onCurrentLocationFound(address = "", latLng = location)
+                // Address and locale are not necessary here
+                onCurrentLocationFoundListener.onCurrentLocationFound(address = "",
+                        latLng = location,
+                        locale = Locale.getDefault())
                 val cameraPosition = CameraUpdateFactory.newLatLngZoom(location, zoomLevel)
                 map.moveCamera(cameraPosition)
             }

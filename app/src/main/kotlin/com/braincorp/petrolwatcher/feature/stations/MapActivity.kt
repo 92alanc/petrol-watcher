@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.Marker
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.app_bar_map.*
+import java.util.*
 
 /**
  * The activity where the map containing all petrol stations
@@ -163,8 +164,9 @@ class MapActivity : AppCompatActivity(),
      *
      * @param address the address
      * @param latLng the latitude and longitude
+     * @param locale the locale
      */
-    override fun onCurrentLocationFound(address: String, latLng: LatLng) {
+    override fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale) {
         currentLocation = latLng
     }
 

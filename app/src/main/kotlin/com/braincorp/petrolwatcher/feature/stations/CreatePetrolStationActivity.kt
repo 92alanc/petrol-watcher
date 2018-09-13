@@ -21,6 +21,7 @@ import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundLi
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.CreatePetrolStationActivityPresenter
+import com.braincorp.petrolwatcher.feature.stations.utils.updateFuelSet
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
 import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.braincorp.petrolwatcher.utils.startFuelActivity
@@ -32,6 +33,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_create_petrol_station.*
 import kotlinx.android.synthetic.main.content_create_petrol_station.*
+import java.util.*
 
 /**
  * The activity where petrol stations are created
@@ -164,12 +166,14 @@ class CreatePetrolStationActivity : AppCompatActivity(),
      *
      * @param address the address
      * @param latLng the latitude and longitude
+     * @param locale the locale
      */
-    override fun onCurrentLocationFound(address: String, latLng: LatLng) {
+    override fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale) {
         placeAutocompleteAddress.setText(address)
 
         petrolStation.address = address
         petrolStation.latLng = latLng
+        petrolStation.locale = locale
     }
 
     override fun onError(error: Status?) {
@@ -223,7 +227,9 @@ class CreatePetrolStationActivity : AppCompatActivity(),
 
     private fun updateRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
-        val adapter = FuelAdapter(onItemClickListener = this, data = petrolStation.fuels)
+        val adapter = FuelAdapter(onItemClickListener = this,
+                data = petrolStation.fuels,
+                locale = petrolStation.locale)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
     }

@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.stations.map
 
 import com.google.android.gms.maps.model.LatLng
+import java.util.*
 
 /**
  * Callback for current address
@@ -13,7 +14,8 @@ interface OnCurrentLocationFoundListener {
      *
      * @param address the address
      * @param latLng the latitude and longitude
+     * @param locale the locale
      */
-    fun onCurrentLocationFound(address: String, latLng: LatLng)
+    fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale)
 
 }
