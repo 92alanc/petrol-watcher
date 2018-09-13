@@ -90,7 +90,16 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_FUEL && resultCode == RESULT_OK) {
             val fuel = data!!.getParcelableExtra<Fuel>(FuelActivity.KEY_DATA)
-            petrolStation.fuels.add(fuel)
+            val isDuplicate = petrolStation.fuels.any {
+                fuel.type == it.type && fuel.quality == it.quality
+            }
+            if (isDuplicate) {
+                petrolStation.fuels.first {
+                    fuel.type == it.type && fuel.quality == it.quality
+                }.price = fuel.price
+            } else {
+                petrolStation.fuels.add(fuel)
+            }
             updateRecyclerView()
         }
     }
