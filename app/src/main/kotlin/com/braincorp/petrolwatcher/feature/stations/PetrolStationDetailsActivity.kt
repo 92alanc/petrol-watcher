@@ -109,7 +109,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         when (v.id) {
             R.id.fab -> handleFabClick()
             R.id.bt_directions -> showDirections()
-            R.id.bt_add_fuel -> startFuelActivity(REQUEST_CODE_FUEL)
+            R.id.bt_add_fuel -> startFuelActivity(requestCode = REQUEST_CODE_FUEL)
         }
     }
 
@@ -119,7 +119,8 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
      * @param position the position in the list
      */
     override fun onItemClick(position: Int) {
-        // TODO: implement
+        val fuel = petrolStation.fuels.elementAt(position)
+        startFuelActivity(fuel, REQUEST_CODE_FUEL)
     }
 
     /**
