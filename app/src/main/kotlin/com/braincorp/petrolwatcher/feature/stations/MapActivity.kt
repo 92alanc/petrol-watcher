@@ -20,11 +20,13 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import de.hdodenhof.circleimageview.CircleImageView
@@ -41,7 +43,8 @@ class MapActivity : AppCompatActivity(),
         OnMapReadyCallback,
         MapActivityContract.View,
         OnPetrolStationsFoundListener,
-        GoogleMap.OnMarkerClickListener {
+        GoogleMap.OnMarkerClickListener,
+        OnCurrentLocationFoundListener {
 
     private companion object {
         const val KEY_IS_MAP_READY = "is_map_ready"
@@ -53,6 +56,7 @@ class MapActivity : AppCompatActivity(),
 
     private var isMapReady = false
     private var petrolStations = ArrayList<PetrolStation>()
+    private var currentLocation: LatLng? = null
     private lateinit var map: GoogleMap
 
     private val authenticator = DependencyInjection.authenticator
@@ -96,13 +100,13 @@ class MapActivity : AppCompatActivity(),
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fab -> startCreatePetrolStationActivity()
+            R.id.fab -> startCreatePetrolStationActivity(currentLocation = currentLocation)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_stations_nearby -> startPetrolStationListActivity()
+            R.id.item_stations_nearby -> startList()
             R.id.item_profile -> startProfileActivity(editMode = true)
             R.id.item_sign_out -> presenter.signOut()
         }
@@ -154,6 +158,17 @@ class MapActivity : AppCompatActivity(),
     }
 
     /**
+     * Function to be triggered when the current address
+     * is found
+     *
+     * @param address the address
+     * @param latLng the latitude and longitude
+     */
+    override fun onCurrentLocationFound(address: String, latLng: LatLng) {
+        currentLocation = latLng
+    }
+
+    /**
      * Starts the main activity
      */
     override fun startMainActivity() {
@@ -188,7 +203,9 @@ class MapActivity : AppCompatActivity(),
     private fun enableLocation(map: GoogleMap) {
         try {
             map.isMyLocationEnabled = true
-            mapController.zoomToDeviceLocation(map, context = this)
+            mapController.zoomToDeviceLocation(map,
+                    context = this,
+                    onCurrentLocationFoundListener = this)
         } catch (e: SecurityException) {
             Log.d(TAG, "Error enabling location", e)
         }
@@ -196,6 +213,10 @@ class MapActivity : AppCompatActivity(),
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         isMapReady = savedInstanceState.getBoolean(KEY_IS_MAP_READY)
+    }
+
+    private fun startList() {
+        startPetrolStationListActivity(currentLocation)
     }
 
 }

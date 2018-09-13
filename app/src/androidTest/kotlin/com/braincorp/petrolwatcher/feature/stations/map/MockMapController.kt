@@ -10,6 +10,7 @@ import com.braincorp.petrolwatcher.base.TestActivity
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import org.mockito.Mockito.mock
@@ -72,8 +73,22 @@ object MockMapController : MapController {
      *
      * @param map the map
      * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered when
+     *                                       the current location is found
      */
-    override fun zoomToDeviceLocation(map: GoogleMap, context: Context) {
+    override fun zoomToDeviceLocation(map: GoogleMap,
+                                      context: Context,
+                                      onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
     }
+
+    /**
+     * Gets the distance between 2 points, in metres
+     *
+     * @param a the start point
+     * @param b the end point
+     *
+     * @return the distance in metres
+     */
+    override fun getDistanceInMetres(a: LatLng, b: LatLng): Float = 800f
 
 }

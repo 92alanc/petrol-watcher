@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher.feature.stations
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -13,7 +15,9 @@ import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationListAc
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.PetrolStationListActivityPresenter
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
+import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.braincorp.petrolwatcher.utils.startPetrolStationDetailsActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_petrol_station_list.*
 import kotlinx.android.synthetic.main.content_petrol_station_list.*
 
@@ -24,28 +28,47 @@ class PetrolStationListActivity : AppCompatActivity(),
         PetrolStationListActivityContract.View,
         OnItemClickListener {
 
-    private companion object {
-        const val KEY_PETROL_STATIONS = "petrol_stations"
+    companion object {
+        private const val KEY_CURRENT_LOCATION = "current_location"
+        private const val KEY_HAS_LOCATION_PERMISSION = "has_location_permission"
+        private const val KEY_PETROL_STATIONS = "petrol_stations"
+
+        fun intent(context: Context,
+                   currentLocation: LatLng?): Intent {
+            return Intent(context, PetrolStationListActivity::class.java)
+                    .putExtra(KEY_CURRENT_LOCATION, currentLocation)
+        }
     }
 
     override lateinit var presenter: PetrolStationListActivityContract.Presenter
 
     private var petrolStations = ArrayList<PetrolStation>()
+    private var hasLocationPermission = false
+    private var currentLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_petrol_station_list)
         setupToolbar()
         presenter = PetrolStationListActivityPresenter(view = this)
+
+        hasLocationPermission = hasLocationPermission()
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
+        else
+            currentLocation = intent.getParcelableExtra(KEY_CURRENT_LOCATION)
+
         if (petrolStations.isEmpty())
             fetchPetrolStations()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(KEY_PETROL_STATIONS, petrolStations)
+        with(outState) {
+            putParcelableArrayList(KEY_PETROL_STATIONS, petrolStations)
+            putParcelable(KEY_CURRENT_LOCATION, currentLocation)
+            putBoolean(KEY_HAS_LOCATION_PERMISSION, hasLocationPermission)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -71,7 +94,10 @@ class PetrolStationListActivity : AppCompatActivity(),
      */
     override fun updateList(petrolStations: ArrayList<PetrolStation>) {
         this.petrolStations = petrolStations
-        val adapter = PetrolStationAdapter(petrolStations, onItemClickListener = this)
+        val adapter = PetrolStationAdapter(petrolStations,
+                onItemClickListener = this,
+                hasLocationPermission = hasLocationPermission,
+                currentLocation = currentLocation)
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
@@ -91,7 +117,10 @@ class PetrolStationListActivity : AppCompatActivity(),
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
-        petrolStations = savedInstanceState.getParcelableArrayList(KEY_PETROL_STATIONS)
+        with(savedInstanceState) {
+            petrolStations = getParcelableArrayList(KEY_PETROL_STATIONS)
+            currentLocation = getParcelable(KEY_CURRENT_LOCATION)
+        }
     }
 
     private fun setupToolbar() {

@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.stations
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build.VERSION.SDK_INT
@@ -42,16 +43,25 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         OnCurrentLocationFoundListener,
         OnItemClickListener {
 
-    private companion object {
-        const val KEY_PETROL_STATION = "petrol_station"
-        const val REQUEST_CODE_LOCATION = 1234
-        const val REQUEST_CODE_FUEL = 5678
-        const val TAG = "PETROL_WATCHER"
+    companion object {
+        private const val KEY_HAS_LOCATION_PERMISSION = "has_location_permission"
+        private const val KEY_CURRENT_LOCATION = "current_location"
+        private const val KEY_PETROL_STATION = "petrol_station"
+        private const val REQUEST_CODE_LOCATION = 1234
+        private const val REQUEST_CODE_FUEL = 5678
+        private const val TAG = "PETROL_WATCHER"
+
+        fun intent(context: Context, currentLocation: LatLng?): Intent {
+            return Intent(context, CreatePetrolStationActivity::class.java)
+                    .putExtra(KEY_CURRENT_LOCATION, currentLocation)
+        }
     }
 
     override lateinit var presenter: CreatePetrolStationActivityContract.Presenter
 
     private var petrolStation = PetrolStation()
+    private var hasLocationPermission = false
+    private var currentLocation: LatLng? = null
     private lateinit var placeAutocompleteAddress: PlaceAutocompleteFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,13 +73,21 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         fab.setOnClickListener(this)
         bt_add_fuel.setOnClickListener(this)
         setupLocationButton()
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState)
+        } else {
+            hasLocationPermission = intent.getBooleanExtra(KEY_HAS_LOCATION_PERMISSION, false)
+            currentLocation = intent.getParcelableExtra(KEY_CURRENT_LOCATION)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(KEY_PETROL_STATION, petrolStation)
+        with(outState) {
+            putParcelable(KEY_PETROL_STATION, petrolStation)
+            putBoolean(KEY_HAS_LOCATION_PERMISSION, hasLocationPermission)
+            putParcelable(KEY_CURRENT_LOCATION, currentLocation)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -117,7 +135,8 @@ class CreatePetrolStationActivity : AppCompatActivity(),
      * Shows the petrol station list
      */
     override fun showPetrolStationList() {
-        startPetrolStationListActivity(finishCurrent = true)
+        startPetrolStationListActivity(finishCurrent = true,
+                currentLocation = currentLocation)
     }
 
     /**
@@ -176,6 +195,8 @@ class CreatePetrolStationActivity : AppCompatActivity(),
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
             petrolStation = getParcelable(KEY_PETROL_STATION)
+            hasLocationPermission = getBoolean(KEY_HAS_LOCATION_PERMISSION)
+            currentLocation = getParcelable(KEY_CURRENT_LOCATION)
             placeAutocompleteAddress.setText(petrolStation.address)
         }
     }

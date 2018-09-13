@@ -12,6 +12,7 @@ import com.braincorp.petrolwatcher.feature.vehicles.CreateVehicleActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleDetailsActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Starts the main activity
@@ -134,19 +135,29 @@ fun AppCompatActivity.startConsumptionActivity(finishCurrent: Boolean = false) {
  *
  * @param finishCurrent if true, the current
  *                      activity will be finished
+ * @param currentLocation the current location
  */
-fun AppCompatActivity.startCreatePetrolStationActivity(finishCurrent: Boolean = false) {
-    startActivity(CreatePetrolStationActivity::class.java, finishCurrent)
+fun AppCompatActivity.startCreatePetrolStationActivity(finishCurrent: Boolean = false,
+                                                       currentLocation: LatLng?) {
+    val intent = CreatePetrolStationActivity.intent(this, currentLocation)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
 }
 
 /**
  * Starts the petrol station list activity
  *
+ * @param currentLocation the current location
  * @param finishCurrent if true, the current
  *                      activity will be finished
  */
-fun AppCompatActivity.startPetrolStationListActivity(finishCurrent: Boolean = false) {
-    startActivity(PetrolStationListActivity::class.java, finishCurrent)
+fun AppCompatActivity.startPetrolStationListActivity(currentLocation: LatLng?,
+                                                     finishCurrent: Boolean = false) {
+    val intent = PetrolStationListActivity.intent(this, currentLocation)
+    startActivity(intent)
+    if (finishCurrent)
+        finish()
 }
 
 /**

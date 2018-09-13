@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 
 /**
@@ -63,7 +64,21 @@ interface MapController {
      *
      * @param map the map
      * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered when
+     *                                       the current location is found
      */
-    fun zoomToDeviceLocation(map: GoogleMap, context: Context)
+    fun zoomToDeviceLocation(map: GoogleMap,
+                             context: Context,
+                             onCurrentLocationFoundListener: OnCurrentLocationFoundListener)
+
+    /**
+     * Gets the distance between 2 points, in metres
+     *
+     * @param a the start point
+     * @param b the end point
+     *
+     * @return the distance in metres
+     */
+    fun getDistanceInMetres(a: LatLng, b: LatLng): Float
 
 }

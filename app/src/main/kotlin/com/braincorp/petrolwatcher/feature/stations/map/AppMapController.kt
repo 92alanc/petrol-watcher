@@ -104,20 +104,47 @@ class AppMapController : MapController {
      *
      * @param map the map
      * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered when
+     *                                       the current location is found
      */
-    override fun zoomToDeviceLocation(map: GoogleMap, context: Context) {
+    override fun zoomToDeviceLocation(map: GoogleMap, context: Context,
+                                      onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
         try {
             val client = LocationServices.getFusedLocationProviderClient(context)
             val locationResult = client.lastLocation
             locationResult.addOnCompleteListener {
                 val zoomLevel = 15f
                 val location = LatLng(it.result.latitude, it.result.longitude)
+                // Address is not necessary here
+                onCurrentLocationFoundListener.onCurrentLocationFound(address = "", latLng = location)
                 val cameraPosition = CameraUpdateFactory.newLatLngZoom(location, zoomLevel)
                 map.moveCamera(cameraPosition)
             }
         } catch (e: SecurityException) {
             Log.e(TAG, e.message, e)
         }
+    }
+
+    /**
+     * Gets the distance between 2 points, in metres
+     *
+     * @param a the start point
+     * @param b the end point
+     *
+     * @return the distance in metres
+     */
+    override fun getDistanceInMetres(a: LatLng, b: LatLng): Float {
+        val startLatitude = a.latitude
+        val startLongitude = a.longitude
+
+        val endLatitude = b.latitude
+        val endLongitude = b.longitude
+
+        val results = FloatArray(4)
+
+        Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results)
+
+        return results[0]
     }
 
 }

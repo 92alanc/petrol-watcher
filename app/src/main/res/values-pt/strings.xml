@@ -59,8 +59,8 @@
     <string name="address">Endereço</string>
     <string name="invalid_petrol_station_data">Dados do posto inválidos</string>
     <string name="rating">Avaliação</string>
-    <string name="distance_km_format">Distância: %1$dkm</string>
-    <string name="distance_m_format">Distância: %1$dm</string>
+    <string name="distance_km_format">Distância: %1$.1fkm</string>
+    <string name="distance_m_format">Distância: %1$.0fm</string>
     <string name="fuels">Combustíveis</string>
     <string name="description_directions">Como chegar</string>
     <string name="add_fuel">Adicionar combustível</string>

@@ -73,8 +73,8 @@
     <string name="address">Address</string>
     <string name="invalid_petrol_station_data">Invalid petrol station data</string>
     <string name="rating">Rating</string>
-    <string name="distance_km_format">Distance: %1$dkm</string>
-    <string name="distance_m_format">Distance: %1$dm</string>
+    <string name="distance_km_format">Distance: %1$.1fkm</string>
+    <string name="distance_m_format">Distance: %1$.0fm</string>
     <string name="fuels">Fuels</string>
     <string name="add_fuel">Add fuel</string>
     <string name="price">Price</string>
