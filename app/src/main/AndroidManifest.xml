@@ -20,37 +20,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- region Authentication -->
-        <activity android:name=".feature.auth.MainActivity"
-                  android:taskAffinity="@string/affinity_auth"
-                  android:finishOnTaskLaunch="true"
-                  android:theme="@style/AppTheme">
+        <activity android:name=".ui.SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <!-- region Authentication -->
+        <activity android:name=".feature.auth.MainActivity"
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme"/>
+
         <activity android:name=".feature.auth.EmailSignInActivity"
-                  android:taskAffinity="@string/affinity_auth"
-                  android:finishOnTaskLaunch="true"
-                  android:theme="@style/AppTheme.NoActionBar">
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".feature.auth.MainActivity"/>
+                android:value=".feature.auth.MainActivity"/>
         </activity>
 
         <activity android:name=".feature.auth.EmailAndPasswordSignUpActivity"
-                  android:taskAffinity="@string/affinity_auth"
-                  android:finishOnTaskLaunch="true"
-                  android:theme="@style/AppTheme.NoActionBar">
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".feature.auth.EmailSignInActivity"/>
+                android:value=".feature.auth.EmailSignInActivity"/>
         </activity>
 
         <activity android:name=".feature.auth.AuthenticationErrorActivity"
-                  android:taskAffinity="@string/affinity_auth"
-                  android:finishOnTaskLaunch="true"
-                  android:theme="@style/AppTheme"/>
+            android:taskAffinity="@string/affinity_auth"
+            android:finishOnTaskLaunch="true"
+            android:theme="@style/AppTheme"/>
 
         <activity android:name=".feature.auth.ProfileActivity"
             android:taskAffinity="@string/affinity_auth"
@@ -64,10 +68,10 @@
             android:theme="@style/AppTheme"/>
 
         <activity android:name=".feature.vehicles.CreateVehicleActivity"
-                  android:taskAffinity="@string/affinity_vehicles"
-                  android:theme="@style/AppTheme.NoActionBar">
+            android:taskAffinity="@string/affinity_vehicles"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".feature.vehicles.VehicleListActivity"/>
+                android:value=".feature.vehicles.VehicleListActivity"/>
         </activity>
 
         <activity android:name=".feature.vehicles.VehicleDetailsActivity"
@@ -112,12 +116,12 @@
 
         <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
-                   android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id"/>
 
         <activity android:name="com.facebook.FacebookActivity"
-                  android:configChanges=
-                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                  android:label="@string/app_name" />
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"
