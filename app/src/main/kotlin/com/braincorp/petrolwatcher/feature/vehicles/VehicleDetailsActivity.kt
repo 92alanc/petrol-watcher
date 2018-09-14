@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -54,6 +56,17 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         savedInstanceState?.let {
             restoreInstanceState(it)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_vehicle_details, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.item_delete)
+            delete()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
@@ -230,6 +243,17 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                                                              avgConsumptionCity)
         txt_calculated_avg_consumption_motorway.text = getString(R.string.avg_consumption_motorway_format,
                                                                  avgConsumptionMotorway)
+    }
+
+    private fun delete() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.delete_vehicle)
+                .setMessage(R.string.delete_vehicle_confirmation)
+                .setIcon(R.drawable.ic_warning)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    presenter.deleteVehicle(vehicle)
+                }.show()
     }
     // endregion
 

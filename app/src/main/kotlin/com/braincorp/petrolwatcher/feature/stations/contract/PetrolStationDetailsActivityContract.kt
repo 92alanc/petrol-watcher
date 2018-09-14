@@ -31,5 +31,12 @@ interface PetrolStationDetailsActivityContract {
          * @param petrolStation the petrol station
          */
         fun savePetrolStation(petrolStation: PetrolStation)
+
+        /**
+         * Deletes a petrol station
+         *
+         * @param petrolStation the petrol station
+         */
+        fun deletePetrolStation(petrolStation: PetrolStation)
     }
 }

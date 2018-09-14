@@ -108,7 +108,7 @@ class AppDatabaseManager : DatabaseManager {
      * @param petrolStation the petrol station to delete
      */
     override fun deletePetrolStation(petrolStation: PetrolStation) {
-        val childToDelete = FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES)
+        val childToDelete = FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
                 .child(petrolStation.id)
         childToDelete.removeValue()
     }

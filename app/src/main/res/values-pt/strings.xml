@@ -66,9 +66,16 @@
     <string name="add_fuel">Adicionar combustível</string>
     <string name="price">Preço</string>
     <string name="diesel">Diesel</string>
-    <string name="ethanol">Ethanol</string>
+    <string name="ethanol">Etanol</string>
     <string name="lpg">Gás natural</string>
     <string name="petrol">Gasolina</string>
     <string name="regular">Comum</string>
     <string name="premium">Aditivado(a)</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_vehicle">Excluir veículo</string>
+    <string name="delete_vehicle_confirmation">Tem certeza que deseja excluir este veículo?</string>
+    <string name="delete_petrol_station">Excluir posto de gasolina</string>
+    <string name="delete_petrol_station_confirmation">Tem certeza que deseja excluir este posto de gasolina?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 </resources>

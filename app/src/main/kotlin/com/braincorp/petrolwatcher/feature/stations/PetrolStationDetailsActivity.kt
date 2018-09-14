@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -71,6 +73,17 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         bt_add_fuel.setOnClickListener(this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_petrol_station_details, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.item_delete)
+            delete()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -224,6 +237,17 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
                 locale = petrolStation.locale)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+    }
+
+    private fun delete() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.delete_petrol_station)
+                .setMessage(R.string.delete_petrol_station_confirmation)
+                .setIcon(R.drawable.ic_warning)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    presenter.deletePetrolStation(petrolStation)
+                }.show()
     }
 
 }

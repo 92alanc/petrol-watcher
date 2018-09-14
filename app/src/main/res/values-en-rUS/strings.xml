@@ -71,4 +71,11 @@
     <string name="petrol">Gas</string>
     <string name="regular">Regular</string>
     <string name="premium">Premium</string>
+    <string name="delete">Delete</string>
+    <string name="delete_vehicle">Delete vehicle</string>
+    <string name="delete_vehicle_confirmation">Are you sure you want to delete this vehicle?</string>
+    <string name="delete_petrol_station">Delete gas station</string>
+    <string name="delete_petrol_station_confirmation">Are you sure you want to delete this gas station?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

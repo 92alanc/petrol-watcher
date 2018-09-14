@@ -26,4 +26,14 @@ class VehicleDetailsActivityPresenter(private val view: VehicleDetailsActivityCo
         }
     }
 
+    /**
+     * Deletes a vehicle
+     *
+     * @param vehicle the vehicle to delete
+     */
+    override fun deleteVehicle(vehicle: Vehicle) {
+        DependencyInjection.databaseManager.deleteVehicle(vehicle)
+        view.showVehicleList()
+    }
+
 }

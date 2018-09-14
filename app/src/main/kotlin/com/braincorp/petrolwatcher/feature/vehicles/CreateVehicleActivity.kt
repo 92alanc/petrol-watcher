@@ -181,8 +181,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
             }
 
             R.id.spn_details -> {
-                if (++detailsSelectedCount > 1)
-                    selectedDetails = detailsList[position]
+                selectedDetails = detailsList[position]
             }
         }
     }

@@ -27,4 +27,14 @@ class PetrolStationDetailsActivityPresenter(private val view: PetrolStationDetai
         }
     }
 
+    /**
+     * Deletes a petrol station
+     *
+     * @param petrolStation the petrol station
+     */
+    override fun deletePetrolStation(petrolStation: PetrolStation) {
+        DependencyInjection.databaseManager.deletePetrolStation(petrolStation)
+        view.showMap()
+    }
+
 }
