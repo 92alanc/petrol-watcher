@@ -1,7 +1,10 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import org.mockito.Mock
@@ -54,4 +57,56 @@ object MockDatabaseManager : DatabaseManager {
         onCompleteListener.onComplete(voidTask)
     }
 
+    /**
+     * Saves a petrol station
+     *
+     * @param petrolStation the petrol station to save
+     * @param onCompleteListener the callback to be triggered when the
+     *                           operation is complete
+     */
+    override fun savePetrolStation(petrolStation: PetrolStation,
+                                   onCompleteListener: OnCompleteListener<Void>) {
+        onCompleteListener.onComplete(voidTask)
+    }
+
+    /**
+     * Deletes a petrol station
+     *
+     * @param petrolStation the petrol station to delete
+     */
+    override fun deletePetrolStation(petrolStation: PetrolStation) { }
+
+    /**
+     * Fetches all petrol stations
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     */
+    override fun fetchPetrolStations(onPetrolStationsFoundListener: OnPetrolStationsFoundListener) {
+        val stationA = PetrolStation(name = "BP", rating = 4)
+        val stationB = PetrolStation(name = "Shell", rating = 3)
+        val stationC = PetrolStation(name = "BR", rating = 1)
+
+        val petrolStations = arrayListOf(stationA, stationB, stationC)
+        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+    }
+
+    /**
+     * Fetches all petrol stations within a 5km radius
+     *
+     * @param onPetrolStationsFoundListener the listener to be triggered when the
+     *                                      query is complete
+     * @param hasLocationPermission whether the user has granted the location system
+     *                           permission
+     * @param currentLocation the current location
+     */
+    override fun fetchPetrolStationsWithin5kmRadius(onPetrolStationsFoundListener: OnPetrolStationsFoundListener,
+                                                    hasLocationPermission: Boolean,
+                                                    currentLocation: LatLng?) {
+        val stationA = PetrolStation(name = "Shell", rating = 3)
+        val stationB = PetrolStation(name = "BR", rating = 1)
+
+        val petrolStations = arrayListOf(stationA, stationB)
+        onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
+    }
 }

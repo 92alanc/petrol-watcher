@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_navigation_header"
+    android:background="@drawable/bg_navigation_header"
+    android:gravity="bottom"
+    android:padding="@dimen/padding_default"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/img_profile"
+        app:layout_constraintBottom_toBottomOf="@id/img_profile"
+        app:layout_constraintLeft_toLeftOf="@id/img_profile"
+        app:layout_constraintRight_toRightOf="@id/img_profile"
+        tools:progress="25"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_profile"
+        android:layout_width="@dimen/size_circleimageview_small"
+        android:layout_height="@dimen/size_circleimageview_small"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:civ_circle_background_color="@color/white"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="@id/img_profile"
+        app:layout_constraintBottom_toBottomOf="@id/img_profile"
+        app:layout_constraintLeft_toRightOf="@id/img_profile"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        tools:text="@tools:sample/full_names" />
+
+</android.support.constraint.ConstraintLayout>

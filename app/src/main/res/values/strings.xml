@@ -4,6 +4,17 @@
     <string name="error">Error</string>
     <string name="ok" translatable="false">OK</string>
     <string name="warning">Warning</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <!-- endregion -->
+
+    <!-- region Accessibility -->
+    <string name="description_navigation_open">Menu open</string>
+    <string name="description_navigation_closed">Menu closed</string>
+    <string name="description_my_location">My location</string>
+    <string name="description_refresh">Refresh</string>
+    <string name="description_directions">Directions</string>
     <!-- endregion -->
 
     <!-- region Auth -->
@@ -31,6 +42,9 @@
     <string name="error_email_format">Invalid e-mail format</string>
     <string name="error_incorrect_email_password">Incorrect e-mail or password</string>
     <string name="warning_password_length">Password length must be at least 6 characters</string>
+    <string name="my_account">My account</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
     <!-- endregion -->
 
     <!-- region Vehicles -->
@@ -54,5 +68,28 @@
     <string name="calculated_data">Calculated data</string>
     <string name="calculate">Calculate</string>
     <string name="year_format">Year: %1$d</string>
+    <string name="delete_vehicle">Delete vehicle</string>
+    <string name="delete_vehicle_confirmation">Are you sure you want to delete this vehicle?</string>
+    <!-- endregion -->
+
+    <!-- region Petrol stations -->
+    <string name="find_stations">Find stations</string>
+    <string name="stations_nearby">Stations nearby</string>
+    <string name="address">Address</string>
+    <string name="invalid_petrol_station_data">Invalid petrol station data</string>
+    <string name="rating">Rating</string>
+    <string name="distance_km_format">Distance: %1$.1fkm</string>
+    <string name="distance_m_format">Distance: %1$.0fm</string>
+    <string name="fuels">Fuels</string>
+    <string name="add_fuel">Add fuel</string>
+    <string name="price">Price</string>
+    <string name="diesel">Diesel</string>
+    <string name="ethanol">Ethanol</string>
+    <string name="lpg">LPG</string>
+    <string name="petrol">Petrol</string>
+    <string name="regular">Regular</string>
+    <string name="premium">Premium</string>
+    <string name="delete_petrol_station">Delete petrol station</string>
+    <string name="delete_petrol_station_confirmation">Are you sure you want to delete this petrol station?</string>
     <!-- endregion -->
 </resources>

@@ -78,4 +78,24 @@ interface Authenticator {
      */
     fun getCurrentUser(): FirebaseUser?
 
+    /**
+     * Gets the user's data
+     *
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
+     */
+    fun getUserData(onUserDataFoundListener: OnUserDataFoundListener)
+
+    /**
+     * Ends the current session
+     */
+    fun signOut()
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    fun isUserSignedIn(): Boolean
+
 }

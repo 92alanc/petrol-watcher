@@ -26,5 +26,12 @@ interface VehicleDetailsActivityContract {
          * @param vehicle the vehicle to save
          */
         fun saveVehicle(vehicle: Vehicle)
+
+        /**
+         * Deletes a vehicle
+         *
+         * @param vehicle the vehicle to delete
+         */
+        fun deleteVehicle(vehicle: Vehicle)
     }
 }

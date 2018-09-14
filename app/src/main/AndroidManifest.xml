@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- endregion -->
 
     <application
@@ -76,6 +78,38 @@
         </activity>
         <!-- endregion -->
 
+        <!-- region Petrol stations -->
+        <activity android:name=".feature.stations.MapActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".feature.stations.CreatePetrolStationActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.stations.MapActivity"/>
+        </activity>
+
+        <activity android:name=".feature.stations.PetrolStationListActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.stations.MapActivity"/>
+        </activity>
+
+        <activity android:name=".feature.stations.PetrolStationDetailsActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".feature.stations.PetrolStationListActivity"/>
+        </activity>
+
+        <activity android:name=".feature.stations.FuelActivity"
+            android:taskAffinity="@string/affinity_petrol_stations"
+            android:theme="@style/AppTheme"/>
+        <!-- endregion -->
+
         <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
@@ -96,6 +130,11 @@
             </intent-filter>
         </activity>
         <!-- endregion -->
+
+        <!-- Google Maps -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
     </application>
 

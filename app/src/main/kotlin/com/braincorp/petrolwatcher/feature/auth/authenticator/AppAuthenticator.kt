@@ -66,7 +66,7 @@ class AppAuthenticator : Authenticator {
     override fun signInWithGoogle(activity: AppCompatActivity,
                                   onConnectionFailedListener: GoogleApiClient.OnConnectionFailedListener): Intent {
         val signInOptions = GoogleSignInOptions.Builder(DEFAULT_SIGN_IN)
-                .requestEmail()
+                .requestProfile()
                 .build()
 
         val client = GoogleApiClient.Builder(activity)
@@ -86,8 +86,10 @@ class AppAuthenticator : Authenticator {
      */
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
-        LoginManager.getInstance().logInWithReadPermissions(activity, listOf("email"))
-        LoginManager.getInstance().registerCallback(facebookCallbackManager, callback)
+        with (LoginManager.getInstance()) {
+            logInWithReadPermissions(activity, listOf("public_profile"))
+            registerCallback(facebookCallbackManager, callback)
+        }
     }
 
     /**
@@ -108,5 +110,37 @@ class AppAuthenticator : Authenticator {
      * @return the currently logged in user
      */
     override fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+    /**
+     * Gets the user's data
+     *
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
+     */
+    override fun getUserData(onUserDataFoundListener: OnUserDataFoundListener) {
+        FirebaseAuth.getInstance().addAuthStateListener {
+            if (it.currentUser != null) {
+                val displayName = it.currentUser?.displayName
+                val profilePictureUri = it.currentUser?.photoUrl
+                onUserDataFoundListener.onUserDataFound(displayName, profilePictureUri)
+            }
+        }
+    }
+
+    /**
+     * Ends the current session
+     */
+    override fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    override fun isUserSignedIn(): Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
+    }
 
 }

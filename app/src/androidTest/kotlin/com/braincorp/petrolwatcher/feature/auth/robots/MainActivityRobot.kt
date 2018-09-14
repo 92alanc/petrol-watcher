@@ -5,6 +5,7 @@ import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractio
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.AuthenticationErrorActivity
 import com.braincorp.petrolwatcher.feature.auth.EmailSignInActivity
+import com.braincorp.petrolwatcher.feature.stations.MapActivity
 
 fun mainActivity(func: MainActivityRobot.() -> Unit) = MainActivityRobot().apply(func)
 
@@ -53,7 +54,9 @@ class MainActivityResult {
     }
 
     fun redirectToMapActivity() {
-        // TODO: implement
+        sentIntent {
+            className(MapActivity::class.java.name)
+        }
     }
 
     fun showErrorScreen() {

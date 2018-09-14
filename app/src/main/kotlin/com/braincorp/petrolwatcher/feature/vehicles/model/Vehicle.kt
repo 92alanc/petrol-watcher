@@ -122,7 +122,7 @@ data class Vehicle(var manufacturer: String = "",
     }
 
     /**
-     * Determines whether the vehicle data is valid
+     * Determines whether the data is valid
      *
      * @return true if positive, otherwise false
      */
@@ -130,10 +130,7 @@ data class Vehicle(var manufacturer: String = "",
         return manufacturer.isNotBlank() &&
                model.isNotBlank() &&
                year > 0 &&
-               details.trimLevel.isNotBlank() &&
-               details.fuelCapacity > 0 &&
-               details.avgConsumptionCity > 0f &&
-               details.avgConsumptionMotorway > 0f
+               details.trimLevel.isNotBlank()
     }
 
     data class Details(var trimLevel: String = "",

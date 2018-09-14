@@ -1,8 +1,6 @@
 package com.braincorp.petrolwatcher.feature.auth.imageHandler
 
-import android.Manifest.permission.CAMERA
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.*
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
@@ -13,18 +11,34 @@ import android.os.Build.VERSION_CODES.M
 import android.provider.MediaStore
 import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
 import com.braincorp.petrolwatcher.feature.auth.utils.rotateBitmap
 import com.braincorp.petrolwatcher.feature.auth.utils.toByteArray
 import com.braincorp.petrolwatcher.feature.auth.utils.toUri
 import com.braincorp.petrolwatcher.utils.hasCameraPermission
+import com.braincorp.petrolwatcher.utils.hasExternalStoragePermission
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import com.nostra13.universalimageloader.core.DisplayImageOptions
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.assist.FailReason
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener
 
 class AppImageHandler : ImageHandler {
+
+    private companion object {
+        const val TAG = "PETROL_WATCHER"
+    }
+
+    private var imageLoaderBusy = false
 
     /**
      * Gets the camera intent
@@ -48,10 +62,25 @@ class AppImageHandler : ImageHandler {
     /**
      * Gets the gallery intent
      *
+     * @param activity the activity where the gallery will
+     *                 be opened from
+     * @param requestCode the request code for the external
+     *                    storage permission
+     *
      * @return the gallery intent
      */
-    override fun getGalleryIntent(): Intent {
-        return Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    override fun getGalleryIntent(activity: AppCompatActivity, requestCode: Int): Intent? {
+        return if (SDK_INT >= M) {
+            if (activity.hasExternalStoragePermission()) {
+                getIntentForGallery()
+            } else {
+                activity.requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE),
+                        requestCode)
+                null
+            }
+        } else {
+            getIntentForCamera()
+        }
     }
 
     /**
@@ -125,8 +154,81 @@ class AppImageHandler : ImageHandler {
                 ?.addOnFailureListener(onFailureListener)
     }
 
+    /**
+     * Fills an ImageView
+     *
+     * @param imageUri the image URI
+     * @param imageView the ImageView
+     * @param placeholderRes the optional image to be placed in case
+     *                       the image URI is null
+     * @param progressBar the progress bar to show when the image
+     *                    is loading
+     */
+    override fun fillImageView(imageUri: Uri?,
+                               imageView: ImageView,
+                               placeholderRes: Int,
+                               progressBar: ProgressBar) {
+        if (imageLoaderBusy) return
+
+        if (imageUri == null) {
+            imageView.setImageResource(placeholderRes)
+            return
+        }
+
+        val imageLoader = ImageLoader.getInstance()
+        val options = DisplayImageOptions.Builder()
+                .showImageOnLoading(placeholderRes)
+                .showImageForEmptyUri(placeholderRes)
+                .showImageOnFail(placeholderRes)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .build()
+
+        val imageLoadingListener = object: ImageLoadingListener {
+            override fun onLoadingComplete(imageUri: String?, view: View?, loadedImage: Bitmap?) {
+                progressBar.visibility = View.GONE
+                Log.d(TAG, "Finished loading image. Image URI: $imageUri")
+                imageLoaderBusy = false
+            }
+
+            override fun onLoadingStarted(imageUri: String?, view: View?) {
+                progressBar.visibility = View.VISIBLE
+                progressBar.progress = 0
+                Log.d(TAG, "Started loading image. Image URI: $imageUri")
+                imageLoaderBusy = true
+            }
+
+            override fun onLoadingCancelled(imageUri: String?, view: View?) {
+                progressBar.progress = 0
+                progressBar.visibility = View.GONE
+                Log.w(TAG, "Cancelled loading image. Image URI: $imageUri")
+                imageLoaderBusy = false
+            }
+
+            override fun onLoadingFailed(imageUri: String?, view: View?, failReason: FailReason?) {
+                progressBar.progress = 0
+                progressBar.visibility = View.GONE
+                Log.e(TAG, "Error loading image. Image URI: $imageUri", failReason?.cause)
+                imageLoaderBusy = false
+            }
+
+        }
+
+        val progressListener = ImageLoadingProgressListener { _, _, current, total ->
+            progressBar.progress = ((current * 100) / total)
+        }
+
+        imageLoader.displayImage(imageUri.toString(), imageView, options,
+                                 imageLoadingListener, progressListener)
+    }
+
     private fun getIntentForCamera(): Intent {
         return Intent(ACTION_IMAGE_CAPTURE)
+    }
+
+    private fun getIntentForGallery(): Intent {
+        return Intent(ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     }
 
 }

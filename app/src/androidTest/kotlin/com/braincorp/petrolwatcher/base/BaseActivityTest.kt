@@ -7,11 +7,11 @@ import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.rule.ActivityTestRule
 import android.support.v7.app.AppCompatActivity
 import br.com.concretesolutions.kappuccino.utils.doWait
-import com.braincorp.petrolwatcher.App
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.MockDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
+import com.braincorp.petrolwatcher.feature.stations.map.MockMapController
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -22,8 +22,6 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
                                                   private val autoLaunch: Boolean = true) {
 
     val mockVehicleApi = MockWebServer()
-
-    private lateinit var app: App
 
     @Rule
     @JvmField
@@ -38,6 +36,7 @@ open class BaseActivityTest<T: AppCompatActivity>(activityClass: Class<T>,
         DependencyInjection.init(DependencyInjection.Config(MockAuthenticator,
                 MockImageHandler,
                 MockDatabaseManager,
+                MockMapController,
                 mockVehicleApi.url("/vehicles/").toString()))
 
         if (autoLaunch) launch()

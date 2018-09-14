@@ -9,8 +9,10 @@
     <dimen name="radius_cardview_default">8dp</dimen>
     <!-- endregion -->
 
-    <!-- CircleImageView -->
+    <!-- region CircleImageView -->
     <dimen name="size_circleimageview">120dp</dimen>
+    <dimen name="size_circleimageview_small">80dp</dimen>
+    <!-- endregion -->
 
     <!-- FloatingActionButton -->
     <dimen name="margin_fab">16dp</dimen>
@@ -18,7 +20,11 @@
     <!-- region Margin -->
     <dimen name="margin_default">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_huge">32dp</dimen>
     <!-- endregion -->
+
+    <!-- Navigation header -->
+    <dimen name="height_navigation_header">160dp</dimen>
 
     <!-- region Padding -->
     <dimen name="padding_button">4dp</dimen>

@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.feature.auth.authenticator
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.base.TestActivity
 import com.facebook.CallbackManager
@@ -21,16 +22,9 @@ object MockAuthenticator : Authenticator {
     private val authResult = mock(AuthResult::class.java)
 
     @Mock
-    private val facebookLoginResult = mock(LoginResult::class.java)
-
-    @Mock
     override val facebookCallbackManager: CallbackManager = mock(CallbackManager::class.java)
 
-    @Mock
-    private val firebaseUser = mock(FirebaseUser::class.java)
-
     var authSuccess = true
-
     var userLoggedIn = false
 
     /**
@@ -89,7 +83,7 @@ object MockAuthenticator : Authenticator {
     override fun signInWithFacebook(activity: AppCompatActivity,
                                     callback: FacebookCallback<LoginResult>) {
         if (authSuccess)
-            callback.onSuccess(facebookLoginResult)
+            callback.onSuccess(mock(LoginResult::class.java))
         else
             callback.onError(FacebookException())
     }
@@ -110,8 +104,34 @@ object MockAuthenticator : Authenticator {
      * @return the currently logged in user
      */
     override fun getCurrentUser(): FirebaseUser? {
-        return if (userLoggedIn) firebaseUser
+        return if (userLoggedIn) mock(FirebaseUser::class.java)
         else null
+    }
+
+    /**
+     * Gets the user's data
+     *
+     * @param onUserDataFoundListener the callback to be triggered
+     *                                when the data is found
+     */
+    override fun getUserData(onUserDataFoundListener: OnUserDataFoundListener) {
+        val name = "Alan Camargo"
+        val profilePictureUri = Uri.EMPTY
+        onUserDataFoundListener.onUserDataFound(name, profilePictureUri)
+    }
+
+    /**
+     * Ends the current session
+     */
+    override fun signOut() { }
+
+    /**
+     * Determines whether the user is signed in
+     *
+     * @return true if positive
+     */
+    override fun isUserSignedIn(): Boolean {
+        return userLoggedIn
     }
 
 }

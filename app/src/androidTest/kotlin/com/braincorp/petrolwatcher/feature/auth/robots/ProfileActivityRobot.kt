@@ -6,6 +6,7 @@ import br.com.concretesolutions.kappuccino.assertions.VisibilityAssertions.displ
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.sentIntent
 import br.com.concretesolutions.kappuccino.custom.intent.IntentMatcherInteractions.stubIntent
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.stations.MapActivity
 import com.braincorp.petrolwatcher.feature.vehicles.VehicleListActivity
 
 fun profile(func: ProfileActivityRobot.() -> Unit) = ProfileActivityRobot().apply(func)
@@ -83,7 +84,9 @@ class ProfileResult {
     }
 
     fun redirectToMapActivity() {
-        // TODO: implement
+        sentIntent {
+            className(MapActivity::class.java.name)
+        }
     }
 
     fun showErrorDialogue() {

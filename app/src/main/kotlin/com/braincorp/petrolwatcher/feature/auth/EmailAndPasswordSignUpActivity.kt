@@ -3,6 +3,8 @@ package com.braincorp.petrolwatcher.feature.auth
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
@@ -35,6 +37,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * field is empty
      */
     override fun showEmptyConfirmationError() {
+        showCardView()
         showFieldError(edt_password_confirmation, getString(R.string.error_empty_confirmation))
     }
 
@@ -43,6 +46,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * don't match
      */
     override fun showPasswordNotMatchingError() {
+        showCardView()
         showFieldError(edt_password_confirmation, getString(R.string.error_password_and_confirmation_dont_match))
     }
 
@@ -50,6 +54,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * Shows an e-mail format error
      */
     override fun showEmailFormatError() {
+        showCardView()
         showFieldError(edt_email, getString(R.string.error_email_format))
     }
 
@@ -57,6 +62,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * Shows a backend error dialogue
      */
     override fun showBackendError() {
+        showCardView()
         AlertDialog.Builder(this)
                 .setTitle(R.string.error)
                 .setIcon(R.drawable.ic_error)
@@ -69,6 +75,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * Shows the profile
      */
     override fun showProfile() {
+        showCardView()
         startProfileActivity(finishCurrent = true)
     }
 
@@ -76,6 +83,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
      * Shows a password length warning
      */
     override fun showPasswordLengthWarning() {
+        showCardView()
         AlertDialog.Builder(this)
                 .setTitle(R.string.warning)
                 .setMessage(R.string.warning_password_length)
@@ -86,11 +94,19 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
 
     private fun setupNextButton() {
         fab.setOnClickListener {
+            card_view.visibility = GONE
+            progress_bar.visibility = VISIBLE
+
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
             val confirmation = edt_password_confirmation.text.toString()
             presenter.createAccount(email, password, confirmation)
         }
+    }
+
+    private fun showCardView() {
+        progress_bar.visibility = GONE
+        card_view.visibility = VISIBLE
     }
 
 }
