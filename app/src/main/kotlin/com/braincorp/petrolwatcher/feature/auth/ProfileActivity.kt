@@ -1,15 +1,13 @@
 package com.braincorp.petrolwatcher.feature.auth
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -19,8 +17,7 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
-import com.braincorp.petrolwatcher.feature.auth.presenter.ProfilePresenter
-import com.braincorp.petrolwatcher.utils.hasExternalStoragePermission
+import com.braincorp.petrolwatcher.feature.auth.presenter.ProfileActivityPresenter
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.braincorp.petrolwatcher.utils.startVehicleListActivity
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -59,7 +56,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        presenter = ProfilePresenter(view = this, imageHandler = imageHandler)
+        presenter = ProfileActivityPresenter(view = this, imageHandler = imageHandler)
         setupButtons()
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
@@ -95,12 +92,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
                 profilePicture = presenter.getImageUriFromCameraIntent(data, this)
                 Log.d(TAG, "URI from camera: $profilePicture")
                 imageHandler.fillImageView(profilePicture, img_profile,
-                                           R.drawable.ic_profile, progress_bar)
+                        R.drawable.ic_profile, progress_bar)
             } else if (requestCode == REQUEST_CODE_GALLERY) {
                 profilePicture = presenter.getImageUriFromGalleryIntent(data)
                 Log.d(TAG, "URI from gallery: $profilePicture")
                 imageHandler.fillImageView(profilePicture, img_profile,
-                                           R.drawable.ic_profile, progress_bar)
+                        R.drawable.ic_profile, progress_bar)
             }
         }
     }
@@ -141,11 +138,20 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         startMapActivity()
     }
 
+    /**
+     * Shows a blank name error
+     */
+    override fun showBlankNameError() {
+        showCardViewAndVehiclesButton()
+        edt_name.error = getString(R.string.name_should_not_be_blank)
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.bt_camera -> presenter.openCamera(activity = this, requestCode = REQUEST_CODE_CAMERA)
             R.id.bt_gallery -> presenter.openGallery(activity = this, requestCode = REQUEST_CODE_GALLERY)
-            R.id.bt_vehicles -> startVehicleListActivity(finishCurrent = true)
+            R.id.bt_vehicles -> startVehicleListActivity()
+            R.id.bt_remove_profile_picture -> img_profile.setImageResource(R.drawable.ic_profile)
             R.id.fab -> saveProfile()
         }
     }
@@ -166,6 +172,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
     private fun setupButtons() {
         bt_camera.setOnClickListener(this)
         bt_gallery.setOnClickListener(this)
+        bt_remove_profile_picture.setOnClickListener(this)
         bt_vehicles.setOnClickListener(this)
         fab.setOnClickListener(this)
     }
@@ -179,16 +186,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,
         bt_vehicles.visibility = GONE
         progress_bar.visibility = VISIBLE
 
-        if (SDK_INT >= M) {
-            if (hasExternalStoragePermission()) {
-                presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
-            } else {
-                requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE),
-                                   REQUEST_CODE_GALLERY)
-            }
-        } else {
-            presenter.saveProfile(img_profile.drawable, edt_name.text.toString(), context = this)
-        }
+        val profilePicture = img_profile.drawable
+        val defaultProfilePicture = ContextCompat.getDrawable(this, R.drawable.ic_profile)
+        val displayName = edt_name.text.toString()
+
+        if (profilePicture != defaultProfilePicture && profilePicture !is VectorDrawable)
+            presenter.saveProfile(profilePicture, displayName, context = this)
+        else
+            presenter.saveProfile(null, displayName, context = this)
     }
 
     private fun showCardViewAndVehiclesButton() {

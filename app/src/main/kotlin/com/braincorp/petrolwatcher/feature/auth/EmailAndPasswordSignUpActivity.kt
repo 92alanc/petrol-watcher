@@ -8,7 +8,7 @@ import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailAndPasswordSignUpContract
-import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpPresenter
+import com.braincorp.petrolwatcher.feature.auth.presenter.EmailAndPasswordSignUpActivityPresenter
 import com.braincorp.petrolwatcher.utils.showFieldError
 import com.braincorp.petrolwatcher.utils.startProfileActivity
 import kotlinx.android.synthetic.main.activity_email_and_password_sign_up.*
@@ -27,7 +27,7 @@ class EmailAndPasswordSignUpActivity : AppCompatActivity(), EmailAndPasswordSign
         setContentView(R.layout.activity_email_and_password_sign_up)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter = EmailAndPasswordSignUpPresenter(view = this,
+        presenter = EmailAndPasswordSignUpActivityPresenter(view = this,
                 authenticator = DependencyInjection.authenticator)
         setupNextButton()
     }

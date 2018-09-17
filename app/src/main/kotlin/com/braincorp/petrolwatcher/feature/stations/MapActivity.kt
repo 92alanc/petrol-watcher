@@ -9,6 +9,7 @@ import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
@@ -109,7 +110,7 @@ class MapActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.item_stations_nearby -> startList()
             R.id.item_profile -> startProfileActivity(editMode = true)
-            R.id.item_sign_out -> presenter.signOut()
+            R.id.item_sign_out -> signOut()
         }
 
         return true
@@ -197,7 +198,8 @@ class MapActivity : AppCompatActivity(),
             override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
                 txtName.text = displayName
                 DependencyInjection.imageHandler.fillImageView(profilePictureUri, imgProfile,
-                        progressBar = progressBar)
+                        progressBar = progressBar,
+                        placeholderRes = R.drawable.ic_profile)
             }
         })
     }
@@ -219,6 +221,17 @@ class MapActivity : AppCompatActivity(),
 
     private fun startList() {
         startPetrolStationListActivity(currentLocation)
+    }
+
+    private fun signOut() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.sign_out)
+                .setMessage(R.string.sign_out_confirmation)
+                .setIcon(R.drawable.ic_sign_out)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    presenter.signOut()
+                }.show()
     }
 
 }
