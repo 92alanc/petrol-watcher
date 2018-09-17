@@ -24,6 +24,11 @@ interface ProfileContract {
          * Shows the map activity
          */
         fun showMap()
+
+        /**
+         * Shows a blank name error
+         */
+        fun showBlankNameError()
     }
 
     /**

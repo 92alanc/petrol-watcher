@@ -74,13 +74,13 @@ interface ImageHandler {
      * Sets a profile picture and a display name to
      * the current account
      *
-     * @param picture the profile picture
+     * @param pictureUri the profile picture URI
      * @param displayName the display name
      * @param context the Android context
      * @param onSuccessListener the success listener
      * @param onFailureListener the failure listener
      */
-    fun setProfilePictureAndDisplayName(picture: Bitmap?, displayName: String,
+    fun setProfilePictureAndDisplayName(pictureUri: Uri?, displayName: String,
                                         context: Context,
                                         onSuccessListener: OnSuccessListener<Void>,
                                         onFailureListener: OnFailureListener)

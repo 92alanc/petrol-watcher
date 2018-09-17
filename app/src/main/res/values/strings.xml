@@ -15,6 +15,7 @@
     <string name="description_my_location">My location</string>
     <string name="description_refresh">Refresh</string>
     <string name="description_directions">Directions</string>
+    <string name="description_remove_profile_picture">Remove profile picture</string>
     <!-- endregion -->
 
     <!-- region Auth -->
@@ -45,6 +46,8 @@
     <string name="my_account">My account</string>
     <string name="profile">Profile</string>
     <string name="sign_out">Sign out</string>
+    <string name="name_should_not_be_blank">The name should not be blank</string>
+    <string name="sign_out_confirmation">Are you sure you want to sign out?</string>
     <!-- endregion -->
 
     <!-- region Vehicles -->

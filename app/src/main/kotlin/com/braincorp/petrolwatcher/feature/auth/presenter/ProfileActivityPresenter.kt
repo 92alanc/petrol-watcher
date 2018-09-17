@@ -4,19 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.VectorDrawable
 import android.net.Uri
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.alancamargo.validationchain.ValidationChain
-import com.alancamargo.validationchain.model.Validation
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.ProfileContract
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import java.lang.Exception
 
 /**
  * The implementation of the presentation layer
@@ -25,9 +20,9 @@ import java.lang.Exception
  * @param view the view layer
  * @param imageHandler the image handler
  */
-class ProfilePresenter(private val view: ProfileContract.View,
-                       private val imageHandler: ImageHandler) : ProfileContract.Presenter,
-                                                                 OnSuccessListener<Void>, OnFailureListener {
+class ProfileActivityPresenter(private val view: ProfileContract.View,
+                               private val imageHandler: ImageHandler) : ProfileContract.Presenter,
+        OnSuccessListener<Void>, OnFailureListener {
 
     private companion object {
         const val TAG = "PETROL_WATCHER"
@@ -67,32 +62,22 @@ class ProfilePresenter(private val view: ProfileContract.View,
      * @param context the Android context
      */
     override fun saveProfile(drawable: Drawable?, displayName: String, context: Context) {
-        val defaultProfilePicture = ContextCompat.getDrawable(context, R.drawable.ic_profile)
-        val notDefaultProfilePicture = Validation(drawable != defaultProfilePicture) {
-            Log.e(TAG, "Tried to set default profile picture")
-            view.showErrorDialogue(R.string.error_profile_picture_display_name)
+        if (displayName.isNotBlank()) {
+            if (drawable != null) {
+                val profilePicture = (drawable as BitmapDrawable).bitmap
+                imageHandler.uploadImage(profilePicture, OnSuccessListener { uploadTask ->
+                    uploadTask.storage.downloadUrl.addOnSuccessListener {
+                        setProfilePictureAndDisplayName(it, displayName, context)
+                    }
+                }, OnFailureListener {
+                    view.showErrorDialogue(R.string.error_profile_picture_display_name)
+                })
+            } else {
+                setProfilePictureAndDisplayName(null, displayName, context)
+            }
+        } else {
+            view.showBlankNameError()
         }
-        val notNull = Validation(drawable != null) {
-            Log.e(TAG, "Tried to set null profile picture")
-            view.showErrorDialogue(R.string.error_profile_picture_display_name)
-        }
-        val notVectorDrawable = Validation(drawable !is VectorDrawable) {
-            Log.e(TAG, "Tried to set vector drawable as profile picture")
-            view.showErrorDialogue(R.string.error_profile_picture_display_name)
-        }
-
-        ValidationChain().add(notDefaultProfilePicture)
-                .add(notNull)
-                .add(notVectorDrawable)
-                .run {
-                    val profilePicture = (drawable as BitmapDrawable).bitmap
-                    imageHandler.uploadImage(profilePicture, OnSuccessListener {
-                        imageHandler.setProfilePictureAndDisplayName(profilePicture, displayName, context,
-                                                                     onSuccessListener = this, onFailureListener = this)
-                    }, OnFailureListener {
-                        view.showErrorDialogue(R.string.error_profile_picture_display_name)
-                    })
-                }
     }
 
     /**
@@ -137,6 +122,14 @@ class ProfilePresenter(private val view: ProfileContract.View,
     override fun onFailure(e: Exception) {
         Log.e(TAG, "Error updating profile picture and display name", e)
         view.showErrorDialogue(R.string.error_profile_picture_display_name)
+    }
+
+    private fun setProfilePictureAndDisplayName(profilePictureUri: Uri?,
+                                                displayName: String,
+                                                context: Context) {
+        imageHandler.setProfilePictureAndDisplayName(profilePictureUri,
+                displayName, context,
+                onSuccessListener = this, onFailureListener = this)
     }
 
 }

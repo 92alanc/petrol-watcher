@@ -78,4 +78,7 @@
     <string name="delete_petrol_station_confirmation">Tem certeza que deseja excluir este posto de gasolina?</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
+    <string name="name_should_not_be_blank">O nome não pode estar em branco</string>
+    <string name="sign_out_confirmation">Você tem certeza que deseja sair?</string>
+    <string name="description_remove_profile_picture">Remove foto de perfil</string>
 </resources>

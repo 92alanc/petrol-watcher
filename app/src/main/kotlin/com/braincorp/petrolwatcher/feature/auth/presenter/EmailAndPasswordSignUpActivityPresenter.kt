@@ -16,8 +16,8 @@ import java.lang.Exception
  *
  * @param view the view layer
  */
-open class EmailAndPasswordSignUpPresenter(private val view: EmailAndPasswordSignUpContract.View,
-                                           var authenticator: Authenticator) :
+open class EmailAndPasswordSignUpActivityPresenter(private val view: EmailAndPasswordSignUpContract.View,
+                                                   var authenticator: Authenticator) :
         EmailAndPasswordSignUpContract.Presenter, OnSuccessListener<AuthResult>, OnFailureListener {
 
     private companion object {
