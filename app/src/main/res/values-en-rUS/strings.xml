@@ -50,7 +50,6 @@
     <string name="my_account">My account</string>
     <string name="profile">Profile</string>
     <string name="sign_out">Sign out</string>
-    <string name="find_stations">Find stations</string>
     <string name="stations_nearby">Stations nearby</string>
     <string name="description_navigation_open">Menu open</string>
     <string name="description_navigation_closed">Menu closed</string>
@@ -92,4 +91,5 @@
     <string name="fuel_capacity_missing">This vehicle\'s fuel capacity is missing. Please check your vehicle\'s manual and enter it manually on the vehicle details screen.</string>
     <string name="invalid_distance">The distance you have entered is invalid.</string>
     <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
+    <string name="go_to">Go to</string>
 </resources>

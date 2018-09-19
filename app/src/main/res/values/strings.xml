@@ -8,6 +8,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="field_should_not_be_blank">This field should not be blank</string>
+    <string name="go_to">Go to</string>
     <!-- endregion -->
 
     <!-- region Accessibility -->
@@ -77,7 +78,6 @@
     <!-- endregion -->
 
     <!-- region Petrol stations -->
-    <string name="find_stations">Find stations</string>
     <string name="stations_nearby">Stations nearby</string>
     <string name="address">Address</string>
     <string name="invalid_petrol_station_data">Invalid petrol station data</string>

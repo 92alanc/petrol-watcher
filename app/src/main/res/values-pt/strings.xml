@@ -50,7 +50,6 @@
     <string name="my_account">Minha conta</string>
     <string name="profile">Perfil</string>
     <string name="sign_out">Sair</string>
-    <string name="find_stations">Encontrar postos</string>
     <string name="stations_nearby">Postos ao redor</string>
     <string name="description_navigation_open">Menu aberto</string>
     <string name="description_navigation_closed">Menu fechado</string>
@@ -92,4 +91,5 @@
     <string name="fuel_capacity_missing">A capacidade de combustível deste veículo está faltando. Por favor confira o manual do seu veículo e insira-a manualmente.</string>
     <string name="invalid_distance">A distância que você informou é inválida.</string>
     <string name="invalid_tank_state">O estado final do tanque deve ser menor que o inicial.</string>
+    <string name="go_to">Ir para</string>
 </resources>

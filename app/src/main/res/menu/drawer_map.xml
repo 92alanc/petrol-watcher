@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/find_stations">
+    <item android:title="@string/go_to">
         <menu>
             <group
                 android:checkableBehavior="none"
@@ -11,6 +11,12 @@
                     android:title="@string/stations_nearby"
                     android:icon="@drawable/ic_stations"
                     android:orderInCategory="2"/>
+
+                <item
+                    android:id="@+id/item_my_vehicles"
+                    android:title="@string/my_vehicles"
+                    android:icon="@drawable/ic_vehicles"
+                    android:orderInCategory="3"/>
             </group>
         </menu>
     </item>
