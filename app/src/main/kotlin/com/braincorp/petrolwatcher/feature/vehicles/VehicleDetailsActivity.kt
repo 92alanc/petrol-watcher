@@ -73,7 +73,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onBackPressed() {
         if (editMode)
-            showReadOnlyFields()
+            setReadOnlyMode()
         else
             super.onBackPressed()
     }
@@ -82,7 +82,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         super.onSaveInstanceState(outState)
         if (outState == null) return
 
-        with (outState) {
+        with(outState) {
             putParcelable(KEY_VEHICLE, vehicle)
             putBoolean(KEY_EDIT_MODE, editMode)
         }
@@ -100,6 +100,8 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         if (requestCode == REQUEST_CODE_CONSUMPTION && resultCode == RESULT_OK) {
             vehicle = data!!.getParcelableExtra(ConsumptionActivity.KEY_DATA)
             fillCalculatedValues()
+        } else if (requestCode == REQUEST_CODE_CONSUMPTION && resultCode == RESULT_CANCELED) {
+            setReadOnlyMode()
         }
     }
     // endregion
@@ -108,7 +110,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> handleFabClick()
-            R.id.bt_calculate -> startConsumptionActivity(vehicle, REQUEST_CODE_CONSUMPTION)
+            R.id.bt_calculate -> startConsumptionActivity()
         }
     }
     // endregion
@@ -140,8 +142,13 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    private fun startConsumptionActivity() {
+        startConsumptionActivity(vehicle, REQUEST_CODE_CONSUMPTION)
+        setEditMode()
+    }
+
     private fun restoreInstanceState(savedInstanceState: Bundle) {
-        with (savedInstanceState) {
+        with(savedInstanceState) {
             if (containsKey(KEY_EDIT_MODE))
                 editMode = getBoolean(KEY_EDIT_MODE)
 
@@ -152,7 +159,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                 showEditableFields()
                 fillEditableFields()
             } else {
-                showReadOnlyFields()
+                setReadOnlyMode()
                 fillReadOnlyFields()
             }
         }
@@ -163,11 +170,23 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
             updateVehicleData()
             presenter.saveVehicle(vehicle)
         } else {
-            editMode = true
-            fab.setImageResource(R.drawable.ic_save)
-            showEditableFields()
-            fillEditableFields()
+            setEditMode()
         }
+    }
+
+    private fun setReadOnlyMode() {
+        editMode = false
+        fab.setImageResource(R.drawable.ic_edit)
+        group_editable_fields.visibility = GONE
+        label_factory_data.visibility = VISIBLE
+        group_read_only_fields.visibility = VISIBLE
+    }
+
+    private fun setEditMode() {
+        editMode = true
+        fab.setImageResource(R.drawable.ic_save)
+        showEditableFields()
+        fillEditableFields()
     }
 
     private fun updateVehicleData() {
@@ -208,12 +227,6 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         label_factory_data.visibility = GONE
         group_read_only_fields.visibility = GONE
         group_editable_fields.visibility = VISIBLE
-    }
-
-    private fun showReadOnlyFields() {
-        group_editable_fields.visibility = GONE
-        label_factory_data.visibility = VISIBLE
-        group_read_only_fields.visibility = VISIBLE
     }
 
     private fun fillReadOnlyFields() {
