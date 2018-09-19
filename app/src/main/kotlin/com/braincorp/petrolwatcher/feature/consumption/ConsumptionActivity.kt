@@ -143,6 +143,7 @@ class ConsumptionActivity : AppCompatActivity(),
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+        populateViews()
     }
 
     private fun calculateConsumption() {
