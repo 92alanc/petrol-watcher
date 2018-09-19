@@ -37,16 +37,21 @@ class ConsumptionActivityPresenter(private val view: ConsumptionActivityContract
                 .run {
                     val kmStart = odometerStart.toInt()
                     val kmEnd = odometerEnd.toInt()
-                    if (kmStart > kmEnd) {
+                    if (kmStart >= kmEnd) {
                         view.showInvalidDistanceError()
                     } else {
                         val distance = kmEnd - kmStart
                         val tankStateStartLitres = tankStateToLitres(tankStateStart, fuelCapacity)
                         val tankStateEndLitres = tankStateToLitres(tankStateEnd, fuelCapacity)
-                        val fuelSpent = tankStateEndLitres - tankStateStartLitres
 
-                        val consumption = (distance / fuelSpent).toFloat()
-                        view.exportConsumption(consumption)
+                        if (tankStateEndLitres >= tankStateStartLitres) {
+                            view.showInvalidTankStateError()
+                        } else {
+                            val fuelSpent = tankStateStartLitres - tankStateEndLitres
+
+                            val consumption = (distance / fuelSpent).toFloat()
+                            view.exportConsumption(consumption)
+                        }
                     }
                 }
     }

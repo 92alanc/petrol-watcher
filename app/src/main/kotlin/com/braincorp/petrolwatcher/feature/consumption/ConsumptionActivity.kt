@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.consumption
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.braincorp.petrolwatcher.R
@@ -74,24 +75,52 @@ class ConsumptionActivity : AppCompatActivity(),
      * Shows an error in the odometer (start) field
      */
     override fun showOdometerStartError() {
+        edt_odometer_start.error = getString(R.string.field_should_not_be_blank)
     }
 
     /**
      * Shows an error in the odometer (end) field
      */
     override fun showOdometerEndError() {
+        edt_odometer_end.error = getString(R.string.field_should_not_be_blank)
     }
 
     /**
      * Shows a fuel capacity error
      */
     override fun showFuelCapacityError() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(R.string.fuel_capacity_missing)
+                .setIcon(R.drawable.ic_error)
+                .setNeutralButton(R.string.ok) { _, _ ->
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }.show()
     }
 
     /**
      * Shows an invalid distance error
      */
     override fun showInvalidDistanceError() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(R.string.invalid_distance)
+                .setIcon(R.drawable.ic_error)
+                .setNeutralButton(R.string.ok, null)
+                .show()
+    }
+
+    /**
+     * Show an invalid tank state error
+     */
+    override fun showInvalidTankStateError() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(R.string.invalid_tank_state)
+                .setIcon(R.drawable.ic_error)
+                .setNeutralButton(R.string.ok, null)
+                .show()
     }
 
     /**
@@ -109,6 +138,7 @@ class ConsumptionActivity : AppCompatActivity(),
 
         val data = Intent().putExtra(KEY_DATA, vehicle)
         setResult(RESULT_OK, data)
+        finish()
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.consumption.ConsumptionActivity
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleDetailsActivityPresenter
@@ -28,6 +29,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
     companion object {
         private const val KEY_VEHICLE = "vehicle"
         private const val KEY_EDIT_MODE = "edit_mode"
+        private const val REQUEST_CODE_CONSUMPTION = 1234
 
         fun getIntent(context: Context, vehicle: Vehicle): Intent {
             return Intent(context, VehicleDetailsActivity::class.java)
@@ -92,13 +94,21 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
             restoreInstanceState(it)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CONSUMPTION && resultCode == RESULT_OK) {
+            vehicle = data!!.getParcelableExtra(ConsumptionActivity.KEY_DATA)
+            fillCalculatedValues()
+        }
+    }
     // endregion
 
     // region view functions
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> handleFabClick()
-            R.id.bt_calculate -> startConsumptionActivity(vehicle)
+            R.id.bt_calculate -> startConsumptionActivity(vehicle, REQUEST_CODE_CONSUMPTION)
         }
     }
     // endregion

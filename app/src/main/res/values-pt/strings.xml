@@ -88,4 +88,8 @@
     <string name="odometer_start">Odômetro (início) - km</string>
     <string name="odometer_end">Odômetro (fim) - km</string>
     <string name="predominant_road_type">Tipo de via predominante</string>
+    <string name="field_should_not_be_blank">Este campo não pode estar em branco</string>
+    <string name="fuel_capacity_missing">A capacidade de combustível deste veículo está faltando. Por favor confira o manual do seu veículo e insira-a manualmente.</string>
+    <string name="invalid_distance">A distância que você informou é inválida.</string>
+    <string name="invalid_tank_state">O estado final do tanque deve ser menor que o inicial.</string>
 </resources>

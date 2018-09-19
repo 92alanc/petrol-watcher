@@ -29,6 +29,11 @@ interface ConsumptionActivityContract {
         fun showInvalidDistanceError()
 
         /**
+         * Show an invalid tank state error
+         */
+        fun showInvalidTankStateError()
+
+        /**
          * Exports the calculated average consumption
          *
          * @param consumption the calculated average consumption

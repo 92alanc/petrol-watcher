@@ -7,6 +7,7 @@
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="field_should_not_be_blank">This field should not be blank</string>
     <!-- endregion -->
 
     <!-- region Accessibility -->
@@ -104,5 +105,8 @@
     <string name="odometer_start">Odometer (start) - km</string>
     <string name="odometer_end">Odometer (end) - km</string>
     <string name="predominant_road_type">Predominant road type</string>
+    <string name="fuel_capacity_missing">This vehicle\'s fuel capacity is missing. Please check your vehicle\'s manual and enter it manually on the vehicle details screen.</string>
+    <string name="invalid_distance">The distance you have entered is invalid.</string>
+    <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
     <!-- endregion -->
 </resources>

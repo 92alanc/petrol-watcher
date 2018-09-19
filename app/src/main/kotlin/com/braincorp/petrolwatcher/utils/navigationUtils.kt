@@ -124,15 +124,11 @@ fun AppCompatActivity.startVehicleDetailsActivity(vehicle: Vehicle,
  *
  * @param vehicle the vehicle whose fuel consumption
  *                will be calculated
- * @param finishCurrent if true, the current
- *                      activity will be finished
  */
 fun AppCompatActivity.startConsumptionActivity(vehicle: Vehicle,
-                                               finishCurrent: Boolean = false) {
+                                               requestCode: Int) {
     val intent = ConsumptionActivity.intent(this, vehicle)
-    startActivity(intent)
-    if (finishCurrent)
-        finish()
+    startActivityForResult(intent, requestCode)
 }
 
 /**
