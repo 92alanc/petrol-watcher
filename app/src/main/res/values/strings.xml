@@ -95,4 +95,14 @@
     <string name="delete_petrol_station">Delete petrol station</string>
     <string name="delete_petrol_station_confirmation">Are you sure you want to delete this petrol station?</string>
     <!-- endregion -->
+
+    <!-- region Consumption -->
+    <string name="selected_vehicle_format">Selected vehicle: %1$s</string>
+    <string name="tank_state_start">Tank state (start)</string>
+    <string name="tank_state_end">Tank state (end)</string>
+    <string name="finish">Finish</string>
+    <string name="odometer_start">Odometer (start) - km</string>
+    <string name="odometer_end">Odometer (end) - km</string>
+    <string name="predominant_road_type">Predominant road type</string>
+    <!-- endregion -->
 </resources>

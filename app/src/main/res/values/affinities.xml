@@ -3,4 +3,5 @@
     <string name="affinity_auth" translatable="false">com.braincorp.petrolwatcher.auth</string>
     <string name="affinity_vehicles" translatable="false">com.braincorp.petrolwatcher.vehicles</string>
     <string name="affinity_petrol_stations" translatable="false">com.braincorp.petrolwatcher.petrol_stations</string>
+    <string name="affinity_consumption" translatable="false">com.braincorp.petrolwatcher.consumption</string>
 </resources>

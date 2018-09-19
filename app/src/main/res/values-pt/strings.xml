@@ -81,4 +81,11 @@
     <string name="name_should_not_be_blank">O nome não pode estar em branco</string>
     <string name="sign_out_confirmation">Você tem certeza que deseja sair?</string>
     <string name="description_remove_profile_picture">Remove foto de perfil</string>
+    <string name="selected_vehicle_format">Veículo selecionado: %1$s</string>
+    <string name="tank_state_start">Estado do tanque (início)</string>
+    <string name="tank_state_end">Estado do tanque (fim)</string>
+    <string name="finish">Concluir</string>
+    <string name="odometer_start">Odômetro (início) - km</string>
+    <string name="odometer_end">Odômetro (fim) - km</string>
+    <string name="predominant_road_type">Tipo de via predominante</string>
 </resources>

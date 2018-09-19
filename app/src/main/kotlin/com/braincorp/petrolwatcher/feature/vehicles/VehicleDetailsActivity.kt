@@ -98,7 +98,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> handleFabClick()
-            R.id.bt_calculate -> startConsumptionActivity()
+            R.id.bt_calculate -> startConsumptionActivity(vehicle)
         }
     }
     // endregion

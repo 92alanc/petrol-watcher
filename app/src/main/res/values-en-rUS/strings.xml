@@ -81,4 +81,11 @@
     <string name="name_should_not_be_blank">The name should not be blank</string>
     <string name="sign_out_confirmation">Are you sure you want to sign out?</string>
     <string name="description_remove_profile_picture">Remove profile picture</string>
+    <string name="selected_vehicle_format">Selected vehicle: %1$s</string>
+    <string name="tank_state_start">Tank state (start)</string>
+    <string name="tank_state_end">Tank state (end)</string>
+    <string name="finish">Finish</string>
+    <string name="odometer_start">Odometer (start) - km</string>
+    <string name="odometer_end">Odometer (end) - km</string>
+    <string name="predominant_road_type">Predominant road type</string>
 </resources>
