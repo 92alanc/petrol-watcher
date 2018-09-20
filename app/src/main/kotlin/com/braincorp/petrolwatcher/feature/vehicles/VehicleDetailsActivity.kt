@@ -11,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.consumption.ConsumptionActivity
 import com.braincorp.petrolwatcher.feature.vehicles.contract.VehicleDetailsActivityContract
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.feature.vehicles.presenter.VehicleDetailsActivityPresenter
@@ -28,6 +29,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
     companion object {
         private const val KEY_VEHICLE = "vehicle"
         private const val KEY_EDIT_MODE = "edit_mode"
+        private const val REQUEST_CODE_CONSUMPTION = 1234
 
         fun getIntent(context: Context, vehicle: Vehicle): Intent {
             return Intent(context, VehicleDetailsActivity::class.java)
@@ -71,7 +73,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onBackPressed() {
         if (editMode)
-            showReadOnlyFields()
+            setReadOnlyMode()
         else
             super.onBackPressed()
     }
@@ -80,7 +82,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         super.onSaveInstanceState(outState)
         if (outState == null) return
 
-        with (outState) {
+        with(outState) {
             putParcelable(KEY_VEHICLE, vehicle)
             putBoolean(KEY_EDIT_MODE, editMode)
         }
@@ -90,6 +92,16 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState?.let {
             restoreInstanceState(it)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CONSUMPTION && resultCode == RESULT_OK) {
+            vehicle = data!!.getParcelableExtra(ConsumptionActivity.KEY_DATA)
+            fillCalculatedValues()
+        } else if (requestCode == REQUEST_CODE_CONSUMPTION && resultCode == RESULT_CANCELED) {
+            setReadOnlyMode()
         }
     }
     // endregion
@@ -130,8 +142,13 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    private fun startConsumptionActivity() {
+        startConsumptionActivity(vehicle, REQUEST_CODE_CONSUMPTION)
+        setEditMode()
+    }
+
     private fun restoreInstanceState(savedInstanceState: Bundle) {
-        with (savedInstanceState) {
+        with(savedInstanceState) {
             if (containsKey(KEY_EDIT_MODE))
                 editMode = getBoolean(KEY_EDIT_MODE)
 
@@ -142,7 +159,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                 showEditableFields()
                 fillEditableFields()
             } else {
-                showReadOnlyFields()
+                setReadOnlyMode()
                 fillReadOnlyFields()
             }
         }
@@ -153,11 +170,23 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
             updateVehicleData()
             presenter.saveVehicle(vehicle)
         } else {
-            editMode = true
-            fab.setImageResource(R.drawable.ic_save)
-            showEditableFields()
-            fillEditableFields()
+            setEditMode()
         }
+    }
+
+    private fun setReadOnlyMode() {
+        editMode = false
+        fab.setImageResource(R.drawable.ic_edit)
+        group_editable_fields.visibility = GONE
+        label_factory_data.visibility = VISIBLE
+        group_read_only_fields.visibility = VISIBLE
+    }
+
+    private fun setEditMode() {
+        editMode = true
+        fab.setImageResource(R.drawable.ic_save)
+        showEditableFields()
+        fillEditableFields()
     }
 
     private fun updateVehicleData() {
@@ -198,12 +227,6 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         label_factory_data.visibility = GONE
         group_read_only_fields.visibility = GONE
         group_editable_fields.visibility = VISIBLE
-    }
-
-    private fun showReadOnlyFields() {
-        group_editable_fields.visibility = GONE
-        label_factory_data.visibility = VISIBLE
-        group_read_only_fields.visibility = VISIBLE
     }
 
     private fun fillReadOnlyFields() {

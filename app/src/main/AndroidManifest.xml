@@ -109,6 +109,12 @@
             android:theme="@style/AppTheme"/>
         <!-- endregion -->
 
+        <!-- region Consumption -->
+        <activity android:name=".feature.consumption.ConsumptionActivity"
+            android:taskAffinity="@string/affinity_consumption"
+            android:theme="@style/AppTheme"/>
+        <!-- endregion -->
+
         <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>

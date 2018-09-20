@@ -110,6 +110,7 @@ class MapActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.item_stations_nearby -> startList()
             R.id.item_profile -> startProfileActivity(editMode = true)
+            R.id.item_my_vehicles -> startVehicleListActivity()
             R.id.item_sign_out -> signOut()
         }
 

@@ -7,6 +7,8 @@
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="field_should_not_be_blank">This field should not be blank</string>
+    <string name="go_to">Go to</string>
     <!-- endregion -->
 
     <!-- region Accessibility -->
@@ -76,7 +78,6 @@
     <!-- endregion -->
 
     <!-- region Petrol stations -->
-    <string name="find_stations">Find stations</string>
     <string name="stations_nearby">Stations nearby</string>
     <string name="address">Address</string>
     <string name="invalid_petrol_station_data">Invalid petrol station data</string>
@@ -94,5 +95,18 @@
     <string name="premium">Premium</string>
     <string name="delete_petrol_station">Delete petrol station</string>
     <string name="delete_petrol_station_confirmation">Are you sure you want to delete this petrol station?</string>
+    <!-- endregion -->
+
+    <!-- region Consumption -->
+    <string name="selected_vehicle_format">Selected vehicle: %1$s</string>
+    <string name="tank_state_start">Tank state (start)</string>
+    <string name="tank_state_end">Tank state (end)</string>
+    <string name="finish">Finish</string>
+    <string name="odometer_start">Odometer (start) - km</string>
+    <string name="odometer_end">Odometer (end) - km</string>
+    <string name="predominant_road_type">Predominant road type</string>
+    <string name="fuel_capacity_missing">This vehicle\'s fuel capacity is missing. Please check your vehicle\'s manual and enter it manually on the vehicle details screen.</string>
+    <string name="invalid_distance">The distance you have entered is invalid.</string>
+    <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
     <!-- endregion -->
 </resources>

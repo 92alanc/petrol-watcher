@@ -2,10 +2,9 @@ package com.braincorp.petrolwatcher.utils
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
+import com.braincorp.petrolwatcher.feature.consumption.ConsumptionActivity
 import com.braincorp.petrolwatcher.feature.stations.*
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -123,12 +122,13 @@ fun AppCompatActivity.startVehicleDetailsActivity(vehicle: Vehicle,
 /**
  * Starts the consumption activity
  *
- * @param finishCurrent if true, the current
- *                      activity will be finished
+ * @param vehicle the vehicle whose fuel consumption
+ *                will be calculated
  */
-fun AppCompatActivity.startConsumptionActivity(finishCurrent: Boolean = false) {
-    // TODO: implement
-    Toast.makeText(this, "Consumption activity", LENGTH_SHORT).show()
+fun AppCompatActivity.startConsumptionActivity(vehicle: Vehicle,
+                                               requestCode: Int) {
+    val intent = ConsumptionActivity.intent(this, vehicle)
+    startActivityForResult(intent, requestCode)
 }
 
 /**
