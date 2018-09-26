@@ -57,7 +57,6 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     private var yearSelectedCount = 0
     private var manufacturerSelectedCount = 0
     private var modelSelectedCount = 0
-    private var detailsSelectedCount = 0
 
     private var inputType = InputType.AUTO
     // endregion
