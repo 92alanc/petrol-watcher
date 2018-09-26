@@ -115,13 +115,16 @@ class AppMapController : MapController {
             val locationResult = client.lastLocation
             locationResult.addOnCompleteListener {
                 val zoomLevel = 15f
-                val location = LatLng(it.result.latitude, it.result.longitude)
-                // Address and locale are not necessary here
-                onCurrentLocationFoundListener.onCurrentLocationFound(address = "",
-                        latLng = location,
-                        locale = Locale.getDefault())
-                val cameraPosition = CameraUpdateFactory.newLatLngZoom(location, zoomLevel)
-                map.moveCamera(cameraPosition)
+                val taskResult = it.result
+                taskResult?.let { result ->
+                    val location = LatLng(result.latitude, result.longitude)
+                    // Address and locale are not necessary here
+                    onCurrentLocationFoundListener.onCurrentLocationFound(address = "",
+                            latLng = location,
+                            locale = Locale.getDefault())
+                    val cameraPosition = CameraUpdateFactory.newLatLngZoom(location, zoomLevel)
+                    map.moveCamera(cameraPosition)
+                }
             }
         } catch (e: SecurityException) {
             Log.e(TAG, e.message, e)
