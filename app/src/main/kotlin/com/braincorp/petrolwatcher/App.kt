@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 /**
  * The general application class
  */
+@Suppress("unused")
 open class App : Application() {
 
     private companion object {
