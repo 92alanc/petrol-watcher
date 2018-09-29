@@ -92,4 +92,8 @@
     <string name="invalid_distance">A distância que você informou é inválida.</string>
     <string name="invalid_tank_state">O estado final do tanque deve ser menor que o inicial.</string>
     <string name="go_to">Ir para</string>
+    <string name="info_petrol_stations_5km_radius">Esta lista só mostra postos dentro de um raio de 5km.</string>
+    <string name="no_petrol_stations_found">Nenhum posto encontrado nesta localidade</string>
+    <string name="no_vehicles">Nenhum veículo</string>
+    <string name="info">Informação</string>
 </resources>

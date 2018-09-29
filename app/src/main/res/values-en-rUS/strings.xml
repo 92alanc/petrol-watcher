@@ -92,4 +92,8 @@
     <string name="invalid_distance">The distance you have entered is invalid.</string>
     <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
     <string name="go_to">Go to</string>
+    <string name="info_petrol_stations_5km_radius">This list only shows gas stations within a 5km radius.</string>
+    <string name="no_petrol_stations_found">No gas stations found in this location</string>
+    <string name="no_vehicles">No vehicles</string>
+    <string name="info">Information</string>
 </resources>

@@ -9,6 +9,7 @@
     <string name="no">No</string>
     <string name="field_should_not_be_blank">This field should not be blank</string>
     <string name="go_to">Go to</string>
+    <string name="info">Information</string>
     <!-- endregion -->
 
     <!-- region Accessibility -->
@@ -75,6 +76,7 @@
     <string name="year_format">Year: %1$d</string>
     <string name="delete_vehicle">Delete vehicle</string>
     <string name="delete_vehicle_confirmation">Are you sure you want to delete this vehicle?</string>
+    <string name="no_vehicles">No vehicles</string>
     <!-- endregion -->
 
     <!-- region Petrol stations -->
@@ -95,6 +97,8 @@
     <string name="premium">Premium</string>
     <string name="delete_petrol_station">Delete petrol station</string>
     <string name="delete_petrol_station_confirmation">Are you sure you want to delete this petrol station?</string>
+    <string name="info_petrol_stations_5km_radius">This list only shows petrol stations within a 5km radius.</string>
+    <string name="no_petrol_stations_found">No petrol stations found in this location</string>
     <!-- endregion -->
 
     <!-- region Consumption -->

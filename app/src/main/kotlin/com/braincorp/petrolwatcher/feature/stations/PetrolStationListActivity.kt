@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.stations
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -32,6 +33,7 @@ class PetrolStationListActivity : AppCompatActivity(),
         private const val KEY_CURRENT_LOCATION = "current_location"
         private const val KEY_HAS_LOCATION_PERMISSION = "has_location_permission"
         private const val KEY_PETROL_STATIONS = "petrol_stations"
+        private const val KEY_DISPLAYED_INFO = "displayed_info"
 
         fun intent(context: Context,
                    currentLocation: LatLng?): Intent {
@@ -44,6 +46,7 @@ class PetrolStationListActivity : AppCompatActivity(),
 
     private var petrolStations = ArrayList<PetrolStation>()
     private var hasLocationPermission = false
+    private var displayedInfo = false
     private var currentLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +61,9 @@ class PetrolStationListActivity : AppCompatActivity(),
         else
             currentLocation = intent.getParcelableExtra(KEY_CURRENT_LOCATION)
 
+        if (!displayedInfo)
+            displayInfo()
+
         if (petrolStations.isEmpty())
             fetchPetrolStations()
     }
@@ -68,6 +74,7 @@ class PetrolStationListActivity : AppCompatActivity(),
             putParcelableArrayList(KEY_PETROL_STATIONS, petrolStations)
             putParcelable(KEY_CURRENT_LOCATION, currentLocation)
             putBoolean(KEY_HAS_LOCATION_PERMISSION, hasLocationPermission)
+            putBoolean(KEY_DISPLAYED_INFO, displayedInfo)
         }
     }
 
@@ -94,16 +101,21 @@ class PetrolStationListActivity : AppCompatActivity(),
      */
     override fun updateList(petrolStations: ArrayList<PetrolStation>) {
         this.petrolStations = petrolStations
-        val adapter = PetrolStationAdapter(petrolStations,
-                onItemClickListener = this,
-                hasLocationPermission = hasLocationPermission,
-                currentLocation = currentLocation)
-        val layoutManager = LinearLayoutManager(this)
-        recycler_view.layoutManager = layoutManager
-        recycler_view.adapter = adapter
-
         progress_bar.visibility = GONE
-        recycler_view.visibility = VISIBLE
+
+        if (petrolStations.isEmpty()) {
+            txt_no_petrol_stations.visibility = VISIBLE
+            recycler_view.visibility = GONE
+        } else {
+            val adapter = PetrolStationAdapter(petrolStations,
+                    onItemClickListener = this,
+                    hasLocationPermission = hasLocationPermission,
+                    currentLocation = currentLocation)
+            val layoutManager = LinearLayoutManager(this)
+            recycler_view.layoutManager = layoutManager
+            recycler_view.adapter = adapter
+            recycler_view.visibility = VISIBLE
+        }
     }
 
     /**
@@ -118,9 +130,10 @@ class PetrolStationListActivity : AppCompatActivity(),
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
-            petrolStations = getParcelableArrayList(KEY_PETROL_STATIONS)
+            petrolStations = getParcelableArrayList(KEY_PETROL_STATIONS)!!
             updateList(petrolStations)
             currentLocation = getParcelable(KEY_CURRENT_LOCATION)
+            displayedInfo = getBoolean(KEY_DISPLAYED_INFO)
         }
     }
 
@@ -133,6 +146,16 @@ class PetrolStationListActivity : AppCompatActivity(),
         recycler_view.visibility = GONE
         progress_bar.visibility = VISIBLE
         presenter.fetchPetrolStations(hasLocationPermission(), currentLocation)
+    }
+
+    private fun displayInfo() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.info)
+                .setMessage(R.string.info_petrol_stations_5km_radius)
+                .setIcon(R.drawable.ic_info)
+                .setNeutralButton(R.string.ok, null)
+                .show()
+        displayedInfo = true
     }
 
 }
