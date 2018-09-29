@@ -40,6 +40,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         private const val KEY_SELECTED_MANUFACTURER = "selected_manufacturer"
         private const val KEY_SELECTED_MODEL = "selected_model"
         private const val KEY_SELECTED_DETAILS = "selected_details"
+        private const val KEY_DISPLAYED_INFO = "displayed_info"
     }
 
     override lateinit var presenter: CreateVehicleActivityContract.Presenter
@@ -59,6 +60,8 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
     private var modelSelectedCount = 0
 
     private var inputType = InputType.AUTO
+
+    private var displayedInfo = false
     // endregion
 
     // region activity functions
@@ -71,12 +74,19 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         presenter = CreateVehicleActivityPresenter(VehicleApi.getApi(baseUrl), view = this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
-        else
-            presenter.getYearRange()
+
+        if (!displayedInfo)
+            displayInfo()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_create_vehicle, menu)
+        menu?.let {
+            if (inputType == InputType.AUTO)
+                it.findItem(R.id.item_auto_input).isChecked = true
+            else
+                it.findItem(R.id.item_manual_input).isChecked = true
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -96,6 +106,7 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
 
         with (outState) {
             putSerializable(KEY_INPUT_TYPE, inputType)
+            putBoolean(KEY_DISPLAYED_INFO, displayedInfo)
 
             yearRange.let {
                 if (!it.isEmpty())
@@ -286,12 +297,17 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with (savedInstanceState) {
+            displayedInfo = getBoolean(KEY_DISPLAYED_INFO)
+
             if (containsKey(KEY_INPUT_TYPE))
                 inputType = getSerializable(KEY_INPUT_TYPE) as InputType
 
             if (containsKey(KEY_YEAR_RANGE)) {
                 yearRange = getIntArray(KEY_YEAR_RANGE)!!.toRange()
-                setYearRange(yearRange)
+                if (yearRange.isEmpty())
+                    presenter.getYearRange()
+                else
+                    setYearRange(yearRange)
             }
 
             if (containsKey(KEY_MANUFACTURERS)) {
@@ -374,9 +390,19 @@ class CreateVehicleActivity : AppCompatActivity(), CreateVehicleActivityContract
         value.let {
             if ((it is Int && it > 0) || (it is Float && it > 0f))
                 editText.setText(it.toString())
-            else if (it is String && it != "")
+            else if (it is String && it.isNotBlank())
                 editText.setText(it)
         }
+    }
+
+    private fun displayInfo() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.info)
+                .setMessage(R.string.vehicle_information_might_not_be_accurate)
+                .setIcon(R.drawable.ic_info)
+                .setNeutralButton(R.string.ok, null)
+                .show()
+        displayedInfo = true
     }
     // endregion
 

@@ -96,4 +96,5 @@
     <string name="no_petrol_stations_found">Nenhum posto encontrado nesta localidade</string>
     <string name="no_vehicles">Nenhum veículo</string>
     <string name="info">Informação</string>
+    <string name="vehicle_information_might_not_be_accurate">As informações de veículos fornecidas pelo aplicativo podem não estar 100% precisas. Se você notar algo errado, abra o menu no canto superior direito da tela e selecione \"preenchimento manual\" para preencher as informações você mesmo, buscando do manual do seu veículo.</string>
 </resources>
