@@ -11,6 +11,8 @@
         <item name="colorAccent">@color/orange</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
         <item name="android:typeface">serif</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.AppCompat.Body2</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
