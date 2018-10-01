@@ -191,6 +191,9 @@ class CreatePetrolStationActivity : AppCompatActivity(),
         presenter.savePetrolStation(petrolStation)
     }
 
+    @Suppress("DEPRECATION")
+    // This warning has been suppressed because casting a support fragment
+    // to a PlaceAutoCompleteFragment doesn't work
     private fun bindPlaceAutocompleteFragment() {
         placeAutocompleteAddress = fragmentManager.findFragmentById(R.id.edt_address) as PlaceAutocompleteFragment
         placeAutocompleteAddress.setHint(getString(R.string.address))
@@ -199,7 +202,7 @@ class CreatePetrolStationActivity : AppCompatActivity(),
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
-            petrolStation = getParcelable(KEY_PETROL_STATION)
+            petrolStation = getParcelable(KEY_PETROL_STATION)!!
             hasLocationPermission = getBoolean(KEY_HAS_LOCATION_PERMISSION)
             currentLocation = getParcelable(KEY_CURRENT_LOCATION)
             placeAutocompleteAddress.setText(petrolStation.address)
