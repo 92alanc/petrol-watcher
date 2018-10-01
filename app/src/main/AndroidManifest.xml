@@ -98,11 +98,7 @@
 
         <activity android:name=".feature.stations.PetrolStationDetailsActivity"
             android:taskAffinity="@string/affinity_petrol_stations"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".feature.stations.PetrolStationListActivity"/>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".feature.stations.FuelActivity"
             android:taskAffinity="@string/affinity_petrol_stations"

@@ -153,7 +153,7 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
                 editMode = getBoolean(KEY_EDIT_MODE)
 
             if (containsKey(KEY_VEHICLE))
-                vehicle = getParcelable(KEY_VEHICLE)
+                vehicle = getParcelable(KEY_VEHICLE)!!
 
             if (editMode) {
                 showEditableFields()
