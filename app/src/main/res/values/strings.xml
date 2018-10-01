@@ -10,6 +10,7 @@
     <string name="field_should_not_be_blank">This field should not be blank</string>
     <string name="go_to">Go to</string>
     <string name="info">Information</string>
+    <string name="version_format">Version %1$s</string>
     <!-- endregion -->
 
     <!-- region Accessibility -->
