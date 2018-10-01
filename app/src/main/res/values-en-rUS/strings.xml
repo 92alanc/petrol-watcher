@@ -97,4 +97,5 @@
     <string name="no_vehicles">No vehicles</string>
     <string name="info">Information</string>
     <string name="vehicle_information_might_not_be_accurate">Vehicle information provided by the app might not be 100% accurate. If you notice something wrong, go to the menu at the top right corner of the screen and select \"manual input\" to enter the information yourself from your vehicle\'s owner manual.</string>
+    <string name="version_format">Version %1$s</string>
 </resources>

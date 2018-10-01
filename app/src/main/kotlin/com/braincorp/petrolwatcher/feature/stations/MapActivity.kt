@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity.START
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
@@ -79,6 +80,13 @@ class MapActivity : AppCompatActivity(),
     override fun onStart() {
         super.onStart()
         bindNavigationDrawer()
+    }
+
+    override fun onBackPressed() {
+        if (drawer_map.isDrawerOpen(START))
+            drawer_map.closeDrawer(START)
+        else
+            super.onBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -192,8 +200,13 @@ class MapActivity : AppCompatActivity(),
         val imgProfile = headerView.findViewById<CircleImageView>(R.id.img_profile)
         val progressBar = headerView.findViewById<ProgressBar>(R.id.progress_bar)
         val txtName = headerView.findViewById<TextView>(R.id.txt_name)
+        val txtVersion = headerView.findViewById<TextView>(R.id.txt_version)
 
         imgProfile.setOnClickListener(this)
+
+        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        val versionName = packageInfo.versionName
+        txtVersion.text = getString(R.string.version_format, versionName)
 
         authenticator.getUserData(object: OnUserDataFoundListener {
             override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
