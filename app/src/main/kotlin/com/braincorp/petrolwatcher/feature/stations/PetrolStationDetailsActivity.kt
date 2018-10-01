@@ -81,8 +81,10 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.item_delete)
-            delete()
+        when (item?.itemId) {
+            R.id.item_delete -> delete()
+            android.R.id.home -> finish()
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -169,7 +171,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
     private fun restoreInstanceState(savedInstanceState: Bundle) {
         with(savedInstanceState) {
             editMode = getBoolean(KEY_EDIT_MODE)
-            petrolStation = getParcelable(KEY_PETROL_STATION)
+            petrolStation = getParcelable(KEY_PETROL_STATION)!!
         }
 
         if (editMode) {
@@ -183,6 +185,9 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    @Suppress("DEPRECATION")
+    // This warning has been suppressed because casting a support fragment
+    // to a PlaceAutoCompleteFragment doesn't work
     private fun bindPlaceAutocompleteFragment() {
         placeAutocompleteAddress = fragmentManager.findFragmentById(R.id.edt_address) as PlaceAutocompleteFragment
         placeAutocompleteAddress.setHint(getString(R.string.address))
