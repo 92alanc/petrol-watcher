@@ -48,16 +48,16 @@ data class PetrolStation(var name: String = "",
     @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel): this() {
         with (parcel) {
-            id = readString()
-            name = readString()
-            address = readString()
+            id = readString()!!
+            name = readString()!!
+            address = readString()!!
             val lat = readDouble()
             val lng = readDouble()
             latLng = LatLng(lat, lng)
             locale = Locale.forLanguageTag(readString())
-            val types = readArray(javaClass.classLoader)
-            val qualities = readArray(javaClass.classLoader)
-            val prices = readArray(javaClass.classLoader)
+            val types = readArray(javaClass.classLoader)!!
+            val qualities = readArray(javaClass.classLoader)!!
+            val prices = readArray(javaClass.classLoader)!!
             for (i in 0 until types.size) {
                 val type = Fuel.Type.valueOf(types[i].toString())
                 val quality = Fuel.Quality.valueOf(qualities[i].toString())

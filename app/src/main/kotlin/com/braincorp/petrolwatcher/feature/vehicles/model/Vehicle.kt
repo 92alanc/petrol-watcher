@@ -47,11 +47,11 @@ data class Vehicle(var manufacturer: String = "",
 
     constructor(parcel: Parcel): this() {
         with (parcel) {
-            id = readString()
-            manufacturer = readString()
-            model = readString()
+            id = readString()!!
+            manufacturer = readString()!!
+            model = readString()!!
             year = readInt()
-            val trimLevel = readString()
+            val trimLevel = readString()!!
             val fuelCapacity = readInt()
             val avgConsumptionCity = readFloat()
             val avgConsumptionMotorway = readFloat()
@@ -148,7 +148,7 @@ data class Vehicle(var manufacturer: String = "",
 
         constructor(parcel: Parcel): this() {
             with (parcel) {
-                trimLevel = readString()
+                trimLevel = readString()!!
                 fuelCapacity = readInt()
                 avgConsumptionCity = readFloat()
                 avgConsumptionMotorway = readFloat()
