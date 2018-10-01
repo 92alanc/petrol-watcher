@@ -142,7 +142,7 @@ class ConsumptionActivity : AppCompatActivity(),
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
-        vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)
+        vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)!!
         populateViews()
     }
 
