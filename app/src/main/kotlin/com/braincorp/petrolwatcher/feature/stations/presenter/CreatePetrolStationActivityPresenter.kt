@@ -1,7 +1,6 @@
 package com.braincorp.petrolwatcher.feature.stations.presenter
 
 import android.content.Context
-import android.location.Geocoder
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
 import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
@@ -38,16 +37,16 @@ class CreatePetrolStationActivityPresenter(private val view: CreatePetrolStation
      */
     override fun getCurrentLocation(context: Context,
                                     onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
-        DependencyInjection.mapController.getCurrentLocation(context, OnCompleteListener {
-            val location = it.result
-            val geocoder = Geocoder(context)
-            val latLng = LatLng(location.latitude, location.longitude)
+        val mapController = DependencyInjection.mapController
+        mapController.getCurrentLocation(context, OnCompleteListener {
+            val location = it.result ?: return@OnCompleteListener
 
-            val maxResults = 1
-            val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
-            val address = addresses[0].getAddressLine(0)
+            val locationData = mapController.getDataFromLocation(context, location)
+            val address = locationData.getAddressLine(0)
+            val latLng = LatLng(locationData.latitude, locationData.longitude)
+            val locale = mapController.getLocaleFromLatLng(context, latLng)
 
-            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, addresses[0].locale)
+            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, locale)
         })
     }
 

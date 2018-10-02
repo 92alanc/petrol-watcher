@@ -3,6 +3,8 @@ package com.braincorp.petrolwatcher.feature.stations.map
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.support.annotation.IdRes
@@ -151,6 +153,45 @@ class AppMapController : MapController {
         Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results)
 
         return results[0]
+    }
+
+    /**
+     * Gets a locale from a place
+     *
+     * @param context the Android context
+     * @param latLng the place
+     *
+     * @return the locale
+     */
+    override fun getLocaleFromLatLng(context: Context, latLng: LatLng): Locale {
+        val geocoder = Geocoder(context)
+        val maxResults = 1
+
+        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
+        val address = addresses[0]
+        val countryCode = address.countryCode
+
+        val availableLocales = Locale.getAvailableLocales()
+
+        return availableLocales.first { it.country == countryCode }
+    }
+
+    /**
+     * Gets data related to a location
+     *
+     * @param context the Android context
+     * @param location the location
+     *
+     * @return data such as address, coordinates and locale
+     */
+    override fun getDataFromLocation(context: Context, location: Location): Address {
+        val geocoder = Geocoder(context)
+        val latLng = LatLng(location.latitude, location.longitude)
+
+        val maxResults = 1
+        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
+
+        return addresses[0]
     }
 
 }

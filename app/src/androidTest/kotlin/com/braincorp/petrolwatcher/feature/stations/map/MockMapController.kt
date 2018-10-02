@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.stations.map
 
 import android.content.Context
 import android.content.Intent
+import android.location.Address
 import android.location.Location
 import android.support.annotation.IdRes
 import android.support.test.InstrumentationRegistry.getTargetContext
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import org.mockito.Mockito.mock
+import java.util.*
 
 object MockMapController : MapController {
 
@@ -90,5 +92,27 @@ object MockMapController : MapController {
      * @return the distance in metres
      */
     override fun getDistanceInMetres(a: LatLng, b: LatLng): Float = 800f
+
+    /**
+     * Gets a locale from a latitude/longitude coordinate
+     *
+     * @param context the Android context
+     * @param latLng the coordinates
+     *
+     * @return the locale
+     */
+    override fun getLocaleFromLatLng(context: Context, latLng: LatLng): Locale = Locale.getDefault()
+
+    /**
+     * Gets data related to a location
+     *
+     * @param context the Android context
+     * @param location the location
+     *
+     * @return data such as address, coordinates and locale
+     */
+    override fun getDataFromLocation(context: Context, location: Location): Address {
+        return mock(Address::class.java)
+    }
 
 }

@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.feature.stations.map
 
 import android.content.Context
 import android.content.Intent
+import android.location.Address
 import android.location.Location
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
+import java.util.*
 
 /**
  * A map controller
@@ -80,5 +82,25 @@ interface MapController {
      * @return the distance in metres
      */
     fun getDistanceInMetres(a: LatLng, b: LatLng): Float
+
+    /**
+     * Gets a locale from a latitude/longitude coordinate
+     *
+     * @param context the Android context
+     * @param latLng the coordinates
+     *
+     * @return the locale
+     */
+    fun getLocaleFromLatLng(context: Context, latLng: LatLng): Locale
+
+    /**
+     * Gets data related to a location
+     *
+     * @param context the Android context
+     * @param location the location
+     *
+     * @return data such as address, coordinates and locale
+     */
+    fun getDataFromLocation(context: Context, location: Location): Address
 
 }

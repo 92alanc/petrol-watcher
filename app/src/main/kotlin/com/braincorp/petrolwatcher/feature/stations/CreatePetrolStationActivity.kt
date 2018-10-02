@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
+import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
@@ -157,7 +158,10 @@ class CreatePetrolStationActivity : AppCompatActivity(),
     override fun onPlaceSelected(place: Place?) {
         if (place?.address != null) {
             petrolStation.address = place.address.toString()
-            petrolStation.latLng = place.latLng
+            val latLng = place.latLng
+            petrolStation.latLng = latLng
+            val locale = DependencyInjection.mapController.getLocaleFromLatLng(this, latLng)
+            petrolStation.locale = locale
         }
     }
 
