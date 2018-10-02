@@ -77,11 +77,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_default"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@color/teal"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarSize="@dimen/scrollbar_size"
+        android:fadeScrollbars="false"
         app:layout_constraintTop_toBottomOf="@id/label_fuels"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:itemCount="4"/>
+        tools:itemCount="4"
+        tools:listitem="@layout/item_fuel"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_bottom"

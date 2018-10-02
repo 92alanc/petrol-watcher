@@ -31,4 +31,7 @@
     <dimen name="padding_default">16dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <!-- endregion -->
+
+    <!-- Scrollbar -->
+    <dimen name="scrollbar_size">4dp</dimen>
 </resources>
