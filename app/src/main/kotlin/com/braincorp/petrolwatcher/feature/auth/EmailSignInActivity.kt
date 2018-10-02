@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.contract.EmailSignInContract
@@ -33,8 +35,7 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.bt_sign_in -> presenter.signIn(edt_email.text.toString(),
-                    edt_password.text.toString())
+            R.id.bt_sign_in -> signIn()
             R.id.bt_sign_up -> startEmailAndPasswordSignUpActivity()
         }
     }
@@ -44,6 +45,7 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
      * error dialogue
      */
     override fun showErrorDialogue() {
+        progress_bar.visibility = GONE
         AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_error)
                 .setTitle(R.string.error)
@@ -56,12 +58,19 @@ class EmailSignInActivity : AppCompatActivity(), View.OnClickListener, EmailSign
      * Shows the map activity
      */
     override fun showMap() {
+        progress_bar.visibility = GONE
         startMapActivity(finishCurrent = true)
     }
 
     private fun setupButtons() {
         bt_sign_in.setOnClickListener(this)
         bt_sign_up.setOnClickListener(this)
+    }
+
+    private fun signIn() {
+        progress_bar.visibility = VISIBLE
+        presenter.signIn(edt_email.text.toString(),
+                         edt_password.text.toString())
     }
 
 }
