@@ -98,4 +98,8 @@
     <string name="info">Information</string>
     <string name="vehicle_information_might_not_be_accurate">Vehicle information provided by the app might not be 100% accurate. If you notice something wrong, go to the menu at the top right corner of the screen and select \"manual input\" to enter the information yourself from your vehicle\'s owner manual.</string>
     <string name="version_format">Version %1$s</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="tank_state">Tank state</string>
+    <string name="estimated_cost_format">Estimated cost: %1$s %2$.2f</string>
+    <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
 </resources>

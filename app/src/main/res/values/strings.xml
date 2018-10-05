@@ -115,4 +115,12 @@
     <string name="invalid_distance">The distance you have entered is invalid.</string>
     <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
     <!-- endregion -->
+
+    <!-- region Cost planning -->
+    <string name="vehicle">Vehicle</string>
+    <string name="tank_state">Tank state</string>
+    <string name="estimated_cost_format">Estimated cost: %1$s %2$.2f</string>
+    <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
+    <!-- endregion -->
+
 </resources>
