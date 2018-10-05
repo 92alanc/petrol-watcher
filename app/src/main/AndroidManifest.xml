@@ -111,6 +111,12 @@
             android:theme="@style/AppTheme"/>
         <!-- endregion -->
 
+        <!-- region Cost planning -->
+        <activity android:name=".feature.costplanning.CostPlanningActivity"
+            android:taskAffinity="@string/affinity_cost_planning"
+            android:theme="@style/AppTheme"/>
+        <!-- endregion -->
+
         <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
