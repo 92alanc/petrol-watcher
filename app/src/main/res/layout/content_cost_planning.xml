@@ -105,7 +105,7 @@
             android:id="@+id/group_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="txt_estimated_cost,txt_estimated_fuel_amount" />
 
     </android.support.constraint.ConstraintLayout>
