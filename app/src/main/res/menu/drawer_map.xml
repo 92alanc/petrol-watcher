@@ -17,6 +17,12 @@
                     android:title="@string/my_vehicles"
                     android:icon="@drawable/ic_vehicles"
                     android:orderInCategory="3"/>
+
+                <item
+                    android:id="@+id/item_cost_planning"
+                    android:title="@string/cost_planning"
+                    android:icon="@drawable/ic_cost_planning"
+                    android:orderInCategory="4"/>
             </group>
         </menu>
     </item>

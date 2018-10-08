@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.braincorp.petrolwatcher.feature.auth.*
 import com.braincorp.petrolwatcher.feature.auth.model.AuthErrorType
 import com.braincorp.petrolwatcher.feature.consumption.ConsumptionActivity
+import com.braincorp.petrolwatcher.feature.costplanning.CostPlanningActivity
 import com.braincorp.petrolwatcher.feature.stations.*
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -185,6 +186,16 @@ fun AppCompatActivity.startPetrolStationDetailsActivity(petrolStation: PetrolSta
 fun AppCompatActivity.startFuelActivity(fuel: Fuel? = null, requestCode: Int) {
     val intent = FuelActivity.intent(this, fuel)
     startActivityForResult(intent, requestCode)
+}
+
+/**
+ * Starts the cost planning activity
+ *
+ * @param finishCurrent if true, the current
+ *                      activity will be finished
+ */
+fun AppCompatActivity.startCostPlanningActivity(finishCurrent: Boolean = false) {
+    startActivity(CostPlanningActivity::class.java, finishCurrent)
 }
 
 private fun AppCompatActivity.startActivity(destinationClass: Class<*>, finishCurrent: Boolean) {
