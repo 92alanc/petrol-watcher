@@ -164,14 +164,14 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.28.0'
 
     // region Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.3'
-    implementation 'com.google.firebase:firebase-auth:16.0.3'
-    implementation 'com.google.firebase:firebase-database:16.0.2'
-    implementation 'com.google.firebase:firebase-storage:16.0.2'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-auth:16.0.4'
+    implementation 'com.google.firebase:firebase-database:16.0.3'
+    implementation 'com.google.firebase:firebase-storage:16.0.3'
     // endregion
 
     // Google sign in
-    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     // region Google Maps
     implementation "com.google.android.gms:play-services-maps:$google_maps_version"
