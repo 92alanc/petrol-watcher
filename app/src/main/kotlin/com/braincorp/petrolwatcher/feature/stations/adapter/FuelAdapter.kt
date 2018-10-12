@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
-import com.braincorp.petrolwatcher.feature.stations.utils.formatPriceAsCurrency
+import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
 import java.util.*
 

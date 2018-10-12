@@ -103,4 +103,15 @@ interface MapController {
      */
     fun getDataFromLocation(context: Context, location: Location): Address
 
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    fun getCurrentLocation(context: Context,
+                           onCurrentLocationFoundListener: OnCurrentLocationFoundListener)
+
 }

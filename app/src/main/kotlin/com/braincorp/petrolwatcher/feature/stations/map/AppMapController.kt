@@ -194,4 +194,26 @@ class AppMapController : MapController {
         return addresses[0]
     }
 
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    override fun getCurrentLocation(context: Context,
+                                    onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
+        getCurrentLocation(context, OnCompleteListener {
+            val location = it.result ?: return@OnCompleteListener
+
+            val locationData = getDataFromLocation(context, location)
+            val address = locationData.getAddressLine(0)
+            val latLng = LatLng(locationData.latitude, locationData.longitude)
+            val locale = getLocaleFromLatLng(context, latLng)
+
+            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, locale)
+        })
+    }
+
 }

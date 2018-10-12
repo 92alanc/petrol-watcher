@@ -115,4 +115,20 @@ object MockMapController : MapController {
         return mock(Address::class.java)
     }
 
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    override fun getCurrentLocation(context: Context,
+                                    onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
+        val address = "My address"
+        val latLng = LatLng(0.0, 0.0)
+        val locale = Locale.getDefault()
+        onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, locale)
+    }
+
 }

@@ -119,9 +119,11 @@
     <!-- region Cost planning -->
     <string name="vehicle">Vehicle</string>
     <string name="tank_state">Tank state</string>
-    <string name="estimated_cost_format">Estimated cost: %1$s %2$.2f</string>
+    <string name="estimated_cost_format">Estimated cost: %1$s</string>
     <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
     <string name="cost_planning">Cost planning</string>
+    <string name="origin">Origin</string>
+    <string name="destination">Destination</string>
     <!-- endregion -->
 
 </resources>

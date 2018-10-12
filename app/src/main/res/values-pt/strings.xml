@@ -100,7 +100,9 @@
     <string name="version_format">Versão %1$s</string>
     <string name="vehicle">Veículo</string>
     <string name="tank_state">Estado do tanque</string>
-    <string name="estimated_cost_format">Custo estimado: %1$s %2$.2f</string>
+    <string name="estimated_cost_format">Custo estimado: %1$s</string>
     <string name="estimated_fuel_amount_format">Quantidade de combustível estimada: %1$dℓ</string>
     <string name="cost_planning">Planejamento de custo</string>
+    <string name="origin">Origem</string>
+    <string name="destination">Destino</string>
 </resources>
