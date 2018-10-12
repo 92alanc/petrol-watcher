@@ -186,7 +186,9 @@ class CostPlanningActivity : AppCompatActivity(),
             selectedVehicle = getParcelable(KEY_SELECTED_VEHICLE)
             selectedTankState = getSerializable(KEY_SELECTED_TANK_STATE) as TankState
             vehicles = getParcelableArrayList(KEY_VEHICLES)!!
-            cost = getSerializable(KEY_COST) as BigDecimal
+            getSerializable(KEY_COST)?.let {
+                cost = it as BigDecimal
+            }
             fuelAmount = getInt(KEY_FUEL_AMOUNT)
             locale = Locale.forLanguageTag(getString(KEY_LOCALE))
         }
