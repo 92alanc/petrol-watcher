@@ -124,10 +124,16 @@ class CostPlanningActivity : AppCompatActivity(),
      * is found
      *
      * @param address the address
+     * @param city the city
+     * @param country the country
      * @param latLng the latitude and longitude
      * @param locale the locale
      */
-    override fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale) {
+    override fun onCurrentLocationFound(address: String,
+                                        city: String,
+                                        country: String,
+                                        latLng: LatLng,
+                                        locale: Locale) {
         this.locale = locale
         originAddress = address
         placeAutocompleteOrigin.setText(originAddress)
