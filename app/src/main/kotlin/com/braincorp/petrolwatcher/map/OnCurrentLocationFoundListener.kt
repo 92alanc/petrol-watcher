@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.stations.map
+package com.braincorp.petrolwatcher.map
 
 import com.google.android.gms.maps.model.LatLng
 import java.util.*

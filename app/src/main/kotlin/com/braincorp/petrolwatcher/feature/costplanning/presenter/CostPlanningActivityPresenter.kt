@@ -4,7 +4,7 @@ import android.content.Context
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.location.places.Place

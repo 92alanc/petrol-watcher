@@ -9,6 +9,8 @@ import android.support.test.InstrumentationRegistry.getTargetContext
 import android.support.v4.app.FragmentManager
 import com.braincorp.petrolwatcher.base.TestActivity
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.braincorp.petrolwatcher.map.MapController
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng

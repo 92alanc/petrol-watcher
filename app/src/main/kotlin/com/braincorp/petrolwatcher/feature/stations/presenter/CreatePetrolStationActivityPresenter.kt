@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.feature.stations.presenter
 import android.content.Context
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.tasks.OnCompleteListener
 

@@ -22,7 +22,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
 import com.braincorp.petrolwatcher.utils.*

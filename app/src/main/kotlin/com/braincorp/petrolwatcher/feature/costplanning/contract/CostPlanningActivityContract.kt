@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.feature.costplanning.contract
 import android.content.Context
 import com.braincorp.petrolwatcher.base.BaseContract
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.location.places.Place
 import java.math.BigDecimal

@@ -9,7 +9,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
 import com.braincorp.petrolwatcher.feature.costplanning.presenter.CostPlanningActivityPresenter
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
