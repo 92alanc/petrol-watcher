@@ -11,7 +11,7 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.MockDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.MockAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.MockImageHandler
-import com.braincorp.petrolwatcher.feature.stations.map.MockMapController
+import com.braincorp.petrolwatcher.map.MockMapController
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before

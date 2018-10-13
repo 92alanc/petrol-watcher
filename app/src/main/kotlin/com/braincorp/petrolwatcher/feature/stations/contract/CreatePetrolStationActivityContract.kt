@@ -2,7 +2,7 @@ package com.braincorp.petrolwatcher.feature.stations.contract
 
 import android.content.Context
 import com.braincorp.petrolwatcher.base.BaseContract
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 
 interface CreatePetrolStationActivityContract {

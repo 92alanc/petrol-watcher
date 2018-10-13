@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -72,4 +73,19 @@ interface DatabaseManager {
     fun fetchPetrolStationsWithin5kmRadius(onPetrolStationsFoundListener: OnPetrolStationsFoundListener,
                                            hasLocationPermission: Boolean,
                                            currentLocation: LatLng?)
+
+    /**
+     * Gets the average price for a fuel
+     *
+     * @param city the city
+     * @param country the country
+     * @param fuelType the fuel type
+     * @param fuelQuality the fuel quality
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    fun getAveragePriceForFuel(city: String,
+                               country: String,
+                               fuelType: Fuel.Type,
+                               fuelQuality: Fuel.Quality,
+                               onAveragePriceFoundListener: OnAveragePriceFoundListener)
 }

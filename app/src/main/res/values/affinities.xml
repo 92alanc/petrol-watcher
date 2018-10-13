@@ -4,4 +4,5 @@
     <string name="affinity_vehicles" translatable="false">com.braincorp.petrolwatcher.vehicles</string>
     <string name="affinity_petrol_stations" translatable="false">com.braincorp.petrolwatcher.petrol_stations</string>
     <string name="affinity_consumption" translatable="false">com.braincorp.petrolwatcher.consumption</string>
+    <string name="affinity_cost_planning" translatable="false">com.braincorp.petrolwatcher.costplanning</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.stations.map
+package com.braincorp.petrolwatcher.map
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.util.Log
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -120,8 +121,10 @@ class AppMapController : MapController {
                 val taskResult = it.result
                 taskResult?.let { result ->
                     val location = LatLng(result.latitude, result.longitude)
-                    // Address and locale are not necessary here
+                    // Address, city, country and locale are not necessary here
                     onCurrentLocationFoundListener.onCurrentLocationFound(address = "",
+                            city = "",
+                            country = "",
                             latLng = location,
                             locale = Locale.getDefault())
                     val cameraPosition = CameraUpdateFactory.newLatLngZoom(location, zoomLevel)
@@ -192,6 +195,64 @@ class AppMapController : MapController {
         val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
 
         return addresses[0]
+    }
+
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    override fun getCurrentLocation(context: Context,
+                                    onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
+        getCurrentLocation(context, OnCompleteListener {
+            val location = it.result ?: return@OnCompleteListener
+
+            val locationData = getDataFromLocation(context, location)
+            val address = locationData.getAddressLine(0)
+            val latLng = LatLng(locationData.latitude, locationData.longitude)
+            val locale = getLocaleFromLatLng(context, latLng)
+            val city = locationData.locality
+            val country = locationData.countryName
+
+            onCurrentLocationFoundListener.onCurrentLocationFound(address, city, country, latLng, locale)
+        })
+    }
+
+    /**
+     * Gets the city from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the city
+     */
+    override fun getCityFromPlace(context: Context, place: Place): String {
+        val geocoder = Geocoder(context)
+        val maxResults = 1
+        val address = geocoder.getFromLocation(place.latLng.latitude,
+                place.latLng.longitude,
+                maxResults)[0]
+        return address.locality
+    }
+
+    /**
+     * Gets the country from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the country
+     */
+    override fun getCountryFromPlace(context: Context, place: Place): String {
+        val geocoder = Geocoder(context)
+        val maxResults = 1
+        val address = geocoder.getFromLocation(place.latLng.latitude,
+                place.latLng.longitude,
+                maxResults)[0]
+        return address.countryName
     }
 
 }

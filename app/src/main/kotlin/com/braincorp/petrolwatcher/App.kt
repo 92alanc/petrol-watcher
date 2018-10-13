@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
-import com.braincorp.petrolwatcher.feature.stations.map.AppMapController
+import com.braincorp.petrolwatcher.map.AppMapController
 import com.google.firebase.FirebaseApp
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration

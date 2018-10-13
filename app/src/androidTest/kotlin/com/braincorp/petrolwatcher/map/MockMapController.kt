@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.stations.map
+package com.braincorp.petrolwatcher.map
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.support.test.InstrumentationRegistry.getTargetContext
 import android.support.v4.app.FragmentManager
 import com.braincorp.petrolwatcher.base.TestActivity
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -114,5 +115,41 @@ object MockMapController : MapController {
     override fun getDataFromLocation(context: Context, location: Location): Address {
         return mock(Address::class.java)
     }
+
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    override fun getCurrentLocation(context: Context,
+                                    onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
+        val address = "My address"
+        val latLng = LatLng(0.0, 0.0)
+        val locale = Locale.getDefault()
+        onCurrentLocationFoundListener.onCurrentLocationFound(address, "", "", latLng, locale)
+    }
+
+    /**
+     * Gets the city from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the city
+     */
+    override fun getCityFromPlace(context: Context, place: Place): String = "Worthing"
+
+    /**
+     * Gets the country from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the country
+     */
+    override fun getCountryFromPlace(context: Context, place: Place): String = "United Kingdom"
 
 }

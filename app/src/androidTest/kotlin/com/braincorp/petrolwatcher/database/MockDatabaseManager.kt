@@ -1,6 +1,7 @@
 package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -9,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import org.mockito.Mock
 import org.mockito.Mockito.mock
+import java.math.BigDecimal
 
 /**
  * The database manager used in tests
@@ -109,4 +111,22 @@ object MockDatabaseManager : DatabaseManager {
         val petrolStations = arrayListOf(stationA, stationB)
         onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
     }
+
+    /**
+     * Gets the average price for a fuel
+     *
+     * @param city the city
+     * @param country the country
+     * @param fuelType the fuel type
+     * @param fuelQuality the fuel quality
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    override fun getAveragePriceForFuel(city: String,
+                                        country: String,
+                                        fuelType: Fuel.Type,
+                                        fuelQuality: Fuel.Quality,
+                                        onAveragePriceFoundListener: OnAveragePriceFoundListener) {
+        onAveragePriceFoundListener.onAveragePriceFound(BigDecimal(4.8))
+    }
+
 }

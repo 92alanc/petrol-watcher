@@ -18,7 +18,7 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.CreatePetrolStationActivityPresenter
@@ -157,10 +157,13 @@ class CreatePetrolStationActivity : AppCompatActivity(),
 
     override fun onPlaceSelected(place: Place?) {
         if (place?.address != null) {
+            val mapController = DependencyInjection.mapController
             petrolStation.address = place.address.toString()
+            petrolStation.city = mapController.getCityFromPlace(this, place)
+            petrolStation.country = mapController.getCountryFromPlace(this, place)
             val latLng = place.latLng
             petrolStation.latLng = latLng
-            val locale = DependencyInjection.mapController.getLocaleFromLatLng(this, latLng)
+            val locale = mapController.getLocaleFromLatLng(this, latLng)
             petrolStation.locale = locale
         }
     }
@@ -170,13 +173,21 @@ class CreatePetrolStationActivity : AppCompatActivity(),
      * is found
      *
      * @param address the address
+     * @param city the city
+     * @param country the country
      * @param latLng the latitude and longitude
      * @param locale the locale
      */
-    override fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale) {
+    override fun onCurrentLocationFound(address: String,
+                                        city: String,
+                                        country: String,
+                                        latLng: LatLng,
+                                        locale: Locale) {
         placeAutocompleteAddress.setText(address)
 
         petrolStation.address = address
+        petrolStation.city = city
+        petrolStation.country = country
         petrolStation.latLng = latLng
         petrolStation.locale = locale
     }

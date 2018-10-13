@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher
 import com.braincorp.petrolwatcher.database.DatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.Authenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.ImageHandler
-import com.braincorp.petrolwatcher.feature.stations.map.MapController
+import com.braincorp.petrolwatcher.map.MapController
 
 /**
  * The dependencies used in the app

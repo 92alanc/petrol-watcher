@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.stations.map
+package com.braincorp.petrolwatcher.map
 
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
@@ -13,9 +13,15 @@ interface OnCurrentLocationFoundListener {
      * is found
      *
      * @param address the address
+     * @param city the city
+     * @param country the country
      * @param latLng the latitude and longitude
      * @param locale the locale
      */
-    fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale)
+    fun onCurrentLocationFound(address: String,
+                               city: String,
+                               country: String,
+                               latLng: LatLng,
+                               locale: Locale)
 
 }

@@ -66,7 +66,6 @@
     <string name="price">Price</string>
     <string name="diesel">Diesel</string>
     <string name="ethanol">Ethanol</string>
-    <string name="lpg">LPG</string>
     <string name="petrol">Gas</string>
     <string name="regular">Regular</string>
     <string name="premium">Premium</string>
@@ -98,4 +97,13 @@
     <string name="info">Information</string>
     <string name="vehicle_information_might_not_be_accurate">Vehicle information provided by the app might not be 100% accurate. If you notice something wrong, go to the menu at the top right corner of the screen and select \"manual input\" to enter the information yourself from your vehicle\'s owner manual.</string>
     <string name="version_format">Version %1$s</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="tank_state">Tank state</string>
+    <string name="estimated_cost_format">Estimated cost: %1$s</string>
+    <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
+    <string name="cost_planning">Cost planning</string>
+    <string name="origin">Origin</string>
+    <string name="destination">Destination</string>
+    <string name="fuel_type">Fuel type</string>
+    <string name="fuel_quality">Fuel quality</string>
 </resources>

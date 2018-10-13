@@ -14,6 +14,8 @@ import kotlin.collections.HashMap
  *
  * @param name the name
  * @param address the address
+ * @param city the city
+ * @param country the country
  * @param latLng the latitude and longitude
  * @param locale the locale
  * @param fuels the fuels with their respective prices
@@ -21,6 +23,8 @@ import kotlin.collections.HashMap
  */
 data class PetrolStation(var name: String = "",
                          var address: String = "",
+                         var city: String = "",
+                         var country: String = "",
                          var latLng: LatLng = LatLng(0.0, 0.0),
                          var locale: Locale = Locale.getDefault(),
                          var fuels: MutableSet<Fuel> = mutableSetOf(),
@@ -30,6 +34,8 @@ data class PetrolStation(var name: String = "",
         private const val KEY_ID = "id"
         private const val KEY_NAME = "name"
         private const val KEY_ADDRESS = "address"
+        private const val KEY_CITY = "city"
+        private const val KEY_COUNTRY = "country"
         private const val KEY_LAT = "lat"
         private const val KEY_LNG = "lng"
         private const val KEY_LOCALE = "locale"
@@ -51,6 +57,8 @@ data class PetrolStation(var name: String = "",
             id = readString()!!
             name = readString()!!
             address = readString()!!
+            city = readString()!!
+            country = readString()!!
             val lat = readDouble()
             val lng = readDouble()
             latLng = LatLng(lat, lng)
@@ -74,6 +82,8 @@ data class PetrolStation(var name: String = "",
             id = child(KEY_ID).value.toString()
             name = child(KEY_NAME).value.toString()
             address = child(KEY_ADDRESS).value.toString()
+            city = child(KEY_CITY).value.toString()
+            country = child(KEY_COUNTRY).value.toString()
             val lat = child(KEY_LAT).value.toString().toDouble()
             val lng = child(KEY_LNG).value.toString().toDouble()
             latLng = LatLng(lat, lng)
@@ -103,6 +113,8 @@ data class PetrolStation(var name: String = "",
         map[KEY_ID] = id
         map[KEY_NAME] = name
         map[KEY_ADDRESS] = address
+        map[KEY_CITY] = city
+        map[KEY_COUNTRY] = country
         map[KEY_LAT] = latLng.latitude
         map[KEY_LNG] = latLng.longitude
         map[KEY_LOCALE] = locale.toLanguageTag()
@@ -127,6 +139,8 @@ data class PetrolStation(var name: String = "",
             writeString(id)
             writeString(name)
             writeString(address)
+            writeString(city)
+            writeString(country)
             writeDouble(latLng.latitude)
             writeDouble(latLng.longitude)
             writeString(locale.toLanguageTag())

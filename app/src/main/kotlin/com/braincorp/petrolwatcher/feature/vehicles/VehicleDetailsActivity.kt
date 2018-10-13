@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.content_vehicle_details.*
  * The activity where vehicle details are shown and edited
  */
 class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
-                               VehicleDetailsActivityContract.View {
+        VehicleDetailsActivityContract.View {
 
     companion object {
         private const val KEY_VEHICLE = "vehicle"
@@ -233,12 +233,22 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         val name = "${vehicle.manufacturer} ${vehicle.model} ${vehicle.details.trimLevel}"
         txt_name.text = name
         txt_year.text = getString(R.string.year_format, vehicle.year)
-        txt_fuel_capacity.text = getString(R.string.capacity_format,
-                                           vehicle.details.fuelCapacity.toString())
+
+        val fuelCapacity = if (vehicle.details.fuelCapacity > 0) vehicle.details.fuelCapacity.toString()
+        else "?"
+        txt_fuel_capacity.text = getString(R.string.capacity_format, fuelCapacity)
+
+        val avgConsumptionCity = if (vehicle.details.avgConsumptionCity > 0f) {
+            vehicle.details.avgConsumptionCity.toString()
+        } else "?"
         txt_avg_consumption_city.text = getString(R.string.avg_consumption_city_format,
-                                                  vehicle.details.avgConsumptionCity.toString())
+                avgConsumptionCity)
+
+        val avgConsumptionMotorway = if (vehicle.details.avgConsumptionMotorway > 0f) {
+            vehicle.details.avgConsumptionMotorway.toString()
+        } else "?"
         txt_avg_consumption_motorway.text = getString(R.string.avg_consumption_motorway_format,
-                                                  vehicle.details.avgConsumptionMotorway.toString())
+                avgConsumptionMotorway)
     }
 
     private fun fillEditableFields() {
@@ -246,9 +256,12 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
         edt_manufacturer.setText(vehicle.manufacturer)
         edt_model.setText(vehicle.model)
         edt_trim_level.setText(vehicle.details.trimLevel)
-        edt_capacity.setText(vehicle.details.fuelCapacity.toString())
-        edt_avg_consumption_city.setText(vehicle.details.avgConsumptionCity.toString())
-        edt_avg_consumption_motorway.setText(vehicle.details.avgConsumptionMotorway.toString())
+        if (vehicle.details.fuelCapacity > 0)
+            edt_capacity.setText(vehicle.details.fuelCapacity.toString())
+        if (vehicle.details.avgConsumptionCity > 0f)
+            edt_avg_consumption_city.setText(vehicle.details.avgConsumptionCity.toString())
+        if (vehicle.details.avgConsumptionMotorway > 0f)
+            edt_avg_consumption_motorway.setText(vehicle.details.avgConsumptionMotorway.toString())
     }
 
     private fun fillCalculatedValues() {
@@ -263,9 +276,9 @@ class VehicleDetailsActivity : AppCompatActivity(), View.OnClickListener,
             "?"
 
         txt_calculated_avg_consumption_city.text = getString(R.string.avg_consumption_city_format,
-                                                             avgConsumptionCity)
+                avgConsumptionCity)
         txt_calculated_avg_consumption_motorway.text = getString(R.string.avg_consumption_motorway_format,
-                                                                 avgConsumptionMotorway)
+                avgConsumptionMotorway)
     }
 
     private fun delete() {

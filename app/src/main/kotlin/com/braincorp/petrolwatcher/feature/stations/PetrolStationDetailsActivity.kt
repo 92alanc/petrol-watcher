@@ -159,7 +159,10 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
 
     override fun onPlaceSelected(place: Place?) {
         if (place?.address != null) {
+            val mapController = DependencyInjection.mapController
             petrolStation.address = place.address.toString()
+            petrolStation.city = mapController.getCityFromPlace(this, place)
+            petrolStation.country = mapController.getCountryFromPlace(this, place)
             petrolStation.latLng = place.latLng
         }
     }

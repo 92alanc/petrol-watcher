@@ -3,9 +3,8 @@ package com.braincorp.petrolwatcher.feature.stations.presenter
 import android.content.Context
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.contract.CreatePetrolStationActivityContract
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 
 /**
@@ -38,16 +37,7 @@ class CreatePetrolStationActivityPresenter(private val view: CreatePetrolStation
     override fun getCurrentLocation(context: Context,
                                     onCurrentLocationFoundListener: OnCurrentLocationFoundListener) {
         val mapController = DependencyInjection.mapController
-        mapController.getCurrentLocation(context, OnCompleteListener {
-            val location = it.result ?: return@OnCompleteListener
-
-            val locationData = mapController.getDataFromLocation(context, location)
-            val address = locationData.getAddressLine(0)
-            val latLng = LatLng(locationData.latitude, locationData.longitude)
-            val locale = mapController.getLocaleFromLatLng(context, latLng)
-
-            onCurrentLocationFoundListener.onCurrentLocationFound(address, latLng, locale)
-        })
+        mapController.getCurrentLocation(context, onCurrentLocationFoundListener)
     }
 
 }

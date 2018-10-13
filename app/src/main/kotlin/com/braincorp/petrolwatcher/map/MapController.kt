@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.stations.map
+package com.braincorp.petrolwatcher.map
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.location.Location
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
+import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -102,5 +103,36 @@ interface MapController {
      * @return data such as address, coordinates and locale
      */
     fun getDataFromLocation(context: Context, location: Location): Address
+
+    /**
+     * Gets the current location
+     *
+     * @param context the Android context
+     * @param onCurrentLocationFoundListener the callback to be triggered
+     *                                       when all data belonging to the
+     *                                       location is found
+     */
+    fun getCurrentLocation(context: Context,
+                           onCurrentLocationFoundListener: OnCurrentLocationFoundListener)
+
+    /**
+     * Gets the city from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the city
+     */
+    fun getCityFromPlace(context: Context, place: Place): String
+
+    /**
+     * Gets the country from a place
+     *
+     * @param context the Android context
+     * @param place the place
+     *
+     * @return the country
+     */
+    fun getCountryFromPlace(context: Context, place: Place): String
 
 }

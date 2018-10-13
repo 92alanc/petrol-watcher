@@ -22,7 +22,7 @@ import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
-import com.braincorp.petrolwatcher.feature.stations.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
 import com.braincorp.petrolwatcher.utils.*
@@ -119,6 +119,7 @@ class MapActivity : AppCompatActivity(),
             R.id.item_stations_nearby -> startList()
             R.id.item_profile -> startProfileActivity(editMode = true)
             R.id.item_my_vehicles -> startVehicleListActivity()
+            R.id.item_cost_planning -> startCostPlanningActivity()
             R.id.item_sign_out -> signOut()
         }
 
@@ -173,10 +174,16 @@ class MapActivity : AppCompatActivity(),
      * is found
      *
      * @param address the address
+     * @param city the city
+     * @param country the country
      * @param latLng the latitude and longitude
      * @param locale the locale
      */
-    override fun onCurrentLocationFound(address: String, latLng: LatLng, locale: Locale) {
+    override fun onCurrentLocationFound(address: String,
+                                        city: String,
+                                        country: String,
+                                        latLng: LatLng,
+                                        locale: Locale) {
         currentLocation = latLng
     }
 

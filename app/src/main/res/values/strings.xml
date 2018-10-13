@@ -93,7 +93,6 @@
     <string name="price">Price</string>
     <string name="diesel">Diesel</string>
     <string name="ethanol">Ethanol</string>
-    <string name="lpg">LPG</string>
     <string name="petrol">Petrol</string>
     <string name="regular">Regular</string>
     <string name="premium">Premium</string>
@@ -115,4 +114,17 @@
     <string name="invalid_distance">The distance you have entered is invalid.</string>
     <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
     <!-- endregion -->
+
+    <!-- region Cost planning -->
+    <string name="vehicle">Vehicle</string>
+    <string name="tank_state">Tank state</string>
+    <string name="estimated_cost_format">Estimated cost: %1$s</string>
+    <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
+    <string name="cost_planning">Cost planning</string>
+    <string name="origin">Origin</string>
+    <string name="destination">Destination</string>
+    <string name="fuel_type">Fuel type</string>
+    <string name="fuel_quality">Fuel quality</string>
+    <!-- endregion -->
+
 </resources>
