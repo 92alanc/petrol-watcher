@@ -2,6 +2,7 @@ package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -9,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.math.BigDecimal
 
 /**
  * The database manager used in the app
@@ -172,6 +174,39 @@ class AppDatabaseManager : DatabaseManager {
                         onPetrolStationsFoundListener.onPetrolStationsFound(petrolStations)
                     }
                 })
+    }
+
+    /**
+     * Gets the average price for a fuel
+     *
+     * @param city the city
+     * @param country the country
+     * @param fuelType the fuel type
+     * @param fuelQuality the fuel quality
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    override fun getAveragePriceForFuel(city: String,
+                                        country: String,
+                                        fuelType: Fuel.Type,
+                                        fuelQuality: Fuel.Quality,
+                                        onAveragePriceFoundListener: OnAveragePriceFoundListener) {
+        fetchPetrolStations(object: OnPetrolStationsFoundListener {
+            override fun onPetrolStationsFound(petrolStations: ArrayList<PetrolStation>) {
+                val stationsInTheArea = petrolStations.filter {
+                    it.city == city && it.country == country
+                }
+
+                // Sum all the fuel prices matching the defined criteria (same price and same quality)
+                val sum = stationsInTheArea.sumByDouble {
+                    it.fuels.first {
+                        fuel -> fuel.type == fuelType && fuel.quality == fuelQuality
+                    }.price.toDouble()
+                }
+
+                val averageDouble = sum / stationsInTheArea.size
+                onAveragePriceFoundListener.onAveragePriceFound(BigDecimal(averageDouble))
+            }
+        })
     }
 
     private fun <T: Mappable> insert(item: T,

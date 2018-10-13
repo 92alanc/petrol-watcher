@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
 import com.braincorp.petrolwatcher.feature.costplanning.presenter.CostPlanningActivityPresenter
-import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
 import com.google.android.gms.common.api.Status
@@ -34,6 +36,9 @@ class CostPlanningActivity : AppCompatActivity(),
     private companion object {
         const val KEY_ORIGIN = "origin"
         const val KEY_DESTINATION = "destination"
+        const val KEY_SELECTED_FUEL_TYPE = "selected_fuel_type"
+        const val KEY_SELECTED_FUEL_QUALITY = "selected_fual_quality"
+        const val KEY_SELECTED_ROAD_TYPE = "selected_road_type"
         const val KEY_SELECTED_VEHICLE = "selected_vehicle"
         const val KEY_SELECTED_TANK_STATE = "selected_tank_state"
         const val KEY_VEHICLES = "vehicles"
@@ -53,6 +58,9 @@ class CostPlanningActivity : AppCompatActivity(),
     private var destination: Place? = null
     private var originAddress: String? = null
     private var destinationAddress: String? = null
+    private var selectedFuelType: Fuel.Type? = null
+    private var selectedFuelQuality: Fuel.Quality? = null
+    private var selectedRoadType: RoadType? = null
     private var selectedVehicle: Vehicle? = null
     private var selectedTankState: TankState? = null
     private var cost: BigDecimal? = null
@@ -81,6 +89,9 @@ class CostPlanningActivity : AppCompatActivity(),
             it.putString(KEY_DESTINATION, destination?.address?.toString())
             it.putParcelable(KEY_SELECTED_VEHICLE, selectedVehicle)
             it.putSerializable(KEY_SELECTED_TANK_STATE, selectedTankState)
+            it.putSerializable(KEY_SELECTED_FUEL_TYPE, selectedFuelType)
+            it.putSerializable(KEY_SELECTED_FUEL_QUALITY, selectedFuelQuality)
+            it.putSerializable(KEY_SELECTED_ROAD_TYPE, selectedRoadType)
             it.putParcelableArrayList(KEY_VEHICLES, vehicles)
             it.putSerializable(KEY_COST, cost)
             it.putInt(KEY_FUEL_AMOUNT, fuelAmount)
@@ -190,7 +201,18 @@ class CostPlanningActivity : AppCompatActivity(),
             originAddress = getString(KEY_ORIGIN)
             destinationAddress = getString(KEY_DESTINATION)
             selectedVehicle = getParcelable(KEY_SELECTED_VEHICLE)
-            selectedTankState = getSerializable(KEY_SELECTED_TANK_STATE) as TankState
+            getSerializable(KEY_SELECTED_TANK_STATE)?.let {
+                selectedTankState = it as TankState
+            }
+            getSerializable(KEY_SELECTED_FUEL_TYPE)?.let {
+                selectedFuelType = it as Fuel.Type
+            }
+            getSerializable(KEY_SELECTED_FUEL_QUALITY)?.let {
+                selectedFuelQuality = it as Fuel.Quality
+            }
+            getSerializable(KEY_SELECTED_ROAD_TYPE)?.let {
+                selectedRoadType = it as RoadType
+            }
             vehicles = getParcelableArrayList(KEY_VEHICLES)!!
             getSerializable(KEY_COST)?.let {
                 cost = it as BigDecimal
@@ -211,6 +233,9 @@ class CostPlanningActivity : AppCompatActivity(),
     private fun populateSpinners() {
         populateVehicleSpinner()
         populateTankStateSpinner()
+        populateFuelTypeSpinner()
+        populateFuelQualitySpinner()
+        populateRoadTypeSpinner()
     }
 
     private fun populateVehicleSpinner() {
@@ -247,10 +272,64 @@ class CostPlanningActivity : AppCompatActivity(),
         }
     }
 
+    private fun populateFuelTypeSpinner() {
+        val fuelTypes = Fuel.Type.values().map { getString(it.stringRes) }
+        val adapter = GenericSpinnerAdapter(this, fuelTypes)
+        spn_fuel_type.adapter = adapter
+        spn_fuel_type.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(spinner: AdapterView<*>?) { }
+
+            override fun onItemSelected(spinner: AdapterView<*>?, itemView: View?, position: Int, p3: Long) {
+                selectedFuelType = Fuel.Type.values()[position]
+            }
+        }
+    }
+
+    private fun populateFuelQualitySpinner() {
+        val fuelQualities = Fuel.Quality.values().map { getString(it.stringRes) }
+        val adapter = GenericSpinnerAdapter(this, fuelQualities)
+        spn_fuel_quality.adapter = adapter
+        spn_fuel_quality.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(spinner: AdapterView<*>?) { }
+
+            override fun onItemSelected(spinner: AdapterView<*>?, itemView: View?, position: Int, p3: Long) {
+                selectedFuelQuality = Fuel.Quality.values()[position]
+            }
+        }
+    }
+
+    private fun populateRoadTypeSpinner() {
+        val roadTypes = resources.getStringArray(R.array.road_types).toList()
+        val adapter = GenericSpinnerAdapter(this, roadTypes)
+        spn_road_type.adapter = adapter
+        spn_road_type.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(spinner: AdapterView<*>?) { }
+
+            override fun onItemSelected(spinner: AdapterView<*>?, itemView: View?, position: Int, p3: Long) {
+                selectedRoadType = RoadType.values()[position]
+            }
+        }
+    }
+
     private fun getResult() {
-        if (origin != null && destination != null && selectedVehicle != null && selectedTankState != null) {
-            presenter.estimateCostAndFuelAmount(origin!!, destination!!,
-                    selectedVehicle!!, selectedTankState!!)
+        val noBlankFields = origin != null
+                && destination != null
+                && selectedVehicle != null
+                && selectedTankState != null
+                && selectedFuelType != null
+                && selectedFuelQuality != null
+                && selectedRoadType != null
+
+
+        if (noBlankFields) {
+            presenter.estimateCostAndFuelAmount(this,
+                    origin!!,
+                    destination!!,
+                    selectedFuelType!!,
+                    selectedFuelQuality!!,
+                    selectedVehicle!!,
+                    selectedTankState!!,
+                    selectedRoadType!!)
         }
     }
 

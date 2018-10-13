@@ -2,9 +2,11 @@ package com.braincorp.petrolwatcher.feature.costplanning.contract
 
 import android.content.Context
 import com.braincorp.petrolwatcher.base.BaseContract
+import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
-import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
+import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.google.android.gms.location.places.Place
 import java.math.BigDecimal
 
@@ -53,14 +55,22 @@ interface CostPlanningActivityContract {
          * Estimates the cost and the fuel amount
          * necessary for a trip
          *
+         * @param context the Android context
          * @param origin the origin
          * @param destination the destination
+         * @param fuelType the fuel type
+         * @param fuelQuality the fuel quality
          * @param vehicle the vehicle
          * @param tankState the tank state
+         * @param roadType the road type
          */
-        fun estimateCostAndFuelAmount(origin: Place,
+        fun estimateCostAndFuelAmount(context: Context,
+                                      origin: Place,
                                       destination: Place,
+                                      fuelType: Fuel.Type,
+                                      fuelQuality: Fuel.Quality,
                                       vehicle: Vehicle,
-                                      tankState: TankState)
+                                      tankState: TankState,
+                                      roadType: RoadType)
     }
 }

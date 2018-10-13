@@ -66,7 +66,6 @@
     <string name="price">Preço</string>
     <string name="diesel">Diesel</string>
     <string name="ethanol">Etanol</string>
-    <string name="lpg">Gás natural</string>
     <string name="petrol">Gasolina</string>
     <string name="regular">Comum</string>
     <string name="premium">Aditivado(a)</string>
@@ -105,4 +104,6 @@
     <string name="cost_planning">Planejamento de custo</string>
     <string name="origin">Origem</string>
     <string name="destination">Destino</string>
+    <string name="fuel_type">Tipo de combustível</string>
+    <string name="fuel_quality">Qualidade de combustível</string>
 </resources>

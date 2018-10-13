@@ -86,13 +86,76 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/generic_spinner_item"/>
 
+        <TextView
+            android:id="@+id/label_spn_fuel_type"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/fuel_type"
+            app:layout_constraintTop_toBottomOf="@id/spn_tank_state"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_fuel_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_fuel_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
+        <TextView
+            android:id="@+id/label_spn_fuel_quality"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/fuel_quality"
+            app:layout_constraintTop_toBottomOf="@id/spn_fuel_type"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_fuel_quality"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_fuel_quality"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
+        <TextView
+            android:id="@+id/label_spn_road_type"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:textColor="@color/orange"
+            android:text="@string/predominant_road_type"
+            app:layout_constraintTop_toBottomOf="@id/spn_fuel_quality"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Spinner
+            android:id="@+id/spn_road_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            app:layout_constraintTop_toBottomOf="@id/label_spn_road_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/generic_spinner_item"/>
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/margin_huge"
             android:background="@color/grey_dark"
-            app:layout_constraintTop_toBottomOf="@id/spn_tank_state"/>
+            app:layout_constraintTop_toBottomOf="@id/spn_road_type"/>
 
         <TextView
             android:id="@+id/txt_estimated_cost"

@@ -93,7 +93,6 @@
     <string name="price">Price</string>
     <string name="diesel">Diesel</string>
     <string name="ethanol">Ethanol</string>
-    <string name="lpg">LPG</string>
     <string name="petrol">Petrol</string>
     <string name="regular">Regular</string>
     <string name="premium">Premium</string>
@@ -124,6 +123,8 @@
     <string name="cost_planning">Cost planning</string>
     <string name="origin">Origin</string>
     <string name="destination">Destination</string>
+    <string name="fuel_type">Fuel type</string>
+    <string name="fuel_quality">Fuel quality</string>
     <!-- endregion -->
 
 </resources>

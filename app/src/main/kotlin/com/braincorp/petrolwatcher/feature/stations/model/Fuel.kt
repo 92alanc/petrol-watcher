@@ -46,7 +46,6 @@ data class Fuel(var type: Type = Type.PETROL,
     enum class Type(@StringRes val stringRes: Int) {
         DIESEL(R.string.diesel),
         ETHANOL(R.string.ethanol),
-        LPG(R.string.lpg),
         PETROL(R.string.petrol)
     }
 
