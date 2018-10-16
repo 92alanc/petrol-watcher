@@ -111,4 +111,7 @@
         <item quantity="other">Avaliado por %1$d pessoas</item>
     </plurals>
     <string name="rate">Avaliar</string>
+    <string name="description_close">Fechar</string>
+    <string name="info_rating">Avalie a qualidade do combustível deste posto baseado na sua experiência</string>
+    <string name="something_went_wrong">Algo deu errado</string>
 </resources>

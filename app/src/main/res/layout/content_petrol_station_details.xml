@@ -45,11 +45,22 @@
         app:layout_constraintStart_toEndOf="@id/txt_address"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/bt_rate"
+        style="@style/AppStyle.Button.Teal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_huge"
+        android:text="@string/rate"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <android.support.constraint.Group
         android:id="@+id/group_read_only_fields"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="txt_name,txt_address,bt_directions"
+        app:constraint_referenced_ids="txt_name,txt_address,bt_directions,bt_rate"
         tools:visibility="visible"/>
     <!-- endregion -->
 
@@ -144,17 +155,6 @@
         android:visibility="gone"
         app:constraint_referenced_ids="til_name,edt_address,bt_add_fuel"
         tools:visibility="gone"/>
-
-    <Button
-        android:id="@+id/bt_rate"
-        style="@style/AppStyle.Button.Teal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_huge"
-        android:text="@string/rate"
-        app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
     <!-- endregion -->
 
 </android.support.constraint.ConstraintLayout>

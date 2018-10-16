@@ -30,7 +30,8 @@ data class PetrolStation(var name: String = "",
                          var locale: Locale = Locale.getDefault(),
                          var fuels: MutableSet<Fuel> = mutableSetOf(),
                          var rating: Int = 0,
-                         var ratingCount: Int = 0) : Mappable, Parcelable {
+                         var ratingCount: Int = 0,
+                         var ratingSum: Int = 0) : Mappable, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
         private const val KEY_ID = "id"
@@ -46,6 +47,7 @@ data class PetrolStation(var name: String = "",
         private const val KEY_FUEL_PRICES = "fuel_prices"
         private const val KEY_RATING = "rating"
         private const val KEY_RATING_COUNT = "rating_count"
+        private const val KEY_RATING_SUM = "rating_sum"
 
         override fun createFromParcel(parcel: Parcel): PetrolStation {
             return PetrolStation(parcel)
@@ -77,6 +79,7 @@ data class PetrolStation(var name: String = "",
             }
             rating = readInt()
             ratingCount = readInt()
+            ratingSum = readInt()
         }
     }
 
@@ -103,6 +106,7 @@ data class PetrolStation(var name: String = "",
             }
             rating = child(KEY_RATING).value.toString().toInt()
             ratingCount = child(KEY_RATING_COUNT).value.toString().toInt()
+            ratingSum = child(KEY_RATING_SUM).value.toString().toInt()
         }
     }
 
@@ -128,6 +132,7 @@ data class PetrolStation(var name: String = "",
         map[KEY_FUEL_PRICES] = fuels.map { it.price.toDouble() }
         map[KEY_RATING] = rating
         map[KEY_RATING_COUNT] = ratingCount
+        map[KEY_RATING_SUM] = ratingSum
         return map
     }
 
@@ -155,6 +160,7 @@ data class PetrolStation(var name: String = "",
             writeArray(fuels.map { it.price.toDouble() }.toTypedArray())
             writeInt(rating)
             writeInt(ratingCount)
+            writeInt(ratingSum)
         }
     }
 

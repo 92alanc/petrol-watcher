@@ -1,5 +1,6 @@
 package com.braincorp.petrolwatcher.feature.stations
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import com.braincorp.petrolwatcher.feature.stations.contract.PetrolStationDetailsActivityContract
+import com.braincorp.petrolwatcher.feature.stations.dialogue.RatingDialogue
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.PetrolStationDetailsActivityPresenter
@@ -71,6 +73,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         fab.setOnClickListener(this)
         bt_directions.setOnClickListener(this)
         bt_add_fuel.setOnClickListener(this)
+        bt_rate.setOnClickListener(this)
         if (savedInstanceState != null)
             restoreInstanceState(savedInstanceState)
     }
@@ -124,6 +127,7 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
         when (v.id) {
             R.id.fab -> handleFabClick()
             R.id.bt_directions -> showDirections()
+            R.id.bt_rate -> rate()
             R.id.bt_add_fuel -> startFuelActivity(requestCode = REQUEST_CODE_FUEL)
         }
     }
@@ -256,6 +260,21 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
                 .setPositiveButton(R.string.yes) { _, _ ->
                     presenter.deletePetrolStation(petrolStation)
                 }.show()
+    }
+
+    // The transaction is committed by the show function in the dialogue fragment
+    @SuppressLint("CommitTransaction")
+    private fun rate() {
+        val transaction = supportFragmentManager.beginTransaction()
+        val previous = supportFragmentManager.findFragmentByTag(RatingDialogue.TAG)
+
+        previous?.let {
+            transaction.remove(it)
+        }
+        transaction.addToBackStack(null)
+
+        val dialogue = RatingDialogue.newInstance(petrolStation)
+        dialogue.show(supportFragmentManager, RatingDialogue.TAG)
     }
 
 }

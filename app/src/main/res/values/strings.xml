@@ -20,6 +20,7 @@
     <string name="description_refresh">Refresh</string>
     <string name="description_directions">Directions</string>
     <string name="description_remove_profile_picture">Remove profile picture</string>
+    <string name="description_close">Close</string>
     <!-- endregion -->
 
     <!-- region Auth -->
@@ -105,6 +106,8 @@
         <item quantity="other">Rated by %1$d people</item>
     </plurals>
     <string name="rate">Rate</string>
+    <string name="info_rating">Rate the quality of this station\'s fuel based on your experience</string>
+    <string name="something_went_wrong">Something went wrong</string>
     <!-- endregion -->
 
     <!-- region Consumption -->
