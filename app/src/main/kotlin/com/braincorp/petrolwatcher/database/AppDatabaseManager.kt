@@ -209,17 +209,17 @@ class AppDatabaseManager : DatabaseManager {
         })
     }
 
-    private fun <T: Mappable> insert(item: T,
-                                     reference: DatabaseReference,
-                                     onCompleteListener: OnCompleteListener<Void>) {
+    private fun insert(item: Mappable,
+                       reference: DatabaseReference,
+                       onCompleteListener: OnCompleteListener<Void>) {
         reference.child(item.id)
                 .setValue(item.toMap())
                 .addOnCompleteListener(onCompleteListener)
     }
 
-    private fun <T: Mappable> update(item: T,
-                                     reference: DatabaseReference,
-                                     onCompleteListener: OnCompleteListener<Void>) {
+    private fun update(item: Mappable,
+                       reference: DatabaseReference,
+                       onCompleteListener: OnCompleteListener<Void>) {
         reference.child(item.id)
                 .updateChildren(item.toMap())
                 .addOnCompleteListener(onCompleteListener)
