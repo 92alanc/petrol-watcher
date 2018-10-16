@@ -47,7 +47,6 @@ android {
     productFlavors {
         beta {
             dimension "mode"
-            applicationIdSuffix = ".beta"
             versionNameSuffix "-beta4"
         }
 
