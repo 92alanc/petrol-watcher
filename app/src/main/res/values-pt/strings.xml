@@ -106,4 +106,8 @@
     <string name="destination">Destino</string>
     <string name="fuel_type">Tipo de combustível</string>
     <string name="fuel_quality">Qualidade de combustível</string>
+    <plurals name="rated_by_format">
+        <item quantity="one">Avaliado por %1$d pessoa</item>
+        <item quantity="other">Avaliado por %1$d pessoas</item>
+    </plurals>
 </resources>
