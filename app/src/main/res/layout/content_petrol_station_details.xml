@@ -144,6 +144,17 @@
         android:visibility="gone"
         app:constraint_referenced_ids="til_name,edt_address,bt_add_fuel"
         tools:visibility="gone"/>
+
+    <Button
+        android:id="@+id/bt_rate"
+        style="@style/AppStyle.Button.Teal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_huge"
+        android:text="@string/rate"
+        app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
     <!-- endregion -->
 
 </android.support.constraint.ConstraintLayout>

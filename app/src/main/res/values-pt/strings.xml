@@ -110,4 +110,5 @@
         <item quantity="one">Avaliado por %1$d pessoa</item>
         <item quantity="other">Avaliado por %1$d pessoas</item>
     </plurals>
+    <string name="rate">Avaliar</string>
 </resources>
