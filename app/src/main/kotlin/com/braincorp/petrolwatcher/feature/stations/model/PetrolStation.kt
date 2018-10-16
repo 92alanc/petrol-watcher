@@ -19,7 +19,8 @@ import kotlin.collections.HashMap
  * @param latLng the latitude and longitude
  * @param locale the locale
  * @param fuels the fuels with their respective prices
- * @param rating the rating (from 0 to 5)
+ * @param rating the rating (from 1 to 5)
+ * @param ratingCount the number of people who rated this station
  */
 data class PetrolStation(var name: String = "",
                          var address: String = "",
@@ -28,7 +29,8 @@ data class PetrolStation(var name: String = "",
                          var latLng: LatLng = LatLng(0.0, 0.0),
                          var locale: Locale = Locale.getDefault(),
                          var fuels: MutableSet<Fuel> = mutableSetOf(),
-                         var rating: Int = 0) : Mappable, Parcelable {
+                         var rating: Int = 0,
+                         var ratingCount: Int = 0) : Mappable, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<PetrolStation> {
         private const val KEY_ID = "id"
@@ -43,6 +45,7 @@ data class PetrolStation(var name: String = "",
         private const val KEY_FUEL_QUALITIES = "fuel_qualities"
         private const val KEY_FUEL_PRICES = "fuel_prices"
         private const val KEY_RATING = "rating"
+        private const val KEY_RATING_COUNT = "rating_count"
 
         override fun createFromParcel(parcel: Parcel): PetrolStation {
             return PetrolStation(parcel)
@@ -73,6 +76,7 @@ data class PetrolStation(var name: String = "",
                 fuels.add(Fuel(type, quality, price))
             }
             rating = readInt()
+            ratingCount = readInt()
         }
     }
 
@@ -98,6 +102,7 @@ data class PetrolStation(var name: String = "",
                 fuels.add(Fuel(type, quality, price))
             }
             rating = child(KEY_RATING).value.toString().toInt()
+            ratingCount = child(KEY_RATING_COUNT).value.toString().toInt()
         }
     }
 
@@ -122,6 +127,7 @@ data class PetrolStation(var name: String = "",
         map[KEY_FUEL_QUALITIES] = fuels.map { it.quality.name }
         map[KEY_FUEL_PRICES] = fuels.map { it.price.toDouble() }
         map[KEY_RATING] = rating
+        map[KEY_RATING_COUNT] = ratingCount
         return map
     }
 
@@ -148,6 +154,7 @@ data class PetrolStation(var name: String = "",
             writeArray(fuels.map { it.quality.name }.toTypedArray())
             writeArray(fuels.map { it.price.toDouble() }.toTypedArray())
             writeInt(rating)
+            writeInt(ratingCount)
         }
     }
 
