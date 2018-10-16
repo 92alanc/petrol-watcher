@@ -57,6 +57,9 @@ class PetrolStationAdapter(private val data: ArrayList<PetrolStation>,
         }
 
         holder.ratingBar.rating = petrolStation.rating.toFloat()
+        val ratingCountText = context.resources.getQuantityText(R.plurals.rated_by_format,
+                petrolStation.ratingCount).toString()
+        holder.txtRatingCount.text = String.format(ratingCountText, petrolStation.ratingCount)
     }
 
     override fun getItemCount(): Int = data.size
@@ -72,6 +75,7 @@ class PetrolStationAdapter(private val data: ArrayList<PetrolStation>,
         val txtName: TextView = itemView.findViewById(R.id.txt_name)
         val txtDistance: TextView = itemView.findViewById(R.id.txt_distance)
         val ratingBar: RatingBar = itemView.findViewById(R.id.rating_bar)
+        val txtRatingCount: TextView = itemView.findViewById(R.id.txt_rating_count)
 
         override fun onClick(v: View) {
             onItemClickListener.onItemClick(adapterPosition)
