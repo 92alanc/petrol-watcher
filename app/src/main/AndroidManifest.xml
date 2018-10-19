@@ -117,6 +117,18 @@
             android:theme="@style/AppTheme"/>
         <!-- endregion -->
 
+        <!-- region Prediction -->
+        <receiver android:name=".feature.prediction.DateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".feature.prediction.AveragePriceService"/>
+
+        <service android:name=".feature.prediction.PredictionService"/>
+        <!-- endregion -->
+
         <!-- region Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>

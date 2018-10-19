@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.support.annotation.StringRes
 import com.braincorp.petrolwatcher.R
+import com.google.firebase.database.DataSnapshot
 import java.math.BigDecimal
 
 /**
@@ -18,6 +19,11 @@ data class Fuel(var type: Type = Type.PETROL,
                 var price: BigDecimal = BigDecimal("0.0")) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Fuel> {
+        private const val KEY_PETROL_REGULAR = "petrol_regular"
+        private const val KEY_PETROL_PREMIUM = "petrol_premium"
+        private const val KEY_DIESEL = "diesel"
+        private const val KEY_ETHANOL = "ethanol"
+
         override fun createFromParcel(parcel: Parcel): Fuel {
             return Fuel(parcel)
         }
@@ -30,6 +36,38 @@ data class Fuel(var type: Type = Type.PETROL,
             type = readSerializable() as Type
             quality = readSerializable() as Quality
             price = BigDecimal(readDouble())
+        }
+    }
+
+    constructor(snapshot: DataSnapshot): this() {
+        with(snapshot) {
+            val key = when {
+                hasChild(KEY_DIESEL) -> {
+                    type = Type.DIESEL
+                    quality = Quality.REGULAR
+                    KEY_DIESEL
+                }
+
+                hasChild(KEY_ETHANOL) -> {
+                    type = Type.ETHANOL
+                    quality = Quality.REGULAR
+                    KEY_ETHANOL
+                }
+
+                hasChild(KEY_PETROL_PREMIUM) -> {
+                    type = Type.PETROL
+                    quality = Quality.PREMIUM
+                    KEY_PETROL_PREMIUM
+                }
+
+                else -> {
+                    type = Type.PETROL
+                    quality = Quality.REGULAR
+                    KEY_PETROL_REGULAR
+                }
+            }
+
+            price = BigDecimal(child(key).value.toString().toDouble())
         }
     }
 

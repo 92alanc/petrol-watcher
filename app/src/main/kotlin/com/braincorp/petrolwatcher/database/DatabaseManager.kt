@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -88,4 +90,29 @@ interface DatabaseManager {
                                fuelType: Fuel.Type,
                                fuelQuality: Fuel.Quality,
                                onAveragePriceFoundListener: OnAveragePriceFoundListener)
+
+    /**
+     * Gets the average prices for a city and country
+     *
+     * @param city the city
+     * @param country the country
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    fun getAveragePricesForCityAndCountry(city: String,
+                                          country: String,
+                                          onAveragePriceFoundListener: OnAveragePriceFoundListener)
+
+    /**
+     * Saves the average prices for the current location
+     *
+     * @param averagePrices the average prices
+     */
+    fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>)
+
+    /**
+     * Fetches predictions from the database
+     *
+     * @param onPredictionsReadyListener the callback for new predictions
+     */
+    fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener)
 }

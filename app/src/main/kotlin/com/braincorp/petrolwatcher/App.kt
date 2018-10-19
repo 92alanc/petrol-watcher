@@ -1,10 +1,13 @@
 package com.braincorp.petrolwatcher
 
 import android.app.Application
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Typeface
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
+import com.braincorp.petrolwatcher.feature.prediction.DateReceiver
 import com.braincorp.petrolwatcher.map.AppMapController
 import com.google.firebase.FirebaseApp
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -30,6 +33,7 @@ open class App : Application() {
                 AppDatabaseManager(),
                 AppMapController(),
                 VEHICLE_API_BASE_URL))
+        registerReceiver(DateReceiver(), IntentFilter(Intent.ACTION_DATE_CHANGED))
     }
 
     private fun setupFirebase() {

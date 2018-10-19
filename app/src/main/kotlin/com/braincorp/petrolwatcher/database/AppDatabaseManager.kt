@@ -1,6 +1,9 @@
 package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.DependencyInjection
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
+import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -20,6 +23,8 @@ class AppDatabaseManager : DatabaseManager {
     private companion object {
         const val REFERENCE_VEHICLES = "vehicles"
         const val REFERENCE_PETROL_STATIONS = "petrol_stations"
+        const val REFERENCE_AVERAGE_PRICES = "average_prices"
+        const val REFERENCE_PREDICTIONS = "predictions"
     }
 
     /**
@@ -204,9 +209,133 @@ class AppDatabaseManager : DatabaseManager {
                 }
 
                 val averageDouble = sum / stationsInTheArea.size
-                onAveragePriceFoundListener.onAveragePriceFound(BigDecimal(averageDouble))
+                val averagePrice = AveragePrice(BigDecimal(averageDouble),
+                        city,
+                        country,
+                        fuelType,
+                        fuelQuality)
+                onAveragePriceFoundListener.onAveragePriceFound(averagePrice)
             }
         })
+    }
+
+    /**
+     * Gets the average prices for a city and country
+     *
+     * @param city the city
+     * @param country the country
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    override fun getAveragePricesForCityAndCountry(city: String,
+                                                   country: String,
+                                                   onAveragePriceFoundListener: OnAveragePriceFoundListener) {
+        fetchPetrolStations(object: OnPetrolStationsFoundListener {
+            override fun onPetrolStationsFound(petrolStations: ArrayList<PetrolStation>) {
+                val stationsInTheArea = petrolStations.filter {
+                    it.city == city && it.country == country
+                }
+
+                val regularPetrolSum = stationsInTheArea.sumByDouble {
+                    it.fuels.first {
+                        fuel -> fuel.type == Fuel.Type.PETROL && fuel.quality == Fuel.Quality.REGULAR
+                    }.price.toDouble()
+                }
+                val averageRegularPetrolDouble = regularPetrolSum / stationsInTheArea.size
+                val regularPetrol = AveragePrice(BigDecimal(averageRegularPetrolDouble),
+                        city,
+                        country,
+                        Fuel.Type.PETROL,
+                        Fuel.Quality.REGULAR)
+
+                val premiumPetrolSum = stationsInTheArea.sumByDouble {
+                    it.fuels.first {
+                        fuel -> fuel.type == Fuel.Type.PETROL && fuel.quality == Fuel.Quality.PREMIUM
+                    }.price.toDouble()
+                }
+                val averagePremiumPetrolDouble = premiumPetrolSum / stationsInTheArea.size
+                val premiumPetrol = AveragePrice(BigDecimal(averagePremiumPetrolDouble),
+                        city,
+                        country,
+                        Fuel.Type.PETROL,
+                        Fuel.Quality.PREMIUM)
+
+                val ethanolSum = stationsInTheArea.sumByDouble {
+                    it.fuels.first {
+                        fuel -> fuel.type == Fuel.Type.ETHANOL && fuel.quality == Fuel.Quality.REGULAR
+                    }.price.toDouble()
+                }
+                val averageEthanolDouble = ethanolSum / stationsInTheArea.size
+                val ethanol = AveragePrice(BigDecimal(averageEthanolDouble),
+                        city,
+                        country,
+                        Fuel.Type.ETHANOL,
+                        Fuel.Quality.REGULAR)
+
+                val dieselSum = stationsInTheArea.sumByDouble {
+                    it.fuels.first {
+                        fuel -> fuel.type == Fuel.Type.DIESEL && fuel.quality == Fuel.Quality.REGULAR
+                    }.price.toDouble()
+                }
+                val averageDieselDouble = dieselSum / stationsInTheArea.size
+                val diesel = AveragePrice(BigDecimal(averageDieselDouble),
+                        city,
+                        country,
+                        Fuel.Type.DIESEL,
+                        Fuel.Quality.REGULAR)
+
+                val averagePrices = arrayListOf(regularPetrol,
+                        premiumPetrol,
+                        ethanol,
+                        diesel)
+
+                onAveragePriceFoundListener.onAveragePricesFound(averagePrices)
+            }
+        })
+    }
+
+    /**
+     * Saves the average prices for the current location
+     *
+     * @param averagePrices the average prices
+     */
+    override fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>) {
+        val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_AVERAGE_PRICES)
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) { }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                averagePrices.forEach { averagePrice ->
+                    val onCompleteListener = OnCompleteListener<Void> { }
+                    if (snapshot.child(averagePrice.id).exists())
+                        update(averagePrice, reference, onCompleteListener)
+                    else
+                        insert(averagePrice, reference, onCompleteListener)
+                }
+            }
+        })
+    }
+
+    /**
+     * Fetches predictions from the database
+     *
+     * @param onPredictionsReadyListener the callback for new predictions
+     */
+    override fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener) {
+        FirebaseDatabase.getInstance()
+                .getReference(REFERENCE_PREDICTIONS)
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) { }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val predictions = ArrayList<Prediction>()
+
+                        snapshot.children.forEach {
+                            predictions.add(Prediction(it))
+                        }
+
+                        onPredictionsReadyListener.onPredictionsReady(predictions)
+                    }
+                })
     }
 
     private fun insert(item: Mappable,

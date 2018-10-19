@@ -1,5 +1,7 @@
 package com.braincorp.petrolwatcher.database
 
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
@@ -126,7 +128,64 @@ object MockDatabaseManager : DatabaseManager {
                                         fuelType: Fuel.Type,
                                         fuelQuality: Fuel.Quality,
                                         onAveragePriceFoundListener: OnAveragePriceFoundListener) {
-        onAveragePriceFoundListener.onAveragePriceFound(BigDecimal(4.8))
+        val averagePrice = AveragePrice(BigDecimal(4.8),
+                city,
+                country,
+                fuelType,
+                fuelQuality)
+        onAveragePriceFoundListener.onAveragePriceFound(averagePrice)
     }
 
+    /**
+     * Gets the average prices for a city and country
+     *
+     * @param city the city
+     * @param country the country
+     * @param onAveragePriceFoundListener the average price listener
+     */
+    override fun getAveragePricesForCityAndCountry(city: String,
+                                                   country: String,
+                                                   onAveragePriceFoundListener: OnAveragePriceFoundListener) {
+        val regularPetrol = AveragePrice(BigDecimal(4.8),
+                city,
+                country,
+                Fuel.Type.PETROL,
+                Fuel.Quality.REGULAR)
+        val premiumPetrol = AveragePrice(BigDecimal(4.8),
+                city,
+                country,
+                Fuel.Type.PETROL,
+                Fuel.Quality.PREMIUM)
+        val ethanol = AveragePrice(BigDecimal(4.8),
+                city,
+                country,
+                Fuel.Type.ETHANOL,
+                Fuel.Quality.REGULAR)
+        val diesel = AveragePrice(BigDecimal(4.8),
+                city,
+                country,
+                Fuel.Type.DIESEL,
+                Fuel.Quality.REGULAR)
+
+        onAveragePriceFoundListener.onAveragePricesFound(arrayListOf(regularPetrol,
+                premiumPetrol,
+                ethanol,
+                diesel))
+    }
+
+    /**
+     * Saves the average prices for the current location
+     *
+     * @param averagePrices the average prices
+     */
+    override fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>) { }
+
+    /**
+     * Fetches predictions from the database
+     *
+     * @param onPredictionsReadyListener the callback for new predictions
+     */
+    override fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener) {
+        // TODO: implement
+    }
 }

@@ -6,6 +6,7 @@ import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
 import com.braincorp.petrolwatcher.feature.consumption.model.TankState
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
+import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
@@ -13,7 +14,6 @@ import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.utils.tankStateToLitres
 import com.google.android.gms.location.places.Place
 import java.math.BigDecimal
-import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -79,7 +79,7 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
         val distanceKm = mapController.getDistanceInMetres(origin.latLng, destination.latLng) / 1000
         DependencyInjection.databaseManager.getAveragePriceForFuel(city, country,
                 fuelType, fuelQuality, object: OnAveragePriceFoundListener {
-            override fun onAveragePriceFound(averagePrice: BigDecimal) {
+            override fun onAveragePriceFound(averagePrice: AveragePrice) {
                 val tankStateLitres = tankStateToLitres(tankState, vehicle.details.fuelCapacity)
                 val consumption = when (roadType) {
                     RoadType.MOTORWAY -> {
@@ -98,15 +98,19 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
                 }
                 // (distanceKm / consumption) = total fuel amount necessary, disregarding current tank state
                 var fuelAmount = ((distanceKm / consumption) - tankStateLitres).roundToInt()
-                var cost = BigDecimal(fuelAmount * averagePrice.toDouble())
+                var cost = BigDecimal(fuelAmount * averagePrice.price.toDouble())
 
                 fuelAmount = if (fuelAmount > 0) fuelAmount
                 else 0
 
-                cost = if (cost.compareTo(BigDecimal.ZERO) > 0) cost
+                cost = if (cost > BigDecimal.ZERO) cost
                 else BigDecimal.ZERO
 
                 view.updateEstimatedCostAndFuelAmount(cost, fuelAmount)
+            }
+
+            override fun onAveragePricesFound(averagePrices: ArrayList<AveragePrice>) {
+                // Not necessary
             }
         })
     }
