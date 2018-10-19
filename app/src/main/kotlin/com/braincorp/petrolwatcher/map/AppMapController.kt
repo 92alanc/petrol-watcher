@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
+import java.io.IOException
 import java.util.*
 
 /**
@@ -188,13 +189,18 @@ class AppMapController : MapController {
      * @return data such as address, coordinates and locale
      */
     override fun getDataFromLocation(context: Context, location: Location): Address {
-        val geocoder = Geocoder(context)
-        val latLng = LatLng(location.latitude, location.longitude)
+        return try {
+            val geocoder = Geocoder(context)
+            val latLng = LatLng(location.latitude, location.longitude)
 
-        val maxResults = 1
-        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
+            val maxResults = 1
+            val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, maxResults)
 
-        return addresses[0]
+            addresses[0]
+        } catch (e: IOException) {
+            Log.e(TAG, "Error creating geocoder", e)
+            Address(Locale.getDefault())
+        }
     }
 
     /**
