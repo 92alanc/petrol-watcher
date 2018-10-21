@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.feature.prediction
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
@@ -17,7 +16,6 @@ import java.util.Calendar.SATURDAY
 /**
  * A receiver for date change events
  */
-// FIXME
 class DateReceiver : BroadcastReceiver(),
         OnCurrentLocationFoundListener,
         OnAveragePriceFoundListener {
@@ -25,11 +23,9 @@ class DateReceiver : BroadcastReceiver(),
     private lateinit var context: Context
 
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.d("ALAN", "Intent action: ${intent?.action}")
         val isLoggedIn = DependencyInjection.authenticator.isUserSignedIn()
         if (intent?.action != Intent.ACTION_DATE_CHANGED || !isLoggedIn) return
 
-        Log.d("ALAN", "Date changed")
         this.context = context
         val today = Calendar.getInstance().get(DAY_OF_WEEK)
 

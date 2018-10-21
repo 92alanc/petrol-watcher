@@ -178,7 +178,7 @@ object MockDatabaseManager : DatabaseManager {
      *
      * @param averagePrices the average prices
      */
-    override fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>) { }
+    override fun saveAveragePrice(averagePrices: ArrayList<AveragePrice>) { }
 
     /**
      * Fetches predictions from the database

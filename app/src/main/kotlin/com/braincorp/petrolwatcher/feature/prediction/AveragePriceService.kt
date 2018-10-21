@@ -24,7 +24,9 @@ class AveragePriceService : IntentService("average-price-service") {
         if (intent == null) return
 
         val averagePrices = intent.getParcelableArrayListExtra<AveragePrice>(KEY_AVERAGE_PRICES)
-        DependencyInjection.databaseManager.saveAveragePrices(averagePrices)
+        averagePrices.forEach {
+            DependencyInjection.databaseManager.saveAveragePrice(it)
+        }
     }
 
 }

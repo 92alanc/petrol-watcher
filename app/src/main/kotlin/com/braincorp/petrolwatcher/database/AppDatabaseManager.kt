@@ -294,23 +294,21 @@ class AppDatabaseManager : DatabaseManager {
     }
 
     /**
-     * Saves the average prices for the current location
+     * Saves an average price
      *
-     * @param averagePrices the average prices
+     * @param averagePrice the average price
      */
-    override fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>) {
+    override fun saveAveragePrice(averagePrice: AveragePrice) {
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_AVERAGE_PRICES)
         reference.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) { }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                averagePrices.forEach { averagePrice ->
-                    val onCompleteListener = OnCompleteListener<Void> { }
-                    if (snapshot.child(averagePrice.id).exists())
-                        update(averagePrice, reference, onCompleteListener)
-                    else
-                        insert(averagePrice, reference, onCompleteListener)
-                }
+                val onCompleteListener = OnCompleteListener<Void> { }
+                if (snapshot.child(averagePrice.id).exists())
+                    update(averagePrice, reference, onCompleteListener)
+                else
+                    insert(averagePrice, reference, onCompleteListener)
             }
         })
     }

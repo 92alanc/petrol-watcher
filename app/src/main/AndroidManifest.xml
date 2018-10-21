@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.braincorp.petrolwatcher"
-          android:installLocation="preferExternal">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.braincorp.petrolwatcher"
+    android:installLocation="preferExternal">
 
     <!-- region System permissions -->
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -125,7 +126,8 @@
         </receiver>
 
         <service android:name=".feature.prediction.AveragePriceService"/>
-
+        <service android:name=".feature.prediction.AveragePriceJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service android:name=".feature.prediction.PredictionService"/>
         <!-- endregion -->
 

@@ -103,11 +103,11 @@ interface DatabaseManager {
                                           onAveragePriceFoundListener: OnAveragePriceFoundListener)
 
     /**
-     * Saves the average prices for the current location
+     * Saves an average price
      *
-     * @param averagePrices the average prices
+     * @param averagePrice the average price
      */
-    fun saveAveragePrices(averagePrices: ArrayList<AveragePrice>)
+    fun saveAveragePrice(averagePrice: AveragePrice)
 
     /**
      * Fetches predictions from the database
