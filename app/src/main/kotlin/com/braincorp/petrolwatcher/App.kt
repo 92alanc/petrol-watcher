@@ -16,7 +16,7 @@ import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
 import com.braincorp.petrolwatcher.feature.prediction.AveragePriceJobService
 import com.braincorp.petrolwatcher.feature.prediction.DateReceiver
 import com.braincorp.petrolwatcher.map.AppMapController
-import com.braincorp.petrolwatcher.utils.getTimeUntilSaturday
+import com.braincorp.petrolwatcher.utils.getWeekInMillis
 import com.google.firebase.FirebaseApp
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
@@ -65,7 +65,7 @@ open class App : Application() {
             val service = ComponentName(this, AveragePriceJobService::class.java)
             val jobId = 123
             val job = JobInfo.Builder(jobId, service)
-                    .setOverrideDeadline(getTimeUntilSaturday()) // TODO: trigger every Saturday
+                    .setPeriodic(getWeekInMillis())
                     .setBackoffCriteria(0, JobInfo.BACKOFF_POLICY_LINEAR)
                     .build()
 
