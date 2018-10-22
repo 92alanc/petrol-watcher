@@ -1,9 +1,7 @@
 package com.braincorp.petrolwatcher.feature.prediction
 
-import android.annotation.TargetApi
 import android.app.job.JobParameters
 import android.app.job.JobService
-import android.os.Build.VERSION_CODES.O
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
@@ -12,10 +10,9 @@ import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
-@TargetApi(O)
-class AveragePriceJobService : JobService(),
-        OnCurrentLocationFoundListener,
-        OnAveragePriceFoundListener {
+class AveragePriceService : JobService(),
+                            OnCurrentLocationFoundListener,
+                            OnAveragePriceFoundListener {
 
     override fun onStartJob(params: JobParameters): Boolean {
         if (DependencyInjection.authenticator.isUserSignedIn()) {

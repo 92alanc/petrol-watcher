@@ -5,16 +5,11 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Typeface
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.O
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
-import com.braincorp.petrolwatcher.feature.prediction.AveragePriceJobService
-import com.braincorp.petrolwatcher.feature.prediction.DateReceiver
+import com.braincorp.petrolwatcher.feature.prediction.AveragePriceService
 import com.braincorp.petrolwatcher.map.AppMapController
 import com.braincorp.petrolwatcher.utils.getWeekInMillis
 import com.google.firebase.FirebaseApp
@@ -37,10 +32,10 @@ open class App : Application() {
         setupFirebase()
         setupImageLoader()
         DependencyInjection.init(DependencyInjection.Config(AppAuthenticator(),
-                AppImageHandler(),
-                AppDatabaseManager(),
-                AppMapController(),
-                VEHICLE_API_BASE_URL))
+                                                            AppImageHandler(),
+                                                            AppDatabaseManager(),
+                                                            AppMapController(),
+                                                            VEHICLE_API_BASE_URL))
         registerDateReceiver()
     }
 
@@ -61,19 +56,15 @@ open class App : Application() {
     }
 
     private fun registerDateReceiver() {
-        if (SDK_INT >= O) {
-            val service = ComponentName(this, AveragePriceJobService::class.java)
-            val jobId = 123
-            val job = JobInfo.Builder(jobId, service)
-                    .setPeriodic(getWeekInMillis())
-                    .setBackoffCriteria(0, JobInfo.BACKOFF_POLICY_LINEAR)
-                    .build()
+        val service = ComponentName(this, AveragePriceService::class.java)
+        val jobId = 123
+        val job = JobInfo.Builder(jobId, service)
+                .setPeriodic(getWeekInMillis())
+                .setBackoffCriteria(0, JobInfo.BACKOFF_POLICY_LINEAR)
+                .build()
 
-            val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-            jobScheduler.schedule(job)
-        } else {
-            registerReceiver(DateReceiver(), IntentFilter(Intent.ACTION_DATE_CHANGED))
-        }
+        val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+        jobScheduler.schedule(job)
     }
 
 }

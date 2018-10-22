@@ -1,8 +1,7 @@
 package com.braincorp.petrolwatcher.feature.prediction
 
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
+import android.app.job.JobParameters
+import android.app.job.JobService
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
@@ -13,14 +12,17 @@ import com.braincorp.petrolwatcher.utils.showNotificationForPredictions
  * price predictions and notifies the user on
  * receiving new predictions
  */
-class PredictionService : Service(), OnPredictionsReadyListener {
+class PredictionService : JobService(), OnPredictionsReadyListener {
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onStartJob(params: JobParameters): Boolean {
         DependencyInjection.databaseManager.fetchPredictions(this)
+        jobFinished(params, true)
+        return true
     }
 
-    override fun onBind(intent: Intent?): IBinder? = null
+    override fun onStopJob(params: JobParameters): Boolean {
+        return true
+    }
 
     /**
      * Function triggered when new predictions are ready
