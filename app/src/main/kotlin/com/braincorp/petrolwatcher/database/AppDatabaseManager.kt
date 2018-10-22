@@ -168,7 +168,7 @@ class AppDatabaseManager : DatabaseManager {
                             if (hasLocationPermission && currentLocation != null) {
                                 val mapController = DependencyInjection.mapController
                                 val distance = mapController.getDistanceInMetres(currentLocation,
-                                        petrolStation.latLng)
+                                                                                 petrolStation.latLng)
                                 if (distance <= 5000)
                                     petrolStations.add(petrolStation)
                             } else {
@@ -201,19 +201,8 @@ class AppDatabaseManager : DatabaseManager {
                     it.city == city && it.country == country
                 }
 
-                // Sum all the fuel prices matching the defined criteria (same price and same quality)
-                val sum = stationsInTheArea.sumByDouble {
-                    it.fuels.first {
-                        fuel -> fuel.type == fuelType && fuel.quality == fuelQuality
-                    }.price.toDouble()
-                }
-
-                val averageDouble = sum / stationsInTheArea.size
-                val averagePrice = AveragePrice(BigDecimal(averageDouble),
-                        city,
-                        country,
-                        fuelType,
-                        fuelQuality)
+                val averagePrice = getAveragePrice(city, country, stationsInTheArea,
+                                                   fuelType, fuelQuality)
                 onAveragePriceFoundListener.onAveragePriceFound(averagePrice)
             }
         })
@@ -235,59 +224,16 @@ class AppDatabaseManager : DatabaseManager {
                     it.city == city && it.country == country
                 }
 
-                val regularPetrolSum = stationsInTheArea.sumByDouble {
-                    it.fuels.first {
-                        fuel -> fuel.type == Fuel.Type.PETROL && fuel.quality == Fuel.Quality.REGULAR
-                    }.price.toDouble()
-                }
-                val averageRegularPetrolDouble = regularPetrolSum / stationsInTheArea.size
-                val regularPetrol = AveragePrice(BigDecimal(averageRegularPetrolDouble),
-                        city,
-                        country,
-                        Fuel.Type.PETROL,
-                        Fuel.Quality.REGULAR)
+                val regularPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                    Fuel.Type.PETROL, Fuel.Quality.REGULAR)
+                val premiumPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                    Fuel.Type.PETROL, Fuel.Quality.PREMIUM)
+                val ethanol = getAveragePrice(city, country, stationsInTheArea,
+                                              Fuel.Type.ETHANOL, Fuel.Quality.REGULAR)
+                val diesel = getAveragePrice(city, country, stationsInTheArea,
+                                             Fuel.Type.DIESEL, Fuel.Quality.REGULAR)
 
-                val premiumPetrolSum = stationsInTheArea.sumByDouble {
-                    it.fuels.first {
-                        fuel -> fuel.type == Fuel.Type.PETROL && fuel.quality == Fuel.Quality.PREMIUM
-                    }.price.toDouble()
-                }
-                val averagePremiumPetrolDouble = premiumPetrolSum / stationsInTheArea.size
-                val premiumPetrol = AveragePrice(BigDecimal(averagePremiumPetrolDouble),
-                        city,
-                        country,
-                        Fuel.Type.PETROL,
-                        Fuel.Quality.PREMIUM)
-
-                val ethanolSum = stationsInTheArea.sumByDouble {
-                    it.fuels.first {
-                        fuel -> fuel.type == Fuel.Type.ETHANOL && fuel.quality == Fuel.Quality.REGULAR
-                    }.price.toDouble()
-                }
-                val averageEthanolDouble = ethanolSum / stationsInTheArea.size
-                val ethanol = AveragePrice(BigDecimal(averageEthanolDouble),
-                        city,
-                        country,
-                        Fuel.Type.ETHANOL,
-                        Fuel.Quality.REGULAR)
-
-                val dieselSum = stationsInTheArea.sumByDouble {
-                    it.fuels.first {
-                        fuel -> fuel.type == Fuel.Type.DIESEL && fuel.quality == Fuel.Quality.REGULAR
-                    }.price.toDouble()
-                }
-                val averageDieselDouble = dieselSum / stationsInTheArea.size
-                val diesel = AveragePrice(BigDecimal(averageDieselDouble),
-                        city,
-                        country,
-                        Fuel.Type.DIESEL,
-                        Fuel.Quality.REGULAR)
-
-                val averagePrices = arrayListOf(regularPetrol,
-                        premiumPetrol,
-                        ethanol,
-                        diesel)
-
+                val averagePrices = arrayListOf(regularPetrol, premiumPetrol, ethanol, diesel)
                 onAveragePriceFoundListener.onAveragePricesFound(averagePrices)
             }
         })
@@ -350,6 +296,21 @@ class AppDatabaseManager : DatabaseManager {
         reference.child(item.id)
                 .updateChildren(item.toMap())
                 .addOnCompleteListener(onCompleteListener)
+    }
+
+    private fun getAveragePrice(city: String,
+                                country: String,
+                                stationsInTheArea: List<PetrolStation>,
+                                fuelType: Fuel.Type,
+                                fuelQuality: Fuel.Quality): AveragePrice {
+        val sum = stationsInTheArea.sumByDouble {
+            it.fuels.first {
+                fuel -> fuel.type == fuelType && fuel.quality == fuelQuality
+            }.price.toDouble()
+        }
+        val price = BigDecimal(sum / stationsInTheArea.size)
+
+        return AveragePrice(price, city, country, fuelType, fuelQuality)
     }
 
 }
