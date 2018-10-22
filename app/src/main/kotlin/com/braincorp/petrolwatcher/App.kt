@@ -65,7 +65,7 @@ open class App : Application() {
             val service = ComponentName(this, AveragePriceJobService::class.java)
             val jobId = 123
             val job = JobInfo.Builder(jobId, service)
-                    .setOverrideDeadline(getTimeUntilSaturday())
+                    .setOverrideDeadline(getTimeUntilSaturday()) // TODO: trigger every Saturday
                     .setBackoffCriteria(0, JobInfo.BACKOFF_POLICY_LINEAR)
                     .build()
 
