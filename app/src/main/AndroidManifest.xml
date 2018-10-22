@@ -118,10 +118,8 @@
         <!-- endregion -->
 
         <!-- region Prediction -->
-        <service android:name=".feature.prediction.AveragePriceService"
-                 android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".feature.prediction.PredictionService"
-                 android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name=".feature.prediction.AveragePriceService"/>
+        <service android:name=".feature.prediction.PredictionService"/>
         <!-- endregion -->
 
         <!-- region Facebook -->

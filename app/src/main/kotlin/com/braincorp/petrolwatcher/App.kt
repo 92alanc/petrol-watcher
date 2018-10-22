@@ -1,9 +1,8 @@
 package com.braincorp.petrolwatcher
 
+import android.app.AlarmManager
 import android.app.Application
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
+import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Typeface
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
@@ -56,15 +55,15 @@ open class App : Application() {
     }
 
     private fun scheduleAveragePriceService() {
-        val service = ComponentName(this, AveragePriceService::class.java)
-        val jobId = 123
-        val job = JobInfo.Builder(jobId, service)
-                .setPeriodic(getWeekInMillis())
-                .setBackoffCriteria(0, JobInfo.BACKOFF_POLICY_LINEAR)
-                .build()
-
-        val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.schedule(job)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val requestCode = 123
+        val flags = 0
+        val intent = AveragePriceService.getIntent(this)
+        val task = PendingIntent.getService(this, requestCode, intent, flags)
+        alarmManager.setInexactRepeating(AlarmManager.RTC,
+                                         getWeekInMillis(),
+                                         getWeekInMillis(),
+                                         task)
     }
 
 }

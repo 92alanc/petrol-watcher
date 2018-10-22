@@ -1,7 +1,9 @@
 package com.braincorp.petrolwatcher.feature.prediction
 
-import android.app.job.JobParameters
-import android.app.job.JobService
+import android.app.Service
+import android.content.Context
+import android.content.Intent
+import android.os.IBinder
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
@@ -10,24 +12,27 @@ import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
-class AveragePriceService : JobService(),
+class AveragePriceService : Service(),
                             OnCurrentLocationFoundListener,
                             OnAveragePriceFoundListener {
 
-    override fun onStartJob(params: JobParameters): Boolean {
+    companion object {
+        fun getIntent(context: Context): Intent = Intent(context, AveragePriceService::class.java)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
         if (DependencyInjection.authenticator.isUserSignedIn()) {
             applicationContext.let {
                 if (hasLocationPermission()) {
                     DependencyInjection.mapController.getCurrentLocation(it,
-                            this)
+                                                                         this)
                 }
             }
         }
-        jobFinished(params, true)
-        return true
     }
 
-    override fun onStopJob(params: JobParameters) = true
+    override fun onBind(intent: Intent?): IBinder? = null
 
     /**
      * Function to be triggered when the current address
@@ -45,7 +50,7 @@ class AveragePriceService : JobService(),
                                         latLng: LatLng,
                                         locale: Locale) {
         DependencyInjection.databaseManager.getAveragePricesForCityAndCountry(city, country,
-                this)
+                                                                              this)
     }
 
     /**
@@ -64,7 +69,7 @@ class AveragePriceService : JobService(),
      * @param averagePrices the average fuel prices
      */
     override fun onAveragePricesFound(averagePrices: ArrayList<AveragePrice>) {
-        // TODO: save average prices
+        // TODO: save average prices and start prediction service
     }
 
 }
