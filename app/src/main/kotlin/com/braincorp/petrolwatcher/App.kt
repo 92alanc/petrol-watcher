@@ -36,7 +36,7 @@ open class App : Application() {
                                                             AppDatabaseManager(),
                                                             AppMapController(),
                                                             VEHICLE_API_BASE_URL))
-        registerDateReceiver()
+        scheduleAveragePriceService()
     }
 
     private fun setupFirebase() {
@@ -55,7 +55,7 @@ open class App : Application() {
         field.set(null, typeface)
     }
 
-    private fun registerDateReceiver() {
+    private fun scheduleAveragePriceService() {
         val service = ComponentName(this, AveragePriceService::class.java)
         val jobId = 123
         val job = JobInfo.Builder(jobId, service)
