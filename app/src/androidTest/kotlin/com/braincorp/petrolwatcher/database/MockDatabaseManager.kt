@@ -174,13 +174,6 @@ object MockDatabaseManager : DatabaseManager {
     }
 
     /**
-     * Saves the average prices for the current location
-     *
-     * @param averagePrices the average prices
-     */
-    override fun saveAveragePrice(averagePrices: ArrayList<AveragePrice>) { }
-
-    /**
      * Fetches predictions from the database
      *
      * @param onPredictionsReadyListener the callback for new predictions
@@ -188,4 +181,12 @@ object MockDatabaseManager : DatabaseManager {
     override fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener) {
         // TODO: implement
     }
+
+    /**
+     * Saves an average price
+     *
+     * @param averagePrice the average price
+     */
+    override fun saveAveragePrice(averagePrice: AveragePrice) { }
+
 }
