@@ -37,6 +37,7 @@ fun Context.showNotificationForPredictions(predictions: List<Prediction>,
             .setStyle(NotificationCompat.BigTextStyle()
                               .bigText(getString(R.string.notification_message)))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            // TODO: set vibration pattern, lights and sound
             .setAutoCancel(true)
             .setContentIntent(action)
 

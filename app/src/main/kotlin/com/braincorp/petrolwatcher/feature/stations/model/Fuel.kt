@@ -67,7 +67,7 @@ data class Fuel(var type: Type = Type.PETROL,
                 }
             }
 
-            price = BigDecimal(child(key).value.toString().toDouble())
+            price = BigDecimal(child(key).value.toString())
         }
     }
 

@@ -39,19 +39,20 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.app_bar_map.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * The activity where the map containing all petrol stations
  * nearby is shown
  */
 class MapActivity : AppCompatActivity(),
-        View.OnClickListener,
-        NavigationView.OnNavigationItemSelectedListener,
-        OnMapReadyCallback,
-        MapActivityContract.View,
-        OnPetrolStationsFoundListener,
-        GoogleMap.OnMarkerClickListener,
-        OnCurrentLocationFoundListener {
+                    View.OnClickListener,
+                    NavigationView.OnNavigationItemSelectedListener,
+                    OnMapReadyCallback,
+                    MapActivityContract.View,
+                    OnPetrolStationsFoundListener,
+                    GoogleMap.OnMarkerClickListener,
+                    OnCurrentLocationFoundListener {
 
     companion object {
         private const val REQUEST_CODE_LOCATION = 1234
@@ -64,7 +65,7 @@ class MapActivity : AppCompatActivity(),
                                            predictions: ArrayList<Prediction>,
                                            locale: Locale): Intent {
             return Intent(context, MapActivity::class.java)
-                    .putParcelableArrayListExtra(KEY_PREDICTIONS, predictions)
+                    .putExtra(KEY_PREDICTIONS, predictions)
                     .putExtra(KEY_LOCALE, locale.toLanguageTag())
         }
     }
@@ -94,7 +95,8 @@ class MapActivity : AppCompatActivity(),
     override fun onStart() {
         super.onStart()
         bindNavigationDrawer()
-        getPredictions()
+        if (intent.hasExtra(KEY_PREDICTIONS))
+            getPredictions()
     }
 
     override fun onBackPressed() {
@@ -151,7 +153,7 @@ class MapActivity : AppCompatActivity(),
                 enableLocation(map)
             } else {
                 requestPermissions(arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
-                        REQUEST_CODE_LOCATION)
+                                   REQUEST_CODE_LOCATION)
             }
         } else {
             enableLocation(map)
@@ -180,8 +182,8 @@ class MapActivity : AppCompatActivity(),
     override fun onPetrolStationsFound(petrolStations: ArrayList<PetrolStation>) {
         this.petrolStations = petrolStations
         DependencyInjection.mapController.addPetrolStationsToMap(map,
-                petrolStations,
-                onMarkerClickListener = this)
+                                                                 petrolStations,
+                                                                 onMarkerClickListener = this)
     }
 
     /**
@@ -212,19 +214,18 @@ class MapActivity : AppCompatActivity(),
 
     private fun getPredictions() {
         with(intent) {
-            if (hasExtra(KEY_PREDICTIONS)) {
-                val predictions = getParcelableArrayListExtra<Prediction>(KEY_PREDICTIONS)
-                val locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
+            // FIXME: this damn thing is only fetching 1 prediction. It's 1:30am and I'm sick of trying to fix it!!!
+            val predictions = getParcelableArrayListExtra<Prediction>(KEY_PREDICTIONS)
+            val locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
 
-                val dialogue = PredictionsDialogue.newInstance(predictions, locale)
-                showDialogueFragment(supportFragmentManager, dialogue)
-            }
+            val dialogue = PredictionsDialogue.newInstance(predictions, locale)
+            showDialogueFragment(supportFragmentManager, dialogue)
         }
     }
 
     private fun bindNavigationDrawer() {
         val toggle = ActionBarDrawerToggle(this, drawer_map, toolbar,
-                R.string.description_navigation_open, R.string.description_navigation_closed)
+                                           R.string.description_navigation_open, R.string.description_navigation_closed)
         drawer_map.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -246,8 +247,8 @@ class MapActivity : AppCompatActivity(),
             override fun onUserDataFound(displayName: String?, profilePictureUri: Uri?) {
                 txtName.text = displayName
                 DependencyInjection.imageHandler.fillImageView(profilePictureUri, imgProfile,
-                        progressBar = progressBar,
-                        placeholderRes = R.drawable.ic_profile)
+                                                               progressBar = progressBar,
+                                                               placeholderRes = R.drawable.ic_profile)
             }
         })
     }
@@ -256,8 +257,8 @@ class MapActivity : AppCompatActivity(),
         try {
             map.isMyLocationEnabled = true
             mapController.zoomToDeviceLocation(map,
-                    context = this,
-                    onCurrentLocationFoundListener = this)
+                                               context = this,
+                                               onCurrentLocationFoundListener = this)
         } catch (e: SecurityException) {
             Log.d(TAG, "Error enabling location", e)
         }
