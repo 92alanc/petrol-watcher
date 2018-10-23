@@ -114,4 +114,6 @@
     <string name="description_close">Close</string>
     <string name="info_rating">Rate the quality of this station\'s fuel based on your experience</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="notification_message">New predictions for the average fuel prices in your area</string>
+    <string name="description_predictions">Predictions based on average fuel prices collected weekly in your area</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.braincorp.petrolwatcher.feature.stations
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +22,7 @@ import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.PetrolStationDetailsActivityPresenter
 import com.braincorp.petrolwatcher.feature.stations.utils.updateFuelSet
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
+import com.braincorp.petrolwatcher.utils.showDialogueFragment
 import com.braincorp.petrolwatcher.utils.startFuelActivity
 import com.braincorp.petrolwatcher.utils.startMapActivity
 import com.google.android.gms.common.api.Status
@@ -262,19 +262,9 @@ class PetrolStationDetailsActivity : AppCompatActivity(),
                 }.show()
     }
 
-    // The transaction is committed by the show function in the dialogue fragment
-    @SuppressLint("CommitTransaction")
     private fun rate() {
-        val transaction = supportFragmentManager.beginTransaction()
-        val previous = supportFragmentManager.findFragmentByTag(RatingDialogue.TAG)
-
-        previous?.let {
-            transaction.remove(it)
-        }
-        transaction.addToBackStack(null)
-
         val dialogue = RatingDialogue.newInstance(petrolStation)
-        dialogue.show(supportFragmentManager, RatingDialogue.TAG)
+        showDialogueFragment(supportFragmentManager, dialogue)
     }
 
 }

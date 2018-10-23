@@ -1,4 +1,4 @@
-package com.braincorp.petrolwatcher.feature.prediction
+package com.braincorp.petrolwatcher.feature.prediction.service
 
 import android.app.Service
 import android.content.Context
@@ -12,6 +12,10 @@ import com.braincorp.petrolwatcher.utils.hasLocationPermission
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
+/**
+ * Background service that updates the database with
+ * the average prices for the current location (city/country)
+ */
 class AveragePriceService : Service(),
                             OnCurrentLocationFoundListener,
                             OnAveragePriceFoundListener {
@@ -19,6 +23,10 @@ class AveragePriceService : Service(),
     companion object {
         fun getIntent(context: Context): Intent = Intent(context, AveragePriceService::class.java)
     }
+
+    private lateinit var city: String
+    private lateinit var country: String
+    private lateinit var locale: Locale
 
     override fun onCreate() {
         super.onCreate()
@@ -49,6 +57,9 @@ class AveragePriceService : Service(),
                                         country: String,
                                         latLng: LatLng,
                                         locale: Locale) {
+        this.city = city
+        this.country = country
+        this.locale = locale
         DependencyInjection.databaseManager.getAveragePricesForCityAndCountry(city, country,
                                                                               this)
     }
@@ -69,7 +80,11 @@ class AveragePriceService : Service(),
      * @param averagePrices the average fuel prices
      */
     override fun onAveragePricesFound(averagePrices: ArrayList<AveragePrice>) {
-        // TODO: save average prices and start prediction service
+        startService(PredictionService.getIntent(
+                this,
+                city,
+                country,
+                locale))
     }
 
 }

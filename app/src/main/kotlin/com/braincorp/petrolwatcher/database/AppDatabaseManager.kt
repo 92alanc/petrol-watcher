@@ -224,17 +224,90 @@ class AppDatabaseManager : DatabaseManager {
                     it.city == city && it.country == country
                 }
 
-                val regularPetrol = getAveragePrice(city, country, stationsInTheArea,
-                                                    Fuel.Type.PETROL, Fuel.Quality.REGULAR)
-                val premiumPetrol = getAveragePrice(city, country, stationsInTheArea,
-                                                    Fuel.Type.PETROL, Fuel.Quality.PREMIUM)
-                val ethanol = getAveragePrice(city, country, stationsInTheArea,
-                                              Fuel.Type.ETHANOL, Fuel.Quality.REGULAR)
-                val diesel = getAveragePrice(city, country, stationsInTheArea,
-                                             Fuel.Type.DIESEL, Fuel.Quality.REGULAR)
+                var noAveragePricesFound: Boolean
+                val result = ArrayList<AveragePrice>()
 
-                val averagePrices = arrayListOf(regularPetrol, premiumPetrol, ethanol, diesel)
-                onAveragePriceFoundListener.onAveragePricesFound(averagePrices)
+                fetchAveragePrices(city, country, object: OnAveragePriceFoundListener {
+                    override fun onAveragePriceFound(averagePrice: AveragePrice) {
+                        // Not necessary
+                    }
+
+                    override fun onAveragePricesFound(averagePrices: ArrayList<AveragePrice>) {
+                        noAveragePricesFound = averagePrices.isEmpty()
+
+                        if (!noAveragePricesFound) {
+                            averagePrices.forEach {
+                                when (it.fuelType) {
+                                    Fuel.Type.DIESEL -> {
+                                        val diesel = getAveragePrice(city, country, stationsInTheArea,
+                                                                     Fuel.Type.DIESEL,
+                                                                     Fuel.Quality.REGULAR).apply {
+                                            id = it.id
+                                        }
+                                        saveAveragePrice(diesel)
+                                        result.add(diesel)
+                                    }
+
+                                    Fuel.Type.ETHANOL -> {
+                                        val ethanol = getAveragePrice(city, country, stationsInTheArea,
+                                                                      Fuel.Type.ETHANOL,
+                                                                      Fuel.Quality.REGULAR).apply {
+                                            id = it.id
+                                        }
+                                        saveAveragePrice(ethanol)
+                                        result.add(ethanol)
+                                    }
+
+                                    Fuel.Type.PETROL -> {
+                                        if (it.fuelQuality == Fuel.Quality.REGULAR) {
+                                            val regularPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                                                Fuel.Type.PETROL,
+                                                                                Fuel.Quality.REGULAR).apply {
+                                                id = it.id
+                                            }
+                                            saveAveragePrice(regularPetrol)
+                                            result.add(regularPetrol)
+                                        } else {
+                                            val premiumPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                                                Fuel.Type.PETROL,
+                                                                                Fuel.Quality.PREMIUM).apply {
+                                                id = it.id
+                                            }
+                                            saveAveragePrice(premiumPetrol)
+                                            result.add(premiumPetrol)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            val diesel = getAveragePrice(city, country, stationsInTheArea,
+                                                         Fuel.Type.DIESEL,
+                                                         Fuel.Quality.REGULAR)
+                            saveAveragePrice(diesel)
+                            result.add(diesel)
+
+                            val ethanol = getAveragePrice(city, country, stationsInTheArea,
+                                                          Fuel.Type.ETHANOL,
+                                                          Fuel.Quality.REGULAR)
+                            saveAveragePrice(ethanol)
+                            result.add(ethanol)
+
+                            val regularPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                                Fuel.Type.PETROL,
+                                                                Fuel.Quality.REGULAR)
+                            saveAveragePrice(regularPetrol)
+                            result.add(regularPetrol)
+
+                            val premiumPetrol = getAveragePrice(city, country, stationsInTheArea,
+                                                                Fuel.Type.PETROL,
+                                                                Fuel.Quality.PREMIUM)
+                            saveAveragePrice(premiumPetrol)
+                            result.add(premiumPetrol)
+                        }
+
+                        onAveragePriceFoundListener.onAveragePricesFound(result)
+                    }
+                })
             }
         })
     }
@@ -311,6 +384,29 @@ class AppDatabaseManager : DatabaseManager {
         val price = BigDecimal(sum / stationsInTheArea.size)
 
         return AveragePrice(price, city, country, fuelType, fuelQuality)
+    }
+
+    private fun fetchAveragePrices(city: String,
+                                   country: String,
+                                   onAveragePriceFoundListener: OnAveragePriceFoundListener) {
+        val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_AVERAGE_PRICES)
+        reference.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) { }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val averagePrices = ArrayList<AveragePrice>()
+
+                snapshot.children.forEach { child ->
+                    val averagePrice = AveragePrice(child)
+                    averagePrice.let {
+                        if (it.city == city && it.country == country)
+                            averagePrices.add(it)
+                    }
+                }
+
+                onAveragePriceFoundListener.onAveragePricesFound(averagePrices)
+            }
+        })
     }
 
 }

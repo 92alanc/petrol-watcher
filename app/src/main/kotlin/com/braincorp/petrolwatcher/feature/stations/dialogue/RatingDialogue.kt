@@ -3,7 +3,6 @@ package com.braincorp.petrolwatcher.feature.stations.dialogue
 import android.os.Bundle
 import android.support.constraint.Group
 import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
+import com.braincorp.petrolwatcher.base.BaseDialogueFragment
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -19,7 +19,7 @@ import kotlin.math.roundToInt
 /**
  * The dialogue where petrol stations are rated
  */
-class RatingDialogue : DialogFragment(), View.OnClickListener, OnCompleteListener<Void> {
+class RatingDialogue : BaseDialogueFragment(), View.OnClickListener, OnCompleteListener<Void> {
 
     companion object {
         const val TAG = "rating_dialogue"
@@ -70,6 +70,13 @@ class RatingDialogue : DialogFragment(), View.OnClickListener, OnCompleteListene
             }
         }
     }
+
+    /**
+     * Gets the dialogue tag
+     *
+     * @return the tag
+     */
+    override fun tag(): String = TAG
 
     private fun bindViews(view: View) {
         with(view) {

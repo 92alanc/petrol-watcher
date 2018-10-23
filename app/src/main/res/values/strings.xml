@@ -135,4 +135,8 @@
     <string name="fuel_quality">Fuel quality</string>
     <!-- endregion -->
 
+    <!-- region Predictions -->
+    <string name="notification_message">New predictions for the average fuel prices in your area</string>
+    <string name="description_predictions">Predictions based on average fuel prices collected weekly in your area</string>
+    <!-- endregion -->
 </resources>

@@ -10,16 +10,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
-import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
 import com.braincorp.petrolwatcher.ui.OnItemClickListener
+import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
 import java.util.*
 
 /**
  * The adapter for fuel RecyclerView items
  */
-class FuelAdapter(private val onItemClickListener: OnItemClickListener,
+class FuelAdapter(private val onItemClickListener: OnItemClickListener?,
                   private val locale: Locale,
                   private val data: MutableSet<Fuel>) : RecyclerView.Adapter<FuelAdapter.FuelHolder>() {
+
+    constructor(locale: Locale, data: MutableSet<Fuel>): this(null, locale, data)
 
     private lateinit var context: Context
 
@@ -39,15 +41,17 @@ class FuelAdapter(private val onItemClickListener: OnItemClickListener,
 
     override fun getItemCount(): Int = data.size
 
-    class FuelHolder(private val onItemClickListener: OnItemClickListener,
+    class FuelHolder(private val onItemClickListener: OnItemClickListener?,
                      itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        constructor(itemView: View): this(null, itemView)
 
         val txtFuel: TextView = itemView.findViewById(R.id.txt_fuel)
         val txtPrice: TextView = itemView.findViewById(R.id.txt_price)
 
         init {
             itemView.setOnClickListener {
-                onItemClickListener.onItemClick(adapterPosition)
+                onItemClickListener?.onItemClick(adapterPosition)
             }
         }
 

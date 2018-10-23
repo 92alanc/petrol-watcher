@@ -114,4 +114,6 @@
     <string name="description_close">Fechar</string>
     <string name="info_rating">Avalie a qualidade do combustível deste posto baseado na sua experiência</string>
     <string name="something_went_wrong">Algo deu errado</string>
+    <string name="notification_message">Novas previsões para os preços de combustível na sua área</string>
+    <string name="description_predictions">Previsões baseadas em preços médios de combustível coletados semanalmente na sua área</string>
 </resources>

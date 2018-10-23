@@ -1,7 +1,10 @@
 package com.braincorp.petrolwatcher.feature.prediction.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.google.firebase.database.DataSnapshot
+import java.math.BigDecimal
 
 /**
  * A fuel price prediction
@@ -9,13 +12,17 @@ import com.google.firebase.database.DataSnapshot
 data class Prediction(var id: String = "",
                       var fuelData: Fuel = Fuel(),
                       var city: String = "",
-                      var country: String = "") {
+                      var country: String = ""): Parcelable {
 
-    private companion object {
-        const val KEY_ID = "id"
-        const val KEY_FUEL_DATA = "fuel_data"
-        const val KEY_CITY = "city"
-        const val KEY_COUNTRY = "country"
+    companion object CREATOR : Parcelable.Creator<Prediction> {
+        private const val KEY_ID = "id"
+        private const val KEY_FUEL_DATA = "fuel_data"
+        private const val KEY_CITY = "city"
+        private const val KEY_COUNTRY = "country"
+
+        override fun createFromParcel(parcel: Parcel): Prediction = Prediction(parcel)
+
+        override fun newArray(size: Int): Array<Prediction?> = arrayOfNulls(size)
     }
 
     constructor(snapshot: DataSnapshot): this() {
@@ -26,5 +33,30 @@ data class Prediction(var id: String = "",
             country = child(KEY_COUNTRY).value.toString()
         }
     }
+
+    constructor(parcel: Parcel): this() {
+        with(parcel) {
+            id = readString()!!
+            city = readString()!!
+            country = readString()!!
+            val type = readSerializable() as Fuel.Type
+            val quality = readSerializable() as Fuel.Quality
+            val price = readSerializable() as BigDecimal
+            fuelData = Fuel(type, quality, price)
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        with(parcel) {
+            writeString(id)
+            writeString(city)
+            writeString(country)
+            writeSerializable(fuelData.type)
+            writeSerializable(fuelData.quality)
+            writeSerializable(fuelData.price)
+        }
+    }
+
+    override fun describeContents(): Int = 0
 
 }

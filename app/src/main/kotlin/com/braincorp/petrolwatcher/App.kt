@@ -8,7 +8,7 @@ import android.graphics.Typeface
 import com.braincorp.petrolwatcher.database.AppDatabaseManager
 import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
-import com.braincorp.petrolwatcher.feature.prediction.AveragePriceService
+import com.braincorp.petrolwatcher.feature.prediction.service.AveragePriceService
 import com.braincorp.petrolwatcher.map.AppMapController
 import com.braincorp.petrolwatcher.utils.getWeekInMillis
 import com.google.firebase.FirebaseApp
@@ -61,7 +61,7 @@ open class App : Application() {
         val intent = AveragePriceService.getIntent(this)
         val task = PendingIntent.getService(this, requestCode, intent, flags)
         alarmManager.setInexactRepeating(AlarmManager.RTC,
-                                         getWeekInMillis(),
+                                         System.currentTimeMillis() + 5000,
                                          getWeekInMillis(),
                                          task)
     }

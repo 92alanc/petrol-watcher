@@ -118,8 +118,8 @@
         <!-- endregion -->
 
         <!-- region Prediction -->
-        <service android:name=".feature.prediction.AveragePriceService"/>
-        <service android:name=".feature.prediction.PredictionService"/>
+        <service android:name=".feature.prediction.service.AveragePriceService"/>
+        <service android:name=".feature.prediction.service.PredictionService"/>
         <!-- endregion -->
 
         <!-- region Facebook -->

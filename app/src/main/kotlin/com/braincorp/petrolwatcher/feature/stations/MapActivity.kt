@@ -2,6 +2,8 @@ package com.braincorp.petrolwatcher.feature.stations
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
@@ -20,11 +22,13 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
+import com.braincorp.petrolwatcher.feature.prediction.dialogue.PredictionsDialogue
+import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
-import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.PetrolStation
 import com.braincorp.petrolwatcher.feature.stations.presenter.MapActivityPresenter
+import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.utils.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -49,10 +53,20 @@ class MapActivity : AppCompatActivity(),
         GoogleMap.OnMarkerClickListener,
         OnCurrentLocationFoundListener {
 
-    private companion object {
-        const val KEY_IS_MAP_READY = "is_map_ready"
-        const val REQUEST_CODE_LOCATION = 1234
-        const val TAG = "PETROL_WATCHER"
+    companion object {
+        private const val REQUEST_CODE_LOCATION = 1234
+        private const val TAG = "PETROL_WATCHER"
+        private const val KEY_IS_MAP_READY = "is_map_ready"
+        private const val KEY_PREDICTIONS = "predictions"
+        private const val KEY_LOCALE = "locale"
+
+        fun getIntentForPredictionDialogue(context: Context,
+                                           predictions: ArrayList<Prediction>,
+                                           locale: Locale): Intent {
+            return Intent(context, MapActivity::class.java)
+                    .putParcelableArrayListExtra(KEY_PREDICTIONS, predictions)
+                    .putExtra(KEY_LOCALE, locale.toLanguageTag())
+        }
     }
 
     override lateinit var presenter: MapActivityContract.Presenter
@@ -80,6 +94,7 @@ class MapActivity : AppCompatActivity(),
     override fun onStart() {
         super.onStart()
         bindNavigationDrawer()
+        getPredictions()
     }
 
     override fun onBackPressed() {
@@ -193,6 +208,18 @@ class MapActivity : AppCompatActivity(),
     override fun startMainActivity() {
         startMainActivity(finishCurrent = false)
         finishAffinity()
+    }
+
+    private fun getPredictions() {
+        with(intent) {
+            if (hasExtra(KEY_PREDICTIONS)) {
+                val predictions = getParcelableArrayListExtra<Prediction>(KEY_PREDICTIONS)
+                val locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
+
+                val dialogue = PredictionsDialogue.newInstance(predictions, locale)
+                showDialogueFragment(supportFragmentManager, dialogue)
+            }
+        }
     }
 
     private fun bindNavigationDrawer() {
