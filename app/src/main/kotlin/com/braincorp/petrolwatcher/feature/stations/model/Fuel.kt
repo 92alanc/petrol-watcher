@@ -10,7 +10,7 @@ import java.math.BigDecimal
 /**
  * A fuel
  *
- * @param type the type (diesel, ethanol, LPG or petrol)
+ * @param type the type (diesel, ethanol or petrol)
  * @param quality the quality (regular or premium)
  * @param price the price in the local currency
  */

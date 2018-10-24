@@ -21,6 +21,7 @@ import kotlin.collections.HashMap
  * @param fuels the fuels with their respective prices
  * @param rating the rating (from 1 to 5)
  * @param ratingCount the number of people who rated this station
+ * @param ratingSum the sum of all the prices up to the current moment
  */
 data class PetrolStation(var name: String = "",
                          var address: String = "",
