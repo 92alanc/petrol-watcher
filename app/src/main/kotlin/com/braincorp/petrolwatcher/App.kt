@@ -61,7 +61,7 @@ open class App : Application() {
         val intent = AveragePriceService.getIntent(this)
         val task = PendingIntent.getService(this, requestCode, intent, flags)
         alarmManager.setInexactRepeating(AlarmManager.RTC,
-                                         System.currentTimeMillis() + 5000,
+                                         System.currentTimeMillis() + 5000, // TODO: use getTimeLeftUntilSaturday()
                                          getWeekInMillis(),
                                          task)
     }
