@@ -147,6 +147,7 @@ class CostPlanningActivity : AppCompatActivity(),
                                         locale: Locale) {
         this.locale = locale
         originAddress = address
+        // FIXME: assign value to origin
         placeAutocompleteOrigin.setText(originAddress)
     }
 
