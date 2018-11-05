@@ -5,6 +5,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.graphics.Color
+import android.media.RingtoneManager
+import android.media.RingtoneManager.TYPE_NOTIFICATION
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.support.v4.app.NotificationCompat
@@ -30,6 +33,9 @@ fun Context.showNotificationForPredictions(predictions: List<Prediction>,
     val flags = 0
     val action = PendingIntent.getActivity(this, requestCode, intent, flags)
 
+    val vibrationPattern = arrayOf(500L, 500L).toLongArray()
+    val soundUri = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION)
+
     val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.app_name))
@@ -37,7 +43,9 @@ fun Context.showNotificationForPredictions(predictions: List<Prediction>,
             .setStyle(NotificationCompat.BigTextStyle()
                               .bigText(getString(R.string.notification_message)))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            // TODO: set vibration pattern, lights and sound
+            .setVibrate(vibrationPattern)
+            .setSound(soundUri)
+            .setLights(Color.YELLOW, 1000, 1000)
             .setAutoCancel(true)
             .setContentIntent(action)
 

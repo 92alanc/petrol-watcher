@@ -213,6 +213,10 @@ class MapActivity : AppCompatActivity(),
     }
 
     private fun getPredictions() {
+        with (PreferenceHelper(this)) {
+            setNotificationViewed(true)
+        }
+
         with(intent) {
             // FIXME: this damn thing is only fetching 1 prediction. It's 1:30am and I'm sick of trying to fix it!!!
             val predictions = getParcelableArrayListExtra<Prediction>(KEY_PREDICTIONS)

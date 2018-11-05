@@ -6,6 +6,7 @@ import android.content.Intent
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
+import com.braincorp.petrolwatcher.utils.PreferenceHelper
 import com.braincorp.petrolwatcher.utils.showNotificationForPredictions
 import java.util.*
 
@@ -14,7 +15,7 @@ import java.util.*
  * predictions in the current location (city/country)
  */
 class PredictionService : IntentService("prediction"),
-                          OnPredictionsReadyListener {
+        OnPredictionsReadyListener {
 
     companion object {
         private const val KEY_CITY = "city"
@@ -54,7 +55,12 @@ class PredictionService : IntentService("prediction"),
         val localPredictions = predictions.filter {
             it.city == city && it.country == country
         }
-        applicationContext.showNotificationForPredictions(localPredictions, locale)
+
+        applicationContext.let {
+            val preferenceHelper = PreferenceHelper(it)
+            if (preferenceHelper.isPredictionNotificationViewed())
+                it.showNotificationForPredictions(localPredictions, locale)
+        }
     }
 
 }
