@@ -4,6 +4,7 @@ import android.support.design.widget.TextInputEditText
 import java.math.BigDecimal
 import java.math.MathContext
 import java.text.DecimalFormat
+import java.text.Normalizer
 import java.util.*
 
 /**
@@ -62,6 +63,7 @@ fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
  * special characters, concatenated with an underscore
  */
 fun normaliseArea(city: String, country: String): String {
-    val text = "${city.replace(" ", "").toLowerCase()}_${country.replace(" ", "").toLowerCase()}"
+    var text = "${city.replace(" ", "").toLowerCase()}_${country.replace(" ", "").toLowerCase()}"
+    text = Normalizer.normalize(text, Normalizer.Form.NFD)
     return text.replace("\\p{M}".toRegex(), "")
 }

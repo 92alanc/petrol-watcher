@@ -60,7 +60,7 @@ class PredictionService : IntentService("prediction"),
 
         applicationContext.let {
             val preferenceHelper = PreferenceHelper(it)
-            if (preferenceHelper.isPredictionNotificationViewed())
+            if (!preferenceHelper.isPredictionNotificationViewed())
                 it.showNotificationForPrediction(prediction, locale)
         }
     }

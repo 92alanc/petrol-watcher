@@ -174,11 +174,12 @@ object MockDatabaseManager : DatabaseManager {
     }
 
     /**
-     * Fetches predictions from the database
+     * Fetches a prediction for an area from the database
      *
-     * @param onPredictionReadyListener the callback for new predictions
+     * @param area the area
+     * @param onPredictionReadyListener the callback for the new prediction
      */
-    override fun fetchPrediction(onPredictionReadyListener: OnPredictionReadyListener) {
+    override fun fetchPrediction(area: String, onPredictionReadyListener: OnPredictionReadyListener) {
         // TODO: implement
     }
 

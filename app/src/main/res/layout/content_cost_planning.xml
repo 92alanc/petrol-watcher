@@ -19,19 +19,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/edt_destination"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bt_location"/>
-
-        <ImageButton
-            android:id="@+id/bt_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_default"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_location"
-            android:contentDescription="@string/description_my_location"
-            app:layout_constraintTop_toTopOf="@id/edt_origin"
-            app:layout_constraintBottom_toBottomOf="@id/edt_origin"
-            app:layout_constraintStart_toEndOf="@id/edt_origin"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <fragment

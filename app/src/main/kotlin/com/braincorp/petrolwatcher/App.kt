@@ -10,7 +10,6 @@ import com.braincorp.petrolwatcher.feature.auth.authenticator.AppAuthenticator
 import com.braincorp.petrolwatcher.feature.auth.imageHandler.AppImageHandler
 import com.braincorp.petrolwatcher.feature.prediction.service.AveragePriceService
 import com.braincorp.petrolwatcher.map.AppMapController
-import com.braincorp.petrolwatcher.utils.getWeekInMillis
 import com.google.firebase.FirebaseApp
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
@@ -62,7 +61,7 @@ open class App : Application() {
         val task = PendingIntent.getService(this, requestCode, intent, flags)
         alarmManager.setInexactRepeating(AlarmManager.RTC,
                                          System.currentTimeMillis() + 5000, // TODO: use getTimeLeftUntilSaturday()
-                                         getWeekInMillis(),
+                                         60000, // TODO: use getWeekInMillis()
                                          task)
     }
 

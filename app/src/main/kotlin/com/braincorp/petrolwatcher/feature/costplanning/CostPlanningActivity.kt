@@ -12,14 +12,12 @@ import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningAct
 import com.braincorp.petrolwatcher.feature.costplanning.presenter.CostPlanningActivityPresenter
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
-import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
 import com.braincorp.petrolwatcher.utils.formatPriceAsCurrency
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_cost_planning.*
 import kotlinx.android.synthetic.main.content_cost_planning.*
 import java.math.BigDecimal
@@ -30,7 +28,6 @@ import java.util.*
  */
 class CostPlanningActivity : AppCompatActivity(),
         CostPlanningActivityContract.View,
-        OnCurrentLocationFoundListener,
         View.OnClickListener {
 
     private companion object {
@@ -79,7 +76,6 @@ class CostPlanningActivity : AppCompatActivity(),
         else presenter.fetchVehicles()
         populateSpinners()
         fab.setOnClickListener(this)
-        bt_location.setOnClickListener(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -130,31 +126,9 @@ class CostPlanningActivity : AppCompatActivity(),
     // endregion
 
     // region Listeners
-    /**
-     * Function to be triggered when the current address
-     * is found
-     *
-     * @param address the address
-     * @param city the city
-     * @param country the country
-     * @param latLng the latitude and longitude
-     * @param locale the locale
-     */
-    override fun onCurrentLocationFound(address: String,
-                                        city: String,
-                                        country: String,
-                                        latLng: LatLng,
-                                        locale: Locale) {
-        this.locale = locale
-        originAddress = address
-        // FIXME: assign value to origin
-        placeAutocompleteOrigin.setText(originAddress)
-    }
-
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> getResult()
-            R.id.bt_location -> useCurrentLocation()
         }
     }
     // endregion
@@ -340,10 +314,6 @@ class CostPlanningActivity : AppCompatActivity(),
         val costStr = formatPriceAsCurrency(cost!!, locale)
         txt_estimated_cost.text = getString(R.string.estimated_cost_format, costStr)
         txt_estimated_fuel_amount.text = getString(R.string.estimated_fuel_amount_format, fuelAmount)
-    }
-
-    private fun useCurrentLocation() {
-        presenter.getCurrentLocation(context = this, onCurrentLocationFoundListener = this)
     }
     // endregion
 
