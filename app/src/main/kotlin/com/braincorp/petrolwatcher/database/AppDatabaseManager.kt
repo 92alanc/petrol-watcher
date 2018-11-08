@@ -12,7 +12,10 @@ import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.math.BigDecimal
 
 /**
@@ -74,17 +77,7 @@ class AppDatabaseManager : DatabaseManager {
     override fun saveVehicle(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES).child(uid)
-
-        reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError) { }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child(vehicle.id).exists())
-                    update(vehicle, reference, onCompleteListener)
-                else
-                    insert(vehicle, reference, onCompleteListener)
-            }
-        })
+        reference.child(vehicle.id).setValue(vehicle.toMap())
     }
 
     /**
@@ -97,16 +90,7 @@ class AppDatabaseManager : DatabaseManager {
     override fun savePetrolStation(petrolStation: PetrolStation,
                                    onCompleteListener: OnCompleteListener<Void>) {
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
-        reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError) { }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child(petrolStation.id).exists())
-                    update(petrolStation, reference, onCompleteListener)
-                else
-                    insert(petrolStation, reference, onCompleteListener)
-            }
-        })
+        reference.child(petrolStation.id).setValue(petrolStation.toMap())
     }
 
     /**
@@ -319,17 +303,7 @@ class AppDatabaseManager : DatabaseManager {
      */
     override fun saveAveragePrice(averagePrice: AveragePrice) {
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_AVERAGE_PRICES)
-        reference.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(error: DatabaseError) { }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val onCompleteListener = OnCompleteListener<Void> { }
-                if (snapshot.child(averagePrice.id).exists())
-                    update(averagePrice, reference, onCompleteListener)
-                else
-                    insert(averagePrice, reference, onCompleteListener)
-            }
-        })
+        reference.child(averagePrice.id).setValue(averagePrice.toMap())
     }
 
     /**
@@ -353,22 +327,6 @@ class AppDatabaseManager : DatabaseManager {
                         onPredictionsReadyListener.onPredictionsReady(predictions)
                     }
                 })
-    }
-
-    private fun insert(item: Mappable,
-                       reference: DatabaseReference,
-                       onCompleteListener: OnCompleteListener<Void>) {
-        reference.child(item.id)
-                .setValue(item.toMap())
-                .addOnCompleteListener(onCompleteListener)
-    }
-
-    private fun update(item: Mappable,
-                       reference: DatabaseReference,
-                       onCompleteListener: OnCompleteListener<Void>) {
-        reference.child(item.id)
-                .updateChildren(item.toMap())
-                .addOnCompleteListener(onCompleteListener)
     }
 
     private fun getAveragePrice(city: String,

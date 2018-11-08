@@ -14,6 +14,8 @@ data class Prediction(var id: String = "",
                       var city: String = "",
                       var country: String = ""): Parcelable {
 
+    // FIXME: must match database model
+
     companion object CREATOR : Parcelable.Creator<Prediction> {
         private const val KEY_ID = "id"
         private const val KEY_FUEL_DATA = "fuel_data"

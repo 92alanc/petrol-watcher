@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
@@ -21,6 +22,8 @@ class AveragePriceService : Service(),
                             OnAveragePriceFoundListener {
 
     companion object {
+        private const val TAG = "petrol_watcher"
+
         fun getIntent(context: Context): Intent = Intent(context, AveragePriceService::class.java)
     }
 
@@ -30,6 +33,7 @@ class AveragePriceService : Service(),
 
     override fun onCreate() {
         super.onCreate()
+        Log.d(TAG, "Average price service started")
         if (DependencyInjection.authenticator.isUserSignedIn()) {
             applicationContext.let {
                 if (hasLocationPermission()) {

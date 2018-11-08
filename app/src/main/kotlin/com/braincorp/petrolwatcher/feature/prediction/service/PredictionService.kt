@@ -3,6 +3,7 @@ package com.braincorp.petrolwatcher.feature.prediction.service
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
@@ -21,6 +22,7 @@ class PredictionService : IntentService("prediction"),
         private const val KEY_CITY = "city"
         private const val KEY_COUNTRY = "country"
         private const val KEY_LOCALE = "locale"
+        private const val TAG = "petrol_watcher"
 
         fun getIntent(context: Context,
                       city: String,
@@ -38,6 +40,7 @@ class PredictionService : IntentService("prediction"),
     private lateinit var locale: Locale
 
     override fun onHandleIntent(intent: Intent) {
+        Log.d(TAG, "Prediction service started")
         with(intent) {
             city = getStringExtra(KEY_CITY)
             country = getStringExtra(KEY_COUNTRY)
@@ -52,6 +55,7 @@ class PredictionService : IntentService("prediction"),
      * @param predictions the predictions
      */
     override fun onPredictionsReady(predictions: ArrayList<Prediction>) {
+        Log.d(TAG, "Predictions ready")
         val localPredictions = predictions.filter {
             it.city == city && it.country == country
         }
