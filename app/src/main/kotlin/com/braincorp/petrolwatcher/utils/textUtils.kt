@@ -51,3 +51,17 @@ fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
     val formattedPrice = formatter.format(roundedPrice.toDouble())
     return "$currency $formattedPrice"
 }
+
+/**
+ * Normalises an area
+ *
+ * @param city the city
+ * @param country the country
+ *
+ * @return city and country, without spaces or
+ * special characters, concatenated with an underscore
+ */
+fun normaliseArea(city: String, country: String): String {
+    val text = "${city.replace(" ", "").toLowerCase()}_${country.replace(" ", "").toLowerCase()}"
+    return text.replace("\\p{M}".toRegex(), "")
+}

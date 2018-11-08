@@ -9,33 +9,33 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.base.BaseDialogueFragment
+import com.braincorp.petrolwatcher.feature.prediction.adapter.PredictionAdapter
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
-import com.braincorp.petrolwatcher.feature.stations.adapter.FuelAdapter
 import java.util.*
 
 /**
- * The dialogue where fuel price predictions
+ * The dialogue where fuel price prediction
  * are shown
  */
-class PredictionsDialogue : BaseDialogueFragment() {
+class PredictionDialogue : BaseDialogueFragment() {
 
     companion object {
-        const val TAG = "predictions_dialogue"
+        const val TAG = "prediction_dialogue"
 
-        private const val KEY_PREDICTIONS = "predictions"
+        private const val KEY_PREDICTION = "prediction"
         private const val KEY_LOCALE = "locale"
 
-        fun newInstance(predictions: ArrayList<Prediction>,
-                        locale: Locale) = PredictionsDialogue().apply {
+        fun newInstance(prediction: Prediction,
+                        locale: Locale) = PredictionDialogue().apply {
             val args = Bundle().apply {
-                putParcelableArrayList(KEY_PREDICTIONS, predictions)
+                putParcelable(KEY_PREDICTION, prediction)
                 putString(KEY_LOCALE, locale.toLanguageTag())
             }
             arguments = args
         }
     }
 
-    private lateinit var predictions: ArrayList<Prediction>
+    private lateinit var prediction: Prediction
     private lateinit var locale: Locale
 
     /**
@@ -61,19 +61,15 @@ class PredictionsDialogue : BaseDialogueFragment() {
 
     private fun parseArgs() {
         arguments!!.let {
-            predictions = it.getParcelableArrayList(KEY_PREDICTIONS)!!
+            prediction = it.getParcelable(KEY_PREDICTION)!!
             locale = Locale.forLanguageTag(it.getString(KEY_LOCALE))
         }
     }
 
     private fun populateRecyclerView(view: View) {
-        val data = predictions.asSequence().map {
-            it.fuelData
-        }.toMutableSet()
-
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = FuelAdapter(Locale.getDefault(), data)
+            adapter = PredictionAdapter(prediction, locale)
         }
     }
 

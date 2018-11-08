@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
-import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
@@ -176,9 +176,9 @@ object MockDatabaseManager : DatabaseManager {
     /**
      * Fetches predictions from the database
      *
-     * @param onPredictionsReadyListener the callback for new predictions
+     * @param onPredictionReadyListener the callback for new predictions
      */
-    override fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener) {
+    override fun fetchPrediction(onPredictionReadyListener: OnPredictionReadyListener) {
         // TODO: implement
     }
 

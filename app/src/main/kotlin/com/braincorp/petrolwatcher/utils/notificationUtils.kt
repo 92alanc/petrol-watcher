@@ -19,16 +19,16 @@ import java.util.*
 private const val CHANNEL_ID = "notification_channel"
 
 /**
- * Shows a notification for fuel price predictions
+ * Shows a notification for a fuel price prediction
  *
- * @param predictions the predictions
+ * @param prediction the prediction
  * @param locale the locale
  */
-fun Context.showNotificationForPredictions(predictions: List<Prediction>,
-                                           locale: Locale) {
+fun Context.showNotificationForPrediction(prediction: Prediction,
+                                          locale: Locale) {
     val requestCode = 123
     val intent = MapActivity.getIntentForPredictionDialogue(this,
-                                                            predictions as ArrayList<Prediction>,
+                                                            prediction,
                                                             locale)
     val flags = 0
     val action = PendingIntent.getActivity(this, requestCode, intent, flags)

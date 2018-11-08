@@ -5,11 +5,11 @@ import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 /**
  * A callback for new predictions
  */
-interface OnPredictionsReadyListener {
+interface OnPredictionReadyListener {
     /**
-     * Function triggered when new predictions are ready
+     * Function triggered when a new prediction is ready
      *
-     * @param predictions the predictions
+     * @param prediction the prediction
      */
-    fun onPredictionsReady(predictions: ArrayList<Prediction>)
+    fun onPredictionReady(prediction: Prediction)
 }

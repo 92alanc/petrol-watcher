@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.database
 
-import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
@@ -110,9 +110,10 @@ interface DatabaseManager {
     fun saveAveragePrice(averagePrice: AveragePrice)
 
     /**
-     * Fetches predictions from the database
+     * Fetches a prediction for an area from the database
      *
-     * @param onPredictionsReadyListener the callback for new predictions
+     * @param area the area
+     * @param onPredictionReadyListener the callback for the new prediction
      */
-    fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener)
+    fun fetchPrediction(area: String, onPredictionReadyListener: OnPredictionReadyListener)
 }

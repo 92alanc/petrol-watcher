@@ -116,4 +116,6 @@
     <string name="something_went_wrong">Algo deu errado</string>
     <string name="notification_message">Novas previsões para os preços de combustível na sua área</string>
     <string name="description_predictions">Previsões baseadas em preços médios de combustível coletados semanalmente na sua área</string>
+    <string name="regular_petrol">Gasolina comum</string>
+    <string name="premium_petrol">Gasolina aditivada</string>
 </resources>

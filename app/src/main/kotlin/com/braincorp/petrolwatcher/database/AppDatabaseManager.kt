@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.database
 
 import com.braincorp.petrolwatcher.DependencyInjection
-import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
@@ -307,11 +307,12 @@ class AppDatabaseManager : DatabaseManager {
     }
 
     /**
-     * Fetches predictions from the database
+     * Fetches predictions for an area from the database
      *
-     * @param onPredictionsReadyListener the callback for new predictions
+     * @param area the area
+     * @param onPredictionReadyListener the callback for the new prediction
      */
-    override fun fetchPredictions(onPredictionsReadyListener: OnPredictionsReadyListener) {
+    override fun fetchPrediction(area: String, onPredictionReadyListener: OnPredictionReadyListener) {
         FirebaseDatabase.getInstance()
                 .getReference(REFERENCE_PREDICTIONS)
                 .addValueEventListener(object: ValueEventListener {
@@ -324,7 +325,9 @@ class AppDatabaseManager : DatabaseManager {
                             predictions.add(Prediction(it))
                         }
 
-                        onPredictionsReadyListener.onPredictionsReady(predictions)
+                        val prediction = predictions.firstOrNull { it.area == area }
+                        if (prediction != null)
+                            onPredictionReadyListener.onPredictionReady(prediction)
                     }
                 })
     }
@@ -339,7 +342,11 @@ class AppDatabaseManager : DatabaseManager {
                 fuel -> fuel.type == fuelType && fuel.quality == fuelQuality
             }.price.toDouble()
         }
-        val price = BigDecimal(sum / stationsInTheArea.size)
+        val price = if (stationsInTheArea.isNotEmpty()) {
+            BigDecimal(sum / stationsInTheArea.size)
+        } else {
+            BigDecimal.ZERO
+        }
 
         return AveragePrice(price, city, country, fuelType, fuelQuality)
     }

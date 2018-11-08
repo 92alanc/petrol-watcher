@@ -5,10 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.braincorp.petrolwatcher.DependencyInjection
-import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionsReadyListener
+import com.braincorp.petrolwatcher.feature.prediction.listeners.OnPredictionReadyListener
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 import com.braincorp.petrolwatcher.utils.PreferenceHelper
-import com.braincorp.petrolwatcher.utils.showNotificationForPredictions
+import com.braincorp.petrolwatcher.utils.normaliseArea
+import com.braincorp.petrolwatcher.utils.showNotificationForPrediction
 import java.util.*
 
 /**
@@ -16,7 +17,7 @@ import java.util.*
  * predictions in the current location (city/country)
  */
 class PredictionService : IntentService("prediction"),
-        OnPredictionsReadyListener {
+        OnPredictionReadyListener {
 
     companion object {
         private const val KEY_CITY = "city"
@@ -35,35 +36,32 @@ class PredictionService : IntentService("prediction"),
         }
     }
 
-    private lateinit var city: String
-    private lateinit var country: String
+    private lateinit var area: String
     private lateinit var locale: Locale
 
     override fun onHandleIntent(intent: Intent) {
         Log.d(TAG, "Prediction service started")
         with(intent) {
-            city = getStringExtra(KEY_CITY)
-            country = getStringExtra(KEY_COUNTRY)
+            val city = getStringExtra(KEY_CITY)
+            val country = getStringExtra(KEY_COUNTRY)
+            area = normaliseArea(city, country)
             locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
         }
-        DependencyInjection.databaseManager.fetchPredictions(this)
+        DependencyInjection.databaseManager.fetchPrediction(area, this)
     }
 
     /**
-     * Function triggered when new predictions are ready
+     * Function triggered when a new prediction is ready
      *
-     * @param predictions the predictions
+     * @param prediction the prediction
      */
-    override fun onPredictionsReady(predictions: ArrayList<Prediction>) {
-        Log.d(TAG, "Predictions ready")
-        val localPredictions = predictions.filter {
-            it.city == city && it.country == country
-        }
+    override fun onPredictionReady(prediction: Prediction) {
+        Log.d(TAG, "Prediction ready")
 
         applicationContext.let {
             val preferenceHelper = PreferenceHelper(it)
             if (preferenceHelper.isPredictionNotificationViewed())
-                it.showNotificationForPredictions(localPredictions, locale)
+                it.showNotificationForPrediction(prediction, locale)
         }
     }
 

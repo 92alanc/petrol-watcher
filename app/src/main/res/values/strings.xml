@@ -138,5 +138,7 @@
     <!-- region Predictions -->
     <string name="notification_message">New predictions for the average fuel prices in your area</string>
     <string name="description_predictions">Predictions based on average fuel prices collected weekly in your area</string>
+    <string name="regular_petrol">Regular petrol</string>
+    <string name="premium_petrol">Premium petrol</string>
     <!-- endregion -->
 </resources>

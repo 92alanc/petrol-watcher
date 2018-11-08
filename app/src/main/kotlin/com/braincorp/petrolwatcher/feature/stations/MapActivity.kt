@@ -22,7 +22,7 @@ import android.widget.TextView
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.auth.authenticator.OnUserDataFoundListener
-import com.braincorp.petrolwatcher.feature.prediction.dialogue.PredictionsDialogue
+import com.braincorp.petrolwatcher.feature.prediction.dialogue.PredictionDialogue
 import com.braincorp.petrolwatcher.feature.prediction.model.Prediction
 import com.braincorp.petrolwatcher.feature.stations.contract.MapActivityContract
 import com.braincorp.petrolwatcher.feature.stations.listeners.OnPetrolStationsFoundListener
@@ -62,10 +62,10 @@ class MapActivity : AppCompatActivity(),
         private const val KEY_LOCALE = "locale"
 
         fun getIntentForPredictionDialogue(context: Context,
-                                           predictions: ArrayList<Prediction>,
+                                           prediction: Prediction,
                                            locale: Locale): Intent {
             return Intent(context, MapActivity::class.java)
-                    .putExtra(KEY_PREDICTIONS, predictions)
+                    .putExtra(KEY_PREDICTIONS, prediction)
                     .putExtra(KEY_LOCALE, locale.toLanguageTag())
         }
     }
@@ -96,7 +96,7 @@ class MapActivity : AppCompatActivity(),
         super.onStart()
         bindNavigationDrawer()
         if (intent.hasExtra(KEY_PREDICTIONS))
-            getPredictions()
+            getPrediction()
     }
 
     override fun onBackPressed() {
@@ -212,17 +212,16 @@ class MapActivity : AppCompatActivity(),
         finishAffinity()
     }
 
-    private fun getPredictions() {
+    private fun getPrediction() {
         with (PreferenceHelper(this)) {
             setNotificationViewed(true)
         }
 
         with(intent) {
-            // FIXME: this damn thing is only fetching 1 prediction. It's 1:30am and I'm sick of trying to fix it!!!
-            val predictions = getParcelableArrayListExtra<Prediction>(KEY_PREDICTIONS)
+            val prediction = getParcelableExtra<Prediction>(KEY_PREDICTIONS)
             val locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
 
-            val dialogue = PredictionsDialogue.newInstance(predictions, locale)
+            val dialogue = PredictionDialogue.newInstance(prediction, locale)
             showDialogueFragment(supportFragmentManager, dialogue)
         }
     }
