@@ -112,24 +112,6 @@ task jacocoTestReport(type: JacocoReport,
     ])
 }
 
-def build_param = "${build}"
-
-if (build_param != "dev") {
-    //exclude production build
-    android.variantFilter { variant ->
-        if (variant.buildType.name == 'dev') {
-            variant.setIgnore(true)
-        }
-    }
-} else {
-    //exclude all except production build
-    android.variantFilter { variant ->
-        if (variant.buildType.name != 'dev') {
-            variant.setIgnore(true)
-        }
-    }
-}
-
 dependencies {
     // region INSTRUMENTED TEST LIBRARIES
     // libs folder
