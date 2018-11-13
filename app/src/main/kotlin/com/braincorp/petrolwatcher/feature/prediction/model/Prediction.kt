@@ -32,8 +32,8 @@ data class Prediction(var area: String = "",
             prices = hashMapOf()
             prices[KEY_REGULAR_PETROL] = BigDecimal(readString()!!)
             prices[KEY_PREMIUM_PETROL] = BigDecimal(readString()!!)
-            prices[KEY_DIESEL] = BigDecimal(readString()!!)
             prices[KEY_ETHANOL] = BigDecimal(readString()!!)
+            prices[KEY_DIESEL] = BigDecimal(readString()!!)
         }
     }
 

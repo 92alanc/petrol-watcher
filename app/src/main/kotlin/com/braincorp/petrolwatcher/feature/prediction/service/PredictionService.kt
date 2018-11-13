@@ -36,6 +36,7 @@ class PredictionService : IntentService("prediction"),
         }
     }
 
+    private lateinit var preferenceHelper: PreferenceHelper
     private lateinit var area: String
     private lateinit var locale: Locale
 
@@ -47,6 +48,8 @@ class PredictionService : IntentService("prediction"),
             area = normaliseArea(city, country)
             locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
         }
+        preferenceHelper = PreferenceHelper(applicationContext)
+        preferenceHelper.setNotificationViewed(false)
         DependencyInjection.databaseManager.fetchPrediction(area, this)
     }
 
@@ -59,7 +62,6 @@ class PredictionService : IntentService("prediction"),
         Log.d(TAG, "Prediction ready")
 
         applicationContext.let {
-            val preferenceHelper = PreferenceHelper(it)
             if (!preferenceHelper.isPredictionNotificationViewed())
                 it.showNotificationForPrediction(prediction, locale)
         }
