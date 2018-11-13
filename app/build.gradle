@@ -10,7 +10,7 @@ android {
         applicationId "com.braincorp.petrolwatcher"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5
+        versionCode 6
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -43,7 +43,7 @@ android {
     productFlavors {
         beta {
             dimension "mode"
-            versionNameSuffix "-beta5"
+            versionNameSuffix "-beta6"
         }
 
         prod {
