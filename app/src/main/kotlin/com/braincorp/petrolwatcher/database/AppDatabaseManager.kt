@@ -77,7 +77,7 @@ class AppDatabaseManager : DatabaseManager {
     override fun saveVehicle(vehicle: Vehicle, onCompleteListener: OnCompleteListener<Void>) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_VEHICLES).child(uid)
-        reference.child(vehicle.id).setValue(vehicle.toMap())
+        reference.child(vehicle.id).setValue(vehicle.toMap()).addOnCompleteListener(onCompleteListener)
     }
 
     /**
@@ -90,7 +90,7 @@ class AppDatabaseManager : DatabaseManager {
     override fun savePetrolStation(petrolStation: PetrolStation,
                                    onCompleteListener: OnCompleteListener<Void>) {
         val reference = FirebaseDatabase.getInstance().getReference(REFERENCE_PETROL_STATIONS)
-        reference.child(petrolStation.id).setValue(petrolStation.toMap())
+        reference.child(petrolStation.id).setValue(petrolStation.toMap()).addOnCompleteListener(onCompleteListener)
     }
 
     /**
@@ -337,7 +337,9 @@ class AppDatabaseManager : DatabaseManager {
                                 stationsInTheArea: List<PetrolStation>,
                                 fuelType: Fuel.Type,
                                 fuelQuality: Fuel.Quality): AveragePrice {
-        val sum = stationsInTheArea.sumByDouble {
+        val sum = stationsInTheArea.filter {
+            it.fuels.isNotEmpty()
+        }.sumByDouble {
             it.fuels.first {
                 fuel -> fuel.type == fuelType && fuel.quality == fuelQuality
             }.price.toDouble()
