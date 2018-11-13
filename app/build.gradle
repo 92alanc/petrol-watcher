@@ -37,10 +37,6 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
-        dev {
-            minifyEnabled false
-        }
     }
 
     flavorDimensions "mode"
