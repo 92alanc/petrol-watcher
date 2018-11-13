@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.feature.consumption.model
 
-enum class TankState {
+enum class TankLevel {
 
     QUARTER,
     HALF,

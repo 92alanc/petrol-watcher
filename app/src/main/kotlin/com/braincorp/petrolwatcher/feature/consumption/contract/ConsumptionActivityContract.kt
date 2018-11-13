@@ -1,7 +1,7 @@
 package com.braincorp.petrolwatcher.feature.consumption.contract
 
 import com.braincorp.petrolwatcher.base.BaseContract
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 
 interface ConsumptionActivityContract {
     /**
@@ -29,9 +29,9 @@ interface ConsumptionActivityContract {
         fun showInvalidDistanceError()
 
         /**
-         * Show an invalid tank state error
+         * Show an invalid tank level error
          */
-        fun showInvalidTankStateError()
+        fun showInvalidTankLevelError()
 
         /**
          * Exports the calculated average consumption
@@ -50,14 +50,14 @@ interface ConsumptionActivityContract {
          *
          * @param odometerStart the initial state of the odometer
          * @param odometerEnd the final state of the odometer
-         * @param tankStateStart the initial state of the tank
-         * @param tankStateEnd the final state of the tank
+         * @param tankLevelStart the initial level of the tank
+         * @param tankLevelEnd the final level of the tank
          * @param fuelCapacity the fuel capacity
          */
         fun calculateConsumption(odometerStart: String,
                                  odometerEnd: String,
-                                 tankStateStart: TankState,
-                                 tankStateEnd: TankState,
+                                 tankLevelStart: TankLevel,
+                                 tankLevelEnd: TankLevel,
                                  fuelCapacity: Int)
     }
 }

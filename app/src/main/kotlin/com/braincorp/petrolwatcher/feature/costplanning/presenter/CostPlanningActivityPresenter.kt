@@ -4,14 +4,14 @@ import android.content.Context
 import com.braincorp.petrolwatcher.DependencyInjection
 import com.braincorp.petrolwatcher.database.OnAveragePriceFoundListener
 import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
 import com.braincorp.petrolwatcher.feature.prediction.model.AveragePrice
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.listeners.OnVehiclesFoundListener
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
-import com.braincorp.petrolwatcher.utils.tankStateToLitres
+import com.braincorp.petrolwatcher.utils.tankLevelToLitres
 import com.google.android.gms.location.places.Place
 import java.math.BigDecimal
 import kotlin.math.roundToInt
@@ -63,7 +63,7 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
      * @param fuelType the fuel type
      * @param fuelQuality the fuel quality
      * @param vehicle the vehicle
-     * @param tankState the tank state
+     * @param tankLevel the tank state
      */
     override fun estimateCostAndFuelAmount(context: Context,
                                            origin: Place,
@@ -71,7 +71,7 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
                                            fuelType: Fuel.Type,
                                            fuelQuality: Fuel.Quality,
                                            vehicle: Vehicle,
-                                           tankState: TankState,
+                                           tankLevel: TankLevel,
                                            roadType: RoadType) {
         val mapController = DependencyInjection.mapController
         val city = mapController.getCityFromPlace(context, origin)
@@ -80,7 +80,7 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
         DependencyInjection.databaseManager.getAveragePriceForFuel(city, country,
                 fuelType, fuelQuality, object: OnAveragePriceFoundListener {
             override fun onAveragePriceFound(averagePrice: AveragePrice) {
-                val tankStateLitres = tankStateToLitres(tankState, vehicle.details.fuelCapacity)
+                val tankLevelLitres = tankLevelToLitres(tankLevel, vehicle.details.fuelCapacity)
                 val consumption = when (roadType) {
                     RoadType.MOTORWAY -> {
                         if (vehicle.calculatedValues.avgConsumptionMotorway > 0f)
@@ -97,7 +97,7 @@ class CostPlanningActivityPresenter(private val view: CostPlanningActivityContra
                     }
                 }
                 // (distanceKm / consumption) = total fuel amount necessary, disregarding current tank state
-                var fuelAmount = ((distanceKm / consumption) - tankStateLitres).roundToInt()
+                var fuelAmount = ((distanceKm / consumption) - tankLevelLitres).roundToInt()
                 var cost = BigDecimal(fuelAmount * averagePrice.price.toDouble())
 
                 fuelAmount = if (fuelAmount > 0) fuelAmount

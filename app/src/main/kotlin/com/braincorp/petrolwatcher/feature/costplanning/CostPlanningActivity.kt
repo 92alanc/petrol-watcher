@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 import com.braincorp.petrolwatcher.feature.costplanning.contract.CostPlanningActivityContract
 import com.braincorp.petrolwatcher.feature.costplanning.presenter.CostPlanningActivityPresenter
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
@@ -34,10 +34,10 @@ class CostPlanningActivity : AppCompatActivity(),
         const val KEY_ORIGIN = "origin"
         const val KEY_DESTINATION = "destination"
         const val KEY_SELECTED_FUEL_TYPE = "selected_fuel_type"
-        const val KEY_SELECTED_FUEL_QUALITY = "selected_fual_quality"
+        const val KEY_SELECTED_FUEL_QUALITY = "selected_fuel_quality"
         const val KEY_SELECTED_ROAD_TYPE = "selected_road_type"
         const val KEY_SELECTED_VEHICLE = "selected_vehicle"
-        const val KEY_SELECTED_TANK_STATE = "selected_tank_state"
+        const val KEY_SELECTED_TANK_LEVEL = "selected_tank_level"
         const val KEY_VEHICLES = "vehicles"
         const val KEY_COST = "cost"
         const val KEY_FUEL_AMOUNT = "fuel_amount"
@@ -59,7 +59,7 @@ class CostPlanningActivity : AppCompatActivity(),
     private var selectedFuelQuality: Fuel.Quality? = null
     private var selectedRoadType: RoadType? = null
     private var selectedVehicle: Vehicle? = null
-    private var selectedTankState: TankState? = null
+    private var selectedTankLevel: TankLevel? = null
     private var cost: BigDecimal? = null
     private var fuelAmount: Int = 0
     private var vehicles = ArrayList<Vehicle>()
@@ -84,7 +84,7 @@ class CostPlanningActivity : AppCompatActivity(),
             it.putString(KEY_ORIGIN, origin?.address?.toString())
             it.putString(KEY_DESTINATION, destination?.address?.toString())
             it.putParcelable(KEY_SELECTED_VEHICLE, selectedVehicle)
-            it.putSerializable(KEY_SELECTED_TANK_STATE, selectedTankState)
+            it.putSerializable(KEY_SELECTED_TANK_LEVEL, selectedTankLevel)
             it.putSerializable(KEY_SELECTED_FUEL_TYPE, selectedFuelType)
             it.putSerializable(KEY_SELECTED_FUEL_QUALITY, selectedFuelQuality)
             it.putSerializable(KEY_SELECTED_ROAD_TYPE, selectedRoadType)
@@ -176,8 +176,8 @@ class CostPlanningActivity : AppCompatActivity(),
             originAddress = getString(KEY_ORIGIN)
             destinationAddress = getString(KEY_DESTINATION)
             selectedVehicle = getParcelable(KEY_SELECTED_VEHICLE)
-            getSerializable(KEY_SELECTED_TANK_STATE)?.let {
-                selectedTankState = it as TankState
+            getSerializable(KEY_SELECTED_TANK_LEVEL)?.let {
+                selectedTankLevel = it as TankLevel
             }
             getSerializable(KEY_SELECTED_FUEL_TYPE)?.let {
                 selectedFuelType = it as Fuel.Type
@@ -200,14 +200,14 @@ class CostPlanningActivity : AppCompatActivity(),
         placeAutocompleteDestination.setText(destinationAddress)
         updateVehicles(vehicles)
         spn_vehicle.setSelection(vehicles.indexOf(selectedVehicle))
-        spn_tank_state.setSelection(TankState.values().indexOf(selectedTankState))
+        spn_tank_level.setSelection(TankLevel.values().indexOf(selectedTankLevel))
 
         if (cost != null && fuelAmount > 0) showResult()
     }
 
     private fun populateSpinners() {
         populateVehicleSpinner()
-        populateTankStateSpinner()
+        populateTankLevelSpinner()
         populateFuelTypeSpinner()
         populateFuelQualitySpinner()
         populateRoadTypeSpinner()
@@ -231,18 +231,18 @@ class CostPlanningActivity : AppCompatActivity(),
         }
     }
 
-    private fun populateTankStateSpinner() {
-        val tankStates = resources.getStringArray(R.array.tank_states).toList()
-        val adapter = GenericSpinnerAdapter(this, tankStates)
-        spn_tank_state.adapter = adapter
-        spn_tank_state.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+    private fun populateTankLevelSpinner() {
+        val tankLevels = resources.getStringArray(R.array.tank_levels).toList()
+        val adapter = GenericSpinnerAdapter(this, tankLevels)
+        spn_tank_level.adapter = adapter
+        spn_tank_level.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(spinner: AdapterView<*>?) { }
 
             override fun onItemSelected(spinner: AdapterView<*>?,
                                         itemView: View?,
                                         position: Int,
                                         id: Long) {
-                selectedTankState = TankState.values()[position]
+                selectedTankLevel = TankLevel.values()[position]
             }
         }
     }
@@ -290,7 +290,7 @@ class CostPlanningActivity : AppCompatActivity(),
         val noBlankFields = origin != null
                 && destination != null
                 && selectedVehicle != null
-                && selectedTankState != null
+                && selectedTankLevel != null
                 && selectedFuelType != null
                 && selectedFuelQuality != null
                 && selectedRoadType != null
@@ -303,7 +303,7 @@ class CostPlanningActivity : AppCompatActivity(),
                     selectedFuelType!!,
                     selectedFuelQuality!!,
                     selectedVehicle!!,
-                    selectedTankState!!,
+                    selectedTankLevel!!,
                     selectedRoadType!!)
         }
     }

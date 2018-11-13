@@ -9,7 +9,7 @@ import android.view.View
 import com.braincorp.petrolwatcher.R
 import com.braincorp.petrolwatcher.feature.consumption.contract.ConsumptionActivityContract
 import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 import com.braincorp.petrolwatcher.feature.consumption.presenter.ConsumptionActivityPresenter
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.ui.GenericSpinnerAdapter
@@ -112,12 +112,12 @@ class ConsumptionActivity : AppCompatActivity(),
     }
 
     /**
-     * Show an invalid tank state error
+     * Show an invalid tank level error
      */
-    override fun showInvalidTankStateError() {
+    override fun showInvalidTankLevelError() {
         AlertDialog.Builder(this)
                 .setTitle(R.string.error)
-                .setMessage(R.string.invalid_tank_state)
+                .setMessage(R.string.invalid_tank_level)
                 .setIcon(R.drawable.ic_error)
                 .setNeutralButton(R.string.ok, null)
                 .show()
@@ -149,14 +149,14 @@ class ConsumptionActivity : AppCompatActivity(),
     private fun calculateConsumption() {
         val odometerStart = edt_odometer_start.text.toString()
         val odometerEnd = edt_odometer_end.text.toString()
-        val tankStateStartIndex = spn_tank_state_start.selectedItemPosition
-        val tankStateEndIndex = spn_tank_state_end.selectedItemPosition
+        val tankLevelStartIndex = spn_tank_level_start.selectedItemPosition
+        val tankLevelEndIndex = spn_tank_level_end.selectedItemPosition
 
-        val tankStateStart = TankState.values()[tankStateStartIndex]
-        val tankStateEnd = TankState.values()[tankStateEndIndex]
+        val tankLevelStart = TankLevel.values()[tankLevelStartIndex]
+        val tankLevelEnd = TankLevel.values()[tankLevelEndIndex]
 
         presenter.calculateConsumption(odometerStart, odometerEnd,
-                tankStateStart, tankStateEnd,
+                tankLevelStart, tankLevelEnd,
                 vehicle.details.fuelCapacity)
     }
 
@@ -164,10 +164,10 @@ class ConsumptionActivity : AppCompatActivity(),
         val vehicleName = "${vehicle.manufacturer} ${vehicle.model} ${vehicle.details.trimLevel}"
         txt_selected_vehicle.text = vehicleName
 
-        val tankStates = resources.getStringArray(R.array.tank_states).toList()
-        val tankStateAdapter = GenericSpinnerAdapter(this, tankStates)
-        spn_tank_state_start.adapter = tankStateAdapter
-        spn_tank_state_end.adapter = tankStateAdapter
+        val tankLevels = resources.getStringArray(R.array.tank_levels).toList()
+        val tankLevelAdapter = GenericSpinnerAdapter(this, tankLevels)
+        spn_tank_level_start.adapter = tankLevelAdapter
+        spn_tank_level_end.adapter = tankLevelAdapter
 
         val roadTypes = resources.getStringArray(R.array.road_types).toList()
         val roadTypeAdapter = GenericSpinnerAdapter(this, roadTypes)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string-array name="tank_states">
+    <string-array name="tank_levels">
         <item tools:ignore="TypographyFractions">1/4</item>
         <item tools:ignore="TypographyFractions">1/2</item>
         <item tools:ignore="TypographyFractions">3/4</item>

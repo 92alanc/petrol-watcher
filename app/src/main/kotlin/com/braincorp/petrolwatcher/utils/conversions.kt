@@ -1,6 +1,6 @@
 package com.braincorp.petrolwatcher.utils
 
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 import java.math.BigDecimal
 import java.math.MathContext
 import kotlin.math.roundToInt
@@ -29,20 +29,20 @@ fun l100KmToKmL(l100Km: Float): Float {
 }
 
 /**
- * Converts a tank state to the actual quantity
+ * Converts a tank level to the actual quantity
  * in litres
  *
- * @param tankState the tank state (fraction)
+ * @param tankLevel the tank level (fraction)
  * @param fuelCapacity the fuel capacity
  *
  * @return the quantity in litres, relative to the
  *         the fuel capacity
  */
-fun tankStateToLitres(tankState: TankState, fuelCapacity: Int): Int {
-    return when (tankState) {
-        TankState.FULL -> fuelCapacity
-        TankState.THREE_QUARTERS -> (fuelCapacity * 0.75).roundToInt()
-        TankState.HALF -> fuelCapacity / 2
-        TankState.QUARTER -> (fuelCapacity * 0.25).roundToInt()
+fun tankLevelToLitres(tankLevel: TankLevel, fuelCapacity: Int): Int {
+    return when (tankLevel) {
+        TankLevel.FULL -> fuelCapacity
+        TankLevel.THREE_QUARTERS -> (fuelCapacity * 0.75).roundToInt()
+        TankLevel.HALF -> fuelCapacity / 2
+        TankLevel.QUARTER -> (fuelCapacity * 0.25).roundToInt()
     }
 }

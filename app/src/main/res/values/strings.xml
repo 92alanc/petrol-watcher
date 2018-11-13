@@ -112,20 +112,22 @@
 
     <!-- region Consumption -->
     <string name="selected_vehicle_format">Selected vehicle: %1$s</string>
-    <string name="tank_state_start">Tank state (start)</string>
-    <string name="tank_state_end">Tank state (end)</string>
+    <string name="tank_level_start">Tank level (start)</string>
+    <string name="tank_level_end">Tank level (end)</string>
     <string name="finish">Finish</string>
     <string name="odometer_start">Odometer (start) - km</string>
     <string name="odometer_end">Odometer (end) - km</string>
     <string name="predominant_road_type">Predominant road type</string>
     <string name="fuel_capacity_missing">This vehicle\'s fuel capacity is missing. Please check your vehicle\'s manual and enter it manually on the vehicle details screen.</string>
     <string name="invalid_distance">The distance you have entered is invalid.</string>
-    <string name="invalid_tank_state">The final state of the tank must be less than the initial.</string>
+    <string name="invalid_tank_level">The final level of the tank must be less than the initial
+        .</string>
+
     <!-- endregion -->
 
     <!-- region Cost planning -->
     <string name="vehicle">Vehicle</string>
-    <string name="tank_state">Tank state</string>
+    <string name="tank_level">Tank level</string>
     <string name="estimated_cost_format">Estimated cost: %1$s</string>
     <string name="estimated_fuel_amount_format">Estimated fuel amount: %1$dℓ</string>
     <string name="cost_planning">Cost planning</string>

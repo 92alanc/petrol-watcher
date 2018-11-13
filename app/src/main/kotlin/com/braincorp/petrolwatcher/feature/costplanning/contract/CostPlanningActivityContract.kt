@@ -3,7 +3,7 @@ package com.braincorp.petrolwatcher.feature.costplanning.contract
 import android.content.Context
 import com.braincorp.petrolwatcher.base.BaseContract
 import com.braincorp.petrolwatcher.feature.consumption.model.RoadType
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
 import com.braincorp.petrolwatcher.feature.stations.model.Fuel
 import com.braincorp.petrolwatcher.feature.vehicles.model.Vehicle
 import com.braincorp.petrolwatcher.map.OnCurrentLocationFoundListener
@@ -61,7 +61,7 @@ interface CostPlanningActivityContract {
          * @param fuelType the fuel type
          * @param fuelQuality the fuel quality
          * @param vehicle the vehicle
-         * @param tankState the tank state
+         * @param tankLevel the tank state
          * @param roadType the road type
          */
         fun estimateCostAndFuelAmount(context: Context,
@@ -70,7 +70,7 @@ interface CostPlanningActivityContract {
                                       fuelType: Fuel.Type,
                                       fuelQuality: Fuel.Quality,
                                       vehicle: Vehicle,
-                                      tankState: TankState,
+                                      tankLevel: TankLevel,
                                       roadType: RoadType)
     }
 }

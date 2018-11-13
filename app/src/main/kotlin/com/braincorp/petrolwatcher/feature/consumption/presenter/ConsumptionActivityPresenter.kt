@@ -3,8 +3,8 @@ package com.braincorp.petrolwatcher.feature.consumption.presenter
 import com.alancamargo.validationchain.ValidationChain
 import com.alancamargo.validationchain.model.Validation
 import com.braincorp.petrolwatcher.feature.consumption.contract.ConsumptionActivityContract
-import com.braincorp.petrolwatcher.feature.consumption.model.TankState
-import com.braincorp.petrolwatcher.utils.tankStateToLitres
+import com.braincorp.petrolwatcher.feature.consumption.model.TankLevel
+import com.braincorp.petrolwatcher.utils.tankLevelToLitres
 
 /**
  * The implementation of the presentation layer
@@ -18,14 +18,14 @@ class ConsumptionActivityPresenter(private val view: ConsumptionActivityContract
      *
      * @param odometerStart the initial state of the odometer
      * @param odometerEnd the final state of the odometer
-     * @param tankStateStart the initial state of the tank
-     * @param tankStateEnd the final state of the tank
+     * @param tankLevelStart the initial state of the tank
+     * @param tankLevelEnd the final state of the tank
      * @param fuelCapacity the fuel capacity
      */
     override fun calculateConsumption(odometerStart: String,
                                       odometerEnd: String,
-                                      tankStateStart: TankState,
-                                      tankStateEnd: TankState,
+                                      tankLevelStart: TankLevel,
+                                      tankLevelEnd: TankLevel,
                                       fuelCapacity: Int) {
         val odometerStartNotBlank = Validation(odometerStart.isNotBlank(), view::showOdometerStartError)
         val odometerEndNotBlank = Validation(odometerEnd.isNotBlank(), view::showOdometerEndError)
@@ -41,13 +41,13 @@ class ConsumptionActivityPresenter(private val view: ConsumptionActivityContract
                         view.showInvalidDistanceError()
                     } else {
                         val distance = kmEnd - kmStart
-                        val tankStateStartLitres = tankStateToLitres(tankStateStart, fuelCapacity)
-                        val tankStateEndLitres = tankStateToLitres(tankStateEnd, fuelCapacity)
+                        val tankLevelStartLitres = tankLevelToLitres(tankLevelStart, fuelCapacity)
+                        val tankLevelEndLitres = tankLevelToLitres(tankLevelEnd, fuelCapacity)
 
-                        if (tankStateEndLitres >= tankStateStartLitres) {
-                            view.showInvalidTankStateError()
+                        if (tankLevelEndLitres >= tankLevelStartLitres) {
+                            view.showInvalidTankLevelError()
                         } else {
-                            val fuelSpent = tankStateStartLitres - tankStateEndLitres
+                            val fuelSpent = tankLevelStartLitres - tankLevelEndLitres
 
                             val consumption = (distance / fuelSpent).toFloat()
                             view.exportConsumption(consumption)
