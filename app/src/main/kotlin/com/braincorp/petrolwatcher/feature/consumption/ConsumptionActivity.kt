@@ -26,6 +26,7 @@ class ConsumptionActivity : AppCompatActivity(),
         const val KEY_DATA = "data"
 
         private const val KEY_VEHICLE = "vehicle"
+        private const val KEY_DISPLAYED_INFO = "displayed_info"
 
         fun intent(context: Context, vehicle: Vehicle): Intent {
             return Intent(context, ConsumptionActivity::class.java)
@@ -37,6 +38,8 @@ class ConsumptionActivity : AppCompatActivity(),
 
     private lateinit var vehicle: Vehicle
 
+    private var displayedInfo = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_consumption)
@@ -46,12 +49,18 @@ class ConsumptionActivity : AppCompatActivity(),
             vehicle = intent.getParcelableExtra(KEY_VEHICLE)
         else
             restoreInstanceState(savedInstanceState)
+
+        if (!displayedInfo)
+            displayInfo()
         populateViews()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(KEY_VEHICLE, vehicle)
+        with(outState) {
+            putParcelable(KEY_VEHICLE, vehicle)
+            putBoolean(KEY_DISPLAYED_INFO, displayedInfo)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -142,8 +151,21 @@ class ConsumptionActivity : AppCompatActivity(),
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle) {
-        vehicle = savedInstanceState.getParcelable(KEY_VEHICLE)!!
+        with(savedInstanceState) {
+            vehicle = getParcelable(KEY_VEHICLE)!!
+            displayedInfo = getBoolean(KEY_DISPLAYED_INFO)
+        }
         populateViews()
+    }
+
+    private fun displayInfo() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.info)
+                .setMessage(R.string.info_consumption)
+                .setIcon(R.drawable.ic_info)
+                .setNeutralButton(R.string.ok, null)
+                .show()
+        displayedInfo = true
     }
 
     private fun calculateConsumption() {

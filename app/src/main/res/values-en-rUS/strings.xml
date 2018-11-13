@@ -119,4 +119,7 @@
     <string name="description_predictions">Predictions based on average fuel prices collected weekly in your area</string>
     <string name="regular_petrol">Regular gas</string>
     <string name="premium_petrol">Premium gas</string>
+    <string name="info_consumption">Fill in the fields after you\'ve completed a trip without
+        refueling
+    </string>
 </resources>

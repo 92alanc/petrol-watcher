@@ -118,4 +118,7 @@
     <string name="description_predictions">Previsões baseadas em preços médios de combustível coletados semanalmente na sua área</string>
     <string name="regular_petrol">Gasolina comum</string>
     <string name="premium_petrol">Gasolina aditivada</string>
+    <string name="info_consumption">Preencha os campos depois de completar uma viagem sem
+        reabastecer
+    </string>
 </resources>

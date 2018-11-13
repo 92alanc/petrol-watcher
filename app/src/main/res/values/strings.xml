@@ -122,7 +122,8 @@
     <string name="invalid_distance">The distance you have entered is invalid.</string>
     <string name="invalid_tank_level">The final level of the tank must be less than the initial
         .</string>
-
+    <string name="info_consumption">Fill in the fields after you\'ve completed a trip
+        without refuelling</string>
     <!-- endregion -->
 
     <!-- region Cost planning -->
