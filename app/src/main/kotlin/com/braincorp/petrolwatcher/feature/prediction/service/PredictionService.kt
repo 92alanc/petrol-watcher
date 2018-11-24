@@ -46,6 +46,7 @@ class PredictionService : IntentService("prediction"),
             val city = getStringExtra(KEY_CITY)
             val country = getStringExtra(KEY_COUNTRY)
             area = normaliseArea(city, country)
+            Log.d(TAG, "Area: $area")
             locale = Locale.forLanguageTag(getStringExtra(KEY_LOCALE))
         }
         preferenceHelper = PreferenceHelper(applicationContext)

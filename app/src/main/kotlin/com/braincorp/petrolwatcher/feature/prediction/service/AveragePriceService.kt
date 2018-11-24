@@ -62,9 +62,11 @@ class AveragePriceService : Service(),
                                         latLng: LatLng,
                                         locale: Locale) {
         this.city = city
-        this.country = country
+        this.country = if (country == "Brazil") "Brasil" else country
         this.locale = locale
-        DependencyInjection.databaseManager.getAveragePricesForCityAndCountry(city, country,
+        Log.d(TAG, "City: $city")
+        Log.d(TAG, "Country: ${this.country}")
+        DependencyInjection.databaseManager.getAveragePricesForCityAndCountry(city, this.country,
                                                                               this)
     }
 
@@ -84,6 +86,7 @@ class AveragePriceService : Service(),
      * @param averagePrices the average fuel prices
      */
     override fun onAveragePricesFound(averagePrices: ArrayList<AveragePrice>) {
+        Log.d(TAG, "Average prices found")
         startService(PredictionService.getIntent(
                 this,
                 city,

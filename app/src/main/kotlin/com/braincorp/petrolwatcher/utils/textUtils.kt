@@ -42,7 +42,6 @@ fun <T> setEditTextValue(editText: TextInputEditText, value: T) {
  * @return the price formatted in the local currency
  */
 fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
-    val currency = Currency.getInstance(locale).symbol
     val roundedPrice = price.round(MathContext(3)) // precision = 3
     val formatter = DecimalFormat.getNumberInstance(locale)
     with(formatter) {
@@ -50,7 +49,7 @@ fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
         maximumFractionDigits = 2
     }
     val formattedPrice = formatter.format(roundedPrice.toDouble())
-    return "$currency $formattedPrice"
+    return "R$ $formattedPrice"
 }
 
 /**
@@ -63,7 +62,8 @@ fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
  * special characters, concatenated with an underscore
  */
 fun normaliseArea(city: String, country: String): String {
-    var text = "${city.replace(" ", "").toLowerCase()}_${country.replace(" ", "").toLowerCase()}"
+    val countryTxt = if (country == "Brazil") "Brasil" else country
+    var text = "${city.replace(" ", "").toLowerCase()}_${countryTxt.replace(" ", "").toLowerCase()}"
     text = Normalizer.normalize(text, Normalizer.Form.NFD)
     return text.replace("\\p{M}".toRegex(), "")
 }

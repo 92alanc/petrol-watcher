@@ -43,7 +43,7 @@ android {
     productFlavors {
         beta {
             dimension "mode"
-            versionNameSuffix "-beta6"
+            versionNameSuffix "-beta7"
         }
 
         prod {

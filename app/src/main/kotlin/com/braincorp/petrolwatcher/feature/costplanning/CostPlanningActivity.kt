@@ -311,7 +311,7 @@ class CostPlanningActivity : AppCompatActivity(),
     private fun showResult() {
         group_result.visibility = View.VISIBLE
 
-        val costStr = formatPriceAsCurrency(cost!!, locale)
+        val costStr = formatPriceAsCurrency(cost!!, locale) // FIXME
         txt_estimated_cost.text = getString(R.string.estimated_cost_format, costStr)
         txt_estimated_fuel_amount.text = getString(R.string.estimated_fuel_amount_format, fuelAmount)
     }
