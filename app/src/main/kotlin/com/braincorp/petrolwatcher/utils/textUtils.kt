@@ -43,7 +43,7 @@ fun <T> setEditTextValue(editText: TextInputEditText, value: T) {
  */
 fun formatPriceAsCurrency(price: BigDecimal, locale: Locale): String {
     val roundedPrice = price.round(MathContext(3)) // precision = 3
-    val formatter = DecimalFormat.getNumberInstance(locale)
+    val formatter = DecimalFormat.getNumberInstance(Locale.GERMANY)
     with(formatter) {
         minimumFractionDigits = 2
         maximumFractionDigits = 2
